@@ -12,11 +12,13 @@
         "bugsnag/bugsnag-laravel": "^2.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "myclabs/php-enum": "^1.6"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.5",
         "beyondcode/laravel-dump-server": "^1.0",
+        "doctrine/dbal": "~2.3",
         "filp/whoops": "^2.0",
         "friendsofphp/php-cs-fixer": "^2.13",
         "fzaninotto/faker": "^1.4",
@@ -73,6 +75,12 @@
         ],
         "fix-style": [
             "vendor/bin/php-cs-fixer fix -vvv"
+        ],
+        "ide-helper": [
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan ide-helper:models -R -W --no-interaction",
+            "@fix-style"
         ],
         "test": [
             "vendor/bin/phpunit"
