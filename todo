@@ -1,4 +1,3 @@
-* remove some logic and markup
 * create directory structure
     /Domain
         /Blog
@@ -20,6 +19,7 @@
             /Middleware
         /Console
             /Commands
+* seed real blogs (remove HtmlFaker)
 * phpcs
 * basic error pages
 * unit test
@@ -29,3 +29,4 @@
 * security headers
 * add meta tags
 * add microdata
+* add scripts (composer/bash/docker) to automate tasks (install, update, test)

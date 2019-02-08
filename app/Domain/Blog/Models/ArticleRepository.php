@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Blog\Models;
+namespace App\Domain\Blog\Models;
 
 final class ArticleRepository
 {
