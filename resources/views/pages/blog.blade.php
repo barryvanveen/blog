@@ -1,5 +1,5 @@
 @extends('layouts.base')
 
 @section('body')
-    @include('blocks.home.index')
+    @include('blocks.blog.index')
 @endsection

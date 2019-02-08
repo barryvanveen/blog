@@ -1,0 +1,31 @@
+* remove some logic and markup
+* create directory structure
+    /Domain
+        /Blog
+            /Exceptions
+            /Rules
+            /ValueObjects
+            RepositoryInterface
+        CommandInterface
+        EventInterface
+    /Application
+        /Commands
+        /Events
+        /Repositories
+        CommandBusInterface
+        EventDispatcherInterface
+    /Infrastructure
+        /Http
+            /Controllers
+            /Middleware
+        /Console
+            /Commands
+* phpcs
+* basic error pages
+* unit test
+* dusk test
+* travis
+* update dependencies
+* security headers
+* add meta tags
+* add microdata

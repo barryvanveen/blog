@@ -1,12 +1,8 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
+<section>
+    <h1>Blog</h1>
 
-            @include('blocks.blog.partials.card')
-            @include('blocks.blog.partials.card')
-            @include('blocks.blog.partials.card')
-            @include('blocks.blog.partials.card')
-
-        </div>
-    </div>
-</div>
+    @include('blocks.blog.partials.card')
+    @include('blocks.blog.partials.card')
+    @include('blocks.blog.partials.card')
+    @include('blocks.blog.partials.card')
+</section>
