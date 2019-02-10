@@ -3,8 +3,9 @@
 namespace App\Application\Articles\Events;
 
 use App\Domain\Articles\Models\Article;
+use App\Domain\Core\EventInterface;
 
-final class ArticleWasUpdated
+final class ArticleWasUpdated implements EventInterface
 {
     public $article;
 
