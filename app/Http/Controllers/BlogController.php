@@ -21,7 +21,7 @@ final class BlogController extends Controller
         return view('pages.blog.index', $viewModel);
     }
 
-    // todo: write feature test
+    // todo: rename Blog to Article(s)
     // todo: more files to /Core
     // todo: try to move more code to /app/Infrastructure
 

@@ -1,6 +1,6 @@
 <section>
 
-    <h1>Homepage - Barry van Veen</h1>
+    <h1 id="home-header">Homepage - Barry van Veen</h1>
     <p>Introduction of myself, maybe with a photo</p>
 
     <h2>Blog</h2>
