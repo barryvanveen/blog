@@ -1,7 +1,7 @@
 <?php
 
-use App\Blog\Models\Article;
-use App\Blog\Models\Author;
+use App\Domain\Articles\Models\Article;
+use App\Domain\Authors\Models\Author;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
         $author = factory(Author::class)->create();
 
         /** @var Article[] $articles */
-        $articles = factory(Article::class, 10)->create([
+        factory(Article::class, 10)->create([
             'author_id' => $author->id,
         ]);
     }

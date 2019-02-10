@@ -1,8 +1,8 @@
 <?php
 
+use App\Domain\Articles\Enums\ArticleStatus;
+use App\Domain\Articles\Models\Article;
 use App\Domain\Authors\Models\Author;
-use App\Domain\Blog\Enums\ArticleStatus;
-use App\Domain\Blog\Models\Article;
 use App\Faker\Providers\LoremHtml;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;

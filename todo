@@ -1,24 +1,31 @@
 * create directory structure
     /Domain
-        /Blog
+        /Articles
             /Exceptions
             /Rules
             /ValueObjects
             RepositoryInterface
-        CommandInterface
-        EventInterface
+        /Core
+            CommandInterface
+            EventInterface
     /Application
-        /Commands
-        /Events
-        /Repositories
-        CommandBusInterface
-        EventDispatcherInterface
+        /Articles
+            /Commands
+            /Events
+            /Repositories
+        /Core
+            CommandBusInterface
+            EventDispatcherInterface
     /Infrastructure
         /Http
             /Controllers
             /Middleware
         /Console
             /Commands
+        /Core
+            CommandBus
+            EventDispatcher
+
 * seed real blogs (remove HtmlFaker)
 * phpcs
 * basic error pages
@@ -30,3 +37,4 @@
 * add meta tags
 * add microdata
 * add scripts (composer/bash/docker) to automate tasks (install, update, test)
+* automated backup
