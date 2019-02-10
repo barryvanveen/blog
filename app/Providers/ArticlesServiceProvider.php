@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Application\Articles\ArticleRepository;
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Handlers\CreateArticleHandler;
-use App\Application\CommandBusInterface;
+use App\Application\Core\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 

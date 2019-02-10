@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Application\CommandBusInterface;
+use App\Application\Core\CommandBusInterface;
 use App\Infrastructure\CommandBus\LaravelCommandBus;
 use Illuminate\Support\ServiceProvider;
 

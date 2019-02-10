@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\CommandBus;
 
-use App\Application\CommandBusInterface;
-use App\Domain\CommandInterface;
+use App\Application\Core\CommandBusInterface;
+use App\Domain\Core\CommandInterface;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Foundation\Application;
 

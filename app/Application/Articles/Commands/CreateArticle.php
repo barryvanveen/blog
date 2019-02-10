@@ -2,7 +2,7 @@
 
 namespace App\Application\Articles\Commands;
 
-use App\Domain\CommandInterface;
+use App\Domain\Core\CommandInterface;
 
 class CreateArticle implements CommandInterface
 {

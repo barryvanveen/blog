@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application;
+namespace App\Application\Core;
 
-use App\Domain\CommandInterface;
+use App\Domain\Core\CommandInterface;
 
 interface CommandBusInterface
 {

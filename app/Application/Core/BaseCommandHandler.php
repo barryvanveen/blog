@@ -2,8 +2,8 @@
 
 namespace App\Application\Core;
 
-use App\Domain\CommandHandlerInterface;
-use App\Domain\CommandInterface;
+use App\Domain\Core\CommandHandlerInterface;
+use App\Domain\Core\CommandInterface;
 
 abstract class BaseCommandHandler implements CommandHandlerInterface
 {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Application\Articles\ArticleRepository;
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\ViewModels\ArticlesIndexViewModel;
-use App\Application\CommandBusInterface;
+use App\Application\Core\CommandBusInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use Redirect;
 
@@ -21,7 +21,6 @@ final class ArticlesController extends Controller
         return view('pages.articles.index', $viewModel);
     }
 
-    // todo: more files to /Core
     // todo: try to move more code to /app/Infrastructure
 
     public function store(CommandBusInterface $commandBus)
