@@ -9,7 +9,7 @@ use App\Application\CommandBusInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use Redirect;
 
-final class BlogController extends Controller
+final class ArticlesController extends Controller
 {
     public function index()
     {
@@ -18,10 +18,9 @@ final class BlogController extends Controller
             new ArticleRepository()
         );
 
-        return view('pages.blog.index', $viewModel);
+        return view('pages.articles.index', $viewModel);
     }
 
-    // todo: rename Blog to Article(s)
     // todo: more files to /Core
     // todo: try to move more code to /app/Infrastructure
 
@@ -39,6 +38,6 @@ final class BlogController extends Controller
         $commandBus->dispatch($command);
         // todo: catch exceptions
 
-        return Redirect::route('blog.index');
+        return Redirect::route('articles.index');
     }
 }

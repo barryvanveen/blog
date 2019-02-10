@@ -45,12 +45,12 @@ class ArticlesTest extends DuskTestCase
         ]);
 
         $this->browse(function (Browser $browser) {
-            $browser->visit(route('blog.index'))
+            $browser->visit(new ArticlesIndexPage())
                 ->assertSee('Existing article')
                 ->assertDontSee('Foo title');
 
-            $browser->visit(route('blog.store'))
-                ->assertRouteIs('blog.index')
+            $browser->visit(route('articles.store'))
+                ->assertRouteIs('articles.index')
                 ->assertSee('Existing article')
                 ->assertSee('Foo title');
         });
