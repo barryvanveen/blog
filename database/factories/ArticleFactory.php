@@ -3,14 +3,14 @@
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Authors\Models\Author;
-use App\Faker\Providers\LoremHtml;
+use App\Infrastructure\Faker\LoremHtmlProvider;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 /* @var Illuminate\Database\Eloquent\Factory $factory */
 
 $factory->define(Article::class, function (Faker $faker) {
-    $faker->addProvider(new LoremHtml($faker));
+    $faker->addProvider(new LoremHtmlProvider($faker));
 
     $title = $faker->realText(200);
 

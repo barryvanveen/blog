@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Faker\Providers;
+namespace App\Infrastructure\Faker;
 
 use Faker\Provider\Lorem;
 
-class LoremHtml extends Lorem
+class LoremHtmlProvider extends Lorem
 {
     /**
      * Generate html paragraphs.

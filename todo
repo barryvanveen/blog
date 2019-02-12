@@ -26,7 +26,6 @@
             CommandBus
             EventDispatcher
 
-* seed real blogs (remove HtmlFaker)
 * phpcs
 * basic error pages
 * unit test
