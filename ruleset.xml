@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<ruleset name="barryvanveen\blog">
+    <config name="installed_paths" value="vendor/slevomat/coding-standard"/>
+    <config name="ignore_errors_on_exit" value="1"/>
+    <config name="ignore_warnings_on_exit" value="1"/>
+
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg value="s"/> <!-- show sniff codes in all reports -->
+    <arg value="p"/> <!-- show progress of the run -->
+
+    <!-- files to include -->
+    <file>./app</file>
+    <file>./bootstrap</file>
+    <file>./config</file>
+    <file>./database</file>
+    <file>./resources/lang</file>
+    <file>./routes</file>
+    <file>./tests</file>
+
+    <!-- exclude some directories -->
+    <exclude-pattern type="relative">^/bootstrap/cache/*</exclude-pattern>
+
+    <!-- include all sniffs in the PSR2 standard -->
+    <rule ref="PSR2">
+        <!-- except this one -->
+        <exclude name="Generic.Files.LineLength.TooLong"/>
+    </rule>
+
+    <!-- specific sniffs to include -->
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Arrays/TrailingArrayCommaSniff.php"/>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Operators/DisallowEqualOperatorsSniff.php"/>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Namespaces/AlphabeticallySortedUsesSniff.php">
+        <properties>
+            <property name="caseSensitive" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php">
+        <properties>
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
+            <property name="newlinesCountAfterDeclare" value="2"/>
+            <property name="spacesCountAroundEqualsSign" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- allow classes without namespace -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>*/database/*</exclude-pattern>
+    </rule>
+
+    <!-- allow multiple classes per file -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+</ruleset>

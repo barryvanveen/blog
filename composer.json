@@ -27,7 +27,9 @@
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "^7.0",
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "slevomat/coding-standard": "~5.0",
+        "squizlabs/php_codesniffer": "*"
     },
     "config": {
         "optimize-autoloader": true,
@@ -72,10 +74,10 @@
             "php artisan ide-helper:meta"
         ],
         "check-style": [
-            "vendor/bin/php-cs-fixer fix --dry-run -vvv"
+            "phpcs --standard=ruleset.xml"
         ],
         "fix-style": [
-            "vendor/bin/php-cs-fixer fix -vvv"
+            "phpcbf --standard=ruleset.xml"
         ],
         "ide-helper": [
             "php artisan ide-helper:generate",
