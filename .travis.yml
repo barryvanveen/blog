@@ -48,3 +48,8 @@ before_script:
 script:
   - composer check-style
   - composer test
+
+after_script:
+  - |
+    wget https://scrutinizer-ci.com/ocular.phar
+    php ocular.phar code-coverage:upload --format=php-clover tests/build/coverage.xml
