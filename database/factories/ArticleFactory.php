@@ -2,7 +2,6 @@
 
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
-use App\Domain\Authors\Models\Author;
 use App\Infrastructure\Faker\LoremHtmlProvider;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
@@ -15,9 +14,7 @@ $factory->define(Article::class, function (Faker $faker) {
     $title = $faker->realText(200);
 
     return [
-        'author_id' => function () {
-            return factory(Author::class)->make()->id;
-        },
+        'author_id' => 1,
         'content' => $faker->htmlArticle,
         'description' => $faker->htmlParagraph,
         'published_at' => $faker->dateTimeBetween('-1 year', '-1 hour'),

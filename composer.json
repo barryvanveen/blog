@@ -84,6 +84,13 @@
             "@fix-style"
         ],
         "test": [
+            "@test-unit",
+            "@test-browser"
+        ],
+        "test-browser": [
+            "php artisan dusk"
+        ],
+        "test-unit": [
             "vendor/bin/phpunit"
         ]
     }

@@ -4,6 +4,7 @@ namespace App\Domain\Articles\Models;
 
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Authors\Models\Author;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -49,7 +50,9 @@ class Article extends Model
 
     public function scopePublished(Builder $query)
     {
-        return $query->where('status', '=', ArticleStatus::PUBLISHED());
+        return $query
+            ->where('status', '=', ArticleStatus::PUBLISHED())
+            ->where('published_at', '<=', Carbon::now()->toDateTimeString());
     }
 
     public function scopeNewestToOldest(Builder $query)
