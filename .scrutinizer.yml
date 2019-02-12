@@ -2,13 +2,9 @@ build:
     nodes:
         analysis:
             project_setup:
-                override:
-                    - 'true'
+                override: true
             tests:
-                override:
-                    - php-scrutinizer-run
-                    - js-scrutinizer-run
-        tests: true
+                override: [php-scrutinizer-run]
 
 filter:
     paths:
