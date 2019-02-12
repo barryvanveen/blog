@@ -3,9 +3,10 @@
 namespace App\Infrastructure\CommandBus;
 
 use App\Application\Core\CommandBusInterface;
+use App\Domain\Core\CommandHandlerInterface;
 use App\Domain\Core\CommandInterface;
-use Illuminate\Bus\Dispatcher;
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 
 final class LaravelCommandBus implements CommandBusInterface
 {
@@ -22,12 +23,25 @@ final class LaravelCommandBus implements CommandBusInterface
         $this->application = $application;
     }
 
-    public function subscribe(string $commandClassName, string $handlerClassName)
+    public function subscribe(string $commandClassName, string $handlerClassName): void
     {
+        if ($this->doesNotImplementInterface($commandClassName, CommandInterface::class)) {
+            throw LaravelCommandBusException::becauseCommandIsInvalid($commandClassName);
+        }
+
+        if ($this->doesNotImplementInterface($handlerClassName, CommandHandlerInterface::class)) {
+            throw LaravelCommandBusException::becauseHandlerIsInvalid($handlerClassName);
+        }
+
         $this->handlers[$commandClassName] = $handlerClassName;
     }
 
-    public function dispatch(CommandInterface $command)
+    private function doesNotImplementInterface(string $subject, string $interface): bool
+    {
+        return ! in_array($interface, class_implements($subject), true);
+    }
+
+    public function dispatch(CommandInterface $command): void
     {
         $handlerClassName = $this->getHandlerClassName($command);
 
@@ -41,10 +55,8 @@ final class LaravelCommandBus implements CommandBusInterface
         $commandClassName = get_class($command);
 
         if (! isset($this->handlers[$commandClassName])) {
-            throw new \Exception('No handler found for '.$commandClassName);
+            throw LaravelCommandBusException::becauseNoHandlerWasSubscribed($commandClassName);
         }
-
-        // todo: check if handler implements CommandHandlerInterface
 
         return $this->handlers[$commandClassName];
     }
