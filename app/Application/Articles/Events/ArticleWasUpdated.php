@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Articles\Events;
 
 use App\Domain\Articles\Models\Article;

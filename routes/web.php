@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 Route::get('/', [\App\Infrastructure\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/about', [\App\Infrastructure\Http\Controllers\AboutController::class, 'index'])->name('about');
 Route::get('/articles', [\App\Infrastructure\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');

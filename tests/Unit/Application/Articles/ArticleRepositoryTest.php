@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Articles;
 
 use App\Application\Articles\ArticleRepository;

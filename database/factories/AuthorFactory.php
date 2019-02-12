@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Domain\Authors\Models\Author;
 use App\Infrastructure\Faker\LoremHtmlProvider;
 use Faker\Generator as Faker;

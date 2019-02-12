@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Domain\Articles\Models\Article;
 use App\Domain\Authors\Models\Author;
 use Illuminate\Database\Seeder;

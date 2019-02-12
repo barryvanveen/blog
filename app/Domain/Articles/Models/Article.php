@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Articles\Models;
 
 use App\Domain\Authors\Models\Author;
@@ -7,24 +9,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 /**
- * App\Domain\Articles\Models\Article.
+ * App\Domain\Articles\Models\Article
  *
- * @property int                               $id
- * @property int                               $author_id
- * @property string                            $content
- * @property string                            $description
- * @property string                            $published_at
- * @property string                            $slug
- * @property int                               $status
- * @property string                            $title
- * @property \Illuminate\Support\Carbon|null   $created_at
- * @property \Illuminate\Support\Carbon|null   $updated_at
- * @property \App\Domain\Authors\Models\Author $author
- *
+ * @property int $id
+ * @property int $author_id
+ * @property string $content
+ * @property string $description
+ * @property string $published_at
+ * @property string $slug
+ * @property int $status
+ * @property string $title
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Domain\Authors\Models\Author $author
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article newestToOldest()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article published()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereAuthorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereContent($value)

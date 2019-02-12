@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Articles\Handlers;
 
 use App\Application\Articles\Commands\CreateArticle;

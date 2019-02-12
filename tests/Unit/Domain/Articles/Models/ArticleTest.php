@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Domain\Articles\Models;
 
 use App\Domain\Articles\Models\Article;

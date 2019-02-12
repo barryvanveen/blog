@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Articles\ArticleRepository;
