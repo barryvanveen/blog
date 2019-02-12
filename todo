@@ -26,14 +26,14 @@
             CommandBus
             EventDispatcher
 
-* phpcs
-* basic error pages
-* unit test
-* dusk test
-* travis
-* update dependencies
+* auth scaffolding
+* first admin page
+* event bus
+* query bus?
 * security headers
+* basic error pages
 * add meta tags
 * add microdata
 * add scripts (composer/bash/docker) to automate tasks (install, update, test)
 * automated backup
+* fix readme
