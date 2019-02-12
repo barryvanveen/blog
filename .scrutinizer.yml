@@ -13,9 +13,6 @@ filter:
 checks:
     php: true
 
-coding_style:
-    php: {  }
-
 tools:
     external_code_coverage:
         timeout: 600
