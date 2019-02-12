@@ -5,7 +5,6 @@ namespace Tests\Unit\Domain\Articles\Models;
 use App\Domain\Articles\Models\Article;
 use Tests\TestCase;
 
-
 class ArticleTest extends TestCase
 {
     /**
