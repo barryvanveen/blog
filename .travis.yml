@@ -1,0 +1,45 @@
+dist: xenial
+language: php
+
+env:
+  global:
+    - SETUP=stable
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.2
+    - php: 7.2
+      env: SETUP=lowest
+    - php: 7.3
+    - php: 7.3
+      env: SETUP=lowest
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+addons:
+  chrome: stable
+
+services:
+  - mysql
+
+before_install:
+  - phpenv config-rm xdebug.ini || true
+  - travis_retry composer self-update
+  - mysql -e 'CREATE DATABASE homestead;'
+
+install:
+  - cp .env.testing .env
+  - if [[ $SETUP = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $SETUP = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
+  - php artisan migrate
+
+before_script:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - php artisan serve &
+
+script:
+  - composer check-style
+  - composer test
