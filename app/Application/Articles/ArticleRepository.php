@@ -5,16 +5,18 @@ namespace App\Application\Articles;
 use App\Application\Articles\Events\ArticleWasCreated;
 use App\Application\Articles\Events\ArticleWasUpdated;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
+use Carbon\Carbon;
 
 final class ArticleRepository implements ArticleRepositoryInterface
 {
     public function allPublishedAndOrdered()
     {
         return Article::query()
-            ->published()
-            ->newestToOldest()
-            ->with(['author'])
+            ->where('status', '=', ArticleStatus::PUBLISHED())
+            ->where('published_at', '<=', Carbon::now()->toDateTimeString())
+            ->orderBy('published_at', 'desc')
             ->get();
     }
 
