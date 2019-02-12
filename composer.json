@@ -20,7 +20,6 @@
         "beyondcode/laravel-dump-server": "^1.0",
         "doctrine/dbal": "~2.3",
         "filp/whoops": "^2.0",
-        "friendsofphp/php-cs-fixer": "^2.13",
         "fzaninotto/faker": "^1.4",
         "laravel/dusk": "^4.0",
         "laravel/homestead": "^7.19",
