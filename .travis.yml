@@ -37,7 +37,7 @@ before_install:
   - mysql -e 'CREATE DATABASE homestead;'
 
 install:
-  - if [[ $SETUP = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest
   - php artisan migrate
 
 before_script:
