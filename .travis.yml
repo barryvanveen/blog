@@ -33,7 +33,6 @@ services:
   - mysql
 
 before_install:
-  - phpenv config-rm xdebug.ini || true
   - travis_retry composer self-update
   - mysql -e 'CREATE DATABASE homestead;'
 
