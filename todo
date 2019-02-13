@@ -26,9 +26,8 @@
             CommandBus
             EventDispatcher
 
-* improve LoginController?
-* throttle logins
-* translations
+* unit tests for LoginHandler, RateLimitedLoginHandler and LogoutHandler
+* translations (Lang::get(), trans() or __()?)
 * first admin page
 * event bus
 * query bus?
