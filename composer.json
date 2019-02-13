@@ -72,12 +72,8 @@
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
         ],
-        "check-style": [
-            "phpcs --standard=ruleset.xml"
-        ],
-        "fix-style": [
-            "phpcbf --standard=ruleset.xml"
-        ],
+        "check-style": "phpcs --standard=ruleset.xml",
+        "fix-style": "phpcbf --standard=ruleset.xml",
         "ide-helper": [
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
@@ -86,13 +82,11 @@
         ],
         "test": [
             "@test-unit",
+            "@test-feature",
             "@test-browser"
         ],
-        "test-browser": [
-            "php artisan dusk"
-        ],
-        "test-unit": [
-            "vendor/bin/phpunit"
-        ]
+        "test-browser": "php artisan dusk",
+        "test-feature": "vendor/bin/phpunit --testsuite Feature",
+        "test-unit": "vendor/bin/phpunit --testsuite Unit"
     }
 }
