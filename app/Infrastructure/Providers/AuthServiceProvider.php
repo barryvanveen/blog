@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Providers;
 
+use App\Application\Auth\Commands\Login;
+use App\Application\Auth\Commands\Logout;
+use App\Application\Auth\Handlers\LoginHandler;
+use App\Application\Auth\Handlers\LogoutHandler;
+use App\Application\Core\CommandBusInterface;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the application.
-     *
-     * @var array
+     * @param CommandBusInterface $commandBus
      */
-    protected $policies = [];
-
-    /**
-     * Register any authentication / authorization services.
-     */
-    public function boot()
+    public function boot(CommandBusInterface $commandBus)
     {
-        $this->registerPolicies();
+        $commandBus->subscribe(Login::class, LoginHandler::class);
+        $commandBus->subscribe(Logout::class, LogoutHandler::class);
     }
 }
