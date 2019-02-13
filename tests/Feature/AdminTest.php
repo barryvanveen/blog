@@ -31,6 +31,6 @@ class AdminTest extends TestCase
         $response = $this->get(route('admin.dashboard'));
 
         $response->assertOk();
-        $response->assertSee($user->name);
+        $response->assertSee(e($user->name));
     }
 }
