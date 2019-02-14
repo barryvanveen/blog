@@ -14,13 +14,12 @@ class LoremHtmlProvider extends Lorem
      * @example '<p>Lorem ipsum</p><p>Dolores delectus</p>'
      *
      * @param int  $nbParagraphs
-     * @param bool $variableNbParagraphs
      *
      * @return string
      */
-    public static function htmlParagraphs($nbParagraphs = 3, $variableNbParagraphs = true): string
+    public static function htmlParagraphs($nbParagraphs = 3): string
     {
-        $paragraphs[] = static::paragraphs($nbParagraphs, $variableNbParagraphs);
+        $paragraphs = static::paragraphs($nbParagraphs);
 
         foreach ($paragraphs as $key => $paragraph) {
             $paragraphs[$key] = '<p>'.$paragraph.'</p>';
