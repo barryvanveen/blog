@@ -23,13 +23,14 @@ final class CreateArticleHandler extends BaseCommandHandler
      */
     public function handleCreateArticle(CreateArticle $command)
     {
-        $article = new Article();
-        $article->author_id = $command->input['author_id'];
-        $article->content = $command->input['content'];
-        $article->description = $command->input['description'];
-        $article->published_at = $command->input['published_at'];
-        $article->status = $command->input['status'];
-        $article->title = $command->input['title'];
+        $article = Article::create(
+            $command->authorId,
+            $command->content,
+            $command->description,
+            $command->publishedAt,
+            $command->status,
+            $command->title
+        );
 
         $this->repository->save($article);
     }

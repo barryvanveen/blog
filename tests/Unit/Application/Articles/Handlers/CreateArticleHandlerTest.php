@@ -21,19 +21,19 @@ class CreateArticleHandlerTest extends TestCase
     public function itCreatesAnArticle()
     {
         // arrange
-        $input = [
-            'author_id' => 1,
-            'content' => 'baz',
-            'description' => 'bar',
-            'published_at' => now(),
-            'status' => ArticleStatus::PUBLISHED(),
-            'title' => 'Foo title',
-        ];
+        $command = new CreateArticle(
+            1,
+            'baz',
+            'bar',
+            now(),
+            ArticleStatus::PUBLISHED(),
+            'Foo title'
+        );
 
         // act
         /** @var CreateArticleHandler $handler */
         $handler = app()->make(CreateArticleHandler::class);
-        $handler->handle(new CreateArticle($input));
+        $handler->handle($command);
 
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'Foo title']);

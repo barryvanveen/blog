@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Articles\Models;
 
+use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Authors\Models\Author;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -39,6 +41,8 @@ use Illuminate\Support\Str;
  */
 class Article extends Model
 {
+    protected $guarded = [];
+
     public function author()
     {
         return $this->belongsTo(Author::class);
@@ -48,5 +52,23 @@ class Article extends Model
     {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public static function create(
+        int $authorId,
+        string $content,
+        string $description,
+        Carbon $publishedAt,
+        ArticleStatus $status,
+        string $title
+    ) {
+        return new static([
+            'author_id' => $authorId,
+            'content' => $content,
+            'description' => $description,
+            'published_at' => $publishedAt,
+            'status' => $status,
+            'title' => $title,
+        ]);
     }
 }

@@ -9,6 +9,7 @@ use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\ViewModels\ArticlesIndexViewModel;
 use App\Application\Core\CommandBusInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
+use Carbon\Carbon;
 use Redirect;
 
 final class ArticlesController extends Controller
@@ -25,14 +26,14 @@ final class ArticlesController extends Controller
 
     public function store(CommandBusInterface $commandBus)
     {
-        $command = new CreateArticle([
-            'author_id' => 1,
-            'content' => 'baz',
-            'description' => 'bar',
-            'published_at' => now(),
-            'status' => ArticleStatus::PUBLISHED(),
-            'title' => 'Foo title',
-        ]);
+        $command = new CreateArticle(
+            1,
+            'baz',
+            'bar',
+            Carbon::now(),
+            ArticleStatus::PUBLISHED(),
+            'Foo title'
+        );
 
         $commandBus->dispatch($command);
         // todo: catch exceptions
