@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Users\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 /**
  * App\Domain\Users\Models\User
@@ -32,8 +31,6 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
