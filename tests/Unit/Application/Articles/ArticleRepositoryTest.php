@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Articles;
+namespace Tests\Unit\Application\Articles;
 
 use App\Application\Articles\ArticleRepository;
 use App\Domain\Articles\Enums\ArticleStatus;

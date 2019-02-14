@@ -28,6 +28,8 @@
 
 * unit tests for LoginHandler, RateLimitedLoginHandler and LogoutHandler
 * translations (Lang::get(), trans() or __()?)
+* phpstan
+* deptrac
 * first admin page
 * event bus
 * query bus?

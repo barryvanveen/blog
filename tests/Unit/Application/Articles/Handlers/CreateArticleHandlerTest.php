@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Articles\Handlers;
+namespace Tests\Unit\Application\Articles\Handlers;
 
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Handlers\CreateArticleHandler;
