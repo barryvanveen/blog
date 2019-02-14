@@ -8,21 +8,21 @@ use App\Application\Core\CommandBusInterface;
 use App\Domain\Core\CommandHandlerInterface;
 use App\Domain\Core\CommandInterface;
 use Illuminate\Contracts\Bus\Dispatcher;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 
 final class LaravelCommandBus implements CommandBusInterface
 {
     private $laravelDispatcher;
 
-    private $application;
+    private $container;
 
     private $handlers;
 
-    public function __construct(Dispatcher $laravelDispatcher, Application $application)
+    public function __construct(Dispatcher $laravelDispatcher, Container $container)
     {
         $this->laravelDispatcher = $laravelDispatcher;
 
-        $this->application = $application;
+        $this->container = $container;
     }
 
     public function subscribe(string $commandClassName, string $handlerClassName): void
@@ -47,7 +47,7 @@ final class LaravelCommandBus implements CommandBusInterface
     {
         $handlerClassName = $this->getHandlerClassName($command);
 
-        $handler = $this->application->make($handlerClassName);
+        $handler = $this->container->make($handlerClassName);
 
         $this->laravelDispatcher->dispatchNow($command, $handler);
     }
