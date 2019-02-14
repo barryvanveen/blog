@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
+ * @covers \App\Application\Articles\Commands\CreateArticle
  * @covers \App\Application\Articles\Handlers\CreateArticleHandler
  */
 class CreateArticleHandlerTest extends TestCase
