@@ -14,7 +14,7 @@ abstract class BaseCommandHandler implements CommandHandlerInterface
      *
      * @throws CommandHandlerException
      */
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): void
     {
         $method = $this->getHandleMethod($command);
 

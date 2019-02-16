@@ -26,7 +26,7 @@
             CommandBus
             EventDispatcher
 
-* unit tests for LoginHandler, RateLimitedLoginHandler and LogoutHandler
+* fix Scrutinizer code coverage
 * translations (Lang::get(), trans() or __()?)
 * phpstan
 * deptrac

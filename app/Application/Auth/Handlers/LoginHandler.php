@@ -10,7 +10,7 @@ use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class LoginHandler extends BaseCommandHandler
+final class LoginHandler extends BaseCommandHandler
 {
     /** @var Store */
     private $session;

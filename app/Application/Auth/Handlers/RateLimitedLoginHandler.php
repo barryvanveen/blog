@@ -5,26 +5,31 @@ declare(strict_types=1);
 namespace App\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Login;
+use App\Application\Auth\RateLimiterInterface;
+use App\Application\Core\BaseCommandHandler;
+use App\Domain\Core\CommandHandlerInterface;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
-use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-final class RateLimitedLoginHandler extends LoginHandler
+final class RateLimitedLoginHandler extends BaseCommandHandler
 {
+    // todo: these should be config values
     private const MAX_ATTEMPTS = 5;
 
     private const DECAY_MINUTES = 1;
 
-    /** @var RateLimiter */
+    /** @var CommandHandlerInterface */
+    private $loginHandler;
+
+    /** @var RateLimiterInterface */
     private $limiter;
 
-    public function __construct(RateLimiter $limiter, Store $session)
+    public function __construct(CommandHandlerInterface $loginHandler, RateLimiterInterface $limiter)
     {
-        parent::__construct($session);
+        $this->loginHandler = $loginHandler;
 
         $this->limiter = $limiter;
     }
@@ -45,7 +50,7 @@ final class RateLimitedLoginHandler extends LoginHandler
         }
 
         try {
-            parent::handleLogin($command);
+            $this->loginHandler->handle($command);
         } catch (ValidationException $e) {
             $this->incrementLoginAttempts($command);
 
