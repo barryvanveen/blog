@@ -46,9 +46,10 @@ before_script:
 
 script:
   - composer check-style
-  - composer test
+  - vendor/bin/phpunit --verbose --configuration phpunit.xml --coverage-clover coverage.clover
+  - php artisan dusk
 
 after_script:
   - |
     wget https://scrutinizer-ci.com/ocular.phar
-    php ocular.phar code-coverage:upload --format=php-clover tests/build/coverage.xml
+    php ocular.phar code-coverage:upload --format=php-clover coverage.clover
