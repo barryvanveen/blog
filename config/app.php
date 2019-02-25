@@ -173,8 +173,6 @@ return [
         App\Infrastructure\Providers\AppServiceProvider::class,
         App\Infrastructure\Providers\ArticlesServiceProvider::class,
         App\Infrastructure\Providers\AuthServiceProvider::class,
-        // App\Infrastructure\Providers\BroadcastServiceProvider::class,
-        App\Infrastructure\Providers\EventServiceProvider::class,
         App\Infrastructure\Providers\RouteServiceProvider::class,
     ],
 
