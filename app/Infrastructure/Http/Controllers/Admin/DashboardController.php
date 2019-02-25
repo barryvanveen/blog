@@ -10,7 +10,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // todo: return ViewModel
         return view('pages.admin.dashboard');
     }
 }

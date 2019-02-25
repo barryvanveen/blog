@@ -16,7 +16,6 @@ final class ArticlesController extends Controller
 {
     public function index()
     {
-        // todo: is there a way to inject this while still allowing us to pass data to it?
         $viewModel = new ArticlesIndexViewModel(
             new ArticleRepository()
         );
@@ -36,7 +35,6 @@ final class ArticlesController extends Controller
         );
 
         $commandBus->dispatch($command);
-        // todo: catch exceptions
 
         return Redirect::route('articles.index');
     }

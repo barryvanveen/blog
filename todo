@@ -1,38 +1,8 @@
-* create directory structure
-    /Domain
-        /Articles
-            /Exceptions
-            /Rules
-            /ValueObjects
-            RepositoryInterface
-        /Core
-            CommandInterface
-            EventInterface
-    /Application
-        /Articles
-            /Commands
-            /Events
-            /Repositories
-        /Core
-            CommandBusInterface
-            EventDispatcherInterface
-    /Infrastructure
-        /Http
-            /Controllers
-            /Middleware
-        /Console
-            /Commands
-        /Core
-            CommandBus
-            EventDispatcher
-
-* fix Scrutinizer code coverage
-* translations (Lang::get(), trans() or __()?)
-* phpstan
-* deptrac
-* first admin page
+* phpstan or psalm
 * event bus
+* create first view model
 * query bus?
+* first admin page
 * security headers
 * basic error pages
 * add meta tags

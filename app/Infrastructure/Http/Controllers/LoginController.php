@@ -16,7 +16,6 @@ class LoginController extends Controller
 {
     public function form()
     {
-        // todo: return ViewModel
         return view('pages.login');
     }
 
