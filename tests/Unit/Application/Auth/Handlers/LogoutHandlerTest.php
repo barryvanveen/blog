@@ -6,9 +6,9 @@ namespace Tests\Unit\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Logout;
 use App\Application\Auth\Handlers\LogoutHandler;
-use App\Domain\Users\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
+use App\Application\Interfaces\GuardInterface;
+use App\Application\Interfaces\SessionInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
 /**
@@ -17,26 +17,28 @@ use Tests\TestCase;
  */
 class LogoutHandlerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
-    public function itLogsTheUserOut()
+    public function itLogsTheUserOut(): void
     {
         // arrange
-        /** @var User $user */
-        $user = factory(User::class)->create();
-        Auth::login($user);
+        /** @var GuardInterface|MockObject $guardMock */
+        $guardMock = $this->createMock(GuardInterface::class);
+
+        /** @var \App\Application\Interfaces\SessionInterface|MockObject $sessionMock */
+        $sessionMock = $this->createMock(SessionInterface::class);
+
+        $guardMock->expects($this->once())
+            ->method('logout');
+
+        $sessionMock->expects($this->once())
+            ->method('invalidate');
 
         $command = new Logout();
 
-        $this->assertAuthenticatedAs($user);
-
         // act
-        /** @var LogoutHandler $handler */
-        $handler = app()->make(LogoutHandler::class);
+        $handler = new LogoutHandler($guardMock, $sessionMock);
         $handler->handle($command);
 
-        // assert
-        $this->assertGuest();
+        // assertions by mock expections
     }
 }

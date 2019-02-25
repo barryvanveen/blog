@@ -5,22 +5,27 @@ declare(strict_types=1);
 namespace App\Application\Auth\Handlers;
 
 use App\Application\Core\BaseCommandHandler;
-use Illuminate\Session\Store;
-use Illuminate\Support\Facades\Auth;
+use App\Application\Interfaces\GuardInterface;
+use App\Application\Interfaces\SessionInterface;
 
 final class LogoutHandler extends BaseCommandHandler
 {
-    /** @var Store */
+    /** @var GuardInterface */
+    private $guard;
+
+    /** @var \App\Application\Interfaces\SessionInterface */
     private $session;
 
-    public function __construct(Store $session)
+    public function __construct(GuardInterface $guard, SessionInterface $session)
     {
+        $this->guard = $guard;
+
         $this->session = $session;
     }
 
     public function handleLogout(): void
     {
-        Auth::guard()->logout();
+        $this->guard->logout();
 
         $this->session->invalidate();
     }

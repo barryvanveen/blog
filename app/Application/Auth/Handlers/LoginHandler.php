@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace App\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Login;
+use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Core\BaseCommandHandler;
-use Illuminate\Session\Store;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use App\Application\Interfaces\GuardInterface;
+use App\Application\Interfaces\SessionInterface;
 
 final class LoginHandler extends BaseCommandHandler
 {
-    /** @var Store */
+    /** @var GuardInterface */
+    private $guard;
+
+    /** @var SessionInterface */
     private $session;
 
-    public function __construct(Store $session)
+    public function __construct(GuardInterface $guard, SessionInterface $session)
     {
+        $this->guard = $guard;
+
         $this->session = $session;
     }
 
@@ -25,7 +30,7 @@ final class LoginHandler extends BaseCommandHandler
      *
      * @return void
      *
-     * @throws ValidationException
+     * @throws FailedLoginException
      */
     public function handleLogin(Login $command): void
     {
@@ -39,7 +44,7 @@ final class LoginHandler extends BaseCommandHandler
 
     private function attemptLogin(Login $command): bool
     {
-        return Auth::guard()->attempt(
+        return $this->guard->attempt(
             [
                 'email' => $command->email,
                 'password' => $command->password,
@@ -53,10 +58,8 @@ final class LoginHandler extends BaseCommandHandler
         $this->session->regenerate();
     }
 
-    private function getFailedException(): ValidationException
+    private function getFailedException(): FailedLoginException
     {
-        return ValidationException::withMessages([
-            'email' => [trans('auth.failed')],
-        ]);
+        return FailedLoginException::credentialsDontMatch();
     }
 }

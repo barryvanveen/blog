@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Login;
+use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Handlers\LoginHandler;
-use App\Domain\Users\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Validation\ValidationException;
+use App\Application\Interfaces\GuardInterface;
+use App\Application\Interfaces\SessionInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
 /**
@@ -17,52 +18,69 @@ use Tests\TestCase;
  */
 class LoginHandlerTest extends TestCase
 {
-    use RefreshDatabase;
+    /** @var GuardInterface|MockObject */
+    protected $guardMock;
+
+    /** @var SessionInterface|MockObject */
+    private $sessionMock;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->guardMock = $this->createMock(GuardInterface::class);
+
+        $this->sessionMock = $this->createMock(SessionInterface::class);
+    }
 
     /** @test */
-    public function itLogsTheUserIn()
+    public function itLogsTheUserIn(): void
     {
         // arrange
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        $this->guardMock->expects($this->once())
+            ->method('attempt')
+            ->willReturn(true);
+
+        $this->sessionMock->expects($this->once())
+            ->method('regenerate');
 
         $command = new Login(
-            $user->email,
+            'email@domain.tld',
             'secret',
             false,
             '123.123.123.123'
         );
 
-        $this->assertGuest();
-
         // act
-        /** @var LoginHandler $handler */
-        $handler = app()->make(LoginHandler::class);
+        $handler = new LoginHandler($this->guardMock, $this->sessionMock);
         $handler->handle($command);
 
-        // assert
-        $this->assertAuthenticatedAs($user);
+        // assert by mock expectations
     }
 
     /** @test */
-    public function itFailsOnWrongCredentials()
+    public function itFailsOnWrongCredentials(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        // arrange
+        $this->guardMock->expects($this->once())
+            ->method('attempt')
+            ->willReturn(false);
+
+        $this->sessionMock->expects($this->never())
+            ->method('regenerate');
 
         $command = new Login(
-            $user->email,
-            'wrongpassword',
+            'email@domain.tld',
+            'secret',
             false,
             '123.123.123.123'
         );
 
         // assert
-        $this->expectException(ValidationException::class);
+        $this->expectException(FailedLoginException::class);
 
         // act
-        /** @var LoginHandler $handler */
-        $handler = app()->make(LoginHandler::class);
+        $handler = new LoginHandler($this->guardMock, $this->sessionMock);
         $handler->handle($command);
     }
 }

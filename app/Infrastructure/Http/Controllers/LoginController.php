@@ -6,6 +6,8 @@ namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Auth\Commands\Login;
 use App\Application\Auth\Commands\Logout;
+use App\Application\Auth\Exceptions\FailedLoginException;
+use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Core\CommandBusInterface;
 use App\Infrastructure\Http\Requests\LoginRequest;
 
@@ -32,7 +34,17 @@ class LoginController extends Controller
             $request->ip()
         );
 
-        $bus->dispatch($command);
+        try {
+            $bus->dispatch($command);
+        } catch (FailedLoginException $e) {
+            return redirect()->back()->withErrors([
+                'email' => [trans('auth.failed')],
+            ]);
+        } catch (LockoutException $e) {
+            return redirect()->back()->withErrors([
+                'email' => [trans('auth.throttle', ['seconds' => $e->tryAgainIn()])],
+            ]);
+        }
 
         return redirect()->intended(route('admin.dashboard'));
     }

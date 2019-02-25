@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Login;
-use App\Application\Auth\RateLimiterInterface;
+use App\Application\Auth\Events\Lockout;
+use App\Application\Auth\Exceptions\FailedLoginException;
+use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Core\BaseCommandHandler;
+use App\Application\Interfaces\RateLimiterInterface;
 use App\Domain\Core\CommandHandlerInterface;
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 
 final class RateLimitedLoginHandler extends BaseCommandHandler
 {
@@ -24,11 +22,13 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
     /** @var CommandHandlerInterface */
     private $loginHandler;
 
-    /** @var RateLimiterInterface */
+    /** @var \App\Application\Interfaces\RateLimiterInterface */
     private $limiter;
 
-    public function __construct(CommandHandlerInterface $loginHandler, RateLimiterInterface $limiter)
-    {
+    public function __construct(
+        CommandHandlerInterface $loginHandler,
+        RateLimiterInterface $limiter
+    ) {
         $this->loginHandler = $loginHandler;
 
         $this->limiter = $limiter;
@@ -39,19 +39,20 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
      *
      * @return void
      *
-     * @throws ValidationException
+     * @throws LockoutException
+     * @throws FailedLoginException
      */
     public function handleLogin(Login $command): void
     {
         if ($this->hasTooManyLoginAttempts($command)) {
-            $this->fireLockoutEvent();
+            event(new Lockout($command->email, $command->ip));
 
             throw $this->getLockoutException($command);
         }
 
         try {
             $this->loginHandler->handle($command);
-        } catch (ValidationException $e) {
+        } catch (FailedLoginException $e) {
             $this->incrementLoginAttempts($command);
 
             throw $e;
@@ -67,25 +68,16 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
 
     private function throttleKey(Login $command): string
     {
-        return Str::lower($command->email).'|'.$command->ip;
+        return mb_strtolower($command->email, 'UTF-8').'|'.$command->ip;
     }
 
-    private function fireLockoutEvent(): void
-    {
-        $request = app()->make(Request::class);
-
-        event(new Lockout($request));
-    }
-
-    private function getLockoutException(Login $login): ValidationException
+    private function getLockoutException(Login $login): LockoutException
     {
         $seconds = $this->limiter->availableIn(
             $this->throttleKey($login)
         );
 
-        return ValidationException::withMessages([
-            'email' => [Lang::get('auth.throttle', ['seconds' => $seconds])],
-        ])->status(429);
+        return LockoutException::tooManyFailedAttempts($seconds);
     }
 
     private function incrementLoginAttempts(Login $command): void

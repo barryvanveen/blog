@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Login;
+use App\Application\Auth\Exceptions\FailedLoginException;
+use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Auth\Handlers\RateLimitedLoginHandler;
-use App\Application\Auth\RateLimiterInterface;
+use App\Application\Interfaces\RateLimiterInterface;
 use App\Domain\Core\CommandHandlerInterface;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Validation\ValidationException;
+use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
 /**
@@ -18,26 +19,35 @@ use Tests\TestCase;
  */
 class RateLimitedLoginHandlerTest extends TestCase
 {
-    use RefreshDatabase;
+    /** @var CommandHandlerInterface|MockObject */
+    private $mockLoginHandler;
+
+    /** @var RateLimiterInterface|MockObject */
+    private $mockRateLimiter;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->mockLoginHandler = $this->createMock(CommandHandlerInterface::class);
+
+        $this->mockRateLimiter = $this->createMock(RateLimiterInterface::class);
+    }
 
     /** @test */
-    public function itLogsInIfNotAboveRateLimit()
+    public function itLogsInIfNotAboveRateLimit(): void
     {
         // arrange
-        $mockLoginHandler = $this->createMock(CommandHandlerInterface::class);
-
-        $mockLoginHandler
+        $this->mockLoginHandler
             ->expects($this->once())
             ->method('handle');
 
-        $mockRateLimiter = $this->createMock(RateLimiterInterface::class);
-
-        $mockRateLimiter
+        $this->mockRateLimiter
             ->expects($this->once())
             ->method('tooManyAttempts')
             ->willReturn(false);
 
-        $mockRateLimiter
+        $this->mockRateLimiter
             ->expects($this->once())
             ->method('clear');
 
@@ -49,31 +59,26 @@ class RateLimitedLoginHandlerTest extends TestCase
         );
 
         // act
-        /** @var RateLimitedLoginHandler $handler */
-        $handler = new RateLimitedLoginHandler($mockLoginHandler, $mockRateLimiter);
+        $handler = new RateLimitedLoginHandler($this->mockLoginHandler, $this->mockRateLimiter);
         $handler->handle($command);
 
         // assert done by mock expectations
     }
 
     /** @test */
-    public function itLocksTheUserOutAfterTooManyAttempts()
+    public function itLocksTheUserOutAfterTooManyAttempts(): void
     {
         // arrange
-        $mockLoginHandler = $this->createMock(CommandHandlerInterface::class);
-
-        $mockLoginHandler
+        $this->mockLoginHandler
             ->expects($this->never())
             ->method('handle');
 
-        $mockRateLimiter = $this->createMock(RateLimiterInterface::class);
-
-        $mockRateLimiter
+        $this->mockRateLimiter
             ->expects($this->once())
             ->method('tooManyAttempts')
             ->willReturn(true);
 
-        $mockRateLimiter
+        $this->mockRateLimiter
             ->expects($this->once())
             ->method('availableIn')
             ->willReturn(3);
@@ -86,33 +91,28 @@ class RateLimitedLoginHandlerTest extends TestCase
         );
 
         // assert
-        $this->expectException(ValidationException::class);
+        $this->expectException(LockoutException::class);
 
         // act
-        /** @var RateLimitedLoginHandler $handler */
-        $handler = new RateLimitedLoginHandler($mockLoginHandler, $mockRateLimiter);
+        $handler = new RateLimitedLoginHandler($this->mockLoginHandler, $this->mockRateLimiter);
         $handler->handle($command);
     }
 
     /** @test */
-    public function itTracksFailedLoginAttemptsOnTheRateLimiter()
+    public function itTracksFailedLoginAttemptsOnTheRateLimiter(): void
     {
         // arrange
-        $mockLoginHandler = $this->createMock(CommandHandlerInterface::class);
-
-        $mockLoginHandler
+        $this->mockLoginHandler
             ->expects($this->once())
             ->method('handle')
-            ->willThrowException(ValidationException::withMessages([]));
+            ->willThrowException(FailedLoginException::credentialsDontMatch());
 
-        $mockRateLimiter = $this->createMock(RateLimiterInterface::class);
-
-        $mockRateLimiter
+        $this->mockRateLimiter
             ->expects($this->once())
             ->method('tooManyAttempts')
             ->willReturn(false);
 
-        $mockRateLimiter
+        $this->mockRateLimiter
             ->expects($this->once())
             ->method('hit');
 
@@ -124,11 +124,10 @@ class RateLimitedLoginHandlerTest extends TestCase
         );
 
         // assert
-        $this->expectException(ValidationException::class);
+        $this->expectException(FailedLoginException::class);
 
         // act
-        /** @var RateLimitedLoginHandler $handler */
-        $handler = new RateLimitedLoginHandler($mockLoginHandler, $mockRateLimiter);
+        $handler = new RateLimitedLoginHandler($this->mockLoginHandler, $this->mockRateLimiter);
         $handler->handle($command);
     }
 }
