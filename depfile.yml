@@ -1,0 +1,31 @@
+paths:
+  - ./app
+  - ./vendor/laravel/framework
+exclude_files:
+  - .*Models.*
+layers:
+  - name: Infrastructure
+    collectors:
+      - type: directory
+        regex: app/Infrastructure/.*
+  - name: Framework
+    collectors:
+    - type: directory
+      regex: vendor/laravel/framework/.*
+  - name: Application
+    collectors:
+      - type: directory
+        regex: app/Application/.*
+  - name: Domain
+    collectors:
+      - type: directory
+        regex: app/Domain/.*
+ruleset:
+  Infrastructure:
+    - Framework
+    - Application
+    - Domain
+  Framework:
+  Application:
+    - Domain
+  Domain:
