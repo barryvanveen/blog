@@ -9,6 +9,7 @@ use App\Application\Auth\Commands\Logout;
 use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Core\CommandBusInterface;
+use App\Application\Interfaces\TranslatorInterface;
 use App\Infrastructure\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
@@ -22,10 +23,10 @@ class LoginController extends Controller
     /**
      * @param LoginRequest $request
      * @param CommandBusInterface $bus
-     *
+     * @param TranslatorInterface $translator
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(LoginRequest $request, CommandBusInterface $bus)
+    public function login(LoginRequest $request, CommandBusInterface $bus, TranslatorInterface $translator)
     {
         $command = new Login(
             $request->input('email'),
@@ -38,11 +39,11 @@ class LoginController extends Controller
             $bus->dispatch($command);
         } catch (FailedLoginException $e) {
             return redirect()->back()->withErrors([
-                'email' => [trans('auth.failed')],
+                'email' => [$translator->trans('auth.failed')],
             ]);
         } catch (LockoutException $e) {
             return redirect()->back()->withErrors([
-                'email' => [trans('auth.throttle', ['seconds' => $e->tryAgainIn()])],
+                'email' => [$translator->trans('auth.throttle', ['seconds' => $e->tryAgainIn()])],
             ]);
         }
 
