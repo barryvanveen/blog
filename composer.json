@@ -29,7 +29,8 @@
         "roave/security-advisories": "dev-master",
         "sensiolabs-de/deptrac-shim": "^0.4.0",
         "slevomat/coding-standard": "~5.0",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "vimeo/psalm": "^3.0"
     },
     "config": {
         "optimize-autoloader": true,
