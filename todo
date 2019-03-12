@@ -1,6 +1,5 @@
-* phpstan or psalm
-* event bus
 * create first view model
+* event bus
 * query bus?
 * first admin page
 * security headers

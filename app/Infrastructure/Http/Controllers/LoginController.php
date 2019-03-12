@@ -11,22 +11,21 @@ use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Core\CommandBusInterface;
 use App\Application\Interfaces\TranslatorInterface;
 use App\Infrastructure\Http\Requests\LoginRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
-    public function form()
+    public function form(): View
     {
-        return view('pages.login');
+        return $this->viewFactory->make('pages.login');
     }
 
-    /**
-     * @param LoginRequest $request
-     * @param CommandBusInterface $bus
-     * @param TranslatorInterface $translator
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function login(LoginRequest $request, CommandBusInterface $bus, TranslatorInterface $translator)
+    public function login(LoginRequest $request, CommandBusInterface $bus, TranslatorInterface $translator): RedirectResponse
     {
+        /**
+         * @psalm-suppress PossiblyInvalidArgument
+         */
         $command = new Login(
             $request->input('email'),
             $request->input('password'),
@@ -46,20 +45,15 @@ class LoginController extends Controller
             ]);
         }
 
-        return redirect()->intended(route('admin.dashboard'));
+        return $this->redirector->intended(route('admin.dashboard'));
     }
 
-    /**
-     * @param CommandBusInterface $bus
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function logout(CommandBusInterface $bus)
+    public function logout(CommandBusInterface $bus): RedirectResponse
     {
         $command = new Logout();
 
         $bus->dispatch($command);
 
-        return redirect(route('home'));
+        return $this->redirector->route('home');
     }
 }

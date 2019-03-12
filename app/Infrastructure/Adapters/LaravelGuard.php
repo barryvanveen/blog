@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\GuardInterface;
-use Illuminate\Auth\AuthManager;
+use App\Infrastructure\Exceptions\InvalidGuardException;
+use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Contracts\Auth\StatefulGuard;
 
 class LaravelGuard implements GuardInterface
@@ -13,9 +14,13 @@ class LaravelGuard implements GuardInterface
     /** @var StatefulGuard */
     private $laravelGuard;
 
-    public function __construct(AuthManager $authManager)
+    public function __construct(Factory $authFactory)
     {
-        $this->laravelGuard = $authManager->guard();
+        $this->laravelGuard = $authFactory->guard();
+
+        if (($this->laravelGuard instanceof StatefulGuard) === false) {
+            throw InvalidGuardException::becauseStatefulGaurdIsNeeded(get_class($this->laravelGuard));
+        }
     }
 
     /**

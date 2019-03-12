@@ -11,6 +11,7 @@ use App\Domain\Articles\Models\Article;
 
 final class CreateArticleHandler extends BaseCommandHandler
 {
+    /** @var ArticleRepositoryInterface */
     private $repository;
 
     public function __construct(ArticleRepositoryInterface $articleRepository)
@@ -21,7 +22,7 @@ final class CreateArticleHandler extends BaseCommandHandler
     /**
      * @param CreateArticle $command
      */
-    public function handleCreateArticle(CreateArticle $command)
+    public function handleCreateArticle(CreateArticle $command): void
     {
         $article = Article::create(
             $command->authorId,

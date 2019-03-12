@@ -18,12 +18,12 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(CommandBusInterface::class, LaravelCommandBus::class);
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->app->bind(GuardInterface::class, LaravelGuard::class);
         $this->app->bind(SessionInterface::class, LaravelSession::class);

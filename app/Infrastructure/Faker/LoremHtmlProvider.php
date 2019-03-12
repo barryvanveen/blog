@@ -19,7 +19,7 @@ class LoremHtmlProvider extends Lorem
      */
     public static function htmlParagraphs($nbParagraphs = 3): string
     {
-        $paragraphs = static::paragraphs($nbParagraphs);
+        $paragraphs = (array) static::paragraphs($nbParagraphs);
 
         foreach ($paragraphs as $key => $paragraph) {
             $paragraphs[$key] = '<p>'.$paragraph.'</p>';
@@ -92,6 +92,9 @@ class LoremHtmlProvider extends Lorem
         $quote = static::sentence();
 
         if (self::randomFloat(null, 0, 1) <= 0.5) {
+            /**
+             * @psalm-suppress PossiblyInvalidOperand
+             */
             $quote .= '<footer>'.self::words(2, true).'</footer>';
         }
 
@@ -105,8 +108,11 @@ class LoremHtmlProvider extends Lorem
      *
      * @return string
      */
-    public static function htmlCode()
+    public static function htmlCode(): string
     {
+        /**
+         * @psalm-suppress PossiblyInvalidArgument
+         */
         return '<code>'.implode(' ', static::sentences()).'</code>';
     }
 
@@ -117,8 +123,11 @@ class LoremHtmlProvider extends Lorem
      *
      * @return string
      */
-    public static function htmlPre()
+    public static function htmlPre(): string
     {
+        /**
+         * @psalm-suppress PossiblyInvalidArgument
+         */
         return '<pre>'.implode(' ', static::sentences()).'</pre>';
     }
 

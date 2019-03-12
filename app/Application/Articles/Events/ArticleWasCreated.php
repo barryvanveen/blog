@@ -9,6 +9,7 @@ use App\Domain\Core\EventInterface;
 
 final class ArticleWasCreated implements EventInterface
 {
+    /** @var Article */
     public $article;
 
     public function __construct(Article $article)

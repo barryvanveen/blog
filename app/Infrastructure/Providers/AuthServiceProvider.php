@@ -16,12 +16,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * @param CommandBusInterface $commandBus
-     */
-    public function boot(CommandBusInterface $commandBus)
+    public function boot(CommandBusInterface $commandBus): void
     {
-        $this->app->bind(RateLimitedLoginHandler::class, function (Application $app) {
+        $this->app->bind(RateLimitedLoginHandler::class, function (Application $app): RateLimitedLoginHandler {
             return new RateLimitedLoginHandler(
                 $app->make(LoginHandler::class),
                 $app->make(RateLimiterInterface::class)

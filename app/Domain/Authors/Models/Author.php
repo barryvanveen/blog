@@ -6,6 +6,7 @@ namespace App\Domain\Authors\Models;
 
 use App\Domain\Articles\Models\Article;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Domain\Authors\Models\Author
@@ -30,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Author extends Model
 {
-    public function articles()
+    public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
     }

@@ -10,20 +10,21 @@ use App\Application\Articles\ViewModels\ArticlesIndexViewModel;
 use App\Application\Core\CommandBusInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use Carbon\Carbon;
-use Redirect;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 final class ArticlesController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $viewModel = new ArticlesIndexViewModel(
             new ArticleRepository()
         );
 
-        return view('pages.articles.index', $viewModel);
+        return $this->viewFactory->make('pages.articles.index', $viewModel);
     }
 
-    public function store(CommandBusInterface $commandBus)
+    public function store(CommandBusInterface $commandBus): RedirectResponse
     {
         $command = new CreateArticle(
             1,
@@ -36,6 +37,6 @@ final class ArticlesController extends Controller
 
         $commandBus->dispatch($command);
 
-        return Redirect::route('articles.index');
+        return $this->redirector->route('articles.index');
     }
 }

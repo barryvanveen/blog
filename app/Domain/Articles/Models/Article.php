@@ -8,6 +8,7 @@ use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Authors\Models\Author;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 /**
@@ -43,12 +44,12 @@ class Article extends Model
 {
     protected $guarded = [];
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
     }
 
-    public function setTitleAttribute(string $value)
+    public function setTitleAttribute(string $value): void
     {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
@@ -61,7 +62,7 @@ class Article extends Model
         Carbon $publishedAt,
         ArticleStatus $status,
         string $title
-    ) {
+    ): self {
         return new static([
             'author_id' => $authorId,
             'content' => $content,

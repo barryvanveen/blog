@@ -9,6 +9,7 @@ use Illuminate\Contracts\Translation\Translator;
 
 final class LaravelTranslator implements TranslatorInterface
 {
+    /** @var Translator */
     private $translator;
 
     public function __construct(Translator $laravelTranslator)
@@ -18,7 +19,7 @@ final class LaravelTranslator implements TranslatorInterface
 
     public function trans(string $key, array $replace = [], $locale = null): string
     {
-        return $this->translator->trans($key, $replace, $locale);
+        return (string) $this->translator->trans($key, $replace, $locale);
     }
 
     public function transChoice(string $key, int $number, array $replace = [], $locale = null): string

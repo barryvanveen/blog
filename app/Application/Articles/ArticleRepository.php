@@ -10,10 +10,11 @@ use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 final class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function allPublishedAndOrdered()
+    public function allPublishedAndOrdered(): Collection
     {
         return Article::query()
             ->where('status', '=', ArticleStatus::PUBLISHED())
@@ -22,7 +23,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
             ->get();
     }
 
-    public function save(Article $article)
+    public function save(Article $article): void
     {
         $articleExistedBeforeSave = $article->exists;
 

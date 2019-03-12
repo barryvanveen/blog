@@ -12,11 +12,14 @@ use Illuminate\Contracts\Container\Container;
 
 final class LaravelCommandBus implements CommandBusInterface
 {
+    /** @var Dispatcher */
     private $laravelDispatcher;
 
+    /** @var Container */
     private $container;
 
-    private $handlers;
+    /** @var array */
+    private $handlers = [];
 
     public function __construct(Dispatcher $laravelDispatcher, Container $container)
     {
@@ -52,7 +55,7 @@ final class LaravelCommandBus implements CommandBusInterface
         $this->laravelDispatcher->dispatchNow($command, $handler);
     }
 
-    private function getHandlerClassName(CommandInterface $command)
+    private function getHandlerClassName(CommandInterface $command): string
     {
         $commandClassName = get_class($command);
 

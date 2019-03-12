@@ -12,7 +12,7 @@ interface TranslatorInterface
      * @param  string  $key
      * @param  array   $replace
      * @param  string  $locale
-     * @return mixed
+     * @return string
      */
     public function trans(string $key, array $replace = [], $locale = null): string;
 
@@ -20,7 +20,7 @@ interface TranslatorInterface
      * Get a translation according to an integer value.
      *
      * @param  string  $key
-     * @param  int|array|\Countable  $number
+     * @param  int     $number
      * @param  array   $replace
      * @param  string  $locale
      * @return string
