@@ -74,13 +74,17 @@
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
         ],
-        "check-style": "phpcs --standard=ruleset.xml",
-        "fix-style": "phpcbf --standard=ruleset.xml",
+        "check-style": "vendor/bin/phpcs --standard=ruleset.xml",
+        "fix-style": "vendor/bin/phpcbf --standard=ruleset.xml",
         "ide-helper": [
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models -R -W --no-interaction",
             "@fix-style"
+        ],
+        "static-analysis": [
+            "vendor/bin/psalm",
+            "vendor/bin/deptrac"
         ],
         "test": [
             "@test-unit",
