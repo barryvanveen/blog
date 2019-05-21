@@ -1,8 +1,18 @@
 paths:
   - ./app
-  - ./vendor/laravel/framework
-exclude_files:
-  - .*Models.*
+  - ./vendor/bugsnag
+  - ./vendor/doctrine
+  - ./vendor/fzaninotto
+  - ./vendor/guzzlehttp
+  - ./vendor/laravel
+  - ./vendor/monolog
+  - ./vendor/myclabs
+  - ./vendor/nesbot
+  - ./vendor/php-http
+  - ./vendor/psr
+  - ./vendor/symfony
+  - ./vendor/vlucas
+  - ./vendor/zendframework
 layers:
   - name: Infrastructure
     collectors:
@@ -10,8 +20,8 @@ layers:
         regex: app/Infrastructure/.*
   - name: Framework
     collectors:
-    - type: directory
-      regex: vendor/laravel/framework/.*
+      - type: directory
+        regex: vendor/.*
   - name: Application
     collectors:
       - type: directory
@@ -21,11 +31,11 @@ layers:
       - type: directory
         regex: app/Domain/.*
 ruleset:
+  Framework:
   Infrastructure:
     - Framework
     - Application
     - Domain
-  Framework:
   Application:
     - Domain
   Domain:
