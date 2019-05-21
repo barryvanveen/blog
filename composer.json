@@ -12,8 +12,7 @@
         "bugsnag/bugsnag-laravel": "^2.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
-        "laravel/tinker": "^1.0",
-        "myclabs/php-enum": "^1.6"
+        "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.5",
