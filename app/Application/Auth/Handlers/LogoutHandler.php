@@ -13,7 +13,7 @@ final class LogoutHandler extends BaseCommandHandler
     /** @var GuardInterface */
     private $guard;
 
-    /** @var \App\Application\Interfaces\SessionInterface */
+    /** @var SessionInterface */
     private $session;
 
     public function __construct(GuardInterface $guard, SessionInterface $session)

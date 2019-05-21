@@ -21,7 +21,7 @@ class DummyCommandHandler extends BaseCommandHandler
 {
     public $called = false;
 
-    public function handleDummyCommand()
+    public function handleDummyCommand(): void
     {
         $this->called = true;
     }
@@ -34,7 +34,7 @@ class DummyCommandHandler extends BaseCommandHandler
 class BaseCommandHandlerTest extends TestCase
 {
     /** @test */
-    public function itCallsTheAppropriateHandleMethod()
+    public function itCallsTheAppropriateHandleMethod(): void
     {
         // arrange
         $handler = new DummyCommandHandler();
@@ -48,7 +48,7 @@ class BaseCommandHandlerTest extends TestCase
     }
 
     /** @test */
-    public function itThrowsAnExceptionWhenTheHandleMethodIsMissing()
+    public function itThrowsAnExceptionWhenTheHandleMethodIsMissing(): void
     {
         // arrange
         $handler = new DummyCommandHandler();
