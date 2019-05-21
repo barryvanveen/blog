@@ -11,6 +11,7 @@ use App\Infrastructure\CommandBus\LaravelCommandBusException;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Testing\Fakes\BusFake;
 use Tests\TestCase;
+use TypeError;
 
 class FooCommand implements CommandInterface
 {
@@ -24,7 +25,7 @@ class FooCommand implements CommandInterface
 
 class FooHandler extends BaseCommandHandler
 {
-    public function handleFooCommand(FooCommand $command)
+    public function handleFooCommand(FooCommand $command): void
     {
     }
 }
@@ -44,7 +45,7 @@ class NoHandler
 class LaravelCommandBusTest extends TestCase
 {
     /** @test */
-    public function itDispatchesCommands()
+    public function itDispatchesCommands(): void
     {
         // arrange
         $fakeBus = new BusFake();
@@ -63,7 +64,7 @@ class LaravelCommandBusTest extends TestCase
     }
 
     /** @test */
-    public function itThrowsAnExceptionWhenNoHandlerIsSubscribed()
+    public function itThrowsAnExceptionWhenNoHandlerIsSubscribed(): void
     {
         // arrange
         $laravelCommandBus = new LaravelCommandBus(new BusFake(), app());
@@ -77,20 +78,20 @@ class LaravelCommandBusTest extends TestCase
     }
 
     /** @test */
-    public function itThrowsAnExceptionWhenDispatchingAWrongCommand()
+    public function itThrowsAnExceptionWhenDispatchingAWrongCommand(): void
     {
         // arrange
         $laravelCommandBus = new LaravelCommandBus(new BusFake(), app());
 
         // assert
-        $this->expectException(\TypeError::class);
+        $this->expectException(TypeError::class);
 
         // act
         $laravelCommandBus->dispatch(new NoCommand());
     }
 
     /** @test */
-    public function itThrowsAnExceptionWhenSubscribingAWrongCommand()
+    public function itThrowsAnExceptionWhenSubscribingAWrongCommand(): void
     {
         // arrange
         $laravelCommandBus = new LaravelCommandBus(new BusFake(), app());
@@ -104,7 +105,7 @@ class LaravelCommandBusTest extends TestCase
     }
 
     /** @test */
-    public function itThrowsAnExceptionWhenSubscribingAWrongHandler()
+    public function itThrowsAnExceptionWhenSubscribingAWrongHandler(): void
     {
         // arrange
         $laravelCommandBus = new LaravelCommandBus(new BusFake(), app());
