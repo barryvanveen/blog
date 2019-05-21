@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Domain\Users\Models\User;
+use App\Infrastructure\Eloquent\UserEloquentModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class AdminTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function redirectGuestsToLoginPage()
+    public function redirectGuestsToLoginPage(): void
     {
         $response = $this->get(route('admin.dashboard'));
 
@@ -22,10 +22,10 @@ class AdminTest extends TestCase
     }
 
     /** @test */
-    public function displaysDashboard()
+    public function displaysDashboard(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
         Auth::login($user);
 
         $response = $this->get(route('admin.dashboard'));

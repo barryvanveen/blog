@@ -6,17 +6,30 @@ namespace App\Application\Articles\Handlers;
 
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Core\BaseCommandHandler;
+use App\Application\Interfaces\SlugFactoryInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
+use App\Domain\Core\UniqueIdGeneratorInterface;
 
 final class CreateArticleHandler extends BaseCommandHandler
 {
+    /** @var UniqueIdGeneratorInterface */
+    private $uniqueIdGenerator;
+
     /** @var ArticleRepositoryInterface */
     private $repository;
 
-    public function __construct(ArticleRepositoryInterface $articleRepository)
-    {
+    /** @var SlugFactoryInterface */
+    private $slugFactory;
+
+    public function __construct(
+        ArticleRepositoryInterface $articleRepository,
+        UniqueIdGeneratorInterface $uniqueIdGenerator,
+        SlugFactoryInterface $slugFactory
+    ) {
         $this->repository = $articleRepository;
+        $this->uniqueIdGenerator = $uniqueIdGenerator;
+        $this->slugFactory = $slugFactory;
     }
 
     /**
@@ -24,15 +37,17 @@ final class CreateArticleHandler extends BaseCommandHandler
      */
     public function handleCreateArticle(CreateArticle $command): void
     {
-        $article = Article::create(
-            $command->authorId,
+        $article = new Article(
+            $command->authorUuid,
             $command->content,
             $command->description,
             $command->publishedAt,
+            $this->slugFactory->slug($command->title),
             $command->status,
-            $command->title
+            $command->title,
+            $this->uniqueIdGenerator->generate()
         );
 
-        $this->repository->save($article);
+        $this->repository->insert($article);
     }
 }

@@ -9,29 +9,27 @@ use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\ViewModels\ArticlesIndexViewModel;
 use App\Application\Core\CommandBusInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
-use Carbon\Carbon;
+use DateTimeImmutable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 final class ArticlesController extends Controller
 {
-    public function index(): View
+    public function index(ArticleRepository $articleRepository): View
     {
-        $viewModel = new ArticlesIndexViewModel(
-            new ArticleRepository()
-        );
+        $viewModel = new ArticlesIndexViewModel($articleRepository);
 
-        return $this->viewFactory->make('pages.articles.index', $viewModel);
+        return $this->viewFactory->make('pages.articles.index', $viewModel->toArray());
     }
 
     public function store(CommandBusInterface $commandBus): RedirectResponse
     {
         $command = new CreateArticle(
-            1,
+            '1',
             'baz',
             'bar',
-            Carbon::now(),
-            ArticleStatus::PUBLISHED(),
+            new DateTimeImmutable(),
+            ArticleStatus::published(),
             'Foo title'
         );
 

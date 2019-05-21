@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Browser;
 
-use App\Domain\Users\Models\User;
+use App\Infrastructure\Eloquent\UserEloquentModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\AdminDashboardPage;
@@ -15,14 +15,14 @@ class LogoutTest extends DuskTestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function login()
+    public function logout(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser
-                ->loginAs($user->id)
+                ->loginAs($user->uuid)
                 ->visit(new AdminDashboardPage())
                 ->click('@logoutButton')
 

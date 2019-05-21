@@ -5,71 +5,108 @@ declare(strict_types=1);
 namespace App\Domain\Articles\Models;
 
 use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Authors\Models\Author;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
+use DateTimeImmutable;
 
-/**
- * App\Domain\Articles\Models\Article
- *
- * @property int $id
- * @property int $author_id
- * @property string $content
- * @property string $description
- * @property string $published_at
- * @property string $slug
- * @property int $status
- * @property string $title
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Domain\Authors\Models\Author $author
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article wherePublishedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Articles\Models\Article whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-class Article extends Model
+class Article
 {
-    protected $guarded = [];
+    /** @var string */
+    private $authorUuid;
 
-    public function author(): BelongsTo
-    {
-        return $this->belongsTo(Author::class);
-    }
+    /** @var string */
+    private $content;
 
-    public function setTitleAttribute(string $value): void
-    {
-        $this->attributes['title'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
-    }
+    /** @var string */
+    private $description;
 
-    public static function create(
-        int $authorId,
+    /** @var DateTimeImmutable */
+    private $publishedAt;
+
+    /** @var string */
+    private $slug;
+
+    /** @var ArticleStatus */
+    private $status;
+
+    /** @var string */
+    private $title;
+
+    /** @var string */
+    private $uuid;
+
+    public function __construct(
+        string $authorUuid,
         string $content,
         string $description,
-        Carbon $publishedAt,
+        DateTimeImmutable $publishedAt,
+        string $slug,
         ArticleStatus $status,
-        string $title
-    ): self {
-        return new static([
-            'author_id' => $authorId,
-            'content' => $content,
-            'description' => $description,
-            'published_at' => $publishedAt,
-            'status' => $status,
-            'title' => $title,
-        ]);
+        string $title,
+        string $uuid
+    ) {
+        $this->authorUuid = $authorUuid;
+        $this->content = $content;
+        $this->description = $description;
+        $this->publishedAt = $publishedAt;
+        $this->slug = $slug;
+        $this->status = $status;
+        $this->title = $title;
+        $this->uuid = $uuid;
+    }
+
+    public function authorUuid(): string
+    {
+        return $this->authorUuid;
+    }
+
+    public function content(): string
+    {
+        return $this->content;
+    }
+
+    public function description(): string
+    {
+        return $this->description;
+    }
+
+    public function publishedAt(): DateTimeImmutable
+    {
+        return $this->publishedAt;
+    }
+
+    public function slug(): string
+    {
+        return $this->slug;
+    }
+
+    public function isOnline(): bool
+    {
+        $now = new DateTimeImmutable();
+
+        return $this->status->equals(ArticleStatus::published()) &&
+            $now->getTimestamp() > $this->publishedAt->getTimestamp();
+    }
+
+    public function title(): string
+    {
+        return $this->title;
+    }
+
+    public function uuid(): string
+    {
+        return $this->uuid;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'author_uuid' => $this->authorUuid,
+            'content' => $this->content,
+            'description' => $this->description,
+            'published_at' => $this->publishedAt,
+            'slug' => $this->slug,
+            'status' => $this->status,
+            'title' => $this->title,
+            'uuid' => $this->uuid,
+        ];
     }
 }

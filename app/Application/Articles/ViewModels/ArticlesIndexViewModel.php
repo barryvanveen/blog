@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Application\Articles\ViewModels;
 
 use App\Domain\Articles\ArticleRepositoryInterface;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Collection;
+use App\Domain\Core\CollectionInterface;
 
-final class ArticlesIndexViewModel implements Arrayable
+final class ArticlesIndexViewModel
 {
     /** @var ArticleRepositoryInterface */
     private $repository;
@@ -18,7 +17,7 @@ final class ArticlesIndexViewModel implements Arrayable
         $this->repository = $repository;
     }
 
-    public function articles(): Collection
+    public function articles(): CollectionInterface
     {
         return $this->repository->allPublishedAndOrdered();
     }

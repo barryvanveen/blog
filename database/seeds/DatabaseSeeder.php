@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-use App\Domain\Articles\Models\Article;
-use App\Domain\Authors\Models\Author;
-use App\Domain\Users\Models\User;
+use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use App\Infrastructure\Eloquent\AuthorEloquentModel;
+use App\Infrastructure\Eloquent\UserEloquentModel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        factory(User::class)->create([
+        factory(UserEloquentModel::class)->create([
             'email' => 'admin@example.com',
             'name' => 'Barry',
         ]);
 
-        /** @var Author $author */
-        $author = factory(Author::class)->create();
+        /** @var AuthorEloquentModel $author */
+        $author = factory(AuthorEloquentModel::class)->create();
 
-        /* @var Article[] $articles */
-        factory(Article::class, 10)->create([
-            'author_id' => $author->id,
+        /* @var ArticleEloquentModel[] $articles */
+        factory(ArticleEloquentModel::class, 10)->create([
+            'author_uuid' => $author->uuid,
         ]);
     }
 }
