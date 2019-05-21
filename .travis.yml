@@ -33,6 +33,7 @@ services:
   - mysql
 
 before_install:
+  - sudo apt-get install -y php-common
   - travis_retry composer self-update
   - mysql -e 'CREATE DATABASE homestead;'
 
@@ -41,13 +42,19 @@ install:
   - php artisan migrate
 
 before_script:
+  - echo 'xdebug.max_nesting_level = 1024' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - php artisan serve &
 
 script:
-  - composer check-style
-  - vendor/bin/phpunit --verbose --configuration phpunit.xml --coverage-clover coverage.clover
-  - php artisan dusk
+  - vendor/bin/phpcs --standard=ruleset.xml
+  - vendor/bin/psalm --show-info=false
+  - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
+  - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Feature --no-coverage
+  #- php artisan dusk
+  - phpdismod -s cli xdebug &&
+    vendor/bin/deptrac &&
+    phpenmod -s cli xdebug
 
 after_script:
   - |
