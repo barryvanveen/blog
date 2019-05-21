@@ -1,3 +1,6 @@
+* update to Laravel 5.8
+* update to latest version of Dusk
+* enable Dusk tests on Travis
 * create first view model
 * event bus
 * query bus?
