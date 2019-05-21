@@ -7,6 +7,7 @@ namespace Tests\Unit\Application\Articles\Handlers;
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Handlers\CreateArticleHandler;
 use App\Domain\Articles\Enums\ArticleStatus;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,15 +20,15 @@ class CreateArticleHandlerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function itCreatesAnArticle()
+    public function itCreatesAnArticle(): void
     {
         // arrange
         $command = new CreateArticle(
-            1,
+            '321321',
             'baz',
             'bar',
-            now(),
-            ArticleStatus::PUBLISHED(),
+            new DateTimeImmutable(),
+            ArticleStatus::published(),
             'Foo title'
         );
 

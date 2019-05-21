@@ -7,7 +7,11 @@ namespace Tests\Unit\Application\Articles;
 use App\Application\Articles\ArticleRepository;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
+use App\Infrastructure\Adapters\LaravelQueryBuilder;
+use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use App\Infrastructure\Eloquent\ArticleMapper;
 use Carbon\Carbon;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,63 +22,120 @@ class ArticleRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function itRetrievesOnlyPublishedArticles()
+    /** @var ArticleRepository */
+    protected $repository;
+
+    public function setUp(): void
     {
-        // arrange
-        $repository = new ArticleRepository();
-        $dateInPast = Carbon::now()->subDay();
-        $dateInFuture = Carbon::now()->addDay();
-        factory(Article::class)->create(['published_at' => $dateInPast, 'status' => ArticleStatus::PUBLISHED(), 'title' => 'article1']);
-        factory(Article::class)->create(['published_at' => $dateInPast, 'status' => ArticleStatus::UNPUBLISHED(), 'title' => 'article2']);
-        factory(Article::class)->create(['published_at' => $dateInFuture, 'status' => ArticleStatus::PUBLISHED(), 'title' => 'article3']);
-        factory(Article::class)->create(['published_at' => $dateInFuture, 'status' => ArticleStatus::UNPUBLISHED(), 'title' => 'article4']);
+        parent::setUp();
 
-        // act
-        $articles = $repository->allPublishedAndOrdered();
-
-        // assert
-        $this->assertCount(1, $articles);
-        $this->assertEquals('article1', $articles[0]->title);
+        $queryBuilder = $this->app->make(LaravelQueryBuilder::class);
+        $articleMapper = $this->app->make(ArticleMapper::class);
+        $this->repository = new ArticleRepository($queryBuilder, $articleMapper);
     }
 
     /** @test */
-    public function itRetrievesPublishedArticlesInTheCorrectOrder()
+    public function itRetrievesOnlyPublishedArticles(): void
     {
         // arrange
-        $repository = new ArticleRepository();
+        $dateInPast = Carbon::now()->subDay();
+        $dateInFuture = Carbon::now()->addDay();
+        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInPast, 'status' => ArticleStatus::published(), 'title' => 'article1']);
+        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInPast, 'status' => ArticleStatus::unpublished() ,
+            'title' => 'article2']);
+        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInFuture, 'status' =>
+            ArticleStatus::published(), 'title' => 'article3']);
+        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInFuture, 'status' => ArticleStatus::unpublished(),
+            'title' => 'article4']);
+
+        // act
+        /** @var Article[] $articles */
+        $articles = $this->repository->allPublishedAndOrdered()->toArray();
+
+        // assert
+        $this->assertCount(1, $articles);
+        $this->assertEquals('article1', $articles[0]->title());
+    }
+
+    /** @test */
+    public function itRetrievesPublishedArticlesInTheCorrectOrder(): void
+    {
+        // arrange
         $yesterday = Carbon::now()->subDay();
         $lastWeek = Carbon::now()->subWeek();
         $lastYear = Carbon::now()->subYear();
 
-        factory(Article::class)->create(['published_at' => $lastWeek, 'status' => ArticleStatus::PUBLISHED(), 'title' => 'article2']);
-        factory(Article::class)->create(['published_at' => $lastYear, 'status' => ArticleStatus::PUBLISHED(), 'title' => 'article3']);
-        factory(Article::class)->create(['published_at' => $yesterday, 'status' => ArticleStatus::PUBLISHED(), 'title' => 'article1']);
+        factory(ArticleEloquentModel::class)->create(['published_at' => $lastWeek, 'status' => ArticleStatus::published(), 'title' => 'article2']);
+        factory(ArticleEloquentModel::class)->create(['published_at' => $lastYear, 'status' => ArticleStatus::published(), 'title' => 'article3']);
+        factory(ArticleEloquentModel::class)->create(['published_at' => $yesterday, 'status' => ArticleStatus::published(), 'title' => 'article1']);
 
         // act
-        $articles = $repository->allPublishedAndOrdered();
+        /** @var Article[] $articles */
+        $articles = $this->repository->allPublishedAndOrdered()->toArray();
 
         // assert
         $this->assertCount(3, $articles);
-        $this->assertEquals('article1', $articles[0]->title);
-        $this->assertEquals('article2', $articles[1]->title);
-        $this->assertEquals('article3', $articles[2]->title);
+        $this->assertEquals('article1', $articles[0]->title());
+        $this->assertEquals('article2', $articles[1]->title());
+        $this->assertEquals('article3', $articles[2]->title());
     }
 
     /** @test */
-    public function itSavesAnArticle()
+    public function itSavesAnArticle(): void
     {
         // arrange
-        $article = factory(Article::class)->make([
-            'title' => 'Foo Article Title',
-        ]);
-        $repository = new ArticleRepository();
+        $article = new Article(
+            '321321',
+            'article-content',
+            'article-description',
+            new DateTimeImmutable(),
+            'article-slug',
+            ArticleStatus::published(),
+            'article-title',
+            '123123'
+        );
 
         // act
-        $repository->save($article);
+        $this->repository->insert($article);
 
         // assert
-        $this->assertDatabaseHas('articles', ['title' => 'Foo Article Title']);
+        $this->assertDatabaseHas('articles', ['title' => 'article-title']);
+        // todo: assert event was raised
+    }
+
+    /** @test */
+    public function itUpdatesAnArticle(): void
+    {
+        // arrange
+        $article = new Article(
+            '321321',
+            'article-content',
+            'article-description',
+            new DateTimeImmutable(),
+            'article-slug',
+            ArticleStatus::published(),
+            'old-article-title',
+            '123123'
+        );
+
+        $this->repository->insert($article);
+        $this->assertDatabaseHas('articles', ['title' => 'old-article-title']);
+
+        // act
+        $article = new Article(
+            '321321',
+            'article-content',
+            'article-description',
+            new DateTimeImmutable(),
+            'article-slug',
+            ArticleStatus::published(),
+            'new-article-title',
+            '123123'
+        );
+        $this->repository->update($article);
+
+        // assert
+        $this->assertDatabaseHas('articles', ['title' => 'new-article-title']);
         // todo: assert event was raised
     }
 }

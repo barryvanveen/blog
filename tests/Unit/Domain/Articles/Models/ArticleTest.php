@@ -6,47 +6,93 @@ namespace Tests\Unit\Domain\Articles\Models;
 
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
-use Carbon\Carbon;
+use DateTimeImmutable;
 use Tests\TestCase;
 
+/**
+ * @covers \App\Domain\Articles\Models\Article
+ */
 class ArticleTest extends TestCase
 {
-    /**
-     * @test
-     *
-     * @covers \App\Domain\Articles\Models\Article::setTitleAttribute
-     */
-    public function itSetsTheSlugWhenTheTitleIsSet()
-    {
-        $article = new Article();
-        $article->title = 'Foo Article Title';
+    private function getArticle(
+        DateTimeImmutable $dateTime,
+        ArticleStatus $status
+    ): Article {
+        return new Article(
+            '321321',
+            'foo',
+            'bar',
+            $dateTime,
+            'baz-baz',
+            $status,
+            'Baz baz',
+            '123123'
+        );
+    }
 
-        $this->assertEquals('foo-article-title', $article->slug);
+    /** @test */
+    public function itConstructsANewArticle(): void
+    {
+        $dateTime = new DateTimeImmutable('-1 day');
+
+        $article = $this->getArticle(
+            $dateTime,
+            ArticleStatus::published()
+        );
+
+        $this->assertEquals('321321', $article->authorUuid());
+        $this->assertEquals('foo', $article->content());
+        $this->assertEquals('bar', $article->description());
+        $this->assertEquals($dateTime->getTimestamp(), $article->publishedAt()->getTimestamp());
+        $this->assertEquals('baz-baz', $article->slug());
+        $this->assertEquals(true, $article->isOnline());
+        $this->assertEquals('Baz baz', $article->title());
     }
 
     /**
      * @test
+     * @dataProvider isOnlineDataProvider
      *
-     * @covers \App\Domain\Articles\Models\Article::create
+     * @param DateTimeImmutable $dateTime
+     * @param ArticleStatus $status
+     * @param bool $expected
      */
-    public function itCreatesANewInstance()
+    public function isOnline(DateTimeImmutable $dateTime, ArticleStatus $status, bool $expected): void
     {
-        $article = Article::create(
-            3,
-            'foo',
-            'bar',
-            Carbon::createFromTimeString('2019-02-14 20:11:00'),
-            ArticleStatus::UNPUBLISHED(),
-            'Baz baz'
+        $article = $this->getArticle($dateTime, $status);
+
+        $this->assertEquals($expected, $article->isOnline());
+    }
+
+    public function isOnlineDataProvider(): array
+    {
+        return [
+            [new DateTimeImmutable('+1 day'), ArticleStatus::unpublished(), false],
+            [new DateTimeImmutable('+1 day'), ArticleStatus::published(), false],
+            [new DateTimeImmutable('-1 day'), ArticleStatus::unpublished(), false],
+            [new DateTimeImmutable('-1 day'), ArticleStatus::published(), true],
+        ];
+    }
+
+    /** @test */
+    public function itReturnsAnArray(): void
+    {
+        $dateTime = new DateTimeImmutable();
+
+        $article = $this->getArticle(
+            $dateTime,
+            ArticleStatus::published()
         );
 
-        $this->assertInstanceOf(Article::class, $article);
-        $this->assertEquals(3, $article->author_id);
-        $this->assertEquals('foo', $article->content);
-        $this->assertEquals('bar', $article->description);
-        $this->assertTrue(Carbon::createFromTimeString('2019-02-14 20:11:00')->equalTo($article->published_at));
-        $this->assertEquals('baz-baz', $article->slug);
-        $this->assertEquals(ArticleStatus::UNPUBLISHED(), $article->status);
-        $this->assertEquals('Baz baz', $article->title);
+        $this->assertEquals([
+            'author_uuid' => '321321',
+            'content' => 'foo',
+            'description' => 'bar',
+            'published_at' => $dateTime,
+            'slug' => 'baz-baz',
+            'status' => ArticleStatus::published(),
+            'title' => 'Baz baz',
+            'uuid' => '123123',
+        ], $article->toArray());
     }
 }

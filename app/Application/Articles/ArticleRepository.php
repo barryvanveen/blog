@@ -6,33 +6,56 @@ namespace App\Application\Articles;
 
 use App\Application\Articles\Events\ArticleWasCreated;
 use App\Application\Articles\Events\ArticleWasUpdated;
+use App\Application\Interfaces\ModelMapperInterface;
+use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use App\Domain\Core\CollectionInterface;
+use DateTimeImmutable;
 
 final class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function allPublishedAndOrdered(): Collection
+    /** @var QueryBuilderInterface */
+    private $builder;
+
+    /** @var ModelMapperInterface */
+    private $modelMapper;
+
+    public function __construct(QueryBuilderInterface $builder, ModelMapperInterface $modelMapper)
     {
-        return Article::query()
-            ->where('status', '=', ArticleStatus::PUBLISHED())
-            ->where('published_at', '<=', Carbon::now()->toDateTimeString())
-            ->orderBy('published_at', 'desc')
-            ->get();
+        $this->builder = $builder;
+        $this->modelMapper = $modelMapper;
     }
 
-    public function save(Article $article): void
+    public function allPublishedAndOrdered(): CollectionInterface
     {
-        $articleExistedBeforeSave = $article->exists;
+        $articles = $this->builder
+            ->table('articles')
+            ->where('status', '=', ArticleStatus::published())
+            ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
+            ->orderBy('published_at', 'desc')
+            ->get();
 
-        $article->save();
+        return $this->modelMapper->mapToDomainModels($articles);
+    }
 
-        if ($articleExistedBeforeSave) {
-            event(new ArticleWasUpdated($article));
-        } else {
-            event(new ArticleWasCreated($article));
-        }
+    public function insert(Article $article): void
+    {
+        $this->builder
+            ->table('articles')
+            ->insert($article->toArray());
+
+        event(new ArticleWasCreated($article));
+    }
+
+    public function update(Article $article): void
+    {
+        $this->builder
+            ->table('articles')
+            ->where('uuid', '=', $article->uuid())
+            ->update($article->toArray());
+
+        event(new ArticleWasUpdated($article));
     }
 }

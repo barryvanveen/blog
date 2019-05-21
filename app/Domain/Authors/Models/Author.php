@@ -4,35 +4,59 @@ declare(strict_types=1);
 
 namespace App\Domain\Authors\Models;
 
-use App\Domain\Articles\Models\Article;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-/**
- * App\Domain\Authors\Models\Author
- *
- * @property int $id
- * @property string $content
- * @property string $description
- * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Domain\Articles\Models\Article[] $articles
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Authors\Models\Author whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-class Author extends Model
+class Author
 {
-    public function articles(): HasMany
+    /** @var string */
+    private $content;
+
+    /** @var string */
+    private $description;
+
+    /** @var string */
+    private $name;
+
+    /** @var string */
+    private $uuid;
+
+    public function __construct(
+        string $content,
+        string $description,
+        string $name,
+        string $uuid
+    ) {
+        $this->content = $content;
+        $this->description = $description;
+        $this->name = $name;
+        $this->uuid = $uuid;
+    }
+
+    public function content(): string
     {
-        return $this->hasMany(Article::class);
+        return $this->content;
+    }
+
+    public function description(): string
+    {
+        return $this->description;
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function uuid(): string
+    {
+        return $this->uuid;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'content' => $this->content,
+            'description' => $this->description,
+            'name' => $this->name,
+            'uuid' => $this->uuid,
+        ];
     }
 }

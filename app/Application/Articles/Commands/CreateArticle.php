@@ -6,12 +6,12 @@ namespace App\Application\Articles\Commands;
 
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Core\CommandInterface;
-use Carbon\Carbon;
+use DateTimeImmutable;
 
 class CreateArticle implements CommandInterface
 {
-    /** @var int */
-    public $authorId;
+    /** @var string */
+    public $authorUuid;
 
     /** @var string */
     public $content;
@@ -19,7 +19,7 @@ class CreateArticle implements CommandInterface
     /** @var string */
     public $description;
 
-    /** @var Carbon */
+    /** @var DateTimeImmutable */
     public $publishedAt;
 
     /** @var ArticleStatus */
@@ -29,14 +29,14 @@ class CreateArticle implements CommandInterface
     public $title;
 
     public function __construct(
-        int $authorId,
+        string $authorUuid,
         string $content,
         string $description,
-        Carbon $publishedAt,
+        DateTimeImmutable $publishedAt,
         ArticleStatus $status,
         string $title
     ) {
-        $this->authorId = $authorId;
+        $this->authorUuid = $authorUuid;
         $this->content = $content;
         $this->description = $description;
         $this->publishedAt = $publishedAt;

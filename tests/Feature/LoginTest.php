@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Domain\Users\Models\User;
+use App\Infrastructure\Eloquent\UserEloquentModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class LoginTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function seeLoginFormIfUnauthenticated()
+    public function seeLoginFormIfUnauthenticated(): void
     {
         $response = $this->get(route('login'));
 
@@ -23,10 +23,10 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function loginWorksWithCorrectCredentials()
+    public function loginWorksWithCorrectCredentials(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
 
         $response = $this->post(route('login.post'), [
             'email' => $user->email,
@@ -37,10 +37,10 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function loginFailsWithWrongCredentials()
+    public function loginFailsWithWrongCredentials(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
 
         $this->get(route('login'));
 
@@ -55,10 +55,10 @@ class LoginTest extends TestCase
 
 
     /** @test */
-    public function redirectIfAuthenticated()
+    public function redirectIfAuthenticated(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
 
         Auth::login($user);
 
@@ -68,10 +68,10 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function logout()
+    public function logout(): void
     {
-        /** @var User $user */
-        $user = factory(User::class)->create();
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
 
         Auth::login($user);
 
