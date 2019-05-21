@@ -1,9 +1,8 @@
-* update to Laravel 5.8
-* update to latest version of Dusk
-* enable Dusk tests on Travis
+* update to latest version of Homestead
 * create first view model
 * event bus
 * query bus?
+* use PSR-7 request objects
 * first admin page
 * security headers
 * basic error pages
