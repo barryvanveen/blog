@@ -30,7 +30,7 @@ class LoginController extends Controller
             $request->input('email'),
             $request->input('password'),
             $request->filled('remember'),
-            $request->ip()
+            (string) $request->ip()
         );
 
         try {
