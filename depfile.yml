@@ -8,11 +8,8 @@ paths:
   - ./vendor/monolog
   - ./vendor/myclabs
   - ./vendor/nesbot
-  - ./vendor/php-http
   - ./vendor/psr
   - ./vendor/symfony
-  - ./vendor/vlucas
-  - ./vendor/zendframework
 layers:
   - name: Infrastructure
     collectors:

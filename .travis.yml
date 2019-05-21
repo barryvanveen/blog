@@ -40,6 +40,7 @@ before_install:
 install:
   - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest
   - php artisan migrate
+  - php artisan dusk:chrome-driver
 
 before_script:
   - echo 'xdebug.max_nesting_level = 1024' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -48,10 +49,12 @@ before_script:
 
 script:
   - vendor/bin/phpcs --standard=ruleset.xml
-  - vendor/bin/psalm --show-info=false
+  - phpdismod -s cli xdebug &&
+    vendor/bin/psalm --show-info=false &&
+    phpenmod -s cli xdebug
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Feature --no-coverage
-  #- php artisan dusk
+  - php artisan dusk
   - phpdismod -s cli xdebug &&
     vendor/bin/deptrac &&
     phpenmod -s cli xdebug
