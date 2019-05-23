@@ -49,9 +49,7 @@ before_script:
 
 script:
   - vendor/bin/phpcs --standard=ruleset.xml
-  - phpdismod -s cli xdebug &&
-    vendor/bin/psalm --show-info=false &&
-    phpenmod -s cli xdebug
+  #- vendor/bin/psalm --show-info=false
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Feature --no-coverage
   - php artisan dusk
