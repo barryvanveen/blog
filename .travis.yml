@@ -49,13 +49,13 @@ before_script:
 
 script:
   - vendor/bin/phpcs --standard=ruleset.xml
-  #- vendor/bin/psalm --show-info=false
+  - if [[ $TRAVIS_PHP_VERSION = '7.3' ]]; then vendor/bin/psalm --show-info=false; fi
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Feature --no-coverage
   - php artisan dusk
-  - phpdismod -s cli xdebug &&
+  - if [[ $TRAVIS_PHP_VERSION = '7.3' ]]; then phpdismod -s cli xdebug &&
     vendor/bin/deptrac &&
-    phpenmod -s cli xdebug
+    phpenmod -s cli xdebug; fi
 
 after_script:
   - |
