@@ -47,6 +47,7 @@ class ArticleTest extends TestCase
         $this->assertEquals('baz-baz', $article->slug());
         $this->assertEquals(true, $article->isOnline());
         $this->assertEquals('Baz baz', $article->title());
+        $this->assertEquals('123123', $article->uuid());
     }
 
     /**
