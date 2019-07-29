@@ -15,6 +15,7 @@ class ArticlesOverviewPage extends Page
     {
         return [
             '@title' => '#title',
+            '@first-article-link' => 'ul li article a.read-article:first-of-type',
         ];
     }
 }

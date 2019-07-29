@@ -14,4 +14,6 @@ interface ArticleRepositoryInterface
     public function insert(Article $article): void;
 
     public function update(Article $article): void;
+
+    public function getByUuid(string $uuid): Article;
 }

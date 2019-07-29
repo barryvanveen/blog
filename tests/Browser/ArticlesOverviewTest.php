@@ -36,4 +36,21 @@ class ArticlesOverviewTest extends DuskTestCase
             }
         });
     }
+
+    /** @test */
+    public function clickToArticlePage(): void
+    {
+        /** @var ArticleEloquentModel $article */
+        $article = factory(ArticleEloquentModel::class)->create();
+
+        $this->browse(function (Browser $browser) use ($article) {
+            $browser
+                ->visit(new ArticlesOverviewPage())
+                ->assertSee($article->title)
+                ->click('@first-article-link')
+
+                ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
+                ->assertSee($article->content);
+        });
+    }
 }

@@ -10,7 +10,6 @@ use App\Domain\Articles\Models\Article;
 use App\Domain\Core\CollectionInterface;
 use App\Infrastructure\Adapters\LaravelCollection;
 use DateTimeImmutable;
-use stdClass;
 
 final class ArticleMapper implements ModelMapperInterface
 {
@@ -25,7 +24,7 @@ final class ArticleMapper implements ModelMapperInterface
         return new LaravelCollection($domainModels);
     }
 
-    public function mapToDomainModel(stdClass $model): Article
+    public function mapToDomainModel(object $model): Article
     {
         return new Article(
             $model->author_uuid,

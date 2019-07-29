@@ -12,6 +12,8 @@ interface QueryBuilderInterface
 
     public function get(array $columns = ['*']): CollectionInterface;
 
+    public function first(): object;
+
     public function insert(array $values): bool;
 
     public function orderBy(string $column, string $direction = 'asc'): QueryBuilderInterface;

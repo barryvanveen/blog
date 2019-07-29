@@ -138,4 +138,18 @@ class ArticleRepositoryTest extends TestCase
         $this->assertDatabaseHas('articles', ['title' => 'new-article-title']);
         // todo: assert event was raised
     }
+
+    /** @test */
+    public function itRetrievesAnArticleByUUID(): void
+    {
+        // arrange
+        /** @var ArticleEloquentModel $eloquentArticle */
+        $eloquentArticle = factory(ArticleEloquentModel::class)->create();
+        $article = $this->repository->getByUuid($eloquentArticle->uuid);
+
+        // assert
+        $this->assertInstanceOf(Article::class, $article);
+        $this->assertEquals($eloquentArticle->uuid, $article->uuid());
+        $this->assertEquals($eloquentArticle->title, $article->title());
+    }
 }
