@@ -61,11 +61,11 @@ class LaravelSession implements SessionInterface
     /**
      * Save the session data to storage.
      *
-     * @return bool
+     * @return void
      */
-    public function save(): bool
+    public function save(): void
     {
-        return $this->laravelSession->save();
+        $this->laravelSession->save();
     }
 
     /**

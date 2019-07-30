@@ -38,9 +38,9 @@ interface SessionInterface
     /**
      * Save the session data to storage.
      *
-     * @return bool
+     * @return void
      */
-    public function save(): bool;
+    public function save(): void;
 
     /**
      * Get all of the session data.
