@@ -58,4 +58,16 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
         event(new ArticleWasUpdated($article));
     }
+
+    public function getByUuid(string $uuid): Article
+    {
+        $article = $this->builder
+            ->table('articles')
+            ->where('uuid', '=', $uuid)
+            ->first();
+
+        // handle empty result
+
+        return $this->modelMapper->mapToDomainModel($article);
+    }
 }

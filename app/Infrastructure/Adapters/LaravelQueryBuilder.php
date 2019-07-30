@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
+use App\Application\Core\RecordNotFoundException;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Core\CollectionInterface;
 use Illuminate\Database\DatabaseManager;
@@ -32,6 +33,17 @@ class LaravelQueryBuilder implements QueryBuilderInterface
     public function get(array $columns = ['*']): CollectionInterface
     {
         return new LaravelCollection($this->builder->get($columns)->toArray());
+    }
+
+    public function first(): object
+    {
+        $result = $this->builder->first();
+
+        if ($result === null) {
+            throw RecordNotFoundException::emptyResultSet();
+        }
+
+        return $result;
     }
 
     public function insert(array $values): bool
