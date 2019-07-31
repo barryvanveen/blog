@@ -10,7 +10,6 @@
 - Run `php artisan migrate --seed`
 - Copy `.env` to `.env.dusk.local` and change the database name. This will prevent Laravel Dusk from emptying your database on every run.
 
-
 ## Getting started with Laravel Homestead
 - Check the [Homestead docs](https://laravel.com/docs/master/homestead) for necessary software (Vagrant, Virtualbox)
 - Run `vendor/bin/homestead make` to generate a clean `Homestead.yaml`
@@ -18,6 +17,9 @@
 - Update hosts file with link to Homestead ip
 - Run `vagrant up`
 - Visit the hostname in your browser
+
+## Troubleshooting
+- [Laravel Dusk problems](docs/dusk_troubleshooting.md)
 
 ## Tooling
 The composer.json file contains some shortcuts that can help with checking/fixing code style, running tests and running static analysis.
