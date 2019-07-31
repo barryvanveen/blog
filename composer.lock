@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f4e26270d76c720074da549379a5cee",
+    "content-hash": "28bbeb87fc41d1c885ca817339d4243e",
     "packages": [
         {
             "name": "bugsnag/bugsnag",
@@ -4436,16 +4436,16 @@
         },
         {
             "name": "laravel/homestead",
-            "version": "v8.4.0",
+            "version": "v9.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/homestead.git",
-                "reference": "c1e194bac77a03374adb9f92be818d25fa16335a"
+                "reference": "0add54057b5a4f8a4adf78a6c382131257aec090"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/homestead/zipball/c1e194bac77a03374adb9f92be818d25fa16335a",
-                "reference": "c1e194bac77a03374adb9f92be818d25fa16335a",
+                "url": "https://api.github.com/repos/laravel/homestead/zipball/0add54057b5a4f8a4adf78a6c382131257aec090",
+                "reference": "0add54057b5a4f8a4adf78a6c382131257aec090",
                 "shasum": ""
             },
             "require": {
@@ -4482,7 +4482,7 @@
                 }
             ],
             "description": "A virtual machine for web artisans.",
-            "time": "2019-05-01T14:45:57+00:00"
+            "time": "2019-07-22T17:55:23+00:00"
         },
         {
             "name": "mockery/mockery",
