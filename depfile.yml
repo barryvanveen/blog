@@ -8,7 +8,6 @@ paths:
   - ./vendor/monolog
   - ./vendor/myclabs
   - ./vendor/nesbot
-  - ./vendor/psr
   - ./vendor/symfony
 layers:
   - name: Infrastructure
