@@ -1,8 +1,8 @@
-* use PSR-7 request objects
 * "inject" view model into Blade templates, like Shoot
 * event bus
 * first admin page
 * security headers
+* input validation in controller (not in Laravel request object)
 * basic error pages
 * add meta tags
 * add microdata

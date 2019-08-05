@@ -8,6 +8,7 @@ use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ArticlesOverviewPage;
+use Tests\Browser\Pages\ArticlesStorePage;
 use Tests\DuskTestCase;
 
 class ArticlesOverviewTest extends DuskTestCase
@@ -51,6 +52,19 @@ class ArticlesOverviewTest extends DuskTestCase
 
                 ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
                 ->assertSee($article->content);
+        });
+    }
+
+    /** @test */
+    public function createNewArticle(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->visit(new ArticlesOverviewPage())
+                ->assertDontSee('Foo title')
+                ->visit(new ArticlesStorePage())
+                ->assertRouteIs('articles.index')
+                ->assertSee('Foo title');
         });
     }
 }
