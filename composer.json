@@ -13,7 +13,10 @@
         "bugsnag/bugsnag-laravel": "^2.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "psr/http-message": "^1.0",
+        "symfony/psr-http-message-bridge": "^1.2",
+        "zendframework/zend-diactoros": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
