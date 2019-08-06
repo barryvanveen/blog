@@ -20,14 +20,12 @@ class LaravelViewBuilder implements ViewBuilderInterface
 
     public function render(string $view, array $data = []): string
     {
-        $view = $this->laravelViewFactory->make($view, $data);
+        $rendered = $this->laravelViewFactory->make($view, $data)->render();
 
-        $rendered = $view->render();
-
-        if (is_string($rendered) === false) {
-            throw ViewException::renderReturnsAnArrayInsteadOfString($rendered);
+        if (is_string($rendered)) {
+            return $rendered;
         }
 
-        return $view->render();
+        throw ViewException::renderShouldReturnString($view);
     }
 }

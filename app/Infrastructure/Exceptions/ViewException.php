@@ -8,7 +8,7 @@ use RuntimeException;
 
 final class ViewException extends RuntimeException
 {
-    public static function renderReturnsAnArrayInsteadOfString(string $view): self
+    public static function renderShouldReturnString(string $view): self
     {
         return new self('View '.$view.' could not be rendered into a string.');
     }
