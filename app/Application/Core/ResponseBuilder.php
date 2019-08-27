@@ -35,7 +35,8 @@ class ResponseBuilder implements ResponseBuilderInterface
         $this->streamFactory = $streamFactory;
         $this->urlGenerator = $urlGenerator;
     }
-    public function ok(string $view, array $data): ResponseInterface
+
+    public function ok(string $view, array $data = []): ResponseInterface
     {
         $view = $this->viewBuilder->render($view, $data);
 
@@ -44,11 +45,11 @@ class ResponseBuilder implements ResponseBuilderInterface
         return $this->responseFactory->createResponse(200)->withBody($body);
     }
 
-    public function redirect(int $status, string $route): ResponseInterface
+    public function redirect(int $status, string $route, array $routeParams = []): ResponseInterface
     {
         $response = $this->responseFactory->createResponse($status);
 
-        $location = $this->urlGenerator->route($route);
+        $location = $this->urlGenerator->route($route, $routeParams);
 
         return $response->withHeader('Location', $location);
     }

@@ -66,8 +66,6 @@ final class ArticleRepository implements ArticleRepositoryInterface
             ->where('uuid', '=', $uuid)
             ->first();
 
-        // handle empty result
-
         return $this->modelMapper->mapToDomainModel($article);
     }
 }

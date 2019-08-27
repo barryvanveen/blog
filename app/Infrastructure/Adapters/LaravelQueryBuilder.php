@@ -35,6 +35,10 @@ class LaravelQueryBuilder implements QueryBuilderInterface
         return new LaravelCollection($this->builder->get($columns)->toArray());
     }
 
+    /**
+     * @return object
+     * @throws RecordNotFoundException
+     */
     public function first(): object
     {
         $result = $this->builder->first();
