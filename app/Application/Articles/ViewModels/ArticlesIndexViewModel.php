@@ -21,11 +21,4 @@ final class ArticlesIndexViewModel
     {
         return $this->repository->allPublishedAndOrdered();
     }
-
-    public function toArray(): array
-    {
-        return [
-            'articles' => $this->articles(),
-        ];
-    }
 }

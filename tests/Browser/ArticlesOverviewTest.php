@@ -49,7 +49,20 @@ class ArticlesOverviewTest extends DuskTestCase
                 ->visit(new ArticlesOverviewPage())
                 ->assertSee($article->title)
                 ->click('@first-article-link')
+                ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
+                ->assertSee($article->content);
+        });
+    }
 
+    /** @test */
+    public function redirectToCorrectSlug():void
+    {
+        /** @var ArticleEloquentModel $article */
+        $article = factory(ArticleEloquentModel::class)->create();
+
+        $this->browse(function (Browser $browser) use ($article) {
+            $browser
+                ->visitRoute('articles.show', ['uuid' => $article->uuid, 'slug' => 'incorrect-slug'])
                 ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
                 ->assertSee($article->content);
         });

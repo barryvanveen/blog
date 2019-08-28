@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 
 interface ResponseBuilderInterface
 {
-    public function ok(string $view, array $data): ResponseInterface;
+    public function ok(string $view, array $data = []): ResponseInterface;
 
-    public function redirect(int $code, string $route): ResponseInterface;
+    public function redirect(int $code, string $route, array $routeParams = []): ResponseInterface;
 }

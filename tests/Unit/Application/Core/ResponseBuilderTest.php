@@ -73,7 +73,7 @@ class ResponseBuilderTest extends TestCase
     public function itReturnsRedirectResponse(): void
     {
         // arrange
-        $this->urlGenerator->route(Argument::type('string'))
+        $this->urlGenerator->route(Argument::type('string'), Argument::type('array'))
             ->willReturn('fooUrl');
 
         // act

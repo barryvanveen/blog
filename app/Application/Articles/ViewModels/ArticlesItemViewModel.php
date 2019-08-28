@@ -6,26 +6,24 @@ namespace App\Application\Articles\ViewModels;
 
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
+use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 
 final class ArticlesItemViewModel
 {
     /** @var ArticleRepositoryInterface */
     private $repository;
 
-    public function __construct(ArticleRepositoryInterface $repository)
+    /** @var ArticleShowRequestInterface */
+    private $request;
+
+    public function __construct(ArticleRepositoryInterface $repository, ArticleShowRequestInterface $request)
     {
         $this->repository = $repository;
+        $this->request = $request;
     }
 
-    public function article(string $uuid): Article
+    public function article(): Article
     {
-        return $this->repository->getByUuid($uuid);
-    }
-
-    public function toArray(string $uuid): array
-    {
-        return [
-            'article' => $this->article($uuid),
-        ];
+        return $this->repository->getByUuid($this->request->uuid());
     }
 }
