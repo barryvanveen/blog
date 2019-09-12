@@ -17,14 +17,14 @@ final class LaravelTranslator implements TranslatorInterface
         $this->translator = $laravelTranslator;
     }
 
-    public function trans(string $key, array $replace = [], $locale = null): string
+    public function get(string $key, array $replace = [], $locale = null): string
     {
-        return (string) $this->translator->trans($key, $replace, $locale);
+        return (string) $this->translator->get($key, $replace, $locale);
     }
 
-    public function transChoice(string $key, int $number, array $replace = [], $locale = null): string
+    public function choice(string $key, int $number, array $replace = [], $locale = null): string
     {
-        return $this->translator->transChoice($key, $number, $replace, $locale);
+        return $this->translator->choice($key, $number, $replace, $locale);
     }
 
     public function getLocale(): string

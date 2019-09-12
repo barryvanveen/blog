@@ -14,7 +14,7 @@ interface TranslatorInterface
      * @param  string  $locale
      * @return string
      */
-    public function trans(string $key, array $replace = [], $locale = null): string;
+    public function get(string $key, array $replace = [], $locale = null): string;
 
     /**
      * Get a translation according to an integer value.
@@ -25,7 +25,7 @@ interface TranslatorInterface
      * @param  string  $locale
      * @return string
      */
-    public function transChoice(string $key, int $number, array $replace = [], $locale = null): string;
+    public function choice(string $key, int $number, array $replace = [], $locale = null): string;
 
     /**
      * Get the default locale being used.
