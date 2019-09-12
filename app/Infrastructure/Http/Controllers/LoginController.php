@@ -37,11 +37,11 @@ class LoginController extends Controller
             $bus->dispatch($command);
         } catch (FailedLoginException $e) {
             return redirect()->back()->withErrors([
-                'email' => [$translator->trans('auth.failed')],
+                'email' => [$translator->get('auth.failed')],
             ]);
         } catch (LockoutException $e) {
             return redirect()->back()->withErrors([
-                'email' => [$translator->trans('auth.throttle', ['seconds' => $e->tryAgainIn()])],
+                'email' => [$translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()])],
             ]);
         }
 
