@@ -1,10 +1,3 @@
+const styles = require('../sass/app.css');  // eslint-disable-line
 
-require('./bootstrap');
-
-// window.Vue = require('vue');
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-// const app = new Vue({
-//     el: '#app'
-// });
+console.log('it works!')

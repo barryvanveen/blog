@@ -1,0 +1,9 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+a {
+    @apply text-green-600 underline;
+}

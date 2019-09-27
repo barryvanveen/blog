@@ -1,3 +1,10 @@
+<?php
+use App\Application\Util\BaseViewModel;
+
+/** @var $model BaseViewModel */
+$model = app()->make(BaseViewModel::class);
+?>
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -8,15 +15,15 @@
 
         <title>Home - A blog about web development - Barry van Veen</title>
 
-        <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ $model->asset('app.css') }}" rel="stylesheet" type="text/css">
     </head>
-    <body>
+    <body class="bg-red-200">
         <div class="d-block h-100">
             @include('layouts.partials.navbar')
 
             @yield('body')
         </div>
 
-        <script src="{{ mix('/js/app.js') }}"></script>
+        <script src="{{ $model->asset('app.js') }}"></script>
     </body>
 </html>
