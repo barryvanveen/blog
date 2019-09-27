@@ -41,7 +41,7 @@ class LoginTest extends DuskTestCase
         $user2 = factory(UserEloquentModel::class)->create();
 
         Browser::macro('clearCsrfInputs', function () {
-            $this->script("$(\"input[type='hidden'][name=_token]\").each(function(){ this.value = '' });");
+            $this->script("var form = document.forms.login; var token = form.elements._token; token.value = '';");
 
             return $this;
         });
