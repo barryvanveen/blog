@@ -25,6 +25,7 @@ matrix:
 cache:
   directories:
     - $HOME/.composer/cache
+    - $HOME/.cache/yarn/v4
 
 addons:
   chrome: stable
@@ -41,6 +42,8 @@ install:
   - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest
   - php artisan migrate
   - php artisan dusk:chrome-driver
+  - yarn
+  - yarn run prod
 
 before_script:
   - echo 'xdebug.max_nesting_level = 1024' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
