@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'blog'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,9 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
-
-    'asset_url' => env('ASSET_URL', null),
+    'url' => env('APP_URL', 'http://blog.test'),
 
     /*
     |--------------------------------------------------------------------------

@@ -64,45 +64,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Database Connection
-    |--------------------------------------------------------------------------
-    |
-    | When using the "database" or "redis" session drivers, you may specify a
-    | connection that should be used to manage these sessions. This should
-    | correspond to a connection in your database configuration options.
-    |
-    */
-
-    'connection' => env('SESSION_CONNECTION', null),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Session Database Table
-    |--------------------------------------------------------------------------
-    |
-    | When using the "database" session driver, you may specify the table we
-    | should use to manage the sessions. Of course, a sensible default is
-    | provided for you; however, you are free to change this as needed.
-    |
-    */
-
-    'table' => 'sessions',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Session Cache Store
-    |--------------------------------------------------------------------------
-    |
-    | When using the "apc", "memcached", or "dynamodb" session drivers you may
-    | list a cache store that should be used for these sessions. This value
-    | must match with one of the application's configured cache "stores".
-    |
-    */
-
-    'store' => env('SESSION_STORE', null),
-
-    /*
-    |--------------------------------------------------------------------------
     | Session Sweeping Lottery
     |--------------------------------------------------------------------------
     |
@@ -195,5 +156,5 @@ return [
     |
     */
 
-    'same_site' => null,
+    'same_site' => "lax",
 ];
