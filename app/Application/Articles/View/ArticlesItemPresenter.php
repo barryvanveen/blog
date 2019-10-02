@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Articles\ViewModels;
+namespace App\Application\Articles\View;
 
+use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 
-final class ArticlesItemViewModel
+final class ArticlesItemPresenter implements PresenterInterface
 {
     /** @var ArticleRepositoryInterface */
     private $repository;
@@ -22,8 +22,10 @@ final class ArticlesItemViewModel
         $this->request = $request;
     }
 
-    public function article(): Article
+    public function present(): array
     {
-        return $this->repository->getByUuid($this->request->uuid());
+        return [
+            'article' => $this->repository->getByUuid($this->request->uuid()),
+        ];
     }
 }

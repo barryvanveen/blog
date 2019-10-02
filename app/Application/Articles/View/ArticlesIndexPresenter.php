@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Articles\ViewModels;
+namespace App\Application\Articles\View;
 
+use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Core\CollectionInterface;
 
-final class ArticlesIndexViewModel
+final class ArticlesIndexPresenter implements PresenterInterface
 {
     /** @var ArticleRepositoryInterface */
     private $repository;
@@ -17,8 +17,10 @@ final class ArticlesIndexViewModel
         $this->repository = $repository;
     }
 
-    public function articles(): CollectionInterface
+    public function present(): array
     {
-        return $this->repository->allPublishedAndOrdered();
+        return [
+            'articles' => $this->repository->allPublishedAndOrdered(),
+        ];
     }
 }

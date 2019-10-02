@@ -176,6 +176,7 @@ return [
         App\Infrastructure\Providers\ModelMapperServiceProvider::class,
         App\Infrastructure\Providers\Psr7ServiceProvider::class,
         App\Infrastructure\Providers\RouteServiceProvider::class,
+        App\Infrastructure\Providers\ViewServiceProvider::class,
     ],
 
     /*

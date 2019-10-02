@@ -1,14 +1,9 @@
-<?php
-use App\Application\Articles\ViewModels\ArticlesIndexViewModel;
-
-/** @var $model ArticlesIndexViewModel */
-$model = app()->make(ArticlesIndexViewModel::class);
-?>
+@presenter(App\Application\Articles\View\ArticlesIndexPresenter)
 
 <section>
     <h1 id="title">Articles</h1>
 
     <ul>
-        @each('blocks.articles.partials.card', $model->articles(), 'article')
+        @each('blocks.articles.partials.card', $articles, 'article')
     </ul>
 </section>
