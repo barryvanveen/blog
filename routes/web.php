@@ -9,8 +9,8 @@ Route::get('/about', [\App\Infrastructure\Http\Controllers\AboutController::clas
 Route::get('/articles', [\App\Infrastructure\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');
 Route::get('/articles/create', [\App\Infrastructure\Http\Controllers\ArticlesController::class, 'store'])->name('articles.store');
 Route::get('/articles/{uuid}-{slug}', [\App\Infrastructure\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');
-Route::get('/projects', [\App\Infrastructure\Http\Controllers\ProjectsController::class, 'index'])->name('projects');
-Route::get('/rss', [\App\Infrastructure\Http\Controllers\AboutController::class, 'index'])->name('rss');
+
+Route::get('/rss', [\App\Infrastructure\Http\Controllers\RssController::class, 'index'])->name('rss');
 Route::get('/sitemap.xml', [\App\Infrastructure\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 Route::middleware(['guest'])->group(function () {

@@ -6,10 +6,10 @@ namespace App\Infrastructure\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 
-class ProjectsController extends Controller
+class RssController extends Controller
 {
     public function index(): View
     {
-        return $this->viewFactory->make('pages.projects');
+        return $this->viewFactory->make('pages.rss');
     }
 }
