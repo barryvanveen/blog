@@ -13,7 +13,7 @@ class ManifestException extends RuntimeException
         return new self('Could not read or decode manifest file.');
     }
 
-    public static function becauseManifestDoesNotContainPath(string $path)
+    public static function becauseManifestDoesNotContainPath(string $path): self
     {
         return new self("Asset is missing from manifest file: {$path}.");
     }
