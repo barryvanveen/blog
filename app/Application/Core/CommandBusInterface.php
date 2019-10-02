@@ -8,7 +8,7 @@ use App\Domain\Core\CommandInterface;
 
 interface CommandBusInterface
 {
-    public function subscribe(string $commandClassName, string $handlerClassName);
+    public function subscribe(string $commandClassName, string $handlerClassName): void;
 
-    public function dispatch(CommandInterface $command);
+    public function dispatch(CommandInterface $command): void;
 }
