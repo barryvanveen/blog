@@ -18,9 +18,6 @@
 - Run `vagrant up`
 - Visit the hostname in your browser
 
-## Troubleshooting
-- [Laravel Dusk problems](docs/dusk_troubleshooting.md)
-
 ## Tooling
 The composer.json file contains some shortcuts that can help with checking/fixing code style, running tests and running static analysis.
 
