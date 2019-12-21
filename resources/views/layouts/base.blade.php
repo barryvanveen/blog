@@ -12,13 +12,17 @@
 
         <link href="{{ $css_path }}" rel="stylesheet" type="text/css">
     </head>
-    <body class="bg-red-200">
-        <div class="d-block h-100">
-            @include('layouts.partials.navbar')
 
+    <body class="bg-white">
+        @include('layouts.partials.header')
+
+        <main class="container mx-auto max-w-2xl px-4">
             @yield('body')
-        </div>
+        </main>
 
+        @yield('related')
+
+        @include('layouts.partials.footer')
         <script src="{{ $js_path }}"></script>
     </body>
 </html>
