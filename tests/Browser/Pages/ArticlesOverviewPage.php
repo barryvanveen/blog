@@ -14,8 +14,8 @@ class ArticlesOverviewPage extends Page
     public function elements()
     {
         return [
-            '@title' => '#title',
-            '@first-article-link' => 'ul li article a.read-article:first-of-type',
+            '@title' => 'main h1',
+            '@first-article-link' => 'main article h2 a',
         ];
     }
 }
