@@ -1,9 +1,7 @@
-@tailwind base;
+@import "./../../node_modules/tailwindcss/base.css";
+@import "./custom-base-styles.css";
 
-@tailwind components;
+@import "./../../node_modules/tailwindcss/components.css";
+@import "./custom-components.css";
 
-@tailwind utilities;
-
-a {
-    @apply text-green-600 underline;
-}
+@import "./../../node_modules/tailwindcss/utilities.css";

@@ -1,0 +1,45 @@
+html {
+    @apply text-gray-900 antialiased leading-tight;
+}
+
+body {
+    @apply font-sans leading-normal tracking-normal;
+}
+
+main {
+    @apply mt-3 mb-10;
+
+    * + p {
+        @apply my-3;
+    }
+
+    * + h1,
+    * + h2,
+    * + h3 {
+        @apply mt-6;
+    }
+
+    h1 {
+        @apply text-4xl;
+    }
+
+    h2 {
+        @apply text-3xl;
+    }
+
+    h3 {
+        @apply text-2xl;
+    }
+
+    a {
+        @apply text-blue-500;
+    }
+
+    a:hover {
+        @apply text-black underline;
+    }
+
+    ul {
+        @apply list-disc list-outside pl-8;
+    }
+}
