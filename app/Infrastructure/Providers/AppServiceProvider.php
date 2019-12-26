@@ -32,7 +32,11 @@ use App\Infrastructure\Adapters\LaravelTranslator;
 use App\Infrastructure\Adapters\LaravelUrlGenerator;
 use App\Infrastructure\Adapters\LaravelViewBuilder;
 use App\Infrastructure\CommandBus\LaravelCommandBus;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Converter;
+use League\CommonMark\ConverterInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,5 +57,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UniqueIdGeneratorInterface::class, UniqueIdGenerator::class);
         $this->app->bind(UrlGeneratorInterface::class, LaravelUrlGenerator::class);
         $this->app->bind(ViewBuilderInterface::class, LaravelViewBuilder::class);
+
+        $this->app->bind(ConverterInterface::class, function (Application $app): ConverterInterface {
+            return new CommonMarkConverter();
+        });
     }
 }

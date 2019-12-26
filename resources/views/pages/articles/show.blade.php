@@ -16,7 +16,7 @@
             </p>
         </header>
         <div itemprop="articleBody">
-            {{ $content }}
+            {!! $content !!}
         </div>
     </article>
 
