@@ -38,7 +38,6 @@ final class CreateArticleHandler extends BaseCommandHandler
     public function handleCreateArticle(CreateArticle $command): void
     {
         $article = new Article(
-            $command->authorUuid,
             $command->content,
             $command->description,
             $command->publishedAt,

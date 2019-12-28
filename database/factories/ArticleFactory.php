@@ -18,7 +18,6 @@ $factory->define(ArticleEloquentModel::class, function (Faker $faker) {
     $title = $faker->realText(200);
 
     return [
-        'author_uuid' => $uniqueIdGenerator->generate(),
         'content' => $faker->htmlArticle,
         'description' => $faker->htmlParagraph,
         'published_at' => $faker->dateTimeBetween('-1 year', '-1 hour'),
