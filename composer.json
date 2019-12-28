@@ -11,6 +11,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "ext-pdo": "*",
+        "bepsvpt/secure-headers": "^5.5",
         "bugsnag/bugsnag-laravel": "^2.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
