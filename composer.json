@@ -16,6 +16,7 @@
         "laravel/framework": "^6.0",
         "laravel/helpers": "^1.1",
         "laravel/tinker": "^2.0",
+        "league/commonmark": "^1.1",
         "psr/http-message": "^1.0",
         "symfony/psr-http-message-bridge": "^1.2",
         "zendframework/zend-diactoros": "^2.1"

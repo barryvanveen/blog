@@ -50,7 +50,7 @@ class ArticlesOverviewTest extends DuskTestCase
                 ->assertSee($article->title)
                 ->click('@first-article-link')
                 ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
-                ->assertSee($article->content);
+                ->assertSee($article->title);
         });
     }
 
@@ -64,7 +64,7 @@ class ArticlesOverviewTest extends DuskTestCase
             $browser
                 ->visitRoute('articles.show', ['uuid' => $article->uuid, 'slug' => 'incorrect-slug'])
                 ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
-                ->assertSee($article->content);
+                ->assertSee($article->title);
         });
     }
 
