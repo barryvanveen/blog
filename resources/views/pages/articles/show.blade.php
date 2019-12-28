@@ -11,7 +11,7 @@
             </h1>
             <p>
                 <time datetime="{{ $publicationDateInAtomFormat }}" itemprop="datePublished">{{ $publicationDateInHumanFormat }}</time>
-                &diamond; <span itemprop="author" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name">Barry van Veen</span></span>
+                &diamond; <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="hidden"><span itemprop="name">Barry van Veen</span></span>
                 &diamond; <a href="/whiteglass/categories/junk/">junk</a>
             </p>
         </header>

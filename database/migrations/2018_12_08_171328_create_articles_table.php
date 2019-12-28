@@ -11,7 +11,6 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->string('author_uuid');
             $table->text('content');
             $table->text('description');
             $table->dateTime('published_at');

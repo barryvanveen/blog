@@ -135,7 +135,6 @@ class ArticlesControllerTest extends TestCase
             ->willReturn('requestSlug');
 
         $article = new Article(
-            'authorUuid',
             'content',
             'description',
             new DateTimeImmutable(),
@@ -180,7 +179,6 @@ class ArticlesControllerTest extends TestCase
             ->willReturn('slug');
 
         $article = new Article(
-            'authorUuid',
             'content',
             'description',
             new DateTimeImmutable(),

@@ -24,7 +24,6 @@ class CreateArticleHandlerTest extends TestCase
     {
         // arrange
         $command = new CreateArticle(
-            '321321',
             'baz',
             'bar',
             new DateTimeImmutable(),

@@ -44,7 +44,6 @@ final class ArticlesController
     public function store(): ResponseInterface
     {
         $command = new CreateArticle(
-            '1',
             'baz',
             'bar',
             new DateTimeImmutable(),

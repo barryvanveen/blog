@@ -85,7 +85,6 @@ class ArticleRepositoryTest extends TestCase
     {
         // arrange
         $article = new Article(
-            '321321',
             'article-content',
             'article-description',
             new DateTimeImmutable(),
@@ -108,7 +107,6 @@ class ArticleRepositoryTest extends TestCase
     {
         // arrange
         $article = new Article(
-            '321321',
             'article-content',
             'article-description',
             new DateTimeImmutable(),
@@ -123,7 +121,6 @@ class ArticleRepositoryTest extends TestCase
 
         // act
         $article = new Article(
-            '321321',
             'article-content',
             'article-description',
             new DateTimeImmutable(),

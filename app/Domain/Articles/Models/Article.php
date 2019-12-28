@@ -10,9 +10,6 @@ use DateTimeImmutable;
 class Article
 {
     /** @var string */
-    private $authorUuid;
-
-    /** @var string */
     private $content;
 
     /** @var string */
@@ -34,7 +31,6 @@ class Article
     private $uuid;
 
     public function __construct(
-        string $authorUuid,
         string $content,
         string $description,
         DateTimeImmutable $publishedAt,
@@ -43,7 +39,6 @@ class Article
         string $title,
         string $uuid
     ) {
-        $this->authorUuid = $authorUuid;
         $this->content = $content;
         $this->description = $description;
         $this->publishedAt = $publishedAt;
@@ -51,11 +46,6 @@ class Article
         $this->status = $status;
         $this->title = $title;
         $this->uuid = $uuid;
-    }
-
-    public function authorUuid(): string
-    {
-        return $this->authorUuid;
     }
 
     public function content(): string
@@ -99,7 +89,6 @@ class Article
     public function toArray(): array
     {
         return [
-            'author_uuid' => $this->authorUuid,
             'content' => $this->content,
             'description' => $this->description,
             'published_at' => $this->publishedAt,

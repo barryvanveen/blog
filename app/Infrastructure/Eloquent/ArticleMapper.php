@@ -27,7 +27,6 @@ final class ArticleMapper implements ModelMapperInterface
     public function mapToDomainModel(object $model): Article
     {
         return new Article(
-            $model->author_uuid,
             $model->content,
             $model->description,
             new DateTimeImmutable($model->published_at),

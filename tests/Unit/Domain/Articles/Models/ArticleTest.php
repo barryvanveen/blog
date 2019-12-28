@@ -19,7 +19,6 @@ class ArticleTest extends TestCase
         ArticleStatus $status
     ): Article {
         return new Article(
-            '321321',
             'foo',
             'bar',
             $dateTime,
@@ -40,7 +39,6 @@ class ArticleTest extends TestCase
             ArticleStatus::published()
         );
 
-        $this->assertEquals('321321', $article->authorUuid());
         $this->assertEquals('foo', $article->content());
         $this->assertEquals('bar', $article->description());
         $this->assertEquals($dateTime->getTimestamp(), $article->publishedAt()->getTimestamp());
@@ -86,7 +84,6 @@ class ArticleTest extends TestCase
         );
 
         $this->assertEquals([
-            'author_uuid' => '321321',
             'content' => 'foo',
             'description' => 'bar',
             'published_at' => $dateTime,

@@ -6,13 +6,11 @@ namespace App\Infrastructure\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * App\Infrastructure\Eloquent\ArticleEloquentModel
  *
- * @property string $author_uuid
  * @property string $content
  * @property string $description
  * @property string $published_at
@@ -22,11 +20,9 @@ use Illuminate\Support\Carbon;
  * @property string $uuid
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read AuthorEloquentModel $author
  * @method static Builder|ArticleEloquentModel newModelQuery()
  * @method static Builder|ArticleEloquentModel newQuery()
  * @method static Builder|ArticleEloquentModel query()
- * @method static Builder|ArticleEloquentModel whereAuthorUuid($value)
  * @method static Builder|ArticleEloquentModel whereContent($value)
  * @method static Builder|ArticleEloquentModel whereCreatedAt($value)
  * @method static Builder|ArticleEloquentModel whereDescription($value)
@@ -43,9 +39,4 @@ class ArticleEloquentModel extends Model
     protected $guarded = [];
 
     protected $table = 'articles';
-
-    public function author(): BelongsTo
-    {
-        return $this->belongsTo(AuthorEloquentModel::class);
-    }
 }

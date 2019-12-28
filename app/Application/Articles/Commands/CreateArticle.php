@@ -11,9 +11,6 @@ use DateTimeImmutable;
 class CreateArticle implements CommandInterface
 {
     /** @var string */
-    public $authorUuid;
-
-    /** @var string */
     public $content;
 
     /** @var string */
@@ -29,14 +26,12 @@ class CreateArticle implements CommandInterface
     public $title;
 
     public function __construct(
-        string $authorUuid,
         string $content,
         string $description,
         DateTimeImmutable $publishedAt,
         ArticleStatus $status,
         string $title
     ) {
-        $this->authorUuid = $authorUuid;
         $this->content = $content;
         $this->description = $description;
         $this->publishedAt = $publishedAt;
