@@ -88,7 +88,7 @@ interface SessionInterface
      *
      * @return string
      */
-    public function token(): string;
+    public function token(): ?string;
 
     /**
      * Remove an item from the session, returning its value.

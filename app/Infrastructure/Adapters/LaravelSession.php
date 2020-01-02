@@ -129,7 +129,7 @@ class LaravelSession implements SessionInterface
      *
      * @return string
      */
-    public function token(): string
+    public function token(): ?string
     {
         return $this->laravelSession->token();
     }
