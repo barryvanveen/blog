@@ -9,6 +9,7 @@ use App\Application\Core\ResponseBuilder;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Core\UniqueIdGenerator;
 use App\Application\Interfaces\ConfigurationInterface;
+use App\Application\Interfaces\FilesystemInterface;
 use App\Application\Interfaces\GuardInterface;
 use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\PathBuilderInterface;
@@ -24,6 +25,7 @@ use App\Application\View\AssetUrlBuilderInterface;
 use App\Domain\Core\UniqueIdGeneratorInterface;
 use App\Infrastructure\Adapters\CommonMarkMarkdownConverter;
 use App\Infrastructure\Adapters\LaravelConfiguration;
+use App\Infrastructure\Adapters\LaravelFilesystem;
 use App\Infrastructure\Adapters\LaravelGuard;
 use App\Infrastructure\Adapters\LaravelPathBuilder;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
@@ -35,9 +37,6 @@ use App\Infrastructure\Adapters\LaravelUrlGenerator;
 use App\Infrastructure\Adapters\LaravelViewBuilder;
 use App\Infrastructure\CommandBus\LaravelCommandBus;
 use Illuminate\Support\ServiceProvider;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Converter;
-use League\CommonMark\ConverterInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +46,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CommandBusInterface::class, LaravelCommandBus::class);
         $this->app->bind(ConfigurationInterface::class, LaravelConfiguration::class);
         $this->app->bind(GuardInterface::class, LaravelGuard::class);
+        $this->app->bind(FilesystemInterface::class, LaravelFilesystem::class);
         $this->app->bind(MarkdownConverterInterface::class, CommonMarkMarkdownConverter::class);
         $this->app->bind(PathBuilderInterface::class, LaravelPathBuilder::class);
         $this->app->bind(QueryBuilderInterface::class, LaravelQueryBuilder::class);
@@ -58,9 +58,5 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UniqueIdGeneratorInterface::class, UniqueIdGenerator::class);
         $this->app->bind(UrlGeneratorInterface::class, LaravelUrlGenerator::class);
         $this->app->bind(ViewBuilderInterface::class, LaravelViewBuilder::class);
-
-        $this->app->bind(ConverterInterface::class, function (Application $app): ConverterInterface {
-            return new CommonMarkConverter();
-        });
     }
 }
