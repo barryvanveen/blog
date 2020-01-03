@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.0",
         "league/commonmark": "^1.1",
         "psr/http-message": "^1.0",
+        "spatie/flysystem-dropbox": "^1.2",
         "symfony/psr-http-message-bridge": "^1.2",
         "zendframework/zend-diactoros": "^2.1"
     },
