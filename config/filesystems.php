@@ -41,5 +41,11 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+
+        'dropbox' => [
+            'driver'             => 'dropbox',
+            'authorizationToken' => env('DROPBOX_AUTHORIZATION_TOKEN'),
+            'prefix'             => '',
+        ],
     ],
 ];

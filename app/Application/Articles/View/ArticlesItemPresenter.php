@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\View;
 
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use DateTime;
-use League\CommonMark\ConverterInterface;
 
 final class ArticlesItemPresenter implements PresenterInterface
 {
@@ -19,13 +19,13 @@ final class ArticlesItemPresenter implements PresenterInterface
     /** @var ArticleShowRequestInterface */
     private $request;
 
-    /** @var ConverterInterface */
+    /** @var MarkdownConverterInterface */
     private $markdownConverter;
 
     public function __construct(
         ArticleRepositoryInterface $repository,
         ArticleShowRequestInterface $request,
-        ConverterInterface $markdownConverter
+        MarkdownConverterInterface $markdownConverter
     ) {
         $this->repository = $repository;
         $this->request = $request;

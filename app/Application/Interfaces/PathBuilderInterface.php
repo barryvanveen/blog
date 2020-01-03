@@ -9,4 +9,6 @@ interface PathBuilderInterface
     public function publicPath(string $path): string;
 
     public function assetPath(string $path): string;
+
+    public function storagePath(string $path): string;
 }
