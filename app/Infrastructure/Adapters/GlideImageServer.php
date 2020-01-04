@@ -18,14 +18,15 @@ class GlideImageServer implements ImageServerInterface
     /** @var \League\Glide\Server */
     private $glideServer;
 
+    /** @psalm-suppress MissingClosureParamType */
     public function __construct(
         PathBuilderInterface $pathBuilder,
         FilesystemInterface $filesystem
     ) {
         $this->glideServer = ServerFactory::create([
-            'source' => $filesystem->getDriver(),
-            'cache' => $pathBuilder->storagePath(''),
-            'cache_path_prefix' => 'image-cache',
+           'source' => $filesystem->getDriver(),
+           'cache' => $pathBuilder->storagePath(''),
+           'cache_path_prefix' => 'image-cache',
             'response' => new PsrResponseFactory(new Response(), function ($stream) {
                 return new Stream($stream);
             }),
