@@ -44,13 +44,7 @@ final class LoginHandler extends BaseCommandHandler
 
     private function attemptLogin(Login $command): bool
     {
-        return $this->guard->attempt(
-            [
-                'email' => $command->email,
-                'password' => $command->password,
-            ],
-            $command->remember
-        );
+        return $this->guard->attempt($command->email, $command->password);
     }
 
     private function login(): void
