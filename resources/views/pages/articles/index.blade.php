@@ -2,6 +2,8 @@
 
 @extends('layouts.base')
 
+@section('title', 'Articles')
+
 @section('body')
     <section itemscope itemtype="https://schema.org/Blog">
         <h1 itemprop="about">Articles</h1>

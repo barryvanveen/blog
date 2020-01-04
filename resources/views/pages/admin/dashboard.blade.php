@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
+@section('title', 'Dashboard')
+
 @section('body')
     <section>
         <h1>Hi {{ Auth::user()->name }}</h1>
