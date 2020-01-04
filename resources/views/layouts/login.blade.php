@@ -1,6 +1,5 @@
-@presenter(App\Application\View\BaseViewPresenter)
 <!doctype html>
-<html lang="{{ $locale }}">
+<html lang="en">
     @include('layouts.partials.headHtml')
 
     <body class="bg-gray-200">
