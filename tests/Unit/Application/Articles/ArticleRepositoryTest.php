@@ -7,7 +7,7 @@ namespace Tests\Unit\Application\Articles;
 use App\Application\Articles\ArticleRepository;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
-use App\Infrastructure\Adapters\LaravelQueryBuilder;
+use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
 use Carbon\Carbon;
@@ -29,7 +29,7 @@ class ArticleRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = $this->app->make(LaravelQueryBuilder::class);
+        $queryBuilder = $this->app->make(LaravelQueryBuilderFactory::class);
         $articleMapper = $this->app->make(ArticleMapper::class);
         $this->repository = new ArticleRepository($queryBuilder, $articleMapper);
     }

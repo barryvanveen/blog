@@ -7,7 +7,7 @@ namespace App\Application\Articles;
 use App\Application\Articles\Events\ArticleWasCreated;
 use App\Application\Articles\Events\ArticleWasUpdated;
 use App\Application\Interfaces\ModelMapperInterface;
-use App\Application\Interfaces\QueryBuilderInterface;
+use App\Application\Interfaces\QueryBuilderFactoryInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
@@ -16,21 +16,21 @@ use DateTimeImmutable;
 
 final class ArticleRepository implements ArticleRepositoryInterface
 {
-    /** @var QueryBuilderInterface */
-    private $builder;
+    /** @var QueryBuilderFactoryInterface */
+    private $builderFactory;
 
     /** @var ModelMapperInterface */
     private $modelMapper;
 
-    public function __construct(QueryBuilderInterface $builder, ModelMapperInterface $modelMapper)
+    public function __construct(QueryBuilderFactoryInterface $builderFactory, ModelMapperInterface $modelMapper)
     {
-        $this->builder = $builder;
+        $this->builderFactory = $builderFactory;
         $this->modelMapper = $modelMapper;
     }
 
     public function allPublishedAndOrdered(): CollectionInterface
     {
-        $articles = $this->builder
+        $articles = $this->builderFactory
             ->table('articles')
             ->where('status', '=', (string) ArticleStatus::published())
             ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
@@ -42,7 +42,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function insert(Article $article): void
     {
-        $this->builder
+        $this->builderFactory
             ->table('articles')
             ->insert($article->toArray());
 
@@ -51,7 +51,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function update(Article $article): void
     {
-        $this->builder
+        $this->builderFactory
             ->table('articles')
             ->where('uuid', '=', $article->uuid())
             ->update($article->toArray());
@@ -61,7 +61,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function getByUuid(string $uuid): Article
     {
-        $article = $this->builder
+        $article = $this->builderFactory
             ->table('articles')
             ->where('uuid', '=', $uuid)
             ->first();
