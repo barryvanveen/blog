@@ -7,6 +7,7 @@
         <main class="container mx-auto max-w-2xl px-4">
             @yield('body')
         </main>
-        <script src="{{ $js_path }}"></script>
+
+        @include('layouts.partials.javascript')
     </body>
 </html>

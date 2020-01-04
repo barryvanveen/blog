@@ -13,6 +13,6 @@
         @yield('related')
 
         @include('layouts.partials.footer')
-        <script src="{{ $js_path }}"></script>
+        @include('layouts.partials.javascript')
     </body>
 </html>
