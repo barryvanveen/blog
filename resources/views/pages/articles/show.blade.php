@@ -2,6 +2,8 @@
 
 @extends('layouts.base')
 
+@section('title', $title)
+
 @section('body')
 
     <article itemprop="mainEntity" itemscope="" itemtype="https://schema.org/BlogPosting">

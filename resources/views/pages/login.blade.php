@@ -1,5 +1,7 @@
 @extends('layouts.login')
 
+@section('title', 'Login')
+
 @section('body')
     <section>
         <div class="w-full max-w-xs mx-auto py-10 text-gray-700 text-sm">
