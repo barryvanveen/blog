@@ -32,7 +32,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     {
         $articles = $this->builder
             ->table('articles')
-            ->where('status', '=', ArticleStatus::published())
+            ->where('status', '=', (string) ArticleStatus::published())
             ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
             ->orderBy('published_at', 'desc')
             ->get();

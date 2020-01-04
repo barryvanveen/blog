@@ -20,6 +20,6 @@ interface QueryBuilderInterface
 
     public function update(array $values): int;
 
-    public function where(string $column, string $operator, $value, string $boolean = 'and'):
+    public function where(string $column, string $operator, string $value, string $boolean = 'and'):
     QueryBuilderInterface;
 }

@@ -70,7 +70,7 @@ class LaravelQueryBuilder implements QueryBuilderInterface
     public function where(
         string $column,
         string $operator = null,
-        $value = null,
+        string $value = '',
         string $boolean = 'and'
     ): QueryBuilderInterface {
         $this->builder->where($column, $operator, $value, $boolean);
