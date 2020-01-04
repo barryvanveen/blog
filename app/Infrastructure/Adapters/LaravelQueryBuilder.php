@@ -7,27 +7,16 @@ namespace App\Infrastructure\Adapters;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Core\CollectionInterface;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Query\Builder;
 
 class LaravelQueryBuilder implements QueryBuilderInterface
 {
-    /** @var DatabaseManager */
-    private $databaseManager;
-
     /** @var Builder */
     private $builder;
 
-    public function __construct(DatabaseManager $databaseManager)
+    public function __construct(Builder $builder)
     {
-        $this->databaseManager = $databaseManager;
-    }
-
-    public function table(string $table): QueryBuilderInterface
-    {
-        $this->builder = $this->databaseManager->table($table);
-
-        return $this;
+        $this->builder = $builder;
     }
 
     public function get(array $columns = ['*']): CollectionInterface
@@ -70,7 +59,7 @@ class LaravelQueryBuilder implements QueryBuilderInterface
     public function where(
         string $column,
         string $operator = null,
-        $value = null,
+        string $value = '',
         string $boolean = 'and'
     ): QueryBuilderInterface {
         $this->builder->where($column, $operator, $value, $boolean);

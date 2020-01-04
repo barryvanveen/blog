@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\ViewBuilderInterface;
-use App\Infrastructure\Exceptions\ViewException;
 use Illuminate\Contracts\View\Factory;
 
 class LaravelViewBuilder implements ViewBuilderInterface
@@ -20,12 +19,6 @@ class LaravelViewBuilder implements ViewBuilderInterface
 
     public function render(string $view, array $data = []): string
     {
-        $rendered = $this->laravelViewFactory->make($view, $data)->render();
-
-        if (is_string($rendered)) {
-            return $rendered;
-        }
-
-        throw ViewException::renderShouldReturnString($view);
+        return $this->laravelViewFactory->make($view, $data)->render();
     }
 }

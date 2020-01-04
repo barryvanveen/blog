@@ -31,7 +31,7 @@ final class BaseViewPresenter implements PresenterInterface
     public function present(): array
     {
         return [
-            'base_url' => $this->configuration->get('app.url'),
+            'base_url' => $this->configuration->string('app.url'),
             'csrf_token' => $this->session->token(),
             'css_path' => $this->assetUrlBuilder->get('app.css'),
             'js_path' => $this->assetUrlBuilder->get('app.js'),
@@ -44,7 +44,7 @@ final class BaseViewPresenter implements PresenterInterface
         return str_replace(
             '_',
             '-',
-            $this->configuration->get('app.locale')
+            $this->configuration->string('app.locale')
         );
     }
 }

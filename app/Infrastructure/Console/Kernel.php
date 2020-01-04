@@ -7,6 +7,7 @@ namespace App\Infrastructure\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 class Kernel extends ConsoleKernel
 {
     /**

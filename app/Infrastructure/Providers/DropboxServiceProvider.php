@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Providers;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
@@ -14,7 +15,7 @@ class DropboxServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        Storage::extend('dropbox', function ($app, $config) {
+        Storage::extend('dropbox', function (Application $app, array $config) {
             $client = new Client(
                 $config['authorizationToken']
             );

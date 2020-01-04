@@ -8,8 +8,6 @@ use App\Domain\Core\CollectionInterface;
 
 interface QueryBuilderInterface
 {
-    public function table(string $table): QueryBuilderInterface;
-
     public function get(array $columns = ['*']): CollectionInterface;
 
     public function first(): object;
@@ -20,6 +18,6 @@ interface QueryBuilderInterface
 
     public function update(array $values): int;
 
-    public function where(string $column, string $operator, $value, string $boolean = 'and'):
+    public function where(string $column, string $operator, string $value, string $boolean = 'and'):
     QueryBuilderInterface;
 }

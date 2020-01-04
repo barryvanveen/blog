@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Application\Core\UniqueIdGenerator;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
-use App\Infrastructure\Faker\LoremHtmlProvider;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -13,13 +12,12 @@ use Illuminate\Support\Str;
 
 $factory->define(ArticleEloquentModel::class, function (Faker $faker) {
     $uniqueIdGenerator = new UniqueIdGenerator();
-    $faker->addProvider(new LoremHtmlProvider($faker));
 
     $title = $faker->realText(200);
 
     return [
-        'content' => $faker->htmlArticle,
-        'description' => $faker->htmlParagraph,
+        'content' => $faker->paragraph,
+        'description' => $faker->paragraph,
         'published_at' => $faker->dateTimeBetween('-1 year', '-1 hour'),
         'slug' => Str::slug($title),
         'status' => ArticleStatus::published(),

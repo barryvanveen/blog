@@ -18,36 +18,40 @@ class LaravelConfigurationTest extends TestCase
     /**
      * @test
      *
-     * @dataProvider configurationDataProvider
+     * @dataProvider stringDataProvider
      */
-    public function itGetsConfigurationItems($value, $expected): void
+    public function itGetsConfigurationStrings($value, $expected): void
     {
         /** @var ObjectProphecy|Repository $repository */
         $repository = $this->prophesize(Repository::class);
 
         $repository
-            ->get(Argument::type('string'), Argument::exact(null))
+            ->get(Argument::type('string'), Argument::exact(''))
             ->willReturn($value);
 
         $configuration = new LaravelConfiguration($repository->reveal());
 
-        $this->assertEquals($expected, $configuration->get('myKey'));
+        $this->assertEquals($expected, $configuration->string('myKey'));
     }
 
-    public function configurationDataProvider()
+    public function stringDataProvider()
     {
         return [
             [
                 1,
-                1,
+                '1',
             ],
             [
                 'myValue',
                 'myValue',
             ],
             [
+                '',
+                '',
+            ],
+            [
                 null,
-                null,
+                '',
             ],
         ];
     }

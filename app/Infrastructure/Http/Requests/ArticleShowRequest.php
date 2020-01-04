@@ -8,6 +8,7 @@ use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use App\Infrastructure\Exceptions\InvalidRouteParameterException;
 use Illuminate\Foundation\Http\FormRequest;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 class ArticleShowRequest extends FormRequest implements ArticleShowRequestInterface
 {
     public function authorize(): bool

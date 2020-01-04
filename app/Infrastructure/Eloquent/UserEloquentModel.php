@@ -29,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|UserEloquentModel whereUpdatedAt($value)
  * @method static Builder|UserEloquentModel whereUuid($value)
  * @mixin \Eloquent
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class UserEloquentModel extends Authenticatable
 {

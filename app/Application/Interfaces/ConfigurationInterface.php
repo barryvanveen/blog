@@ -6,5 +6,5 @@ namespace App\Application\Interfaces;
 
 interface ConfigurationInterface
 {
-    public function get(string $key);
+    public function string(string $key): string;
 }
