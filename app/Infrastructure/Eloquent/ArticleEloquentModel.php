@@ -33,6 +33,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ArticleEloquentModel whereUpdatedAt($value)
  * @method static Builder|ArticleEloquentModel whereUuid($value)
  * @mixin \Eloquent
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class ArticleEloquentModel extends Model
 {
