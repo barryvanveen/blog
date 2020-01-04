@@ -17,8 +17,8 @@ class LaravelConfiguration implements ConfigurationInterface
         $this->config = $config;
     }
 
-    public function get(string $key)
+    public function string(string $key): string
     {
-        return $this->config->get($key, null);
+        return (string) $this->config->get($key, '');
     }
 }
