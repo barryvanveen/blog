@@ -22,9 +22,9 @@ class LaravelRateLimiter implements RateLimiterInterface
         return $this->laravelRateLimiter->tooManyAttempts($key, $maxAttempts);
     }
 
-    public function hit(string $key, int $decayMinutes = 1): int
+    public function hit(string $key, int $decayInSeconds = 60): int
     {
-        return $this->laravelRateLimiter->hit($key, $decayMinutes);
+        return $this->laravelRateLimiter->hit($key, $decayInSeconds);
     }
 
     public function clear(string $key): void

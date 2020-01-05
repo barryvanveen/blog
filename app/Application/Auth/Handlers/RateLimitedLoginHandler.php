@@ -14,10 +14,9 @@ use App\Domain\Core\CommandHandlerInterface;
 
 final class RateLimitedLoginHandler extends BaseCommandHandler
 {
-    // todo: these should be config values
     private const MAX_ATTEMPTS = 5;
 
-    private const DECAY_MINUTES = 1;
+    private const DECAY_IN_SECONDS = 60;
 
     /** @var CommandHandlerInterface */
     private $loginHandler;
@@ -82,7 +81,7 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
 
     private function incrementLoginAttempts(Login $command): void
     {
-        $this->limiter->hit($this->throttleKey($command), self::DECAY_MINUTES);
+        $this->limiter->hit($this->throttleKey($command), self::DECAY_IN_SECONDS);
     }
 
     private function clearLoginAttempts(Login $command): void
