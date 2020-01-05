@@ -17,23 +17,13 @@ final class LaravelTranslator implements TranslatorInterface
         $this->translator = $laravelTranslator;
     }
 
-    public function get(string $key, array $replace = [], $locale = null): string
+    public function get(string $key, array $replace = []): string
     {
-        return (string) $this->translator->get($key, $replace, $locale);
+        return (string) $this->translator->get($key, $replace);
     }
 
-    public function choice(string $key, int $number, array $replace = [], $locale = null): string
+    public function choice(string $key, int $number, array $replace = []): string
     {
-        return $this->translator->choice($key, $number, $replace, $locale);
-    }
-
-    public function getLocale(): string
-    {
-        return (string) $this->translator->getLocale();
-    }
-
-    public function setLocale(string $locale): void
-    {
-        $this->translator->setLocale($locale);
+        return $this->translator->choice($key, $number, $replace);
     }
 }
