@@ -16,6 +16,7 @@ return [
 
     'paths' => [
         resource_path('views'),
+        base_path('tests/Unit/_data'),
     ],
 
     /*
