@@ -21,7 +21,6 @@ final class FooterPresenter implements PresenterInterface
     public function present(): array
     {
         return [
-            'home_url' => $this->urlGenerator->route('home'),
             'menu_items' => $this->getMenuItems(),
         ];
     }
