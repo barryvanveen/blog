@@ -28,6 +28,16 @@ final class ArticleRepository implements ArticleRepositoryInterface
         $this->modelMapper = $modelMapper;
     }
 
+    public function allOrdered(): CollectionInterface
+    {
+        $articles = $this->builderFactory
+            ->table('articles')
+            ->orderBy('published_at', 'desc')
+            ->get();
+
+        return $this->modelMapper->mapToDomainModels($articles);
+    }
+
     public function allPublishedAndOrdered(): CollectionInterface
     {
         $articles = $this->builderFactory

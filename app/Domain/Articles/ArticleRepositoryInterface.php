@@ -9,6 +9,8 @@ use App\Domain\Core\CollectionInterface;
 
 interface ArticleRepositoryInterface
 {
+    public function allOrdered(): CollectionInterface;
+
     public function allPublishedAndOrdered(): CollectionInterface;
 
     public function insert(Article $article): void;

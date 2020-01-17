@@ -35,6 +35,43 @@ class ArticleRepositoryTest extends TestCase
     }
 
     /** @test */
+    public function itRetrievesAllArticlesInTheCorrectOrder(): void
+    {
+        // arrange
+        factory(ArticleEloquentModel::class)->create([
+            'published_at' => Carbon::now()->subDays(4),
+            'status' => ArticleStatus::published(),
+            'title' => 'article1',
+        ]);
+        factory(ArticleEloquentModel::class)->create([
+            'published_at' => Carbon::now()->subDays(2),
+            'status' => ArticleStatus::unpublished(),
+            'title' => 'article2',
+        ]);
+        factory(ArticleEloquentModel::class)->create([
+            'published_at' => Carbon::now()->addDays(2),
+            'status' => ArticleStatus::published(),
+            'title' => 'article3',
+        ]);
+        factory(ArticleEloquentModel::class)->create([
+            'published_at' => Carbon::now()->addDays(4),
+            'status' => ArticleStatus::unpublished(),
+            'title' => 'article4',
+        ]);
+
+        // act
+        /** @var Article[] $articles */
+        $articles = $this->repository->allOrdered()->toArray();
+
+        // assert
+        $this->assertCount(4, $articles);
+        $this->assertEquals('article4', $articles[0]->title());
+        $this->assertEquals('article3', $articles[1]->title());
+        $this->assertEquals('article2', $articles[2]->title());
+        $this->assertEquals('article1', $articles[3]->title());
+    }
+
+    /** @test */
     public function itRetrievesOnlyPublishedArticles(): void
     {
         // arrange
