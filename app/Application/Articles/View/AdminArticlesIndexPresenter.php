@@ -46,7 +46,7 @@ final class AdminArticlesIndexPresenter implements PresenterInterface
                 'title' => $article->title(),
                 'status' => $article->isOnline() ? 'online' : 'offline',
                 'published_at' => $article->publishedAt()->format('M d, Y'),
-                'edit_url' => $this->urlGenerator->route('articles.index', []),
+                'edit_url' => $this->urlGenerator->route('admin.articles.edit', ['uuid' => $article->uuid()]),
             ];
         }
 

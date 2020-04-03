@@ -76,6 +76,11 @@ class Article
             $now->getTimestamp() > $this->publishedAt->getTimestamp();
     }
 
+    public function status(): ArticleStatus
+    {
+        return $this->status;
+    }
+
     public function title(): string
     {
         return $this->title;
