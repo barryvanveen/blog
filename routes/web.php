@@ -22,4 +22,5 @@ Route::post('/logout', [\App\Infrastructure\Http\Controllers\LoginController::cl
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [\App\Infrastructure\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/articles', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'index'])->name('admin.articles.index');
 });
