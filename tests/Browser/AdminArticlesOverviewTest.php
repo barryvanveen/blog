@@ -52,4 +52,18 @@ class AdminArticlesOverviewTest extends DuskTestCase
             }
         });
     }
+
+    /** @test */
+    public function editArticle(): void
+    {
+        $article = factory(ArticleEloquentModel::class)->create();
+
+        $this->browse(function (Browser $browser) use ($article) {
+            $browser
+                ->loginAs($this->user->uuid)
+                ->visit(new AdminArticlesOverviewPage())
+                ->click('@link')
+                ->assertRouteIs('admin.articles.edit', $article->uuid);
+        });
+    }
 }

@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 $factory->define(ArticleEloquentModel::class, function (Faker $faker) {
     $uniqueIdGenerator = new UniqueIdGenerator();
 
-    $title = $faker->realText(200);
+    $title = $faker->sentence;
 
     return [
         'content' => $faker->paragraph,

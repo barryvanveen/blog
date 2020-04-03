@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Requests;
 
-use App\Domain\Articles\Requests\ArticleShowRequestInterface;
+use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class ArticleShowRequest extends BaseRequest implements ArticleShowRequestInterface
+class AdminArticleEditRequest extends BaseRequest implements AdminArticleEditRequestInterface
 {
     public function rules(): array
     {
@@ -17,10 +17,5 @@ class ArticleShowRequest extends BaseRequest implements ArticleShowRequestInterf
     public function uuid(): string
     {
         return $this->getRouteParameterAsString('uuid');
-    }
-
-    public function slug(): string
-    {
-        return $this->getRouteParameterAsString('slug');
     }
 }
