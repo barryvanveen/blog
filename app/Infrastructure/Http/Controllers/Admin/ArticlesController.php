@@ -42,6 +42,11 @@ final class ArticlesController
         return $this->responseBuilder->ok('pages.admin.articles.index');
     }
 
+    public function create(): ResponseInterface
+    {
+        return $this->responseBuilder->ok('pages.admin.articles.create');
+    }
+
     public function edit(AdminArticleEditRequestInterface $request): ResponseInterface
     {
         try {

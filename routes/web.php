@@ -23,6 +23,7 @@ Route::post('/logout', [\App\Infrastructure\Http\Controllers\LoginController::cl
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [\App\Infrastructure\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/articles', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'index'])->name('admin.articles.index');
+    Route::get('/admin/articles/create', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'create'])->name('admin.articles.create');
     Route::get('/admin/articles/{uuid}/edit', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('admin.articles.edit');
     Route::put('/admin/articles/{uuid}', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'update'])->name('admin.articles.update');
 });
