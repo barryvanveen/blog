@@ -11,9 +11,11 @@ use App\Application\Articles\Handlers\CreateArticleHandler;
 use App\Application\Articles\Handlers\UpdateArticleHandler;
 use App\Application\Core\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Articles\Requests\AdminArticleCreateRequestInterface;
 use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;
 use App\Domain\Articles\Requests\AdminArticleUpdateRequestInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
+use App\Infrastructure\Http\Requests\AdminArticleCreateRequest;
 use App\Infrastructure\Http\Requests\AdminArticleEditRequest;
 use App\Infrastructure\Http\Requests\AdminArticleUpdateRequest;
 use App\Infrastructure\Http\Requests\ArticleShowRequest;
@@ -31,6 +33,7 @@ class ArticlesServiceProvider extends ServiceProvider
     {
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
         $this->app->bind(ArticleShowRequestInterface::class, ArticleShowRequest::class);
+        $this->app->bind(AdminArticleCreateRequestInterface::class, AdminArticleCreateRequest::class);
         $this->app->bind(AdminArticleEditRequestInterface::class, AdminArticleEditRequest::class);
         $this->app->bind(AdminArticleUpdateRequestInterface::class, AdminArticleUpdateRequest::class);
     }
