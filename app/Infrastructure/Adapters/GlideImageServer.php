@@ -9,9 +9,9 @@ use App\Application\Interfaces\ImageServerInterface;
 use App\Application\Interfaces\PathBuilderInterface;
 use League\Glide\Responses\PsrResponseFactory;
 use League\Glide\ServerFactory;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Stream;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class GlideImageServer implements ImageServerInterface
 {
@@ -21,14 +21,16 @@ class GlideImageServer implements ImageServerInterface
     /** @psalm-suppress MissingClosureParamType */
     public function __construct(
         PathBuilderInterface $pathBuilder,
-        FilesystemInterface $filesystem
+        FilesystemInterface $filesystem,
+        ResponseFactoryInterface $responseFactory,
+        StreamFactoryInterface $streamFactory
     ) {
         $this->glideServer = ServerFactory::create([
            'source' => $filesystem->getDriver(),
            'cache' => $pathBuilder->storagePath(''),
            'cache_path_prefix' => 'image-cache',
-            'response' => new PsrResponseFactory(new Response(), function ($stream) {
-                return new Stream($stream);
+            'response' => new PsrResponseFactory($responseFactory->createResponse(), function ($stream) use ($streamFactory) {
+                return $streamFactory->createStream($stream);
             }),
         ]);
     }

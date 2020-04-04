@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\Articles\Models;
+namespace Tests\Unit\Domain\Core;
 
 use App\Domain\Core\Enum;
 use Tests\TestCase;

@@ -35,6 +35,7 @@ return [
     'stores' => [
         'array' => [
             'driver' => 'array',
+            'serialize' => false,
         ],
 
         'file' => [

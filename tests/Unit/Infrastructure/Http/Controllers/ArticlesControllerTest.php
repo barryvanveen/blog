@@ -17,10 +17,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 use Tests\TestCase;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\StreamFactory;
 
 /**
  * @covers \App\Infrastructure\Http\Controllers\ArticlesController
@@ -183,17 +180,12 @@ class ArticlesControllerTest extends TestCase
         $this->assertEquals($response, $result);
     }
 
-    protected function buildStream(string $contents): StreamInterface
-    {
-        $factory = new StreamFactory();
-
-        return $factory->createStream($contents);
-    }
-
     protected function buildResponse(string $body, int $code): ResponseInterface
     {
-        $stream = $this->buildStream($body);
-
-        return new Response($stream, $code);
+        return $this->getResponseFactory()
+            ->createResponse($code)
+            ->withBody(
+                $this->getStreamFactory()->createStream($body)
+            );
     }
 }
