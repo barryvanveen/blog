@@ -11,7 +11,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "ext-pdo": "*",
-        "bepsvpt/secure-headers": "^5.5",
+        "bepsvpt/secure-headers": "^6.0",
         "bugsnag/bugsnag-laravel": "^2.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
@@ -36,7 +36,7 @@
         "phpunit/phpunit": "^8.5",
         "roave/security-advisories": "dev-master",
         "sensiolabs-de/deptrac-shim": "^0.6",
-        "slevomat/coding-standard": "~5.0",
+        "slevomat/coding-standard": "^6.0",
         "squizlabs/php_codesniffer": "^3.4",
         "vimeo/psalm": "^3.0"
     },
