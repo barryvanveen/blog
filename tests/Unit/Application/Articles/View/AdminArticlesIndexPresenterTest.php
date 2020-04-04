@@ -46,7 +46,8 @@ class AdminArticlesIndexPresenterTest extends TestCase
 
         /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
-        $urlGenerator->route(Argument::type('string'), Argument::type('array'))->willReturn('http://myurl');
+        $urlGenerator->route(Argument::exact('admin.articles.create'))->willReturn('http://newurl');
+        $urlGenerator->route(Argument::exact('admin.articles.edit'), Argument::type('array'))->willReturn('http://editurl');
 
         /** @var ObjectProphecy|ArticleRepositoryInterface $repository */
         $repository = $this->prophesize(ArticleRepositoryInterface::class);
@@ -65,16 +66,17 @@ class AdminArticlesIndexPresenterTest extends TestCase
                     'title' => $article1->title,
                     'status' => 'online',
                     'published_at' => 'Jan 17, 2020',
-                    'edit_url' => 'http://myurl',
+                    'edit_url' => 'http://editurl',
                 ],
                 [
                     'uuid' => $article2->uuid,
                     'title' => $article2->title,
                     'status' => 'offline',
                     'published_at' => 'Feb 18, 2020',
-                    'edit_url' => 'http://myurl',
+                    'edit_url' => 'http://editurl',
                 ],
             ],
+            'create_url' => 'http://newurl',
         ], $presenter->present());
     }
 }

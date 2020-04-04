@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Core\CommandBusInterface;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
-use DateTimeImmutable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -39,21 +36,6 @@ final class ArticlesController
     public function index(): ResponseInterface
     {
         return $this->responseBuilder->ok('pages.articles.index');
-    }
-
-    public function store(): ResponseInterface
-    {
-        $command = new CreateArticle(
-            'baz',
-            'bar',
-            new DateTimeImmutable(),
-            ArticleStatus::published(),
-            'Foo title'
-        );
-
-        $this->commandBus->dispatch($command);
-
-        return $this->responseBuilder->redirect(302, 'articles.index');
     }
 
     public function show(ArticleShowRequestInterface $request): ResponseInterface

@@ -1,4 +1,4 @@
-@presenter(App\Application\Articles\View\AdminArticlesEditPresenter)
+@presenter(App\Application\Articles\View\AdminArticlesCreatePresenter)
 @extends('layouts.base')
 
 @section('title', $title)
@@ -6,15 +6,14 @@
 @section('body')
     <h1>{{ $title }}</h1>
 
-    <form action="{{ $update_article_url }}" method="post" name="edit">
+    <form action="{{ $create_article_url }}" method="post" name="create">
         @csrf
-        @method('PUT')
 
         @include('pages.admin.articles.formfields', [
-            'article' => $article,
+            'article' => null,
             'statuses' => $statuses,
             'errors' => $errors,
-            'submit' => 'Edit',
+            'submit' => 'Create',
         ])
     </form>
 @endsection

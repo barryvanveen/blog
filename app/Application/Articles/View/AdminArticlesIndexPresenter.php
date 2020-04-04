@@ -30,6 +30,7 @@ final class AdminArticlesIndexPresenter implements PresenterInterface
         return [
             'title' => 'Articles',
             'articles' => $this->articles(),
+            'create_url' => $this->urlGenerator->route('admin.articles.create'),
         ];
     }
 

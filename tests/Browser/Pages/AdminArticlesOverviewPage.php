@@ -16,7 +16,8 @@ class AdminArticlesOverviewPage extends Page
         return [
             '@title' => 'main h1',
             '@table' => 'main table',
-            '@link' => 'main table a',
+            '@createLink' => 'main h1 + a',
+            '@editLink' => 'main table a',
         ];
     }
 }
