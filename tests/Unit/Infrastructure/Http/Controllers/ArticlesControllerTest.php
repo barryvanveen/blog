@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Http\Controllers;
 
-use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Core\CommandBusInterface;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
@@ -68,28 +67,6 @@ class ArticlesControllerTest extends TestCase
 
         // act
         $result = $this->controller->index();
-
-        // assert
-        $this->assertEquals($response, $result);
-    }
-
-    /** @test */
-    public function storeDispatchesCreateArticleCommandAndRedirects(): void
-    {
-        // arrange
-        $this->commandBus
-            ->dispatch(Argument::type(CreateArticle::class))
-            ->shouldBeCalled();
-
-        $response = $this->buildResponse('redirect', 302);
-
-        $this->responseBuilder
-            ->redirect(Argument::exact(302), Argument::type('string'))
-            ->shouldBeCalled()
-            ->willReturn($response);
-
-        // act
-        $result = $this->controller->store();
 
         // assert
         $this->assertEquals($response, $result);
