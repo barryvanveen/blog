@@ -19,8 +19,7 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 7.2
-    - php: 7.3
+    - php: 7.4
 
 cache:
   directories:
@@ -52,13 +51,13 @@ before_script:
 
 script:
   - vendor/bin/phpcs --standard=ruleset.xml
-  - if [[ $TRAVIS_PHP_VERSION = '7.3' ]]; then vendor/bin/psalm --show-info=false; fi
+  - vendor/bin/psalm --show-info=false
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
   - vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Feature --no-coverage
   - php artisan dusk
-  - if [[ $TRAVIS_PHP_VERSION = '7.3' ]]; then phpdismod -s cli xdebug &&
+  - phpdismod -s cli xdebug &&
     vendor/bin/deptrac &&
-    phpenmod -s cli xdebug; fi
+    phpenmod -s cli xdebug;
 
 after_script:
   - |
