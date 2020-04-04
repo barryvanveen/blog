@@ -62,8 +62,20 @@ class AdminArticlesOverviewTest extends DuskTestCase
             $browser
                 ->loginAs($this->user->uuid)
                 ->visit(new AdminArticlesOverviewPage())
-                ->click('@link')
+                ->click('@editLink')
                 ->assertRouteIs('admin.articles.edit', $article->uuid);
+        });
+    }
+
+    /** @test */
+    public function createArticle(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser
+                ->loginAs($this->user->uuid)
+                ->visit(new AdminArticlesOverviewPage())
+                ->click('@createLink')
+                ->assertRouteIs('admin.articles.create');
         });
     }
 }
