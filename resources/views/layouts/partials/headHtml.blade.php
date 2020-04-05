@@ -6,7 +6,12 @@
     <meta name="csrf-token" content="{{ $csrf_token }}">
     <base href="{{ $base_url }}">
 
-    <title>@yield('title') - A blog about web development - Barry van Veen</title>
+    <meta name="site_name" content="Barry van Veen" />
+    <meta property="og:site_name" content="Barry van Veen" />
+    <meta name="locale" content="en_EN" />
+    <meta property="og:locale" content="en_EN" />
+    @yield('headHtmlMetaTags')
 
+    <link rel="author" href="{{ $about_url }}">
     <link href="{{ $css_path }}" rel="stylesheet" type="text/css">
 </head>

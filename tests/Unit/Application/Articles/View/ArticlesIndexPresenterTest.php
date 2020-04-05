@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\Articles\View;
+namespace Tests\Unit\Application\View;
 
 use App\Application\Articles\View\ArticlesIndexPresenter;
+use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Utils\MetaData;
 use App\Infrastructure\Adapters\LaravelCollection;
+use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
 
 /**
@@ -19,16 +23,25 @@ class ArticlesIndexPresenterTest extends TestCase
     {
         $collection = new LaravelCollection();
 
-        /** @var ArticleRepositoryInterface $repository */
+        /** @var ObjectProphecy|ArticleRepositoryInterface $repository */
         $repository = $this->prophesize(ArticleRepositoryInterface::class);
         $repository->allPublishedAndOrdered()->willReturn($collection);
 
+        /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
+        $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
+        $urlGenerator->route(Argument::any())->willReturn('http://myurl');
+
         $presenter = new ArticlesIndexPresenter(
-            $repository->reveal()
+            $repository->reveal(),
+            $urlGenerator->reveal()
         );
 
-        $this->assertEquals([
-            'articles' => $collection,
-        ], $presenter->present());
+        $result = $presenter->present();
+
+        $this->assertArrayHasKey('articles', $result);
+        $this->assertEquals($collection, $result['articles']);
+
+        $this->assertArrayHasKey('metaData', $result);
+        $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }
 }

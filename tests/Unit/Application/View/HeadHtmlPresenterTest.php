@@ -6,6 +6,7 @@ namespace Tests\Unit\Application\View;
 
 use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\SessionInterface;
+use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Application\View\HeadHtmlPresenter;
 use Prophecy\Argument;
@@ -32,16 +33,22 @@ class HeadHtmlPresenterTest extends TestCase
         $session = $this->prophesize(SessionInterface::class);
         $session->token()->willReturn('myMockToken');
 
+        /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
+        $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
+        $urlGenerator->route(Argument::cetera())->willReturn('http://myapp.dev/about');
+
         $presenter = new HeadHtmlPresenter(
             $assetBuilder->reveal(),
             $configuration->reveal(),
-            $session->reveal()
+            $session->reveal(),
+            $urlGenerator->reveal()
         );
 
         $this->assertEquals([
             'base_url' => 'http://myapp.dev',
             'csrf_token' => 'myMockToken',
             'css_path' => '/path/to/app.css',
+            'about_url' => 'http://myapp.dev/about',
         ], $presenter->present());
     }
 }

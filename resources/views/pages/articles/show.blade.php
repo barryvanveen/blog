@@ -2,7 +2,9 @@
 
 @extends('layouts.base')
 
-@section('title', $title)
+@section('headHtmlMetaTags')
+    @include('layouts.partials.headHtmlMetaTags', ['metaData' => $metaData])
+@endsection
 
 @section('body')
 

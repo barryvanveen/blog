@@ -6,10 +6,12 @@ namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesItemPresenter;
 use App\Application\Interfaces\MarkdownConverterInterface;
+use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
+use App\Domain\Utils\MetaData;
 use DateTimeImmutable;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -50,17 +52,23 @@ class ArticlesItemPresenterTest extends TestCase
         $converter = $this->prophesize(MarkdownConverterInterface::class);
         $converter->convertToHtml(Argument::exact($content))->willReturn($html);
 
+        /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
+        $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
+        $urlGenerator->route(Argument::cetera())->willReturn('http://my-article-url');
+
         $presenter = new ArticlesItemPresenter(
             $repository->reveal(),
             $request->reveal(),
-            $converter->reveal()
+            $converter->reveal(),
+            $urlGenerator->reveal()
         );
 
-        $this->assertEquals([
-            'title' => $title,
-            'publicationDateInAtomFormat' => '2020-01-04T19:56:48+01:00',
-            'publicationDateInHumanFormat' => 'Jan 04, 2020',
-            'content' => $html,
-        ], $presenter->present());
+        $result = $presenter->present();
+
+        $this->assertEquals($title, $result['title']);
+        $this->assertEquals('2020-01-04T19:56:48+01:00', $result['publicationDateInAtomFormat']);
+        $this->assertEquals('Jan 04, 2020', $result['publicationDateInHumanFormat']);
+        $this->assertEquals($html, $result['content']);
+        $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }
 }

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Application\Articles\View;
 
 use App\Application\Interfaces\MarkdownConverterInterface;
+use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
+use App\Domain\Utils\MetaData;
 use DateTime;
 
 final class ArticlesItemPresenter implements PresenterInterface
@@ -22,14 +24,19 @@ final class ArticlesItemPresenter implements PresenterInterface
     /** @var MarkdownConverterInterface */
     private $markdownConverter;
 
+    /** @var UrlGeneratorInterface */
+    private $urlGenerator;
+
     public function __construct(
         ArticleRepositoryInterface $repository,
         ArticleShowRequestInterface $request,
-        MarkdownConverterInterface $markdownConverter
+        MarkdownConverterInterface $markdownConverter,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->repository = $repository;
         $this->request = $request;
         $this->markdownConverter = $markdownConverter;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function present(): array
@@ -41,6 +48,7 @@ final class ArticlesItemPresenter implements PresenterInterface
             'publicationDateInAtomFormat' => $this->publicationDateInAtomFormat($article),
             'publicationDateInHumanFormat' => $this->publicationDateInHumanFormat($article),
             'content' => $this->htmlContent($article),
+            'metaData' => $this->buildMetaData($article),
         ];
     }
 
@@ -58,6 +66,19 @@ final class ArticlesItemPresenter implements PresenterInterface
     {
         return $this->markdownConverter->convertToHtml(
             $article->content()
+        );
+    }
+
+    private function buildMetaData(Article $article): MetaData
+    {
+        return new MetaData(
+            $article->title(),
+            $article->description(),
+            $this->urlGenerator->route('articles.show', [
+                'uuid' => $article->uuid(),
+                'slug' => $article->slug(),
+            ], true),
+            MetaData::TYPE_ARTICLE
         );
     }
 }
