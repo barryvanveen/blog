@@ -36,6 +36,7 @@ before_install:
   - sudo apt-get install -y php-common
   - travis_retry composer self-update
   - mysql -e 'CREATE DATABASE homestead;'
+  - nvm install --lts
 
 install:
   - travis_retry composer install
