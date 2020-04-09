@@ -2,7 +2,9 @@
 
 @extends('layouts.base')
 
-@section('title', 'Articles')
+@section('headHtmlMetaTags')
+    @include('layouts.partials.headHtmlMetaTags', ['metaData' => $metaData])
+@endsection
 
 @section('body')
     <section itemscope itemtype="https://schema.org/Blog">
