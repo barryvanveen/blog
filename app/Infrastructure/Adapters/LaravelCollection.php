@@ -49,4 +49,9 @@ class LaravelCollection extends IteratorIterator implements CollectionInterface
     {
         return $this->collection->toArray();
     }
+
+    public function map(callable $callback): array
+    {
+        return $this->collection->map($callback)->toArray();
+    }
 }

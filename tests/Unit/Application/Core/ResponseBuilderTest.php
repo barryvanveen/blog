@@ -86,4 +86,23 @@ class ResponseBuilderTest extends TestCase
         $this->assertArrayHasKey('Location', $headers);
         $this->assertEquals('fooUrl', $headers['Location'][0]);
     }
+
+    /** @test */
+    public function itReturnsXmlResponse(): void
+    {
+        // arrange
+        $this->viewBuilder->render(Argument::type('string'))
+            ->willReturn('myViewString');
+
+        // act
+        $response = $this->responseBuilder->xml('articles.index');
+
+        // assert
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $headers = $response->getHeaders();
+        $this->assertArrayHasKey('Content-Type', $headers);
+        $this->assertEquals('text/xml', $headers['Content-Type'][0]);
+    }
 }

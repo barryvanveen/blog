@@ -53,4 +53,15 @@ class ResponseBuilder implements ResponseBuilderInterface
 
         return $response->withHeader('Location', $location);
     }
+
+    public function xml(string $view): ResponseInterface
+    {
+        $view = $this->viewBuilder->render($view);
+
+        $body = $this->streamFactory->createStream($view);
+
+        return $this->responseFactory->createResponse(200)
+            ->withBody($body)
+            ->withHeader('Content-Type', 'text/xml');
+    }
 }

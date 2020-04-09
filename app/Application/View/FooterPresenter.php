@@ -34,7 +34,7 @@ final class FooterPresenter implements PresenterInterface
             new MenuItem('© Barry van Veen', $this->urlGenerator->route('home')),
             new MenuItem('LinkedIn', 'https://www.linkedin.com/in/barryvanveen/', true),
             new MenuItem('GitHub', 'https://github.com/barryvanveen/', true),
-            new MenuItem('RSS', $this->urlGenerator->route('rss')),
+            new MenuItem('RSS', $this->urlGenerator->route('articles.rss')),
         ];
     }
 }
