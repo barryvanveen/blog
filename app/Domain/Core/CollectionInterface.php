@@ -18,4 +18,6 @@ interface CollectionInterface extends Countable, Traversable
     public function isNotEmpty(): bool;
 
     public function toArray(): array;
+
+    public function map(callable $callback): array;
 }

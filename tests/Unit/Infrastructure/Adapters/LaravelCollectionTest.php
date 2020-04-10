@@ -89,4 +89,24 @@ class LaravelCollectionTest extends TestCase
             '345',
         ], $array);
     }
+
+    /** @test */
+    public function itMapsACollectionIntoAnArray(): void
+    {
+        $items = [
+            '123',
+            '234',
+            '345',
+        ];
+
+        $array = LaravelCollection::make($items)->map(function (string $in): string {
+            return $in . 'x';
+        });
+
+        $this->assertEquals([
+            '123x',
+            '234x',
+            '345x',
+        ], $array);
+    }
 }
