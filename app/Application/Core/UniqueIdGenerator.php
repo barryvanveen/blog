@@ -10,6 +10,7 @@ class UniqueIdGenerator implements UniqueIdGeneratorInterface
 {
     public function generate(): string
     {
-        return uniqid('', true);
+        $bytes = openssl_random_pseudo_bytes(4);
+        return bin2hex($bytes);
     }
 }
