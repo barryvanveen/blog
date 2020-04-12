@@ -9,7 +9,6 @@ use App\Domain\Core\CommandInterface;
 use App\Infrastructure\CommandBus\LaravelCommandBus;
 use App\Infrastructure\CommandBus\LaravelCommandBusException;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Testing\Fakes\BusFake;
 use Tests\TestCase;
 use TypeError;
 
