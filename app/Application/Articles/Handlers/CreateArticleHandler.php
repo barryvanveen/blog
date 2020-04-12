@@ -32,9 +32,6 @@ final class CreateArticleHandler extends BaseCommandHandler
         $this->slugFactory = $slugFactory;
     }
 
-    /**
-     * @param CreateArticle $command
-     */
     public function handleCreateArticle(CreateArticle $command): void
     {
         $article = new Article(
