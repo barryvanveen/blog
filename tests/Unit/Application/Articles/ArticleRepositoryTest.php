@@ -136,7 +136,6 @@ class ArticleRepositoryTest extends TestCase
 
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'article-title']);
-        // todo: assert event was raised
     }
 
     /** @test */
@@ -170,7 +169,6 @@ class ArticleRepositoryTest extends TestCase
 
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'new-article-title']);
-        // todo: assert event was raised
     }
 
     /** @test */
