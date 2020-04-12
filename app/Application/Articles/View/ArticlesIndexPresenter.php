@@ -7,6 +7,7 @@ namespace App\Application\Articles\View;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Articles\Models\Article;
 use App\Domain\Utils\MetaData;
 
 final class ArticlesIndexPresenter implements PresenterInterface
@@ -28,9 +29,27 @@ final class ArticlesIndexPresenter implements PresenterInterface
     public function present(): array
     {
         return [
-            'articles' => $this->repository->allPublishedAndOrdered(),
+            'articles' => $this->articles(),
             'metaData' => $this->buildMetaData(),
         ];
+    }
+
+    private function articles(): array
+    {
+        /** @var Article[] $articles */
+        $articles = $this->repository->allPublishedAndOrdered();
+
+        $presentableArticles = [];
+
+        foreach ($articles as $article) {
+            $presentableArticles[] = [
+                'title' => $article->title(),
+                'description' => $article->description(),
+                'url' => $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()]),
+            ];
+        }
+
+        return $presentableArticles;
     }
 
     private function buildMetaData(): MetaData

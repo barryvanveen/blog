@@ -8,7 +8,7 @@ use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class Rss extends TestCase
+class RssTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "ext-openssl": "*",
         "ext-pdo": "*",
         "bepsvpt/secure-headers": "^6.0",
         "bugsnag/bugsnag-laravel": "^2.0",

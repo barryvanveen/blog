@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Articles;
 
-use App\Application\Articles\Events\ArticleWasCreated;
-use App\Application\Articles\Events\ArticleWasUpdated;
 use App\Application\Interfaces\ModelMapperInterface;
 use App\Application\Interfaces\QueryBuilderFactoryInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -55,8 +53,6 @@ final class ArticleRepository implements ArticleRepositoryInterface
         $this->builderFactory
             ->table('articles')
             ->insert($article->toArray());
-
-        event(new ArticleWasCreated($article));
     }
 
     public function update(Article $article): void
@@ -65,8 +61,6 @@ final class ArticleRepository implements ArticleRepositoryInterface
             ->table('articles')
             ->where('uuid', '=', $article->uuid())
             ->update($article->toArray());
-
-        event(new ArticleWasUpdated($article));
     }
 
     public function getByUuid(string $uuid): Article

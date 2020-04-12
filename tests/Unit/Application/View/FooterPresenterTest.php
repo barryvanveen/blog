@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\View;
 
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\FooterPresenter;
-use App\Domain\Menu\MenuItem;
+use App\Domain\Utils\MenuItem;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;

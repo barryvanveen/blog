@@ -15,6 +15,7 @@ use Tests\TestCase;
 /**
  * @covers \App\Infrastructure\Adapters\LaravelQueryBuilder
  * @covers \App\Infrastructure\Adapters\LaravelQueryBuilderFactory
+ * @covers \App\Application\Core\RecordNotFoundException
  */
 class LaravelQueryBuilderTest extends TestCase
 {

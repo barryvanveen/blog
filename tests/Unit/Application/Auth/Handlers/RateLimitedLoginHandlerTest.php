@@ -16,6 +16,8 @@ use Tests\TestCase;
 /**
  * @covers \App\Application\Auth\Commands\Login
  * @covers \App\Application\Auth\Handlers\RateLimitedLoginHandler
+ * @covers \App\Application\Auth\Exceptions\FailedLoginException
+ * @covers \App\Application\Auth\Exceptions\LockoutException
  */
 class RateLimitedLoginHandlerTest extends TestCase
 {

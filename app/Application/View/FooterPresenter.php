@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\View;
 
 use App\Application\Interfaces\UrlGeneratorInterface;
-use App\Domain\Menu\MenuItem;
+use App\Domain\Utils\MenuItem;
 
 final class FooterPresenter implements PresenterInterface
 {
@@ -26,7 +26,7 @@ final class FooterPresenter implements PresenterInterface
     }
 
     /**
-     * @return MenuItem[]
+     * @return \App\Domain\Utils\MenuItem[]
      */
     private function getMenuItems(): array
     {

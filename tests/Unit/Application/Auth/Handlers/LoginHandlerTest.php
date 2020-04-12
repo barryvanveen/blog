@@ -15,6 +15,7 @@ use Tests\TestCase;
 /**
  * @covers \App\Application\Auth\Commands\Login
  * @covers \App\Application\Auth\Handlers\LoginHandler
+ * @covers \App\Application\Auth\Exceptions\FailedLoginException
  */
 class LoginHandlerTest extends TestCase
 {

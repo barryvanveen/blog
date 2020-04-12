@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\View;
+namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesIndexPresenter;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Articles\Enums\ArticleStatus;
+use App\Domain\Articles\Models\Article;
 use App\Domain\Utils\MetaData;
 use App\Infrastructure\Adapters\LaravelCollection;
+use DateTimeImmutable;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -21,7 +24,19 @@ class ArticlesIndexPresenterTest extends TestCase
     /** @test */
     public function itPresentsTheCorrectValues(): void
     {
-        $collection = new LaravelCollection();
+        $article1 = new Article(
+            'myContent',
+            'myDescription',
+            new DateTimeImmutable(),
+            'my-slug',
+            ArticleStatus::published(),
+            'myTitle',
+            'my-uuid'
+        );
+
+        $collection = new LaravelCollection([
+            $article1,
+        ]);
 
         /** @var ObjectProphecy|ArticleRepositoryInterface $repository */
         $repository = $this->prophesize(ArticleRepositoryInterface::class);
@@ -29,7 +44,7 @@ class ArticlesIndexPresenterTest extends TestCase
 
         /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
-        $urlGenerator->route(Argument::any())->willReturn('http://myurl');
+        $urlGenerator->route(Argument::cetera())->willReturn('http://myurl');
 
         $presenter = new ArticlesIndexPresenter(
             $repository->reveal(),
@@ -39,7 +54,8 @@ class ArticlesIndexPresenterTest extends TestCase
         $result = $presenter->present();
 
         $this->assertArrayHasKey('articles', $result);
-        $this->assertEquals($collection, $result['articles']);
+        $this->assertCount(1, $result['articles']);
+        $this->assertEquals('myTitle', $result['articles'][0]['title']);
 
         $this->assertArrayHasKey('metaData', $result);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);
