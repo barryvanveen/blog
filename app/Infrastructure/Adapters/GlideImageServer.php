@@ -29,9 +29,9 @@ class GlideImageServer implements ImageServerInterface
            'source' => $filesystem->getDriver(),
            'cache' => $pathBuilder->storagePath(''),
            'cache_path_prefix' => 'image-cache',
-            'response' => new PsrResponseFactory($responseFactory->createResponse(), function ($stream) use ($streamFactory) {
+           'response' => new PsrResponseFactory($responseFactory->createResponse(), function ($stream) use ($streamFactory) {
                 return $streamFactory->createStream($stream);
-            }),
+           }),
         ]);
     }
 
