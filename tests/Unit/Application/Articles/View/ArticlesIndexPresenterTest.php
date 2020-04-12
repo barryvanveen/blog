@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Application\View;
+namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesIndexPresenter;
 use App\Application\Interfaces\UrlGeneratorInterface;
