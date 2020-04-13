@@ -4,21 +4,35 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Application\Auth\Requests\LoginRequestInterface;
 
-/** @psalm-suppress PropertyNotSetInConstructor */
-class LoginRequest extends FormRequest
+class LoginRequest extends BaseRequest implements LoginRequestInterface
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
             'email' => 'required|string',
             'password' => 'required|string',
         ];
+    }
+
+    public function email(): string
+    {
+        return $this->getInputParameterAsString('email');
+    }
+
+    public function password(): string
+    {
+        return $this->getInputParameterAsString('password');
+    }
+
+    public function remember(): bool
+    {
+        return $this->getFilledParameter('remember');
+    }
+
+    public function ip(): string
+    {
+        return (string) parent::ip();
     }
 }

@@ -47,4 +47,9 @@ class BaseRequest extends FormRequest
 
         return (int) $value;
     }
+
+    protected function getFilledParameter(string $parameter): bool
+    {
+        return $this->filled($parameter);
+    }
 }
