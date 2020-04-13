@@ -6,13 +6,18 @@ namespace Tests\Unit\Infrastructure\Adapters;
 
 use App\Infrastructure\Adapters\LaravelGuard;
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use App\Infrastructure\Exceptions\InvalidGuardException;
 use Auth;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\UnauthorizedException;
+use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
+use stdClass;
 
 /**
  * @covers \App\Infrastructure\Adapters\LaravelGuard
+ * @covers \App\Infrastructure\Exceptions\InvalidGuardException
  */
 class LaravelGuardTest extends TestCase
 {
@@ -21,11 +26,14 @@ class LaravelGuardTest extends TestCase
     /** @var LaravelGuard */
     private $guard;
 
+    /** @var UserEloquentModel */
+    private $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        factory(UserEloquentModel::class)->create([
+        $this->user = factory(UserEloquentModel::class)->create([
             'email' => 'foo@bar.baz',
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         ]);
@@ -37,12 +45,24 @@ class LaravelGuardTest extends TestCase
     }
 
     /** @test */
+    public function itThrowsAndExceptionWhenGivenAnIncorrectGuard(): void
+    {
+        /** @var ObjectProphecy|Factory $authFactory */
+        $authFactory = $this->prophesize(Factory::class);
+        $authFactory->guard()->willReturn(new StdClass());
+
+        $this->expectException(InvalidGuardException::class);
+
+        new LaravelGuard($authFactory->reveal());
+    }
+
+    /** @test */
     public function itPassesAuthentication(): void
     {
         $this->assertFalse(Auth::check());
 
         $this->assertTrue(
-            $this->guard->attempt('foo@bar.baz', 'secret')
+            $this->guard->attempt($this->user->email, 'secret')
         );
 
         $this->assertTrue(Auth::check());
@@ -66,7 +86,7 @@ class LaravelGuardTest extends TestCase
         $this->assertFalse(Auth::check());
 
         $this->assertFalse(
-            $this->guard->attempt('foo@bar.baz', 'Secr3t')
+            $this->guard->attempt($this->user->email, 'Secr3t')
         );
 
         $this->assertFalse(Auth::check());
@@ -75,12 +95,32 @@ class LaravelGuardTest extends TestCase
     /** @test */
     public function itLogsAnAuthenticatedUserOut(): void
     {
-        $this->guard->attempt('foo@bar.baz', 'secret');
+        Auth::login($this->user);
 
         $this->assertTrue(Auth::check());
 
         $this->guard->logout();
 
         $this->assertFalse(Auth::check());
+    }
+
+    /** @test */
+    public function itReturnsTheAuthenticatedUser(): void
+    {
+        Auth::login($this->user);
+
+        $result = $this->guard->user();
+
+        $this->assertEquals($this->user->email, $result->email());
+        $this->assertEquals($this->user->name, $result->name());
+        $this->assertEquals($this->user->uuid, $result->uuid());
+    }
+
+    /** @test */
+    public function itThrowsAnErrorIfUnauthenticated(): void
+    {
+        $this->expectException(UnauthorizedException::class);
+
+        $this->guard->user();
     }
 }
