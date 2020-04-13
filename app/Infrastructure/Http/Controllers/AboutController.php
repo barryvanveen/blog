@@ -4,12 +4,22 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
+use App\Application\Core\ResponseBuilderInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class AboutController extends Controller
+class AboutController
 {
-    public function index(): View
+    /** @var ResponseBuilderInterface */
+    private $responseBuilder;
+
+    public function __construct(
+        ResponseBuilderInterface $responseBuilder
+    ) {
+        $this->responseBuilder = $responseBuilder;
+    }
+
+    public function index(): ResponseInterface
     {
-        return $this->viewFactory->make('pages.about');
+        return $this->responseBuilder->ok('pages.about');
     }
 }
