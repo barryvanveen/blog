@@ -47,4 +47,14 @@ class LaravelSession implements SessionInterface
     {
         return $this->laravelSession->regenerate($destroy);
     }
+
+    /**
+     * Get the previous URL from the session.
+     *
+     * @return string|null
+     */
+    public function previousUrl(): ?string
+    {
+        return $this->laravelSession->previousUrl();
+    }
 }

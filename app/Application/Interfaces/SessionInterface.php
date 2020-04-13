@@ -27,4 +27,11 @@ interface SessionInterface
      * @return bool
      */
     public function regenerate(bool $destroy = false): bool;
+
+    /**
+     * Get the previous URL from the session.
+     *
+     * @return string|null
+     */
+    public function previousUrl(): ?string;
 }
