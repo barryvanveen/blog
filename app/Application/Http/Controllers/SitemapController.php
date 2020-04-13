@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Http\Controllers;
+namespace App\Application\Http\Controllers;
 
 use App\Application\Core\ResponseBuilderInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class AboutController
+class SitemapController
 {
     /** @var ResponseBuilderInterface */
     private $responseBuilder;
@@ -20,6 +20,6 @@ class AboutController
 
     public function index(): ResponseInterface
     {
-        return $this->responseBuilder->ok('pages.about');
+        return $this->responseBuilder->ok('pages.sitemap');
     }
 }
