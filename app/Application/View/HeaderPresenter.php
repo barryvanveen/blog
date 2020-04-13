@@ -46,6 +46,8 @@ final class HeaderPresenter implements PresenterInterface
     {
         return [
             new MenuItem('Articles', $this->urlGenerator->route('admin.articles.index')),
+            new MenuItem('Elements', $this->urlGenerator->route('admin.elements')),
+            new MenuItem('Logout', $this->urlGenerator->route('admin.dashboard')),
         ];
     }
 

@@ -27,4 +27,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/articles', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'store'])->name('admin.articles.store');
     Route::get('/admin/articles/{uuid}/edit', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('admin.articles.edit');
     Route::put('/admin/articles/{uuid}', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'update'])->name('admin.articles.update');
+
+    Route::get('/admin/elements', [\App\Application\Http\Controllers\Admin\ElementsController::class, 'index'])->name('admin.elements');
 });
