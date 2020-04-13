@@ -20,7 +20,7 @@ Route::middleware(['guest'])->group(function () {
 Route::post('/logout', [\App\Infrastructure\Http\Controllers\LoginController::class, 'logout'])->name('logout.post');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin', [\App\Infrastructure\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin', [\App\Application\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/articles', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'index'])->name('admin.articles.index');
     Route::get('/admin/articles/create', [\App\Infrastructure\Http\Controllers\Admin\ArticlesController::class, 'create'])->name('admin.articles.create');
