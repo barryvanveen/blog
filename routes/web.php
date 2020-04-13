@@ -11,7 +11,7 @@ Route::get('/articles/rss', [\App\Application\Http\Controllers\ArticlesRssContro
 Route::get('/articles/{uuid}-{slug}', [\App\Infrastructure\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');
 
 Route::get('/sitemap.xml', [\App\Infrastructure\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
-Route::get('/images/{filename}', [\App\Infrastructure\Http\Controllers\ImagesController::class, 'show'])->name('images');
+Route::get('/images/{filename}', [\App\Application\Http\Controllers\ImagesController::class, 'show'])->name('images');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [\App\Infrastructure\Http\Controllers\LoginController::class, 'form'])->name('login');
