@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Http\Controllers;
+namespace App\Application\Http\Controllers;
 
 use App\Application\Interfaces\ImageServerInterface;
 use Psr\Http\Message\ResponseInterface;
