@@ -6,6 +6,8 @@ namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\SessionInterface;
 use Illuminate\Session\Store;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 class LaravelSession implements SessionInterface
 {
@@ -46,5 +48,43 @@ class LaravelSession implements SessionInterface
     public function regenerate(bool $destroy = false): bool
     {
         return $this->laravelSession->regenerate($destroy);
+    }
+
+    /**
+     * Get the previous URL from the session.
+     *
+     * @return string|null
+     */
+    public function previousUrl(): ?string
+    {
+        return $this->laravelSession->previousUrl();
+    }
+
+    /**
+     * Get the intended URL from the session.
+     *
+     * @return string|null
+     */
+    public function intendedUrl(): ?string
+    {
+        return $this->laravelSession->pull('url.intended');
+    }
+
+    /**
+     * Flash set of error messages so they are visible on next page load.
+     *
+     * @param array $errors
+     */
+    public function flashErrors(array $errors): void
+    {
+        $errors = new MessageBag($errors);
+
+        $viewErrorBag = $this->laravelSession->get('errors', new ViewErrorBag);
+
+        if (! $viewErrorBag instanceof ViewErrorBag) {
+            $viewErrorBag = new ViewErrorBag;
+        }
+
+        $this->laravelSession->flash('errors', $viewErrorBag->put('default', $errors));
     }
 }

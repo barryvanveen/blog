@@ -27,4 +27,25 @@ interface SessionInterface
      * @return bool
      */
     public function regenerate(bool $destroy = false): bool;
+
+    /**
+     * Get the previous URL from the session.
+     *
+     * @return string|null
+     */
+    public function previousUrl(): ?string;
+
+    /**
+     * Get the intended URL from the session.
+     *
+     * @return string|null
+     */
+    public function intendedUrl(): ?string;
+
+    /**
+     * Flash set of error messages so they are visible on next page load.
+     *
+     * @param array $errors
+     */
+    public function flashErrors(array $errors): void;
 }
