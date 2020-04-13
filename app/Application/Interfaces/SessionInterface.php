@@ -34,4 +34,11 @@ interface SessionInterface
      * @return string|null
      */
     public function previousUrl(): ?string;
+
+    /**
+     * Flash set of error messages so they are visible on next page load.
+     *
+     * @param array $errors
+     */
+    public function flashErrors(array $errors): void;
 }
