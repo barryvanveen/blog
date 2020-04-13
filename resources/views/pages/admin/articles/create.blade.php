@@ -7,7 +7,7 @@
     <h1>{{ $title }}</h1>
 
     <form action="{{ $create_article_url }}" method="post" name="create">
-        @csrf
+        @include('pages.partials.input.csrf')
 
         @include('pages.admin.articles.formfields', [
             'article' => null,
