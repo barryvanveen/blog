@@ -61,6 +61,16 @@ class LaravelSession implements SessionInterface
     }
 
     /**
+     * Get the intended URL from the session.
+     *
+     * @return string|null
+     */
+    public function intendedUrl(): ?string
+    {
+        return $this->laravelSession->pull('url.intended');
+    }
+
+    /**
      * Flash set of error messages so they are visible on next page load.
      *
      * @param array $errors
