@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Http\Controllers;
+namespace App\Application\Http\Controllers;
 
 use App\Application\Auth\Commands\Login;
 use App\Application\Auth\Commands\Logout;
