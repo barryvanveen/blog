@@ -31,7 +31,7 @@ $factory->state(ArticleEloquentModel::class, 'published', [
 ]);
 
 $factory->state(ArticleEloquentModel::class, 'unpublished', [
-    'status' => ArticleStatus::published(),
+    'status' => ArticleStatus::unpublished(),
 ]);
 
 $factory->state(ArticleEloquentModel::class, 'published_in_past', function (Faker $faker) {
