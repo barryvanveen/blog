@@ -41,7 +41,7 @@ final class ArticlesItemPresenter implements PresenterInterface
 
     public function present(): array
     {
-        $article = $this->repository->getByUuid($this->request->uuid());
+        $article = $this->repository->getPublishedByUuid($this->request->uuid());
 
         return [
             'title' => $article->title(),

@@ -52,18 +52,4 @@ class ArticlesOverviewTest extends DuskTestCase
                 ->assertSee($article->title);
         });
     }
-
-    /** @test */
-    public function redirectToCorrectSlug():void
-    {
-        /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->create();
-
-        $this->browse(function (Browser $browser) use ($article) {
-            $browser
-                ->visitRoute('articles.show', ['uuid' => $article->uuid, 'slug' => 'incorrect-slug'])
-                ->assertRouteIs('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug])
-                ->assertSee($article->title);
-        });
-    }
 }

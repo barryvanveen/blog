@@ -63,6 +63,18 @@ final class ArticleRepository implements ArticleRepositoryInterface
             ->update($article->toArray());
     }
 
+    public function getPublishedByUuid(string $uuid): Article
+    {
+        $article = $this->builderFactory
+            ->table('articles')
+            ->where('uuid', '=', $uuid)
+            ->where('status', '=', (string) ArticleStatus::published())
+            ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
+            ->first();
+
+        return $this->modelMapper->mapToDomainModel($article);
+    }
+
     public function getByUuid(string $uuid): Article
     {
         $article = $this->builderFactory

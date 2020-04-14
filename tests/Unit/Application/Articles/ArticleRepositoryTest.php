@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Articles;
 
 use App\Application\Articles\ArticleRepository;
+use App\Application\Core\RecordNotFoundException;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
@@ -169,6 +170,50 @@ class ArticleRepositoryTest extends TestCase
 
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'new-article-title']);
+    }
+
+    /** @test */
+    public function itRetrievesAPublishedArticleByUUID(): void
+    {
+        // arrange
+        /** @var ArticleEloquentModel $eloquentArticle */
+        $eloquentArticle = factory(ArticleEloquentModel::class)
+            ->states(['published', 'published_in_past'])
+            ->create();
+        $article = $this->repository->getPublishedByUuid($eloquentArticle->uuid);
+
+        // assert
+        $this->assertInstanceOf(Article::class, $article);
+        $this->assertEquals($eloquentArticle->uuid, $article->uuid());
+        $this->assertEquals($eloquentArticle->title, $article->title());
+    }
+
+    /** @test */
+    public function itThrowsAnExceptionWhenRetrievingAnUnpublishedArticle(): void
+    {
+        // arrange
+        /** @var ArticleEloquentModel $eloquentArticle */
+        $eloquentArticle = factory(ArticleEloquentModel::class)
+            ->states(['unpublished', 'published_in_past'])
+            ->create();
+
+        // assert
+        $this->expectException(RecordNotFoundException::class);
+        $this->repository->getPublishedByUuid($eloquentArticle->uuid);
+    }
+
+    /** @test */
+    public function itThrowsAnExceptionWhenRetrievingAnArticlePublishedInTheFuture(): void
+    {
+        // arrange
+        /** @var ArticleEloquentModel $eloquentArticle */
+        $eloquentArticle = factory(ArticleEloquentModel::class)
+            ->states(['published', 'published_in_future'])
+            ->create();
+
+        // assert
+        $this->expectException(RecordNotFoundException::class);
+        $this->repository->getPublishedByUuid($eloquentArticle->uuid);
     }
 
     /** @test */
