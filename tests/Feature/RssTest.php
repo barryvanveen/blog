@@ -15,13 +15,11 @@ class RssTest extends TestCase
     /** @test */
     public function seeArticleRssFeed(): void
     {
-        /** @var ArticleEloquentModel[] $visibleArticle */
-        factory(ArticleEloquentModel::class)->states('published_in_past')->create([
+        factory(ArticleEloquentModel::class)->states(['published', 'published_in_past'])->create([
             'title' => 'FooArticle',
         ]);
 
-        /** @var ArticleEloquentModel[] $unvisibleArticles */
-        factory(ArticleEloquentModel::class)->states('published_in_future')->create([
+        factory(ArticleEloquentModel::class)->states(['unpublished', 'published_in_future'])->create([
             'title' => 'BarArticle',
         ]);
 
