@@ -8,52 +8,78 @@ use App\Application\Auth\Commands\Login;
 use App\Application\Auth\Commands\Logout;
 use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Exceptions\LockoutException;
+use App\Application\Auth\Requests\LoginRequestInterface;
 use App\Application\Core\CommandBusInterface;
+use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\TranslatorInterface;
-use App\Infrastructure\Http\Requests\LoginRequest;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Psr\Http\Message\ResponseInterface;
 
-class LoginController extends Controller
+class LoginController
 {
-    public function form(): View
-    {
-        return $this->viewFactory->make('pages.login');
+    /** @var ResponseBuilderInterface */
+    private $responseBuilder;
+
+    /** @var CommandBusInterface */
+    private $commandBus;
+
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var SessionInterface */
+    private $session;
+
+    public function __construct(
+        ResponseBuilderInterface $responseBuilder,
+        CommandBusInterface $commandBus,
+        TranslatorInterface $translator,
+        SessionInterface $session
+    ) {
+        $this->responseBuilder = $responseBuilder;
+        $this->commandBus = $commandBus;
+        $this->translator = $translator;
+        $this->session = $session;
     }
 
-    public function login(LoginRequest $request, CommandBusInterface $bus, TranslatorInterface $translator): RedirectResponse
+    public function form(): ResponseInterface
     {
-        /**
-         * @psalm-suppress PossiblyInvalidArgument
-         */
+        return $this->responseBuilder->ok('pages.login');
+    }
+
+    public function login(LoginRequestInterface $request): ResponseInterface
+    {
         $command = new Login(
-            $request->input('email'),
-            $request->input('password'),
-            $request->filled('remember'),
-            (string) $request->ip()
+            $request->email(),
+            $request->password(),
+            $request->remember(),
+            $request->ip()
         );
 
         try {
-            $bus->dispatch($command);
+            $this->commandBus->dispatch($command);
         } catch (FailedLoginException $e) {
-            return redirect()->back()->withErrors([
-                'email' => [$translator->get('auth.failed')],
+            $this->session->flashErrors([
+                'email' => [$this->translator->get('auth.failed')],
             ]);
+
+            return $this->responseBuilder->redirectBack(302);
         } catch (LockoutException $e) {
-            return redirect()->back()->withErrors([
-                'email' => [$translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()])],
+            $this->session->flashErrors([
+                'email' => $this->translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()]),
             ]);
+
+            return $this->responseBuilder->redirectBack(302);
         }
 
-        return $this->redirector->intended(route('admin.dashboard'));
+        return $this->responseBuilder->redirectIntended(302, 'admin.dashboard');
     }
 
-    public function logout(CommandBusInterface $bus): RedirectResponse
+    public function logout(): ResponseInterface
     {
         $command = new Logout();
 
-        $bus->dispatch($command);
+        $this->commandBus->dispatch($command);
 
-        return $this->redirector->route('home');
+        return $this->responseBuilder->redirect(302, 'home');
     }
 }
