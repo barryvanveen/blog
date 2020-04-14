@@ -14,10 +14,10 @@ Route::get('/sitemap.xml', [\App\Application\Http\Controllers\SitemapController:
 Route::get('/images/{filename}', [\App\Application\Http\Controllers\ImagesController::class, 'show'])->name('images');
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/login', [\App\Infrastructure\Http\Controllers\LoginController::class, 'form'])->name('login');
-    Route::post('/login', [\App\Infrastructure\Http\Controllers\LoginController::class, 'login'])->name('login.post');
+    Route::get('/login', [\App\Application\Http\Controllers\LoginController::class, 'form'])->name('login');
+    Route::post('/login', [\App\Application\Http\Controllers\LoginController::class, 'login'])->name('login.post');
 });
-Route::post('/logout', [\App\Infrastructure\Http\Controllers\LoginController::class, 'logout'])->name('logout.post');
+Route::post('/logout', [\App\Application\Http\Controllers\LoginController::class, 'logout'])->name('logout.post');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [\App\Application\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
