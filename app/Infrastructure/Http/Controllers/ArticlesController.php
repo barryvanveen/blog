@@ -41,7 +41,7 @@ final class ArticlesController
     public function show(ArticleShowRequestInterface $request): ResponseInterface
     {
         try {
-            $article = $this->articleRepository->getByUuid($request->uuid());
+            $article = $this->articleRepository->getPublishedByUuid($request->uuid());
         } catch (RecordNotFoundException $exception) {
             throw new ModelNotFoundException();
         }

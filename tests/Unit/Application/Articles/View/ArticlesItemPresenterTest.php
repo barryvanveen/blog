@@ -42,7 +42,7 @@ class ArticlesItemPresenterTest extends TestCase
 
         /** @var ObjectProphecy|ArticleRepositoryInterface $repository */
         $repository = $this->prophesize(ArticleRepositoryInterface::class);
-        $repository->getByUuid(Argument::exact($uuid))->willReturn($article);
+        $repository->getPublishedByUuid(Argument::exact($uuid))->willReturn($article);
 
         /** @var ObjectProphecy|ArticleShowRequestInterface $request */
         $request = $this->prophesize(ArticleShowRequestInterface::class);

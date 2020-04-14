@@ -81,7 +81,7 @@ class ArticlesControllerTest extends TestCase
             ->willReturn('asdasd');
 
         $this->articleRepository
-            ->getByUuid(Argument::exact('asdasd'))
+            ->getPublishedByUuid(Argument::exact('asdasd'))
             ->shouldBeCalled()
             ->willThrow(RecordNotFoundException::emptyResultSet());
 
@@ -119,7 +119,7 @@ class ArticlesControllerTest extends TestCase
         );
 
         $this->articleRepository
-            ->getByUuid(Argument::exact('asdasd'))
+            ->getPublishedByUuid(Argument::exact('asdasd'))
             ->shouldBeCalled()
             ->willReturn($article);
 
@@ -163,7 +163,7 @@ class ArticlesControllerTest extends TestCase
         );
 
         $this->articleRepository
-            ->getByUuid(Argument::exact('asdasd'))
+            ->getPublishedByUuid(Argument::exact('asdasd'))
             ->shouldBeCalled()
             ->willReturn($article);
 
