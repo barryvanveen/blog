@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Http\Controllers\Admin;
+namespace App\Application\Http\Controllers\Admin;
 
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Commands\UpdateArticle;
