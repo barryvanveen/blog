@@ -15,6 +15,7 @@ env:
     - DB_PASSWORD=
     - LOG_CHANNEL=single
     - BUGSNAG_API_KEY=
+    - SECURITY_HEADER_CSP_ENABLED=true
 
 matrix:
   fast_finish: true
