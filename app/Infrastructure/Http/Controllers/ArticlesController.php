@@ -7,9 +7,9 @@ namespace App\Infrastructure\Http\Controllers;
 use App\Application\Core\CommandBusInterface;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 
 final class ArticlesController
@@ -43,7 +43,7 @@ final class ArticlesController
         try {
             $article = $this->articleRepository->getPublishedByUuid($request->uuid());
         } catch (RecordNotFoundException $exception) {
-            throw new ModelNotFoundException();
+            throw NotFoundHttpException::create($exception);
         }
 
         if ($article->slug() !== $request->slug()) {

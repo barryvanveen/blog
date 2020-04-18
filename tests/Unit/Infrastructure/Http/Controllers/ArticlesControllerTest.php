@@ -7,13 +7,13 @@ namespace Tests\Unit\Infrastructure\Http\Controllers;
 use App\Application\Core\CommandBusInterface;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use App\Infrastructure\Http\Controllers\ArticlesController;
 use DateTimeImmutable;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
@@ -86,7 +86,7 @@ class ArticlesControllerTest extends TestCase
             ->willThrow(RecordNotFoundException::emptyResultSet());
 
         // assert
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(NotFoundHttpException::class);
 
         // act
         $this->controller->show($request->reveal());
