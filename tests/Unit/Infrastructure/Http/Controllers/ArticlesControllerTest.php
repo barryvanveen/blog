@@ -7,12 +7,12 @@ namespace Tests\Unit\Infrastructure\Http\Controllers;
 use App\Application\Core\CommandBusInterface;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Http\Controllers\ArticlesController;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
-use App\Infrastructure\Http\Controllers\ArticlesController;
 use DateTimeImmutable;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -20,7 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 use Tests\TestCase;
 
 /**
- * @covers \App\Infrastructure\Http\Controllers\ArticlesController
+ * @covers \App\Application\Http\Controllers\ArticlesController
  */
 class ArticlesControllerTest extends TestCase
 {
@@ -44,7 +44,7 @@ class ArticlesControllerTest extends TestCase
         $this->commandBus = $this->prophesize(CommandBusInterface::class);
         $this->responseBuilder = $this->prophesize(ResponseBuilderInterface::class);
 
-        $this->controller = new ArticlesController(
+        $this->controller = new \App\Application\Http\Controllers\ArticlesController(
             $this->articleRepository->reveal(),
             $this->commandBus->reveal(),
             $this->responseBuilder->reveal()
