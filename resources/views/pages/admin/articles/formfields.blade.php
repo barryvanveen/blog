@@ -17,6 +17,7 @@
 @include('pages.partials.input.radio', [
     'title' => 'Status',
     'name' => 'status',
+    'value' => $article['status'] ?? '',
     'options' => $statuses,
     'errors' => $errors,
 ])

@@ -64,14 +64,18 @@ class AdminArticlesEditTest extends DuskTestCase
     public function editArticleValidation(): void
     {
         $this->browse(function (Browser $browser) {
+            $publicationDate = '2020-04-04 11:51:00';
+
             $browser
                 ->loginAs($this->user->uuid)
                 ->visit(new AdminArticlesEditPage($this->article->uuid))
                 ->assertInputValue('@title', $this->article->title)
                 ->type('@title', '')
+                ->type('@publicationDate', $publicationDate)
                 ->click('@submit')
                 ->assertRouteIs('admin.articles.edit', ['uuid' => $this->article->uuid])
-                ->assertInputValue('@titleError', "The title field is required.");
+                ->assertSeeIn('@titleError', "The title field is required.")
+                ->assertInputValue('@publicationDate', $publicationDate);
         });
     }
 }
