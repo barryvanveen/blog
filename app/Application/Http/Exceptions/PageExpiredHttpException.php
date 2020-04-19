@@ -9,7 +9,7 @@ use Throwable;
 
 class PageExpiredHttpException extends Exception implements HttpExceptionInterface
 {
-    public static function create(Throwable $previous): self
+    public static function create(Throwable $previous): HttpExceptionInterface
     {
         return new self('Page Expired', 419, $previous);
     }

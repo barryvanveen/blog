@@ -9,7 +9,7 @@ use Throwable;
 
 class ForbiddenHttpException extends Exception implements HttpExceptionInterface
 {
-    public static function create(Throwable $previous): self
+    public static function create(Throwable $previous): HttpExceptionInterface
     {
         return new self('Forbidden', 403, $previous);
     }
