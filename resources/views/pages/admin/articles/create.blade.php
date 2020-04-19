@@ -10,7 +10,7 @@
         @include('pages.partials.input.csrf')
 
         @include('pages.admin.articles.formfields', [
-            'article' => null,
+            'article' => $article,
             'statuses' => $statuses,
             'errors' => $errors,
             'submit' => 'Create',

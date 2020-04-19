@@ -7,7 +7,7 @@
                 <input type="radio"
                        name="{{ $name }}"
                        value="{{ $option['value'] }}"
-                       @if($option['checked'])checked="checked"@endif
+                       @if($option['value'] === $value)checked="checked"@endif
                 >
                 <span class="ml-2">{{ $option['title'] }}</span>
             </label>

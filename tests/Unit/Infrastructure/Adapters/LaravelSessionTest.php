@@ -118,4 +118,18 @@ class LaravelSessionTest extends TestCase
         $this->assertCount(1, $errors);
         $this->assertEquals('newvalue', $errors->get('newkey')[0]);
     }
+
+    /** @test */
+    public function itGetsOldInputs(): void
+    {
+        $this->laravelSession->put('_old_input', [
+            'name' => 'oldName',
+        ]);
+
+        $session = new LaravelSession($this->laravelSession);
+
+        $this->assertEquals('oldName', $session->oldInput('name'));
+        $this->assertEquals(null, $session->oldInput('foo'));
+        $this->assertEquals('bar', $session->oldInput('foo', 'bar'));
+    }
 }

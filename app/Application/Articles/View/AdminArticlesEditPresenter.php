@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\View;
 
+use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -22,14 +23,19 @@ final class AdminArticlesEditPresenter implements PresenterInterface
     /** @var AdminArticleEditRequestInterface */
     private $request;
 
+    /** @var SessionInterface */
+    private $session;
+
     public function __construct(
         ArticleRepositoryInterface $repository,
         UrlGeneratorInterface $urlGenerator,
-        AdminArticleEditRequestInterface $request
+        AdminArticleEditRequestInterface $request,
+        SessionInterface $session
     ) {
         $this->repository = $repository;
         $this->urlGenerator = $urlGenerator;
         $this->request = $request;
+        $this->session = $session;
     }
 
     public function present(): array
@@ -48,11 +54,11 @@ final class AdminArticlesEditPresenter implements PresenterInterface
     private function article(Article $article): array
     {
         return [
-            'title' => $article->title(),
-            'published_at' => $article->publishedAt()->format("Y-m-d H:i:s"),
-            'description' => $article->description(),
-            'content' => $article->content(),
-            'status' => (string) $article->status(),
+            'title' => $this->session->oldInput('title') ?? $article->title(),
+            'published_at' => $this->session->oldInput('published_at') ?? $article->publishedAt()->format('Y-m-d H:i:s'),
+            'description' => $this->session->oldInput('description') ?? $article->description(),
+            'content' => $this->session->oldInput('content') ?? $article->content(),
+            'status' => $this->session->oldInput('status') ?? (string) $article->status(),
         ];
     }
 
@@ -62,12 +68,10 @@ final class AdminArticlesEditPresenter implements PresenterInterface
             [
                 'value' => (string) ArticleStatus::unpublished(),
                 'title' => 'Not published',
-                'checked' => $article->status()->equals(ArticleStatus::unpublished()),
             ],
             [
                 'value' => (string) ArticleStatus::published(),
                 'title' => 'Published',
-                'checked' => $article->status()->equals(ArticleStatus::published()),
             ],
         ];
     }

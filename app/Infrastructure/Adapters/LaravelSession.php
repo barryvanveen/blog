@@ -11,6 +11,12 @@ use Illuminate\Support\ViewErrorBag;
 
 class LaravelSession implements SessionInterface
 {
+    private const ERRORS_KEY = 'errors';
+
+    private const DEFAULT_VIEW_ERROR_BAG = 'default';
+
+    private const OLD_INPUT_KEY = '_old_input';
+
     /** @var Store */
     private $laravelSession;
 
@@ -79,12 +85,29 @@ class LaravelSession implements SessionInterface
     {
         $errors = new MessageBag($errors);
 
-        $viewErrorBag = $this->laravelSession->get('errors', new ViewErrorBag);
+        $viewErrorBag = $this->laravelSession->get(self::ERRORS_KEY, new ViewErrorBag);
 
-        if (! $viewErrorBag instanceof ViewErrorBag) {
+        if ($viewErrorBag instanceof ViewErrorBag === false) {
             $viewErrorBag = new ViewErrorBag;
         }
 
-        $this->laravelSession->flash('errors', $viewErrorBag->put('default', $errors));
+        $this->laravelSession->flash(
+            self::ERRORS_KEY,
+            $viewErrorBag->put(self::DEFAULT_VIEW_ERROR_BAG, $errors)
+        );
+    }
+
+    /**
+     * Get the requested item from the flashed input array.
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function oldInput(string $key, $default = null)
+    {
+        $oldInputs = $this->laravelSession->get(self::OLD_INPUT_KEY, []);
+
+        return $oldInputs[$key] ?? $default;
     }
 }

@@ -61,18 +61,21 @@ class AdminArticlesCreateTest extends DuskTestCase
     public function createArticleValidation(): void
     {
         $this->browse(function (Browser $browser) {
+            $publicationDate = '2020-04-04 11:51:00';
+
             $browser
                 ->loginAs($this->user->uuid)
                 ->visit(new AdminArticlesCreatePage())
                 ->type('@title', '')
-                ->type('@publicationDate', '2020-04-04 11:51:00')
+                ->type('@publicationDate', $publicationDate)
                 ->assertRadioSelected('@status', (string) ArticleStatus::published())
                 ->type('@description', 'Description')
                 ->type('@content', 'Content')
                 ->click('@submit')
                 ->click('@submit')
                 ->assertRouteIs('admin.articles.create')
-                ->assertInputValue('@titleError', "The title field is required.");
+                ->assertSeeIn('@titleError', "The title field is required.")
+                ->assertInputValue('@publicationDate', $publicationDate);
         });
     }
 }
