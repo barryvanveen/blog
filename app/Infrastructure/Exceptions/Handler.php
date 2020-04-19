@@ -35,12 +35,14 @@ use Whoops\Run as Whoops;
 
 final class Handler implements ExceptionHandlerContract
 {
-    protected $dontReport = [
+    /** @var string[] */
+    private $dontReport = [
         NotFoundHttpException::class,
         SymfonyNotFoundHttpException::class,
     ];
 
-    protected $dontFlash = [
+    /** @var string[] */
+    private $dontFlash = [
         'password',
         'password_confirmation',
     ];
@@ -80,7 +82,7 @@ final class Handler implements ExceptionHandlerContract
 
     public function shouldReport(Throwable $exception)
     {
-        $matches = array_filter($this->dontReport, function ($type) use ($exception) {
+        $matches = array_filter($this->dontReport, function (string $type) use ($exception) {
             return $exception instanceof $type;
         });
 
@@ -92,7 +94,7 @@ final class Handler implements ExceptionHandlerContract
         $exception = $this->mapFrameworkExceptionToHttpException($exception);
 
         if ($exception instanceof AuthenticationException) {
-            return $this->unauthenticated($exception);
+            return $this->unauthenticated();
         } elseif ($exception instanceof ValidationException) {
             return $this->invalid($request, $exception);
         }
@@ -115,11 +117,9 @@ final class Handler implements ExceptionHandlerContract
         return $exception;
     }
 
-    private function unauthenticated(AuthenticationException $exception): RedirectResponse
+    private function unauthenticated(): RedirectResponse
     {
-        return $this->redirector->guest(
-            $exception->redirectTo() ??  $this->urlGenerator->route('login')
-        );
+        return $this->redirector->guest($this->urlGenerator->route('login'));
     }
 
     private function invalid(Request $request, ValidationException $exception): RedirectResponse
@@ -155,9 +155,9 @@ final class Handler implements ExceptionHandlerContract
         return SymfonyResponse::create($this->getWhoopsOutput($exception), 500);
     }
 
-    private function getWhoopsOutput(Throwable $exception)
+    private function getWhoopsOutput(Throwable $exception): string
     {
-        return tap(new Whoops, function ($whoops) {
+        return tap(new Whoops, function (Whoops $whoops) {
             $whoops->appendHandler($this->whoopsHandler());
 
             $whoops->writeToOutput(false);

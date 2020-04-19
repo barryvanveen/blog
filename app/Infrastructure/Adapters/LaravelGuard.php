@@ -43,7 +43,7 @@ class LaravelGuard implements GuardInterface
 
     public function user(): User
     {
-        /** @var UserEloquentModel $laravelUser */
+        /** @var UserEloquentModel|null $laravelUser */
         $laravelUser = $this->laravelGuard->user();
 
         if ($laravelUser === null) {

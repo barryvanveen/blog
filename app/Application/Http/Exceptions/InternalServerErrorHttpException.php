@@ -9,7 +9,7 @@ use Throwable;
 
 class InternalServerErrorHttpException extends Exception implements HttpExceptionInterface
 {
-    public static function create(Throwable $previous): self
+    public static function create(Throwable $previous): HttpExceptionInterface
     {
         return new self('Internal Server Error', 500, $previous);
     }

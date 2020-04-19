@@ -6,7 +6,7 @@ namespace App\Application\Http\Exceptions;
 
 use Throwable;
 
-interface HttpExceptionInterface
+interface HttpExceptionInterface extends Throwable
 {
-    public static function create(Throwable $previous);
+    public static function create(Throwable $previous): HttpExceptionInterface;
 }
