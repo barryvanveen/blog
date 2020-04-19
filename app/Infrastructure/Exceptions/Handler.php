@@ -155,9 +155,9 @@ final class Handler implements ExceptionHandlerContract
         return SymfonyResponse::create($this->getWhoopsOutput($exception), 500);
     }
 
-    private function getWhoopsOutput(Throwable $exception)
+    private function getWhoopsOutput(Throwable $exception): string
     {
-        return tap(new Whoops, function ($whoops) {
+        return tap(new Whoops, function (Whoops $whoops) {
             $whoops->appendHandler($this->whoopsHandler());
 
             $whoops->writeToOutput(false);
