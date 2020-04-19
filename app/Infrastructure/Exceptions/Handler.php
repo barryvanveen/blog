@@ -82,7 +82,7 @@ final class Handler implements ExceptionHandlerContract
 
     public function shouldReport(Throwable $exception)
     {
-        $matches = array_filter($this->dontReport, function ($type) use ($exception) {
+        $matches = array_filter($this->dontReport, function (string $type) use ($exception) {
             return $exception instanceof $type;
         });
 
