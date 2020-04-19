@@ -46,8 +46,22 @@ final class AdminArticlesEditPresenter implements PresenterInterface
         return [
             'title' => 'Edit article',
             'update_article_url' => $this->urlGenerator->route('admin.articles.update', ['uuid' => $this->request->uuid()]),
-            'statuses' => $this->statuses($article),
+            'statuses' => $this->statuses(),
             'article' => $this->article($article),
+        ];
+    }
+
+    private function statuses(): array
+    {
+        return [
+            [
+                'value' => (string) ArticleStatus::unpublished(),
+                'title' => 'Not published',
+            ],
+            [
+                'value' => (string) ArticleStatus::published(),
+                'title' => 'Published',
+            ],
         ];
     }
 
@@ -59,20 +73,6 @@ final class AdminArticlesEditPresenter implements PresenterInterface
             'description' => $this->session->oldInput('description') ?? $article->description(),
             'content' => $this->session->oldInput('content') ?? $article->content(),
             'status' => $this->session->oldInput('status') ?? (string) $article->status(),
-        ];
-    }
-
-    private function statuses(Article $article): array
-    {
-        return [
-            [
-                'value' => (string) ArticleStatus::unpublished(),
-                'title' => 'Not published',
-            ],
-            [
-                'value' => (string) ArticleStatus::published(),
-                'title' => 'Published',
-            ],
         ];
     }
 }
