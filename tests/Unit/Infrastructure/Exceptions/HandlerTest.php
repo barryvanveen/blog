@@ -206,27 +206,6 @@ class HandlerTest extends TestCase
     }
 
     /** @test */
-    public function itRedirectsToTheRedirectToPathOnAuthenticationExceptions(): void
-    {
-        // arrange
-        $exception = new AuthenticationException(
-            'Unauthenticated',
-            [],
-            self::REDIRECT_TO_PATH
-        );
-
-        $this->redirector->guest(self::REDIRECT_TO_PATH)
-            ->willReturn(new RedirectResponse(self::REDIRECT_TO_PATH))
-            ->shouldBeCalled();
-
-        // act
-        $response = $this->handler->render($this->request->reveal(), $exception);
-
-        // assert
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-    }
-
-    /** @test */
     public function itRedirectsToTheLoginRouteOnAuthenticationExceptions(): void
     {
         // arrange

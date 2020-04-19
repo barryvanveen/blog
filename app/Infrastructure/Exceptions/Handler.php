@@ -94,7 +94,7 @@ final class Handler implements ExceptionHandlerContract
         $exception = $this->mapFrameworkExceptionToHttpException($exception);
 
         if ($exception instanceof AuthenticationException) {
-            return $this->unauthenticated($exception);
+            return $this->unauthenticated();
         } elseif ($exception instanceof ValidationException) {
             return $this->invalid($request, $exception);
         }
@@ -117,11 +117,9 @@ final class Handler implements ExceptionHandlerContract
         return $exception;
     }
 
-    private function unauthenticated(AuthenticationException $exception): RedirectResponse
+    private function unauthenticated(): RedirectResponse
     {
-        return $this->redirector->guest(
-            $exception->redirectTo() ??  $this->urlGenerator->route('login')
-        );
+        return $this->redirector->guest($this->urlGenerator->route('login'));
     }
 
     private function invalid(Request $request, ValidationException $exception): RedirectResponse
