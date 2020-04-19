@@ -48,4 +48,13 @@ interface SessionInterface
      * @param array $errors
      */
     public function flashErrors(array $errors): void;
+
+    /**
+     * Get the requested item from the flashed input array.
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function oldInput(string $key, $default = null);
 }
