@@ -35,12 +35,14 @@ use Whoops\Run as Whoops;
 
 final class Handler implements ExceptionHandlerContract
 {
-    protected $dontReport = [
+    /** @var string[] */
+    private $dontReport = [
         NotFoundHttpException::class,
         SymfonyNotFoundHttpException::class,
     ];
 
-    protected $dontFlash = [
+    /** @var string[] */
+    private $dontFlash = [
         'password',
         'password_confirmation',
     ];
