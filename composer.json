@@ -15,6 +15,7 @@
         "bepsvpt/secure-headers": "^6.0",
         "bugsnag/bugsnag-laravel": "^2.0",
         "fideloper/proxy": "^4.0",
+        "fig/http-message-util": "^1.1",
         "laravel/framework": "^7.0",
         "laravel/helpers": "^1.1",
         "laravel/tinker": "^2.0",
