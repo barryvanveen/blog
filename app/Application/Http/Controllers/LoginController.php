@@ -62,16 +62,16 @@ class LoginController
                 'email' => [$this->translator->get('auth.failed')],
             ]);
 
-            return $this->responseBuilder->redirectBack(302);
+            return $this->responseBuilder->redirectBack();
         } catch (LockoutException $e) {
             $this->session->flashErrors([
                 'email' => $this->translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()]),
             ]);
 
-            return $this->responseBuilder->redirectBack(302);
+            return $this->responseBuilder->redirectBack();
         }
 
-        return $this->responseBuilder->redirectIntended(302, 'admin.dashboard');
+        return $this->responseBuilder->redirectIntended('admin.dashboard');
     }
 
     public function logout(): ResponseInterface
@@ -80,6 +80,6 @@ class LoginController
 
         $this->commandBus->dispatch($command);
 
-        return $this->responseBuilder->redirect(302, 'home');
+        return $this->responseBuilder->redirect('home');
     }
 }

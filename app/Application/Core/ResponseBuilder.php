@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Core;
 
+use App\Application\Http\StatusCode;
 use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\Interfaces\ViewBuilderInterface;
@@ -54,11 +55,14 @@ class ResponseBuilder implements ResponseBuilderInterface
 
         $body = $this->streamFactory->createStream($view);
 
-        return $this->responseFactory->createResponse(200)->withBody($body);
+        return $this->responseFactory->createResponse(StatusCode::STATUS_OK)->withBody($body);
     }
 
-    public function redirect(int $status, string $route, array $routeParams = []): ResponseInterface
-    {
+    public function redirect(
+        string $route,
+        array $routeParams = [],
+        int $status = StatusCode::STATUS_FOUND
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse($status);
 
         $location = $this->urlGenerator->route($route, $routeParams);
@@ -66,7 +70,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         return $response->withHeader('Location', $location);
     }
 
-    public function redirectBack(int $status): ResponseInterface
+    public function redirectBack(int $status = StatusCode::STATUS_FOUND): ResponseInterface
     {
         $location = $this->determinePreviousUrl();
 
@@ -74,8 +78,10 @@ class ResponseBuilder implements ResponseBuilderInterface
             ->withHeader('Location', $location);
     }
 
-    public function redirectIntended(int $status, string $fallbackRoute): ResponseInterface
-    {
+    public function redirectIntended(
+        string $fallbackRoute,
+        int $status = StatusCode::STATUS_FOUND
+    ): ResponseInterface {
         $location = $this->session->intendedUrl() ?? $this->urlGenerator->route($fallbackRoute);
 
         return $this->responseFactory->createResponse($status)
@@ -88,7 +94,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
         $body = $this->streamFactory->createStream($view);
 
-        return $this->responseFactory->createResponse(200)
+        return $this->responseFactory->createResponse(StatusCode::STATUS_OK)
             ->withBody($body)
             ->withHeader('Content-Type', 'text/xml');
     }

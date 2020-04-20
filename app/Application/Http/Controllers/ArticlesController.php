@@ -8,6 +8,7 @@ use App\Application\Core\CommandBusInterface;
 use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Http\Exceptions\NotFoundHttpException;
+use App\Application\Http\StatusCode;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -48,12 +49,12 @@ final class ArticlesController
 
         if ($article->slug() !== $request->slug()) {
             return $this->responseBuilder->redirect(
-                301,
                 'articles.show',
                 [
                     'uuid' => $request->uuid(),
                     'slug' => $article->slug(),
-                ]
+                ],
+                StatusCode::STATUS_MOVED_PERMANENTLY
             );
         }
 

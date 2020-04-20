@@ -8,6 +8,7 @@ use App\Application\Http\Exceptions\ForbiddenHttpException;
 use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
+use App\Application\Http\StatusCode;
 use App\Infrastructure\Exceptions\Handler;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -108,15 +109,15 @@ class HandlerTest extends TestCase
     {
         return [
             [
-                'exception' => new NotFoundHttpException('MyMessage', 404),
+                'exception' => new NotFoundHttpException('MyMessage', StatusCode::STATUS_NOT_FOUND),
                 'shouldBeReported' => false,
             ],
             [
-                'exception' => new SuspiciousOperationException('MyMessage', 404),
+                'exception' => new SuspiciousOperationException('MyMessage', StatusCode::STATUS_NOT_FOUND),
                 'shouldBeReported' => true,
             ],
             [
-                'exception' => new Exception('MyMessage', 404),
+                'exception' => new Exception('MyMessage', StatusCode::STATUS_NOT_FOUND),
                 'shouldBeReported' => true,
             ],
         ];
@@ -126,7 +127,7 @@ class HandlerTest extends TestCase
     public function itRendersExceptions(): void
     {
         // arrange
-        $exception = new NotFoundHttpException('MyMessage', 404);
+        $exception = new NotFoundHttpException('MyMessage', StatusCode::STATUS_NOT_FOUND);
 
         $this->viewFactory->make('errors.404', Argument::type('array'))
             ->willReturn('myViewContent');
@@ -137,7 +138,7 @@ class HandlerTest extends TestCase
         // assert
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('myViewContent', $response->getContent());
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_NOT_FOUND, $response->getStatusCode());
     }
 
     /**
@@ -169,22 +170,22 @@ class HandlerTest extends TestCase
             [
                 'frameworkException' => new AuthorizationException(),
                 'httpExceptionClass' => ForbiddenHttpException::class,
-                'httpStatusCode' => 403,
+                'httpStatusCode' => StatusCode::STATUS_FORBIDDEN,
             ],
             [
                 'frameworkException' => new TokenMismatchException(),
                 'httpExceptionClass' => PageExpiredHttpException::class,
-                'httpStatusCode' => 419,
+                'httpStatusCode' => StatusCode::STATUS_PAGE_EXPIRED,
             ],
             [
                 'frameworkException' => new SymfonyNotFoundHttpException(),
                 'httpExceptionClass' => NotFoundHttpException::class,
-                'httpStatusCode' => 404,
+                'httpStatusCode' => StatusCode::STATUS_NOT_FOUND,
             ],
             [
                 'frameworkException' => new SuspiciousOperationException(),
                 'httpExceptionClass' => NotFoundHttpException::class,
-                'httpStatusCode' => 404,
+                'httpStatusCode' => StatusCode::STATUS_NOT_FOUND,
             ],
         ];
     }
@@ -202,7 +203,7 @@ class HandlerTest extends TestCase
         // assert
         $this->assertInstanceOf(Response::class, $response);
         $this->assertInstanceOf(InternalServerErrorHttpException::class, $response->exception);
-        $this->assertEquals(500, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_INTERNAL_SERVER_ERROR, $response->getStatusCode());
     }
 
     /** @test */
