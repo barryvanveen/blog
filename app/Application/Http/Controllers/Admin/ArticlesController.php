@@ -61,7 +61,7 @@ final class ArticlesController
 
         $this->commandBus->dispatch($command);
 
-        return $this->responseBuilder->redirect(302, 'admin.articles.index');
+        return $this->responseBuilder->redirect('admin.articles.index');
     }
 
     public function edit(AdminArticleEditRequestInterface $request): ResponseInterface
@@ -88,6 +88,6 @@ final class ArticlesController
 
         $this->commandBus->dispatch($command);
 
-        return $this->responseBuilder->redirect(302, 'admin.articles.index');
+        return $this->responseBuilder->redirect('admin.articles.index');
     }
 }

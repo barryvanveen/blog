@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Core;
 
 use App\Application\Core\ResponseBuilder;
+use App\Application\Http\StatusCode;
 use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\Interfaces\ViewBuilderInterface;
@@ -77,7 +78,7 @@ class ResponseBuilderTest extends TestCase
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_OK, $response->getStatusCode());
         $this->assertStringContainsString('myViewString', (string) $response->getBody());
     }
 
@@ -89,11 +90,11 @@ class ResponseBuilderTest extends TestCase
             ->willReturn('fooUrl');
 
         // act
-        $response = $this->responseBuilder->redirect(302, 'articles.index');
+        $response = $this->responseBuilder->redirect('articles.index');
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_FOUND, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Location', $headers);
@@ -118,11 +119,11 @@ class ResponseBuilderTest extends TestCase
         );
 
         // act
-        $response = $this->responseBuilder->redirectBack(302);
+        $response = $this->responseBuilder->redirectBack();
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_FOUND, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Location', $headers);
@@ -138,11 +139,11 @@ class ResponseBuilderTest extends TestCase
         $this->urlGenerator->route(Argument::any())->willReturn('http://fallback.url');
 
         // act
-        $response = $this->responseBuilder->redirectBack(302);
+        $response = $this->responseBuilder->redirectBack(StatusCode::STATUS_SEE_OTHER);
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_SEE_OTHER, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Location', $headers);
@@ -158,11 +159,11 @@ class ResponseBuilderTest extends TestCase
         $this->urlGenerator->route(Argument::any())->willReturn('http://fallback.url');
 
         // act
-        $response = $this->responseBuilder->redirectBack(302);
+        $response = $this->responseBuilder->redirectBack();
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_FOUND, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Location', $headers);
@@ -177,11 +178,11 @@ class ResponseBuilderTest extends TestCase
         $this->urlGenerator->route(Argument::any())->willReturn('http://fallback.url');
 
         // act
-        $response = $this->responseBuilder->redirectIntended(302, 'any');
+        $response = $this->responseBuilder->redirectIntended('any', StatusCode::STATUS_SEE_OTHER);
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_SEE_OTHER, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Location', $headers);
@@ -196,11 +197,11 @@ class ResponseBuilderTest extends TestCase
         $this->urlGenerator->route(Argument::any())->willReturn('http://fallback.url');
 
         // act
-        $response = $this->responseBuilder->redirectIntended(302, 'any');
+        $response = $this->responseBuilder->redirectIntended('any');
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_FOUND, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Location', $headers);
@@ -219,7 +220,7 @@ class ResponseBuilderTest extends TestCase
 
         // assert
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(StatusCode::STATUS_OK, $response->getStatusCode());
 
         $headers = $response->getHeaders();
         $this->assertArrayHasKey('Content-Type', $headers);

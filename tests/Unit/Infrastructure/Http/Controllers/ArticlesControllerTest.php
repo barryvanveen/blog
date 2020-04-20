@@ -9,6 +9,7 @@ use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Http\Controllers\ArticlesController;
 use App\Application\Http\Exceptions\NotFoundHttpException;
+use App\Application\Http\StatusCode;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
@@ -55,7 +56,7 @@ class ArticlesControllerTest extends TestCase
     public function indexReturnsIndexViewResponse(): void
     {
         // arrange
-        $response = $this->buildResponse('ok', 200);
+        $response = $this->buildResponse('ok', StatusCode::STATUS_OK);
 
         $this->responseBuilder
             ->ok(Argument::type('string'))
@@ -123,10 +124,14 @@ class ArticlesControllerTest extends TestCase
             ->shouldBeCalled()
             ->willReturn($article);
 
-        $response = $this->buildResponse('redirect', 301);
+        $response = $this->buildResponse('redirect', StatusCode::STATUS_MOVED_PERMANENTLY);
 
         $this->responseBuilder
-            ->redirect(Argument::exact(301), Argument::type('string'), Argument::type('array'))
+            ->redirect(
+                Argument::type('string'),
+                Argument::type('array'),
+                Argument::exact(StatusCode::STATUS_MOVED_PERMANENTLY)
+            )
             ->shouldBeCalled()
             ->willReturn($response);
 
@@ -167,7 +172,7 @@ class ArticlesControllerTest extends TestCase
             ->shouldBeCalled()
             ->willReturn($article);
 
-        $response = $this->buildResponse('ok', 200);
+        $response = $this->buildResponse('ok', StatusCode::STATUS_OK);
 
         $this->responseBuilder
             ->ok(Argument::type('string'))

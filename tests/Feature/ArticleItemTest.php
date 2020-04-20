@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Application\Http\StatusCode;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -36,7 +37,7 @@ class ArticleItemTest extends TestCase
 
         $response = $this->get(route('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug]));
 
-        $response->assertStatus(404);
+        $response->assertStatus(StatusCode::STATUS_NOT_FOUND);
         $response->assertSee('Not Found');
     }
 
@@ -51,7 +52,7 @@ class ArticleItemTest extends TestCase
 
         $response = $this->get(route('articles.show', ['uuid' => $article->uuid, 'slug' => 'wrong-slug']));
 
-        $response->assertStatus(301);
+        $response->assertStatus(StatusCode::STATUS_MOVED_PERMANENTLY);
         $response->assertRedirect(route('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug]));
     }
 }
