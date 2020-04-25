@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Articles;
 
+use App\Application\Articles\Events\ArticleWasCreated;
+use App\Application\Articles\Events\ArticleWasUpdated;
+use App\Application\Core\EventBusInterface;
 use App\Application\Interfaces\ModelMapperInterface;
 use App\Application\Interfaces\QueryBuilderFactoryInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -20,10 +23,17 @@ final class ArticleRepository implements ArticleRepositoryInterface
     /** @var ModelMapperInterface */
     private $modelMapper;
 
-    public function __construct(QueryBuilderFactoryInterface $builderFactory, ModelMapperInterface $modelMapper)
-    {
+    /** @var EventBusInterface */
+    private $eventBus;
+
+    public function __construct(
+        QueryBuilderFactoryInterface $builderFactory,
+        ModelMapperInterface $modelMapper,
+        EventBusInterface $eventBus
+    ) {
         $this->builderFactory = $builderFactory;
         $this->modelMapper = $modelMapper;
+        $this->eventBus = $eventBus;
     }
 
     public function allOrdered(): CollectionInterface
@@ -53,6 +63,8 @@ final class ArticleRepository implements ArticleRepositoryInterface
         $this->builderFactory
             ->table('articles')
             ->insert($article->toArray());
+
+        $this->eventBus->dispatch(new ArticleWasCreated($article->uuid()));
     }
 
     public function update(Article $article): void
@@ -61,6 +73,8 @@ final class ArticleRepository implements ArticleRepositoryInterface
             ->table('articles')
             ->where('uuid', '=', $article->uuid())
             ->update($article->toArray());
+
+        $this->eventBus->dispatch(new ArticleWasUpdated($article->uuid()));
     }
 
     public function getPublishedByUuid(string $uuid): Article

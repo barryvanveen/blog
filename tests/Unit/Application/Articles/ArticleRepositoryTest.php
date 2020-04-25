@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Articles;
 
 use App\Application\Articles\ArticleRepository;
+use App\Application\Articles\Events\ArticleWasCreated;
+use App\Application\Articles\Events\ArticleWasUpdated;
 use App\Application\Core\RecordNotFoundException;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
+use App\Infrastructure\Adapters\LaravelEventBus;
 use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
 use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Testing\Fakes\EventFake;
 use Tests\TestCase;
 
 /**
@@ -26,13 +31,20 @@ class ArticleRepositoryTest extends TestCase
     /** @var ArticleRepository */
     protected $repository;
 
+    /** @var EventFake */
+    private $laravelBusFake;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $queryBuilder = $this->app->make(LaravelQueryBuilderFactory::class);
         $articleMapper = $this->app->make(ArticleMapper::class);
-        $this->repository = new ArticleRepository($queryBuilder, $articleMapper);
+
+        $this->laravelBusFake = Event::fake();
+        $eventBus = new LaravelEventBus($this->laravelBusFake);
+
+        $this->repository = new ArticleRepository($queryBuilder, $articleMapper, $eventBus);
     }
 
     /** @test */
@@ -137,6 +149,7 @@ class ArticleRepositoryTest extends TestCase
 
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'article-title']);
+        $this->laravelBusFake->assertDispatchedTimes(ArticleWasCreated::class);
     }
 
     /** @test */
@@ -170,6 +183,7 @@ class ArticleRepositoryTest extends TestCase
 
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'new-article-title']);
+        $this->laravelBusFake->assertDispatchedTimes(ArticleWasUpdated::class);
     }
 
     /** @test */
