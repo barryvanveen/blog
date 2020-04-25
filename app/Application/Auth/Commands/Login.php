@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Auth\Commands;
 
-use App\Domain\Core\CommandInterface;
+use App\Application\Core\CommandInterface;
 
 class Login implements CommandInterface
 {

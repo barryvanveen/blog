@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Core;
 
-use App\Domain\Core\CommandHandlerInterface;
-use App\Domain\Core\CommandInterface;
-
 abstract class BaseCommandHandler implements CommandHandlerInterface
 {
     /**

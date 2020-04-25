@@ -8,8 +8,8 @@ use App\Application\Auth\Commands\Login;
 use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Auth\Handlers\RateLimitedLoginHandler;
+use App\Application\Core\CommandHandlerInterface;
 use App\Application\Interfaces\RateLimiterInterface;
-use App\Domain\Core\CommandHandlerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -21,7 +21,7 @@ use Tests\TestCase;
  */
 class RateLimitedLoginHandlerTest extends TestCase
 {
-    /** @var CommandHandlerInterface|MockObject */
+    /** @var \App\Application\Core\CommandHandlerInterface|MockObject */
     private $mockLoginHandler;
 
     /** @var RateLimiterInterface|MockObject */
