@@ -14,6 +14,7 @@ use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\TranslatorInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class LoginController
 {
@@ -29,16 +30,21 @@ class LoginController
     /** @var SessionInterface */
     private $session;
 
+    /** @var LoggerInterface */
+    private $logger;
+
     public function __construct(
         ResponseBuilderInterface $responseBuilder,
         CommandBusInterface $commandBus,
         TranslatorInterface $translator,
-        SessionInterface $session
+        SessionInterface $session,
+        LoggerInterface $logger
     ) {
         $this->responseBuilder = $responseBuilder;
         $this->commandBus = $commandBus;
         $this->translator = $translator;
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     public function form(): ResponseInterface
@@ -64,6 +70,8 @@ class LoginController
 
             return $this->responseBuilder->redirectBack();
         } catch (LockoutException $e) {
+            $this->logger->warning('Lockout triggered');
+
             $this->session->flashErrors([
                 'email' => $this->translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()]),
             ]);
