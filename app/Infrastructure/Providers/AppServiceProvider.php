@@ -28,6 +28,7 @@ use App\Application\View\AssetUrlBuilder;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Infrastructure\Adapters\CommonMarkMarkdownConverter;
 use App\Infrastructure\Adapters\GlideImageServer;
+use App\Infrastructure\Adapters\LaravelCommandBus;
 use App\Infrastructure\Adapters\LaravelConfiguration;
 use App\Infrastructure\Adapters\LaravelEventBus;
 use App\Infrastructure\Adapters\LaravelFilesystem;
@@ -41,7 +42,6 @@ use App\Infrastructure\Adapters\LaravelSlugFactory;
 use App\Infrastructure\Adapters\LaravelTranslator;
 use App\Infrastructure\Adapters\LaravelUrlGenerator;
 use App\Infrastructure\Adapters\LaravelViewBuilder;
-use App\Infrastructure\CommandBus\LaravelCommandBus;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
