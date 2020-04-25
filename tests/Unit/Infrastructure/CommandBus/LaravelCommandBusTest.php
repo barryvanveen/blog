@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Infrastructure\CommandBus;
 
 use App\Application\Core\BaseCommandHandler;
-use App\Domain\Core\CommandInterface;
+use App\Application\Core\CommandInterface;
 use App\Infrastructure\CommandBus\LaravelCommandBus;
 use App\Infrastructure\CommandBus\LaravelCommandBusException;
 use Illuminate\Support\Facades\Bus;
@@ -94,7 +94,7 @@ class LaravelCommandBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage('Command Tests\Unit\Infrastructure\CommandBus\NoCommand does not implement App\Domain\Core\CommandInterface');
+        $this->expectExceptionMessage('Command Tests\Unit\Infrastructure\CommandBus\NoCommand does not implement App\Application\Core\CommandInterface');
 
         // act
         $laravelCommandBus->subscribe(NoCommand::class, FooHandler::class);
@@ -108,7 +108,7 @@ class LaravelCommandBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage('Handler Tests\Unit\Infrastructure\CommandBus\NoHandler does not implement App\Domain\Core\CommandHandlerInterface');
+        $this->expectExceptionMessage('Handler Tests\Unit\Infrastructure\CommandBus\NoHandler does not implement App\Application\Core\CommandHandlerInterface');
 
         // act
         $laravelCommandBus->subscribe(FooCommand::class, NoHandler::class);

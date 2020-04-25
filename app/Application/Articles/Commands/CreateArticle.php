@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\Commands;
 
+use App\Application\Core\CommandInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Core\CommandInterface;
 use DateTimeImmutable;
 
 class CreateArticle implements CommandInterface

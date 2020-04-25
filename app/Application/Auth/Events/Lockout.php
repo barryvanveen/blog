@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Auth\Events;
 
-use App\Domain\Core\EventInterface;
+use App\Application\Core\EventInterface;
 
 class Lockout implements EventInterface
 {

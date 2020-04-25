@@ -9,8 +9,8 @@ use App\Application\Auth\Events\Lockout;
 use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Core\BaseCommandHandler;
+use App\Application\Core\CommandHandlerInterface;
 use App\Application\Interfaces\RateLimiterInterface;
-use App\Domain\Core\CommandHandlerInterface;
 
 final class RateLimitedLoginHandler extends BaseCommandHandler
 {

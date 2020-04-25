@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\CommandBus;
 
 use App\Application\Core\CommandBusInterface;
-use App\Domain\Core\CommandHandlerInterface;
-use App\Domain\Core\CommandInterface;
+use App\Application\Core\CommandHandlerInterface;
+use App\Application\Core\CommandInterface;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 

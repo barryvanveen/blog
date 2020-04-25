@@ -6,10 +6,10 @@ namespace App\Application\Articles\Handlers;
 
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Core\BaseCommandHandler;
+use App\Application\Core\UniqueIdGeneratorInterface;
 use App\Application\Interfaces\SlugFactoryInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
-use App\Domain\Core\UniqueIdGeneratorInterface;
 
 final class CreateArticleHandler extends BaseCommandHandler
 {

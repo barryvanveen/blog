@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\Core;
 
 use App\Application\Core\BaseCommandHandler;
 use App\Application\Core\CommandHandlerException;
-use App\Domain\Core\CommandInterface;
+use App\Application\Core\CommandInterface;
 use Tests\TestCase;
 
 class DummyCommand implements CommandInterface
