@@ -47,7 +47,7 @@ class LaravelCommandBusTest extends TestCase
     public function itDispatchesCommands(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
         $laravelCommandBus->subscribe(FooCommand::class, FooHandler::class);
 
         // act
@@ -63,7 +63,7 @@ class LaravelCommandBusTest extends TestCase
     public function itThrowsAnExceptionWhenNoHandlerIsSubscribed(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
@@ -77,7 +77,7 @@ class LaravelCommandBusTest extends TestCase
     public function itThrowsAnExceptionWhenDispatchingAWrongCommand(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
 
         // assert
         $this->expectException(TypeError::class);
@@ -90,7 +90,7 @@ class LaravelCommandBusTest extends TestCase
     public function itThrowsAnExceptionWhenSubscribingAWrongCommand(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
@@ -104,7 +104,7 @@ class LaravelCommandBusTest extends TestCase
     public function itThrowsAnExceptionWhenSubscribingAWrongHandler(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
