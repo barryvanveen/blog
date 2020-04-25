@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Auth\Handlers;
 
 use App\Application\Auth\Commands\Login;
-use App\Application\Auth\Events\Lockout;
 use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Core\BaseCommandHandler;
@@ -21,7 +20,7 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
     /** @var CommandHandlerInterface */
     private $loginHandler;
 
-    /** @var \App\Application\Interfaces\RateLimiterInterface */
+    /** @var RateLimiterInterface */
     private $limiter;
 
     public function __construct(
@@ -29,7 +28,6 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
         RateLimiterInterface $limiter
     ) {
         $this->loginHandler = $loginHandler;
-
         $this->limiter = $limiter;
     }
 
@@ -44,8 +42,6 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
     public function handleLogin(Login $command): void
     {
         if ($this->hasTooManyLoginAttempts($command)) {
-            event(new Lockout($command->email, $command->ip));
-
             throw $this->getLockoutException($command);
         }
 

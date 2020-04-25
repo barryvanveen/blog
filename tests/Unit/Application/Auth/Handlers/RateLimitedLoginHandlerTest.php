@@ -21,7 +21,7 @@ use Tests\TestCase;
  */
 class RateLimitedLoginHandlerTest extends TestCase
 {
-    /** @var \App\Application\Core\CommandHandlerInterface|MockObject */
+    /** @var CommandHandlerInterface|MockObject */
     private $mockLoginHandler;
 
     /** @var RateLimiterInterface|MockObject */
@@ -61,7 +61,10 @@ class RateLimitedLoginHandlerTest extends TestCase
         );
 
         // act
-        $handler = new RateLimitedLoginHandler($this->mockLoginHandler, $this->mockRateLimiter);
+        $handler = new RateLimitedLoginHandler(
+            $this->mockLoginHandler,
+            $this->mockRateLimiter
+        );
         $handler->handle($command);
 
         // assert done by mock expectations
@@ -96,7 +99,10 @@ class RateLimitedLoginHandlerTest extends TestCase
         $this->expectException(LockoutException::class);
 
         // act
-        $handler = new RateLimitedLoginHandler($this->mockLoginHandler, $this->mockRateLimiter);
+        $handler = new RateLimitedLoginHandler(
+            $this->mockLoginHandler,
+            $this->mockRateLimiter
+        );
         $handler->handle($command);
     }
 
@@ -129,7 +135,10 @@ class RateLimitedLoginHandlerTest extends TestCase
         $this->expectException(FailedLoginException::class);
 
         // act
-        $handler = new RateLimitedLoginHandler($this->mockLoginHandler, $this->mockRateLimiter);
+        $handler = new RateLimitedLoginHandler(
+            $this->mockLoginHandler,
+            $this->mockRateLimiter
+        );
         $handler->handle($command);
     }
 }
