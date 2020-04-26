@@ -55,4 +55,53 @@ class LaravelConfigurationTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @test
+     *
+     * @dataProvider booleanDataProvider
+     */
+    public function itGetsConfigurationBooleans($value, $expected): void
+    {
+        /** @var ObjectProphecy|Repository $repository */
+        $repository = $this->prophesize(Repository::class);
+
+        $repository
+            ->get(Argument::type('string'), Argument::exact(false))
+            ->willReturn($value);
+
+        $configuration = new LaravelConfiguration($repository->reveal());
+
+        $this->assertEquals($expected, $configuration->boolean('myKey'));
+    }
+
+    public function booleanDataProvider()
+    {
+        return [
+            [
+                1,
+                true,
+            ],
+            [
+                'myValue',
+                true,
+            ],
+            [
+                true,
+                true,
+            ],
+            [
+                false,
+                false,
+            ],
+            [
+                '',
+                false,
+            ],
+            [
+                null,
+                false,
+            ],
+        ];
+    }
 }
