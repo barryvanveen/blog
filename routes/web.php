@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [\App\Application\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/about', [\App\Application\Http\Controllers\AboutController::class, 'index'])->name('about');
-Route::get('/articles', [\App\Application\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');
-Route::get('/articles/rss', [\App\Application\Http\Controllers\ArticlesRssController::class, 'index'])->name('articles.rss');
-Route::get('/articles/{uuid}-{slug}', [\App\Application\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');
+Route::middleware(['cache'])->group(function () {
+    Route::get('/', [\App\Application\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/about', [\App\Application\Http\Controllers\AboutController::class, 'index'])->name('about');
+    Route::get('/articles', [\App\Application\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');
+    Route::get('/articles/rss', [\App\Application\Http\Controllers\ArticlesRssController::class, 'index'])->name('articles.rss');
+    Route::get('/articles/{uuid}-{slug}', [\App\Application\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');
 
-Route::get('/sitemap.xml', [\App\Application\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
-Route::get('/images/{filename}', [\App\Application\Http\Controllers\ImagesController::class, 'show'])->name('images');
+    Route::get('/sitemap.xml', [\App\Application\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+    Route::get('/images/{filename}', [\App\Application\Http\Controllers\ImagesController::class, 'show'])->name('images');
+});
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [\App\Application\Http\Controllers\LoginController::class, 'form'])->name('login');
