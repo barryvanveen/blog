@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Application\Core\EventBusInterface;
 use App\Application\Core\EventInterface;
 use App\Application\Core\EventListenerInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Infrastructure\Exceptions\LaravelEventBusException;
 use Illuminate\Contracts\Events\Dispatcher;
 

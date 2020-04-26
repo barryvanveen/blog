@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\Http\Controllers;
 
-use App\Application\Core\CommandBusInterface;
-use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;
+use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use Psr\Http\Message\ResponseInterface;

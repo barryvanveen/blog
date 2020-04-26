@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Providers;
 
-use App\Application\Core\CommandBusInterface;
-use App\Application\Core\EventBusInterface;
 use App\Application\Core\ResponseBuilder;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Core\UniqueIdGenerator;
 use App\Application\Core\UniqueIdGeneratorInterface;
+use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\ConfigurationInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\FilesystemInterface;
 use App\Application\Interfaces\GuardInterface;
 use App\Application\Interfaces\ImageServerInterface;
@@ -28,6 +28,7 @@ use App\Application\View\AssetUrlBuilder;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Infrastructure\Adapters\CommonMarkMarkdownConverter;
 use App\Infrastructure\Adapters\GlideImageServer;
+use App\Infrastructure\Adapters\LaravelCommandBus;
 use App\Infrastructure\Adapters\LaravelConfiguration;
 use App\Infrastructure\Adapters\LaravelEventBus;
 use App\Infrastructure\Adapters\LaravelFilesystem;
@@ -41,7 +42,6 @@ use App\Infrastructure\Adapters\LaravelSlugFactory;
 use App\Infrastructure\Adapters\LaravelTranslator;
 use App\Infrastructure\Adapters\LaravelUrlGenerator;
 use App\Infrastructure\Adapters\LaravelViewBuilder;
-use App\Infrastructure\CommandBus\LaravelCommandBus;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CommandBus;
+namespace App\Infrastructure\Exceptions;
 
 use App\Application\Core\CommandHandlerInterface;
 use App\Application\Core\CommandInterface;

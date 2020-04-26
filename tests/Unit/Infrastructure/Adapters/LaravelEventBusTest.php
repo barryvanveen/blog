@@ -6,6 +6,7 @@ namespace Tests\Unit\Infrastructure\Adapters;
 
 use App\Application\Core\BaseEventListener;
 use App\Application\Core\EventInterface;
+use App\Application\Core\EventListenerInterface;
 use App\Infrastructure\Adapters\LaravelEventBus;
 use App\Infrastructure\Exceptions\LaravelEventBusException;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -81,7 +82,6 @@ class LaravelEventBusTest extends TestCase
         $dispatcher = app()->make(Dispatcher::class);
         $laravelEventBus = new LaravelEventBus($dispatcher);
         $laravelEventBus->subscribe(FooEvent::class, FooListener::class);
-        //$laravelEventBus->subscribe(FooEvent::class, BarListener::class);
 
         // act
         $event = new FooEvent('asdasd');
@@ -135,10 +135,12 @@ class LaravelEventBusTest extends TestCase
     {
         // arrange
         $laravelEventBus = new LaravelEventBus(Event::fake());
+        $eventClassName = NoEvent::class;
+        $interfaceClassName = EventInterface::class;
 
         // assert
         $this->expectException(LaravelEventBusException::class);
-        $this->expectExceptionMessage('Event Tests\Unit\Infrastructure\Adapters\NoEvent does not implement App\Application\Core\EventInterface');
+        $this->expectExceptionMessage("Event ${eventClassName} does not implement ${interfaceClassName}");
 
         // act
         $laravelEventBus->subscribe(NoEvent::class, FooListener::class);
@@ -149,10 +151,12 @@ class LaravelEventBusTest extends TestCase
     {
         // arrange
         $laravelEventBus = new LaravelEventBus(Event::fake());
+        $listenerClassName = NoListener::class;
+        $interfaceClassName = EventListenerInterface::class;
 
         // assert
         $this->expectException(LaravelEventBusException::class);
-        $this->expectExceptionMessage('Listener Tests\Unit\Infrastructure\Adapters\NoListener does not implement App\Application\Core\EventListenerInterface');
+        $this->expectExceptionMessage("Listener ${listenerClassName} does not implement ${interfaceClassName}");
 
         // act
         $laravelEventBus->subscribe(FooEvent::class, NoListener::class);

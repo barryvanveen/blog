@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Http\Controllers;
 
-use App\Application\Core\CommandBusInterface;
-use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Controllers\ArticlesController;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;
+use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
@@ -45,7 +45,7 @@ class ArticlesControllerTest extends TestCase
         $this->commandBus = $this->prophesize(CommandBusInterface::class);
         $this->responseBuilder = $this->prophesize(ResponseBuilderInterface::class);
 
-        $this->controller = new \App\Application\Http\Controllers\ArticlesController(
+        $this->controller = new ArticlesController(
             $this->articleRepository->reveal(),
             $this->commandBus->reveal(),
             $this->responseBuilder->reveal()

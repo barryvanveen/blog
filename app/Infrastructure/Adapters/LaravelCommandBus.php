@@ -2,30 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CommandBus;
+namespace App\Infrastructure\Adapters;
 
-use App\Application\Core\CommandBusInterface;
 use App\Application\Core\CommandHandlerInterface;
 use App\Application\Core\CommandInterface;
+use App\Application\Interfaces\CommandBusInterface;
+use App\Infrastructure\Exceptions\LaravelCommandBusException;
 use Illuminate\Contracts\Bus\Dispatcher;
-use Illuminate\Contracts\Container\Container;
 
 final class LaravelCommandBus implements CommandBusInterface
 {
     /** @var Dispatcher */
     private $laravelDispatcher;
 
-    /** @var Container */
-    private $container;
-
-    /** @var array */
-    private $handlers = [];
-
-    public function __construct(Dispatcher $laravelDispatcher, Container $container)
+    public function __construct(Dispatcher $laravelDispatcher)
     {
         $this->laravelDispatcher = $laravelDispatcher;
-
-        $this->container = $container;
     }
 
     public function subscribe(string $commandClassName, string $handlerClassName): void
@@ -38,7 +30,7 @@ final class LaravelCommandBus implements CommandBusInterface
             throw LaravelCommandBusException::becauseHandlerIsInvalid($handlerClassName);
         }
 
-        $this->handlers[$commandClassName] = $handlerClassName;
+        $this->laravelDispatcher->map([$commandClassName => $handlerClassName]);
     }
 
     private function doesNotImplementInterface(string $subject, string $interface): bool
@@ -48,21 +40,10 @@ final class LaravelCommandBus implements CommandBusInterface
 
     public function dispatch(CommandInterface $command): void
     {
-        $handlerClassName = $this->getHandlerClassName($command);
-
-        $handler = $this->container->make($handlerClassName);
-
-        $this->laravelDispatcher->dispatchNow($command, $handler);
-    }
-
-    private function getHandlerClassName(CommandInterface $command): string
-    {
-        $commandClassName = get_class($command);
-
-        if (! isset($this->handlers[$commandClassName])) {
-            throw LaravelCommandBusException::becauseNoHandlerWasSubscribed($commandClassName);
+        if ($this->laravelDispatcher->hasCommandHandler($command) === false) {
+            throw LaravelCommandBusException::becauseNoHandlerWasSubscribed(get_class($command));
         }
 
-        return $this->handlers[$commandClassName];
+        $this->laravelDispatcher->dispatch($command);
     }
 }

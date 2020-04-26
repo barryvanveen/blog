@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Adapters;
 
-use App\Application\Core\RecordNotFoundException;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
@@ -15,7 +15,7 @@ use Tests\TestCase;
 /**
  * @covers \App\Infrastructure\Adapters\LaravelQueryBuilder
  * @covers \App\Infrastructure\Adapters\LaravelQueryBuilderFactory
- * @covers \App\Application\Core\RecordNotFoundException
+ * @covers \App\Application\Exceptions\RecordNotFoundException
  */
 class LaravelQueryBuilderTest extends TestCase
 {

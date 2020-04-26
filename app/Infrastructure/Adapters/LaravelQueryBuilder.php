@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Application\Core\RecordNotFoundException;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Core\CollectionInterface;
 use Illuminate\Database\Query\Builder;

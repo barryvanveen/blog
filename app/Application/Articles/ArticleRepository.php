@@ -6,7 +6,7 @@ namespace App\Application\Articles;
 
 use App\Application\Articles\Events\ArticleWasCreated;
 use App\Application\Articles\Events\ArticleWasUpdated;
-use App\Application\Core\EventBusInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\ModelMapperInterface;
 use App\Application\Interfaces\QueryBuilderFactoryInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;

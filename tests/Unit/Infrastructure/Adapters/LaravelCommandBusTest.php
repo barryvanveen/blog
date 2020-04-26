@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Infrastructure\CommandBus;
+namespace Tests\Unit\Infrastructure\Adapters;
 
 use App\Application\Core\BaseCommandHandler;
+use App\Application\Core\CommandHandlerInterface;
 use App\Application\Core\CommandInterface;
-use App\Infrastructure\CommandBus\LaravelCommandBus;
-use App\Infrastructure\CommandBus\LaravelCommandBusException;
+use App\Infrastructure\Adapters\LaravelCommandBus;
+use App\Infrastructure\Exceptions\LaravelCommandBusException;
 use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 use TypeError;
@@ -38,8 +39,8 @@ class NoHandler
 }
 
 /**
- * @covers \App\Infrastructure\CommandBus\LaravelCommandBus
- * @covers \App\Infrastructure\CommandBus\LaravelCommandBusException
+ * @covers \App\Infrastructure\Adapters\LaravelCommandBus
+ * @covers \App\Infrastructure\Exceptions\LaravelCommandBusException
  */
 class LaravelCommandBusTest extends TestCase
 {
@@ -47,37 +48,42 @@ class LaravelCommandBusTest extends TestCase
     public function itDispatchesCommands(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
         $laravelCommandBus->subscribe(FooCommand::class, FooHandler::class);
 
         // act
         $laravelCommandBus->dispatch(new FooCommand('asdasd'));
 
         // assert
-        Bus::assertDispatched(FooCommand::class, function (FooCommand $command) {
-            return 'asdasd' === $command->name;
-        });
+        Bus::assertDispatched(
+            FooCommand::class,
+            function (FooCommand $command) {
+                return 'asdasd' === $command->name;
+            }
+        );
     }
 
     /** @test */
     public function itThrowsAnExceptionWhenNoHandlerIsSubscribed(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
+        $command = new FooCommand('asdasd');
+        $commandClassName = get_class($command);
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage('No handler found for Tests\Unit\Infrastructure\CommandBus\FooCommand');
+        $this->expectExceptionMessage("No handler found for ${commandClassName}");
 
         // act
-        $laravelCommandBus->dispatch(new FooCommand('asdasd'));
+        $laravelCommandBus->dispatch($command);
     }
 
     /** @test */
     public function itThrowsAnExceptionWhenDispatchingAWrongCommand(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
 
         // assert
         $this->expectException(TypeError::class);
@@ -90,11 +96,13 @@ class LaravelCommandBusTest extends TestCase
     public function itThrowsAnExceptionWhenSubscribingAWrongCommand(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
+        $commandClassName = NoCommand::class;
+        $interfaceClassName = CommandInterface::class;
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage('Command Tests\Unit\Infrastructure\CommandBus\NoCommand does not implement App\Application\Core\CommandInterface');
+        $this->expectExceptionMessage("Command ${commandClassName} does not implement ${interfaceClassName}");
 
         // act
         $laravelCommandBus->subscribe(NoCommand::class, FooHandler::class);
@@ -104,11 +112,13 @@ class LaravelCommandBusTest extends TestCase
     public function itThrowsAnExceptionWhenSubscribingAWrongHandler(): void
     {
         // arrange
-        $laravelCommandBus = new LaravelCommandBus(Bus::fake(), app());
+        $laravelCommandBus = new LaravelCommandBus(Bus::fake());
+        $handlerClassName = NoHandler::class;
+        $interfaceClassName = CommandHandlerInterface::class;
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage('Handler Tests\Unit\Infrastructure\CommandBus\NoHandler does not implement App\Application\Core\CommandHandlerInterface');
+        $this->expectExceptionMessage("Handler ${handlerClassName} does not implement ${interfaceClassName}");
 
         // act
         $laravelCommandBus->subscribe(FooCommand::class, NoHandler::class);

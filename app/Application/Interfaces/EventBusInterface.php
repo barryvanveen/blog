@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Core;
+namespace App\Application\Interfaces;
+
+use App\Application\Core\EventInterface;
 
 interface EventBusInterface
 {

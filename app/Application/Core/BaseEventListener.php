@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Core;
 
+use App\Application\Exceptions\EventListenerException;
+
 abstract class BaseEventListener implements EventListenerInterface
 {
     /**

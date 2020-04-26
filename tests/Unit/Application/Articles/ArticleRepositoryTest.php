@@ -7,7 +7,7 @@ namespace Tests\Unit\Application\Articles;
 use App\Application\Articles\ArticleRepository;
 use App\Application\Articles\Events\ArticleWasCreated;
 use App\Application\Articles\Events\ArticleWasUpdated;
-use App\Application\Core\RecordNotFoundException;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Infrastructure\Adapters\LaravelEventBus;
