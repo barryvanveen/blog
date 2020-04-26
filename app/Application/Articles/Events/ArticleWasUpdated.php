@@ -16,4 +16,9 @@ class ArticleWasUpdated implements EventInterface
     ) {
         $this->uuid = $uuid;
     }
+
+    public function uuid(): string
+    {
+        return $this->uuid;
+    }
 }
