@@ -8,6 +8,7 @@ use App\Application\Core\ResponseBuilder;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Core\UniqueIdGenerator;
 use App\Application\Core\UniqueIdGeneratorInterface;
+use App\Application\Interfaces\CacheInterface;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\EventBusInterface;
@@ -28,6 +29,7 @@ use App\Application\View\AssetUrlBuilder;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Infrastructure\Adapters\CommonMarkMarkdownConverter;
 use App\Infrastructure\Adapters\GlideImageServer;
+use App\Infrastructure\Adapters\LaravelCache;
 use App\Infrastructure\Adapters\LaravelCommandBus;
 use App\Infrastructure\Adapters\LaravelConfiguration;
 use App\Infrastructure\Adapters\LaravelEventBus;
@@ -49,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(AssetUrlBuilderInterface::class, AssetUrlBuilder::class);
+        $this->app->bind(CacheInterface::class, LaravelCache::class);
         $this->app->singleton(CommandBusInterface::class, LaravelCommandBus::class);
         $this->app->bind(ConfigurationInterface::class, LaravelConfiguration::class);
         $this->app->bind(EventBusInterface::class, LaravelEventBus::class);
