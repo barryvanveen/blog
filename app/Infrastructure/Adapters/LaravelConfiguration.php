@@ -21,4 +21,9 @@ class LaravelConfiguration implements ConfigurationInterface
     {
         return (string) $this->config->get($key, '');
     }
+
+    public function boolean(string $key): bool
+    {
+        return (bool) $this->config->get($key, false);
+    }
 }
