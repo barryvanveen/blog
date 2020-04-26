@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Providers;
 
-use App\Application\Core\CommandBusInterface;
-use App\Application\Core\EventBusInterface;
 use App\Application\Core\ResponseBuilder;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Core\UniqueIdGenerator;
 use App\Application\Core\UniqueIdGeneratorInterface;
+use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\ConfigurationInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\FilesystemInterface;
 use App\Application\Interfaces\GuardInterface;
 use App\Application\Interfaces\ImageServerInterface;

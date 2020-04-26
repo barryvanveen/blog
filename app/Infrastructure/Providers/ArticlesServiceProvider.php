@@ -9,7 +9,7 @@ use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Commands\UpdateArticle;
 use App\Application\Articles\Handlers\CreateArticleHandler;
 use App\Application\Articles\Handlers\UpdateArticleHandler;
-use App\Application\Core\CommandBusInterface;
+use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\AdminArticleCreateRequestInterface;
 use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
-use App\Application\Core\CommandBusInterface;
 use App\Application\Core\CommandHandlerInterface;
 use App\Application\Core\CommandInterface;
+use App\Application\Interfaces\CommandBusInterface;
 use App\Infrastructure\Exceptions\LaravelCommandBusException;
 use Illuminate\Contracts\Bus\Dispatcher;
 
