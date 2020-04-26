@@ -7,9 +7,13 @@ namespace App\Infrastructure\Providers;
 use App\Application\Articles\ArticleRepository;
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Commands\UpdateArticle;
+use App\Application\Articles\Events\ArticleWasCreated;
+use App\Application\Articles\Events\ArticleWasUpdated;
 use App\Application\Articles\Handlers\CreateArticleHandler;
 use App\Application\Articles\Handlers\UpdateArticleHandler;
+use App\Application\Articles\Listeners\ArticleListener;
 use App\Application\Interfaces\CommandBusInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\AdminArticleCreateRequestInterface;
 use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;
@@ -23,10 +27,15 @@ use Illuminate\Support\ServiceProvider;
 
 class ArticlesServiceProvider extends ServiceProvider
 {
-    public function boot(CommandBusInterface $commandBus): void
-    {
+    public function boot(
+        CommandBusInterface $commandBus,
+        EventBusInterface $eventBus
+    ): void {
         $commandBus->subscribe(CreateArticle::class, CreateArticleHandler::class);
         $commandBus->subscribe(UpdateArticle::class, UpdateArticleHandler::class);
+
+        $eventBus->subscribe(ArticleWasCreated::class, ArticleListener::class);
+        $eventBus->subscribe(ArticleWasUpdated::class, ArticleListener::class);
     }
 
     public function register(): void

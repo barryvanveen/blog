@@ -64,7 +64,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
             ->table('articles')
             ->insert($article->toArray());
 
-        $this->eventBus->dispatch(new ArticleWasCreated($article->uuid()));
+        $this->eventBus->dispatch(new ArticleWasCreated());
     }
 
     public function update(Article $article): void

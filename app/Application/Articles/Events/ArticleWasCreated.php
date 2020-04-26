@@ -8,12 +8,4 @@ use App\Application\Core\EventInterface;
 
 class ArticleWasCreated implements EventInterface
 {
-    /** @var string */
-    private $uuid;
-
-    public function __construct(
-        string $uuid
-    ) {
-        $this->uuid = $uuid;
-    }
 }
