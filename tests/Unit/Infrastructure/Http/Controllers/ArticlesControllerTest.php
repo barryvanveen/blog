@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Http\Controllers;
 
-use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Controllers\ArticlesController;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;

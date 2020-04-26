@@ -6,8 +6,8 @@ namespace App\Application\Http\Controllers\Admin;
 
 use App\Application\Articles\Commands\CreateArticle;
 use App\Application\Articles\Commands\UpdateArticle;
-use App\Application\Core\RecordNotFoundException;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;

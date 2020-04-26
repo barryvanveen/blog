@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\Core;
 
 use App\Application\Core\BaseEventListener;
 use App\Application\Core\EventInterface;
-use App\Application\Core\EventListenerException;
+use App\Application\Exceptions\EventListenerException;
 use Tests\TestCase;
 
 class DummyEvent implements EventInterface
@@ -29,7 +29,7 @@ class DummyEventListener extends BaseEventListener
 
 /**
  * @covers \App\Application\Core\BaseEventListener
- * @covers \App\Application\Core\EventListenerException
+ * @covers \App\Application\Exceptions\EventListenerException
  */
 class BaseEventListenerTest extends TestCase
 {

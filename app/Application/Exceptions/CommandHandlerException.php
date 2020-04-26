@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Core;
+namespace App\Application\Exceptions;
 
-class CommandHandlerException extends \BadMethodCallException
+use BadMethodCallException;
+
+class CommandHandlerException extends BadMethodCallException
 {
     public static function handleMethodIsMissing(string $handleMethodName): self
     {

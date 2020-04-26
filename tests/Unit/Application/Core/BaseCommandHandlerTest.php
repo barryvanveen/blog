@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Core;
 
 use App\Application\Core\BaseCommandHandler;
-use App\Application\Core\CommandHandlerException;
 use App\Application\Core\CommandInterface;
+use App\Application\Exceptions\CommandHandlerException;
 use Tests\TestCase;
 
 class DummyCommand implements CommandInterface
@@ -29,7 +29,7 @@ class DummyCommandHandler extends BaseCommandHandler
 
 /**
  * @covers \App\Application\Core\BaseCommandHandler
- * @covers \App\Application\Core\CommandHandlerException
+ * @covers \App\Application\Exceptions\CommandHandlerException
  */
 class BaseCommandHandlerTest extends TestCase
 {
