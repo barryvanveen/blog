@@ -117,6 +117,20 @@ class LaravelGuardTest extends TestCase
     }
 
     /** @test */
+    public function itReturnsTrueIfUserIsAuthenticated(): void
+    {
+        Auth::login($this->user);
+
+        $this->assertEquals(true, $this->guard->authenticated());
+    }
+
+    /** @test */
+    public function itReturnsFalseIfUserIsNotAuthenticated(): void
+    {
+        $this->assertEquals(false, $this->guard->authenticated());
+    }
+
+    /** @test */
     public function itThrowsAnErrorIfUnauthenticated(): void
     {
         $this->expectException(UnauthorizedException::class);

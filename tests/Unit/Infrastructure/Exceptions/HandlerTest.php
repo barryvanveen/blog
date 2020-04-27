@@ -8,6 +8,7 @@ use App\Application\Http\Exceptions\ForbiddenHttpException;
 use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
+use App\Application\Http\Exceptions\ServiceUnavailableException;
 use App\Application\Http\StatusCode;
 use App\Infrastructure\Exceptions\Handler;
 use Exception;
@@ -15,6 +16,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -186,6 +188,11 @@ class HandlerTest extends TestCase
                 'frameworkException' => new SuspiciousOperationException(),
                 'httpExceptionClass' => NotFoundHttpException::class,
                 'httpStatusCode' => StatusCode::STATUS_NOT_FOUND,
+            ],
+            [
+                'frameworkException' => new MaintenanceModeException(60),
+                'httpExceptionClass' => ServiceUnavailableException::class,
+                'httpStatusCode' => StatusCode::STATUS_SERVICE_UNAVAILABLE,
             ],
         ];
     }

@@ -9,6 +9,7 @@ use App\Application\Http\Exceptions\HttpExceptionInterface;
 use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
+use App\Application\Http\Exceptions\ServiceUnavailableException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -16,6 +17,7 @@ use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Exceptions\WhoopsHandler;
+use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -39,6 +41,7 @@ final class Handler implements ExceptionHandlerContract
     private $dontReport = [
         NotFoundHttpException::class,
         SymfonyNotFoundHttpException::class,
+        MaintenanceModeException::class,
     ];
 
     /** @var string[] */
@@ -112,6 +115,8 @@ final class Handler implements ExceptionHandlerContract
             $exception = NotFoundHttpException::create($exception);
         } elseif ($exception instanceof SuspiciousOperationException) {
             $exception = NotFoundHttpException::create($exception);
+        } elseif ($exception instanceof MaintenanceModeException) {
+            $exception = ServiceUnavailableException::create($exception);
         }
 
         return $exception;

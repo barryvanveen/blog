@@ -12,5 +12,7 @@ interface GuardInterface
 
     public function logout(): void;
 
+    public function authenticated(): bool;
+
     public function user(): User;
 }
