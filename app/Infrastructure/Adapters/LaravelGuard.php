@@ -41,6 +41,11 @@ class LaravelGuard implements GuardInterface
         $this->laravelGuard->logout();
     }
 
+    public function authenticated(): bool
+    {
+        return $this->laravelGuard->user() !== null;
+    }
+
     public function user(): User
     {
         /** @var UserEloquentModel|null $laravelUser */
