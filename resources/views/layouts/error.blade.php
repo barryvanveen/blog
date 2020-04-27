@@ -2,7 +2,7 @@
 <html lang="en">
     @include('layouts.partials.headHtml')
 
-    <body class="bg-white">
+    <body>
         @include('layouts.partials.header')
 
         <div class="flex items-center justify-center text-gray-700 py-10">
