@@ -2,6 +2,6 @@
 @import "./custom-base-styles.css";
 
 @import "./../../node_modules/tailwindcss/components.css";
-@import "./custom-components.css";
+/* --> import custom components here */
 
 @import "./../../node_modules/tailwindcss/utilities.css";

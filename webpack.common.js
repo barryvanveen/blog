@@ -66,6 +66,17 @@ const baseConfig = {
                     },
                 ],
             },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: settings.paths.publicImagesPostfix,
+                        },
+                    },
+                ],
+            },
         ],
     },
     plugins: [

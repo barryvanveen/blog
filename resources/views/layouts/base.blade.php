@@ -2,11 +2,17 @@
 <html lang="en">
     @include('layouts.partials.headHtml')
 
-    <body class="bg-white">
+    <body>
         @include('layouts.partials.header')
 
-        <main class="container mx-auto max-w-2xl px-4">
-            @yield('body')
+        @yield('bgImage')
+        <main>
+            <div class="container mx-auto max-w-4xl px-4 md:px-12">
+                @yield('bodyHeader')
+            </div>
+            <div class="container mx-auto max-w-3xl px-4">
+                @yield('body')
+            </div>
         </main>
 
         @yield('related')
