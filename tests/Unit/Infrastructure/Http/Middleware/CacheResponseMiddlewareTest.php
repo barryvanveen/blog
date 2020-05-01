@@ -10,10 +10,9 @@ use App\Infrastructure\Http\Middleware\CacheResponseMiddleware;
 use Closure;
 use Fig\Http\Message\RequestMethodInterface;
 use Illuminate\Http\Request;
-use Nyholm\Psr7\Response;
-use Nyholm\Psr7\Stream;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 /**
@@ -45,7 +44,7 @@ class CacheResponseMiddlewareTest extends TestCase
 
         $this->request = $this->prophesize(Request::class);
         $this->next = function () {
-            return new Response(200, [], Stream::create('nextResponse'));
+            return new Response('nextResponse');
         };
 
         $this->middleware = new CacheResponseMiddleware(
@@ -71,7 +70,7 @@ class CacheResponseMiddlewareTest extends TestCase
         );
 
         // assert
-        $this->assertEquals('nextResponse', (string) $result->getBody());
+        $this->assertEquals('nextResponse', (string) $result->getContent());
     }
 
     /** @test */
@@ -94,7 +93,7 @@ class CacheResponseMiddlewareTest extends TestCase
         );
 
         // assert
-        $this->assertEquals('nextResponse', (string) $result->getBody());
+        $this->assertEquals('nextResponse', (string) $result->getContent());
     }
 
     /** @test */
@@ -149,7 +148,7 @@ class CacheResponseMiddlewareTest extends TestCase
         );
 
         // assert
-        $this->assertEquals('nextResponse', (string) $result->getBody());
+        $this->assertEquals('nextResponse', (string) $result->getContent());
     }
 
     /** @test */
@@ -167,7 +166,7 @@ class CacheResponseMiddlewareTest extends TestCase
             ->willReturn(false);
 
         $this->next = function () {
-            return new Response(500, [], Stream::create('errorResponse'));
+            return new Response('errorResponse', 500);
         };
 
         $this->cache->put($url, Argument::any(), Argument::any())
@@ -180,7 +179,7 @@ class CacheResponseMiddlewareTest extends TestCase
         );
 
         // assert
-        $this->assertEquals('errorResponse', (string) $result->getBody());
+        $this->assertEquals('errorResponse', (string) $result->getContent());
     }
 
     private function mockCacheableRequest(): void

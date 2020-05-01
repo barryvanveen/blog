@@ -10,7 +10,7 @@ use App\Application\Interfaces\ConfigurationInterface;
 use Closure;
 use Fig\Http\Message\RequestMethodInterface;
 use Illuminate\Http\Request;
-use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CacheResponseMiddleware
 {
@@ -44,10 +44,10 @@ class CacheResponseMiddleware
             return $this->cache->get($key);
         }
 
-        /** @var ResponseInterface $response */
+        /** @var Response $response */
         $response = $next($request);
 
-        if ($response instanceof ResponseInterface &&
+        if ($response instanceof Response &&
             $response->getStatusCode() === StatusCode::STATUS_OK) {
             $this->cache->put($key, $response, self::TTL_ONE_HOUR);
         }
