@@ -44,7 +44,7 @@ const baseConfig = {
                 ],
             },
             {
-                test: /\.css$/,
+                test: /\.(css|pcss)$/,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
