@@ -86,7 +86,10 @@ const baseConfig = {
                 '!.gitignore',
                 '!manifest.json'
             ],
-            verbose: false,
+            cleanAfterEveryBuildPatterns: [
+                '!**/*.gif',
+            ],
+            verbose: true,
             dry: false
         }),
         new ManifestPlugin({
