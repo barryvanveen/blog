@@ -27,6 +27,8 @@ use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\Interfaces\ViewBuilderInterface;
 use App\Application\View\AssetUrlBuilder;
 use App\Application\View\AssetUrlBuilderInterface;
+use App\Application\View\DateTimeFormatter;
+use App\Application\View\DateTimeFormatterInterface;
 use App\Infrastructure\Adapters\CommonMarkMarkdownConverter;
 use App\Infrastructure\Adapters\GlideImageServer;
 use App\Infrastructure\Adapters\LaravelCache;
@@ -54,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CacheInterface::class, LaravelCache::class);
         $this->app->singleton(CommandBusInterface::class, LaravelCommandBus::class);
         $this->app->bind(ConfigurationInterface::class, LaravelConfiguration::class);
+        $this->app->bind(DateTimeFormatterInterface::class, DateTimeFormatter::class);
         $this->app->bind(EventBusInterface::class, LaravelEventBus::class);
         $this->app->bind(FilesystemInterface::class, LaravelFilesystem::class);
         $this->app->bind(GuardInterface::class, LaravelGuard::class);

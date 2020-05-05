@@ -7,6 +7,7 @@ namespace Tests\Unit\Application\Articles\View;
 use App\Application\Articles\View\ArticlesItemPresenter;
 use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
+use App\Application\View\DateTimeFormatterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
@@ -56,18 +57,24 @@ class ArticlesItemPresenterTest extends TestCase
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $urlGenerator->route(Argument::cetera())->willReturn('http://my-article-url');
 
+        /** @var ObjectProphecy|DateTimeFormatterInterface $dateTimeFormatter */
+        $dateTimeFormatter = $this->prophesize(DateTimeFormatterInterface::class);
+        $dateTimeFormatter->metadata(Argument::any())->willReturn('metadata-string');
+        $dateTimeFormatter->humanReadable(Argument::any())->willReturn('humanReadable-string');
+
         $presenter = new ArticlesItemPresenter(
             $repository->reveal(),
             $request->reveal(),
             $converter->reveal(),
-            $urlGenerator->reveal()
+            $urlGenerator->reveal(),
+            $dateTimeFormatter->reveal()
         );
 
         $result = $presenter->present();
 
         $this->assertEquals($title, $result['title']);
-        $this->assertEquals('2020-01-04T19:56:48+01:00', $result['publicationDateInAtomFormat']);
-        $this->assertEquals('Jan 04, 2020', $result['publicationDateInHumanFormat']);
+        $this->assertEquals('metadata-string', $result['publicationDateInAtomFormat']);
+        $this->assertEquals('humanReadable-string', $result['publicationDateInHumanFormat']);
         $this->assertEquals($html, $result['content']);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }

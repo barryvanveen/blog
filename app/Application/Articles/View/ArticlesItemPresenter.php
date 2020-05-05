@@ -6,12 +6,12 @@ namespace App\Application\Articles\View;
 
 use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
+use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use App\Domain\Utils\MetaData;
-use DateTime;
 
 final class ArticlesItemPresenter implements PresenterInterface
 {
@@ -27,16 +27,21 @@ final class ArticlesItemPresenter implements PresenterInterface
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
+    /** @var DateTimeFormatterInterface */
+    private $dateTimeFormatter;
+
     public function __construct(
         ArticleRepositoryInterface $repository,
         ArticleShowRequestInterface $request,
         MarkdownConverterInterface $markdownConverter,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        DateTimeFormatterInterface $dateTimeFormatter
     ) {
         $this->repository = $repository;
         $this->request = $request;
         $this->markdownConverter = $markdownConverter;
         $this->urlGenerator = $urlGenerator;
+        $this->dateTimeFormatter = $dateTimeFormatter;
     }
 
     public function present(): array
@@ -54,12 +59,12 @@ final class ArticlesItemPresenter implements PresenterInterface
 
     private function publicationDateInAtomFormat(Article $article): string
     {
-        return $article->publishedAt()->format(DateTime::ATOM);
+        return $this->dateTimeFormatter->metadata($article->publishedAt());
     }
 
     private function publicationDateInHumanFormat(Article $article): string
     {
-        return $article->publishedAt()->format('M d, Y');
+        return $this->dateTimeFormatter->humanReadable($article->publishedAt());
     }
 
     private function htmlContent(Article $article): string
