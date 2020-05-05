@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Articles\View;
 
 use App\Application\Interfaces\UrlGeneratorInterface;
+use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Core\CollectionInterface;
-use DateTimeInterface;
 
 final class ArticlesRssItemPresenter implements PresenterInterface
 {
@@ -19,12 +19,17 @@ final class ArticlesRssItemPresenter implements PresenterInterface
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
+    /** @var DateTimeFormatterInterface */
+    private $dateTimeFormatter;
+
     public function __construct(
         ArticleRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        DateTimeFormatterInterface $dateTimeFormatter
     ) {
         $this->repository = $repository;
         $this->urlGenerator = $urlGenerator;
+        $this->dateTimeFormatter = $dateTimeFormatter;
     }
 
     public function present(): array
@@ -50,7 +55,7 @@ final class ArticlesRssItemPresenter implements PresenterInterface
 
     private function publicationDateInAtomFormat(Article $article): string
     {
-        return $article->publishedAt()->format(DateTimeInterface::ATOM);
+        return $this->dateTimeFormatter->metadata($article->publishedAt());
     }
 
     private function articleShowUrl(Article $article): string
