@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Pages\Models;
 
+use DateTimeInterface;
+
 class Page
 {
     /** @var string */
@@ -11,6 +13,9 @@ class Page
 
     /** @var string */
     private $description;
+
+    /** @var DateTimeInterface */
+    private $lastUpdated;
 
     /** @var string */
     private $slug;
@@ -21,11 +26,13 @@ class Page
     public function __construct(
         string $content,
         string $description,
+        DateTimeInterface $lastUpdated,
         string $slug,
         string $title
     ) {
         $this->content = $content;
         $this->description = $description;
+        $this->lastUpdated = $lastUpdated;
         $this->slug = $slug;
         $this->title = $title;
     }
@@ -38,6 +45,11 @@ class Page
     public function description(): string
     {
         return $this->description;
+    }
+
+    public function lastUpdated(): DateTimeInterface
+    {
+        return $this->lastUpdated;
     }
 
     public function slug(): string
@@ -55,6 +67,7 @@ class Page
         return [
             'content' => $this->content,
             'description' => $this->description,
+            'lastUpdated' => $this->lastUpdated,
             'slug' => $this->slug,
             'title' => $this->title,
         ];

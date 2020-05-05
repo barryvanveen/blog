@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Domain\Pages\Models;
 
-use App\Domain\Pages\Models\Page;
+use DateTimeImmutable;
 use Tests\TestCase;
 
 /**
@@ -12,35 +12,29 @@ use Tests\TestCase;
  */
 class PageTest extends TestCase
 {
-    private function getPage(): Page
-    {
-        return new Page(
-            'foo',
-            'bar',
-            'baz-baz',
-            'Baz baz'
-        );
-    }
-
     /** @test */
-    public function itConstructsANewPage(): void
+    public function itConstructsANewPageAndReturnsAnArray(): void
     {
-        $page = $this->getPage();
+        $date = new DateTimeImmutable();
+
+        $page = $this->getPage([
+            'content' => 'foo',
+            'description' => 'bar',
+            'lastUpdated' => $date,
+            'slug' => 'baz-baz',
+            'title' => 'Baz baz',
+        ]);
 
         $this->assertEquals('foo', $page->content());
         $this->assertEquals('bar', $page->description());
+        $this->assertSame($date, $page->lastUpdated());
         $this->assertEquals('baz-baz', $page->slug());
         $this->assertEquals('Baz baz', $page->title());
-    }
-
-    /** @test */
-    public function itReturnsAnArray(): void
-    {
-        $page = $this->getPage();
 
         $this->assertEquals([
             'content' => 'foo',
             'description' => 'bar',
+            'lastUpdated' => $date,
             'slug' => 'baz-baz',
             'title' => 'Baz baz',
         ], $page->toArray());
