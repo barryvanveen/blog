@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Eloquent;
 
-use App\Application\Interfaces\ModelMapperInterface;
+use App\Application\Articles\ModelMapperInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Core\CollectionInterface;
