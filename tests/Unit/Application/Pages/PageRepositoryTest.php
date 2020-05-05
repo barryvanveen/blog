@@ -107,8 +107,10 @@ class PageRepositoryTest extends TestCase
     {
         // arrange
         /** @var PageEloquentModel $eloquentPage */
-        $eloquentPage = factory(PageEloquentModel::class)->create();
-        $page = $this->repository->getBySlug($eloquentPage->slug);
+        $eloquentPage = factory(PageEloquentModel::class)->create([
+            'slug' => 'about',
+        ]);
+        $page = $this->repository->about();
 
         // assert
         $this->assertInstanceOf(Page::class, $page);
@@ -121,6 +123,6 @@ class PageRepositoryTest extends TestCase
     {
         // assert
         $this->expectException(RecordNotFoundException::class);
-        $this->repository->getBySlug('non-existent-slug');
+        $this->repository->about();
     }
 }
