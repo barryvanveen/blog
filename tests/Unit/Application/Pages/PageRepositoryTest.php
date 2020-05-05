@@ -68,45 +68,37 @@ class PageRepositoryTest extends TestCase
     public function itSavesAPage(): void
     {
         // arrange
-        $page = new Page(
-            'page-content',
-            'page-description',
-            'page-slug',
-            'page-title'
-        );
+        $page = $this->getPage();
 
         // act
         $this->repository->insert($page);
 
         // assert
-        $this->assertDatabaseHas('pages', ['slug' => 'page-slug']);
+        $this->assertDatabaseHas('pages', ['slug' => $page->slug()]);
     }
 
     /** @test */
     public function itUpdatesAPage(): void
     {
         // arrange
-        $page = new Page(
-            'page-content',
-            'page-description',
-            'page-slug',
-            'old-page-title'
-        );
+        $page = $this->getPage([
+            'slug' => 'myslug',
+            'title' => 'old-page-title',
+        ]);
 
         $this->repository->insert($page);
-        $this->assertDatabaseHas('pages', ['title' => 'old-page-title']);
+        $this->assertDatabaseHas('pages', ['title' => $page->title()]);
 
         // act
-        $page = new Page(
-            'page-content',
-            'page-description',
-            'page-slug',
-            'new-page-title'
-        );
+        $page = $this->getPage([
+            'slug' => 'myslug',
+            'title' => 'old-page-title',
+        ]);
+
         $this->repository->update($page);
 
         // assert
-        $this->assertDatabaseHas('pages', ['title' => 'new-page-title']);
+        $this->assertDatabaseHas('pages', ['title' => $page->title()]);
         $this->laravelBusFake->assertDispatchedTimes(PageWasUpdated::class);
     }
 

@@ -47,4 +47,17 @@ class PageMapperTest extends TestCase
         $this->assertEquals($eloquentPage1->title, $collection->toArray()[0]->title());
         $this->assertEquals($eloquentPage2->title, $collection->toArray()[1]->title());
     }
+
+    /** @test */
+    public function itMapsADomainModelToAnArrayForDatabaseOperations(): void
+    {
+        $page = $this->getPage();
+
+        $mapper = new PageMapper();
+        $record = $mapper->mapToDatabaseArray($page);
+
+        $this->assertEquals($page->title(), $record['title']);
+        $this->assertArrayNotHasKey('last_updated', $record);
+        $this->assertArrayNotHasKey('lastUpdated', $record);
+    }
 }

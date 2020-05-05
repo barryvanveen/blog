@@ -44,17 +44,21 @@ final class PageRepository implements PageRepositoryInterface
 
     public function insert(Page $page): void
     {
+        $record = $this->modelMapper->mapToDatabaseArray($page);
+
         $this->builderFactory
             ->table('pages')
-            ->insert($page->toArray());
+            ->insert($record);
     }
 
     public function update(Page $page): void
     {
+        $record = $this->modelMapper->mapToDatabaseArray($page);
+
         $this->builderFactory
             ->table('pages')
             ->where('slug', '=', $page->slug())
-            ->update($page->toArray());
+            ->update($record);
 
         $this->eventBus->dispatch(new PageWasUpdated($page->slug()));
     }

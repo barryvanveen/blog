@@ -16,5 +16,6 @@ $factory->define(PageEloquentModel::class, function (Faker $faker) {
         'description' => $faker->paragraph,
         'slug' => Str::slug($title),
         'title' => $title,
+        'updated_at' => $faker->dateTimeBetween('-1 year'),
     ];
 });
