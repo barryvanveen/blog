@@ -172,7 +172,6 @@ return [
         App\Infrastructure\Providers\ArticlesServiceProvider::class,
         App\Infrastructure\Providers\AuthServiceProvider::class,
         App\Infrastructure\Providers\DropboxServiceProvider::class,
-        App\Infrastructure\Providers\ModelMapperServiceProvider::class,
         App\Infrastructure\Providers\Psr7ServiceProvider::class,
         App\Infrastructure\Providers\RouteServiceProvider::class,
         App\Infrastructure\Providers\ViewServiceProvider::class,

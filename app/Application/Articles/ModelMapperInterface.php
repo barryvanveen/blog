@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Interfaces;
+namespace App\Application\Articles;
 
 use App\Domain\Articles\Models\Article;
 use App\Domain\Core\CollectionInterface;
