@@ -13,6 +13,8 @@ use App\Domain\Pages\PageRepositoryInterface;
 
 final class PageRepository implements PageRepositoryInterface
 {
+    private const SLUG_ABOUT = 'about';
+
     /** @var QueryBuilderFactoryInterface */
     private $builderFactory;
 
@@ -63,7 +65,12 @@ final class PageRepository implements PageRepositoryInterface
         $this->eventBus->dispatch(new PageWasUpdated($page->slug()));
     }
 
-    public function getBySlug(string $slug): Page
+    public function about(): Page
+    {
+        return $this->getBySlug(self::SLUG_ABOUT);
+    }
+
+    private function getBySlug(string $slug): Page
     {
         $page = $this->builderFactory
             ->table('pages')

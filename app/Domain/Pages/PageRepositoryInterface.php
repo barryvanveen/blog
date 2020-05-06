@@ -15,5 +15,5 @@ interface PageRepositoryInterface
 
     public function update(Page $page): void;
 
-    public function getBySlug(string $slug): Page;
+    public function about(): Page;
 }

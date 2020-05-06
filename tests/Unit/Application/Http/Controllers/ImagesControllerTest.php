@@ -15,7 +15,7 @@ use Tests\TestCase;
  */
 class ImagesControllerTest extends TestCase
 {
-    /** @var ObjectProphecy|ImagesController */
+    /** @var ImagesController */
     private $controller;
 
     /** @var ObjectProphecy|ImageServerInterface */
