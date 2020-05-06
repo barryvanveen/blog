@@ -7,10 +7,10 @@
     <h1>{{ $title }}</h1>
 
     <form action="{{ $update_article_url }}" method="post" name="edit">
-        @include('pages.partials.input.csrf')
+        @include('partials.input.csrf')
         @method('PUT')
 
-        @include('pages.admin.articles.formfields', [
+        @include('articles.admin.formfields', [
             'article' => $article,
             'statuses' => $statuses,
             'errors' => $errors,

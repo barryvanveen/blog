@@ -7,9 +7,9 @@
     <h1>{{ $title }}</h1>
 
     <form action="{{ $create_article_url }}" method="post" name="create">
-        @include('pages.partials.input.csrf')
+        @include('partials.input.csrf')
 
-        @include('pages.admin.articles.formfields', [
+        @include('articles.admin.formfields', [
             'article' => $article,
             'statuses' => $statuses,
             'errors' => $errors,

@@ -6,7 +6,7 @@
     <section>
         <div class="w-full max-w-xs mx-auto py-10 text-gray-700 text-sm">
             <form action="{{ route('login.post') }}" method="post" name="login" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                @include('pages.partials.input.csrf')
+                @include('partials.input.csrf')
 
                 <div class="mb-4">
                     <label class="block font-bold mb-2" for="email">
