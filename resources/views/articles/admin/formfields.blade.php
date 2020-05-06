@@ -1,4 +1,4 @@
-@include('pages.partials.input.text', [
+@include('partials.input.text', [
     'title' => 'Title',
     'name' => 'title',
     'value' => $article['title'] ?? '',
@@ -6,7 +6,7 @@
     'errors' => $errors,
 ])
 
-@include('pages.partials.input.text', [
+@include('partials.input.text', [
     'title' => 'Publication date',
     'name' => 'published_at',
     'value' => $article['published_at'] ?? '',
@@ -14,7 +14,7 @@
     'errors' => $errors,
 ])
 
-@include('pages.partials.input.radio', [
+@include('partials.input.radio', [
     'title' => 'Status',
     'name' => 'status',
     'value' => $article['status'] ?? '',
@@ -22,7 +22,7 @@
     'errors' => $errors,
 ])
 
-@include('pages.partials.input.textarea', [
+@include('partials.input.textarea', [
     'title' => 'Description',
     'name' => 'description',
     'value' => $article['description'] ?? '',
@@ -30,7 +30,7 @@
     'errors' => $errors,
 ])
 
-@include('pages.partials.input.textarea', [
+@include('partials.input.textarea', [
     'title' => 'Content',
     'name' => 'content',
     'value' => $article['content'] ?? '',
@@ -38,7 +38,7 @@
     'errors' => $errors,
 ])
 
-@include('pages.partials.input.button', [
+@include('partials.input.button', [
     'type' => 'submit',
     'name' => 'submit',
     'title' => $submit,

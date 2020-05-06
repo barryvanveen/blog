@@ -36,7 +36,7 @@ final class ArticlesController
 
     public function index(): ResponseInterface
     {
-        return $this->responseBuilder->ok('pages.articles.index');
+        return $this->responseBuilder->ok('articles.index');
     }
 
     public function show(ArticleShowRequestInterface $request): ResponseInterface
@@ -58,6 +58,6 @@ final class ArticlesController
             );
         }
 
-        return $this->responseBuilder->ok('pages.articles.show');
+        return $this->responseBuilder->ok('articles.show');
     }
 }

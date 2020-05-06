@@ -12,6 +12,6 @@ final class ArticlesRssController
     public function index(
         ResponseBuilderInterface $responseBuilder
     ): ResponseInterface {
-        return $responseBuilder->xml('pages.articles.rss');
+        return $responseBuilder->xml('articles.rss');
     }
 }

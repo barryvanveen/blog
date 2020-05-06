@@ -10,8 +10,8 @@
     <h1>Hi {{ $name }}</h1>
 
     <form action="{{ $form_url }}" method="post" name="logout">
-        @include('pages.partials.input.csrf')
+        @include('partials.input.csrf')
 
-        @include('pages.partials.input.button', ['type' => 'submit', 'name' => 'submit', 'title' => 'Logout'])
+        @include('partials.input.button', ['type' => 'submit', 'name' => 'submit', 'title' => 'Logout'])
     </form>
 @endsection

@@ -41,12 +41,12 @@ final class ArticlesController
 
     public function index(): ResponseInterface
     {
-        return $this->responseBuilder->ok('pages.admin.articles.index');
+        return $this->responseBuilder->ok('articles.admin.index');
     }
 
     public function create(): ResponseInterface
     {
-        return $this->responseBuilder->ok('pages.admin.articles.create');
+        return $this->responseBuilder->ok('articles.admin.create');
     }
 
     public function store(AdminArticleCreateRequestInterface $request): ResponseInterface
@@ -72,7 +72,7 @@ final class ArticlesController
             throw NotFoundHttpException::create($exception);
         }
 
-        return $this->responseBuilder->ok('pages.admin.articles.edit');
+        return $this->responseBuilder->ok('articles.admin.edit');
     }
 
     public function update(AdminArticleUpdateRequestInterface $request): ResponseInterface
