@@ -28,5 +28,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/articles/{uuid}/edit', [\App\Application\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('admin.articles.edit');
     Route::put('/admin/articles/{uuid}', [\App\Application\Http\Controllers\Admin\ArticlesController::class, 'update'])->name('admin.articles.update');
 
+    Route::get('/admin/pages', [\App\Application\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
+    Route::get('/admin/pages/create', [\App\Application\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
+    Route::post('/admin/pages', [\App\Application\Http\Controllers\Admin\PagesController::class, 'store'])->name('admin.pages.store');
+    Route::get('/admin/pages/{slug}/edit', [\App\Application\Http\Controllers\Admin\PagesController::class, 'edit'])->name('admin.pages.edit');
+    Route::put('/admin/pages/{slug}', [\App\Application\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
+
     Route::get('/admin/elements', [\App\Application\Http\Controllers\Admin\ElementsController::class, 'index'])->name('admin.elements');
 });
