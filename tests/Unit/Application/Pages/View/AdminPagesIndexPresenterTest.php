@@ -36,8 +36,8 @@ class AdminPagesIndexPresenterTest extends TestCase
 
         $collection = $mapper->mapToDomainModels(
             new LaravelCollection([
-                $page1,
-                $page2,
+                $page1->toArray(),
+                $page2->toArray(),
             ])
         );
 

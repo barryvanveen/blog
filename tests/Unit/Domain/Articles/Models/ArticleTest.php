@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Domain\Articles\Models;
 
 use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Articles\Models\Article;
 use DateTimeImmutable;
 use Tests\TestCase;
 
@@ -14,30 +13,15 @@ use Tests\TestCase;
  */
 class ArticleTest extends TestCase
 {
-    private function getArticle(
-        DateTimeImmutable $dateTime,
-        ArticleStatus $status
-    ): Article {
-        return new Article(
-            'foo',
-            'bar',
-            $dateTime,
-            'baz-baz',
-            $status,
-            'Baz baz',
-            '123123'
-        );
-    }
-
     /** @test */
     public function itConstructsANewArticle(): void
     {
         $dateTime = new DateTimeImmutable('-1 day');
 
-        $article = $this->getArticle(
-            $dateTime,
-            ArticleStatus::published()
-        );
+        $article = $this->getArticle([
+            'published_at' => $dateTime,
+            'status' => ArticleStatus::published(),
+        ]);
 
         $this->assertEquals('foo', $article->content());
         $this->assertEquals('bar', $article->description());
@@ -59,7 +43,10 @@ class ArticleTest extends TestCase
      */
     public function isOnline(DateTimeImmutable $dateTime, ArticleStatus $status, bool $expected): void
     {
-        $article = $this->getArticle($dateTime, $status);
+        $article = $this->getArticle([
+            'published_at' => $dateTime,
+            'status' => $status,
+        ]);
 
         $this->assertEquals($expected, $article->isOnline());
     }
@@ -79,10 +66,10 @@ class ArticleTest extends TestCase
     {
         $dateTime = new DateTimeImmutable();
 
-        $article = $this->getArticle(
-            $dateTime,
-            ArticleStatus::published()
-        );
+        $article = $this->getArticle([
+            'published_at' => $dateTime,
+            'status' => ArticleStatus::published(),
+        ]);
 
         $this->assertEquals([
             'content' => 'foo',

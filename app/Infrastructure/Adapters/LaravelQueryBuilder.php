@@ -7,7 +7,7 @@ namespace App\Infrastructure\Adapters;
 use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Core\CollectionInterface;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class LaravelQueryBuilder implements QueryBuilderInterface
 {
@@ -21,14 +21,15 @@ class LaravelQueryBuilder implements QueryBuilderInterface
 
     public function get(array $columns = ['*']): CollectionInterface
     {
+        /** @psalm-suppress PossiblyInvalidMethodCall */
         return new LaravelCollection($this->builder->get($columns)->toArray());
     }
 
     /**
-     * @return object
+     * @return array
      * @throws RecordNotFoundException
      */
-    public function first(): object
+    public function first(): array
     {
         $result = $this->builder->first();
 
@@ -36,12 +37,12 @@ class LaravelQueryBuilder implements QueryBuilderInterface
             throw RecordNotFoundException::emptyResultSet();
         }
 
-        return $result;
+        return $result->toArray();
     }
 
-    public function insert(array $values): bool
+    public function insert(array $values): void
     {
-        return $this->builder->insert($values);
+        $this->builder->create($values);
     }
 
     public function orderBy(string $column, string $direction = 'asc'): QueryBuilderInterface

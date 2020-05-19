@@ -25,20 +25,20 @@ final class PageMapper implements ModelMapperInterface
         return new LaravelCollection($domainModels);
     }
 
-    public function mapToDomainModel(object $model): Page
+    public function mapToDomainModel(array $model): Page
     {
-        $date = $model->updated_at;
+        $date = $model['updated_at'] ?? $model['created_at'];
 
         if ($date instanceof Carbon) {
             $date = $date->format(DateTime::ATOM);
         }
 
         return new Page(
-            $model->content,
-            $model->description,
+            $model['content'],
+            $model['description'],
             new DateTimeImmutable($date),
-            $model->slug,
-            $model->title
+            $model['slug'],
+            $model['title']
         );
     }
 

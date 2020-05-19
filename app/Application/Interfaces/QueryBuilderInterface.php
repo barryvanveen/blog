@@ -10,9 +10,9 @@ interface QueryBuilderInterface
 {
     public function get(array $columns = ['*']): CollectionInterface;
 
-    public function first(): object;
+    public function first(): array;
 
-    public function insert(array $values): bool;
+    public function insert(array $values): void;
 
     public function orderBy(string $column, string $direction = 'asc'): QueryBuilderInterface;
 

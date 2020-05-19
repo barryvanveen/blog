@@ -15,11 +15,14 @@ use App\Application\Articles\Listeners\ArticleListener;
 use App\Application\Articles\ModelMapperInterface;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\EventBusInterface;
+use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\AdminArticleCreateRequestInterface;
 use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;
 use App\Domain\Articles\Requests\AdminArticleUpdateRequestInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
+use App\Infrastructure\Adapters\LaravelQueryBuilder;
+use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
 use App\Infrastructure\Http\Requests\AdminArticleCreateRequest;
 use App\Infrastructure\Http\Requests\AdminArticleEditRequest;
@@ -42,6 +45,14 @@ class ArticlesServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+        $this->app->when(ArticleRepository::class)
+            ->needs(QueryBuilderInterface::class)
+            ->give(function () {
+                return new LaravelQueryBuilder(
+                    ArticleEloquentModel::query()
+                );
+            });
+
         $this->app->bind(ModelMapperInterface::class, ArticleMapper::class);
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
         $this->app->bind(ArticleShowRequestInterface::class, ArticleShowRequest::class);

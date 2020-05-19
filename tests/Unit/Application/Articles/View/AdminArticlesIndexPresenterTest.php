@@ -39,8 +39,8 @@ class AdminArticlesIndexPresenterTest extends TestCase
 
         $collection = $mapper->mapToDomainModels(
             new LaravelCollection([
-                $article1,
-                $article2,
+                $article1->toArray(),
+                $article2->toArray(),
             ])
         );
 

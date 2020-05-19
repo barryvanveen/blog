@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Pages;
 
 use App\Application\Interfaces\EventBusInterface;
-use App\Application\Interfaces\QueryBuilderFactoryInterface;
+use App\Application\Interfaces\QueryBuilderInterface;
 use App\Application\Pages\Events\PageWasUpdated;
 use App\Domain\Core\CollectionInterface;
 use App\Domain\Pages\Models\Page;
@@ -15,8 +15,8 @@ final class PageRepository implements PageRepositoryInterface
 {
     private const SLUG_ABOUT = 'about';
 
-    /** @var QueryBuilderFactoryInterface */
-    private $builderFactory;
+    /** @var QueryBuilderInterface */
+    private $queryBuilder;
 
     /** @var ModelMapperInterface */
     private $modelMapper;
@@ -25,19 +25,18 @@ final class PageRepository implements PageRepositoryInterface
     private $eventBus;
 
     public function __construct(
-        QueryBuilderFactoryInterface $builderFactory,
+        QueryBuilderInterface $queryBuilder,
         ModelMapperInterface $modelMapper,
         EventBusInterface $eventBus
     ) {
-        $this->builderFactory = $builderFactory;
+        $this->queryBuilder = $queryBuilder;
         $this->modelMapper = $modelMapper;
         $this->eventBus = $eventBus;
     }
 
     public function allOrdered(): CollectionInterface
     {
-        $pages = $this->builderFactory
-            ->table('pages')
+        $pages = $this->queryBuilder
             ->orderBy('slug', 'asc')
             ->get();
 
@@ -48,8 +47,7 @@ final class PageRepository implements PageRepositoryInterface
     {
         $record = $this->modelMapper->mapToDatabaseArray($page);
 
-        $this->builderFactory
-            ->table('pages')
+        $this->queryBuilder
             ->insert($record);
     }
 
@@ -57,8 +55,7 @@ final class PageRepository implements PageRepositoryInterface
     {
         $record = $this->modelMapper->mapToDatabaseArray($page);
 
-        $this->builderFactory
-            ->table('pages')
+        $this->queryBuilder
             ->where('slug', '=', $page->slug())
             ->update($record);
 
@@ -70,10 +67,9 @@ final class PageRepository implements PageRepositoryInterface
         return $this->getBySlug(self::SLUG_ABOUT);
     }
 
-    private function getBySlug(string $slug): Page
+    public function getBySlug(string $slug): Page
     {
-        $page = $this->builderFactory
-            ->table('pages')
+        $page = $this->queryBuilder
             ->where('slug', '=', $slug)
             ->first();
 

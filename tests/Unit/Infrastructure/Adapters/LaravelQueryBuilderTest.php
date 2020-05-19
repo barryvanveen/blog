@@ -6,15 +6,12 @@ namespace Tests\Unit\Infrastructure\Adapters;
 
 use App\Application\Exceptions\RecordNotFoundException;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
-use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
  * @covers \App\Infrastructure\Adapters\LaravelQueryBuilder
- * @covers \App\Infrastructure\Adapters\LaravelQueryBuilderFactory
  * @covers \App\Application\Exceptions\RecordNotFoundException
  */
 class LaravelQueryBuilderTest extends TestCase
@@ -28,12 +25,7 @@ class LaravelQueryBuilderTest extends TestCase
     {
         parent::setUp();
 
-        /** @var DatabaseManager $databaseManager */
-        $databaseManager = $this->app->make(DatabaseManager::class);
-
-        $queryBuilderFactory = new LaravelQueryBuilderFactory($databaseManager);
-
-        $this->queryBuilder = $queryBuilderFactory->table('articles');
+        $this->queryBuilder = new LaravelQueryBuilder(ArticleEloquentModel::query());
     }
 
     /** @test */
@@ -56,9 +48,9 @@ class LaravelQueryBuilderTest extends TestCase
             ->toArray();
 
         $this->assertCount(3, $collection);
-        $this->assertEquals($articles[0]->uuid, $collection[0]->uuid);
-        $this->assertEquals($articles[1]->uuid, $collection[1]->uuid);
-        $this->assertEquals($articles[2]->uuid, $collection[2]->uuid);
+        $this->assertEquals($articles[0]['uuid'], $collection[0]['uuid']);
+        $this->assertEquals($articles[1]['uuid'], $collection[1]['uuid']);
+        $this->assertEquals($articles[2]['uuid'], $collection[2]['uuid']);
     }
 
     /** @test */
@@ -86,9 +78,9 @@ class LaravelQueryBuilderTest extends TestCase
             ->toArray();
 
         $this->assertCount(3, $collection);
-        $this->assertEquals('aaa', $collection[0]->slug);
-        $this->assertEquals('bbb', $collection[1]->slug);
-        $this->assertEquals('ccc', $collection[2]->slug);
+        $this->assertEquals('aaa', $collection[0]['slug']);
+        $this->assertEquals('bbb', $collection[1]['slug']);
+        $this->assertEquals('ccc', $collection[2]['slug']);
     }
 
     /** @test */
@@ -116,9 +108,9 @@ class LaravelQueryBuilderTest extends TestCase
             ->toArray();
 
         $this->assertCount(3, $collection);
-        $this->assertEquals('ccc', $collection[0]->slug);
-        $this->assertEquals('bbb', $collection[1]->slug);
-        $this->assertEquals('aaa', $collection[2]->slug);
+        $this->assertEquals('ccc', $collection[0]['slug']);
+        $this->assertEquals('bbb', $collection[1]['slug']);
+        $this->assertEquals('aaa', $collection[2]['slug']);
     }
 
     /** @test */
@@ -143,7 +135,7 @@ class LaravelQueryBuilderTest extends TestCase
             ->orderBy('slug', 'desc')
             ->first();
 
-        $this->assertEquals('ccc', $record->slug);
+        $this->assertEquals('ccc', $record['slug']);
     }
 
     /** @test */
@@ -163,7 +155,7 @@ class LaravelQueryBuilderTest extends TestCase
             ->where('slug', '=', 'aaa')
             ->first();
 
-        $this->assertEquals('aaa', $record->slug);
+        $this->assertEquals('aaa', $record['slug']);
     }
 
     /** @test */
@@ -194,8 +186,8 @@ class LaravelQueryBuilderTest extends TestCase
             ->toArray();
 
         $this->assertCount(2, $collection);
-        $this->assertEquals('ccc', $collection[0]->slug);
-        $this->assertEquals('bbb', $collection[1]->slug);
+        $this->assertEquals('ccc', $collection[0]['slug']);
+        $this->assertEquals('bbb', $collection[1]['slug']);
     }
 
     /** @test */

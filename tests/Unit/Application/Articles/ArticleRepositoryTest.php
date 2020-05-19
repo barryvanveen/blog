@@ -11,12 +11,13 @@ use App\Application\Exceptions\RecordNotFoundException;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Infrastructure\Adapters\LaravelEventBus;
-use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
+use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
 use Carbon\Carbon;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Tests\TestCase;
@@ -38,7 +39,7 @@ class ArticleRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = $this->app->make(LaravelQueryBuilderFactory::class);
+        $queryBuilder = new LaravelQueryBuilder(ArticleEloquentModel::query());
         $articleMapper = $this->app->make(ArticleMapper::class);
 
         $this->laravelBusFake = Event::fake();
@@ -184,6 +185,45 @@ class ArticleRepositoryTest extends TestCase
         // assert
         $this->assertDatabaseHas('articles', ['title' => 'new-article-title']);
         $this->laravelBusFake->assertDispatchedTimes(ArticleWasUpdated::class);
+    }
+
+    /** @test */
+    public function itSetsTheTimestamps(): void
+    {
+        // arrange
+        $article = $this->getArticle();
+
+        // act
+        $this->repository->insert($article);
+
+        // assert
+        $record = DB::table('articles')->where('uuid', '=', $article->uuid())->first();
+        $this->assertNotEmpty($record->created_at);
+        $this->assertNotEmpty($record->updated_at);
+    }
+
+    /** @test */
+    public function itUpdatesTheTimestamps(): void
+    {
+        // arrange
+        $oldDate = new DateTimeImmutable('-1 day');
+        factory(ArticleEloquentModel::class)->create([
+            'uuid' => 'myuuid',
+            'created_at' => $oldDate,
+            'updated_at' => $oldDate,
+        ]);
+
+        // act
+        $article = $this->getArticle([
+            'uuid' => 'myuuid',
+        ]);
+        $this->repository->update($article);
+
+        // assert
+        $record = DB::table('articles')->where('uuid', '=', $article->uuid())->first();
+        $this->assertEquals($oldDate->getTimestamp(), (new DateTimeImmutable($record->created_at))->getTimestamp());
+        $this->assertNotEmpty($record->updated_at);
+        $this->assertTrue($record->updated_at > $record->created_at);
     }
 
     /** @test */

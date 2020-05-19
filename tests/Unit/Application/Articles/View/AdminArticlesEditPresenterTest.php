@@ -39,7 +39,7 @@ class AdminArticlesEditPresenterTest extends TestCase
         /** @var ObjectProphecy|ArticleRepositoryInterface $repository */
         $repository = $this->prophesize(ArticleRepositoryInterface::class);
         $repository->getByUuid(Argument::exact($article->uuid))->willReturn(
-            $mapper->mapToDomainModel($article)
+            $mapper->mapToDomainModel($article->toArray())
         );
 
         /** @var ObjectProphecy|AdminArticleEditRequestInterface $request */

@@ -22,7 +22,7 @@ class PageMapperTest extends TestCase
         $eloquentPage = factory(PageEloquentModel::class)->make();
 
         $mapper = new PageMapper();
-        $page = $mapper->mapToDomainModel($eloquentPage);
+        $page = $mapper->mapToDomainModel($eloquentPage->toArray());
 
         $this->assertEquals($eloquentPage->slug, $page->slug());
         $this->assertEquals($eloquentPage->title, $page->title());
@@ -37,7 +37,10 @@ class PageMapperTest extends TestCase
         /** @var PageEloquentModel $eloquentPage2 */
         $eloquentPage2 = factory(PageEloquentModel::class)->make();
 
-        $eloquentCollection = new LaravelCollection([$eloquentPage1, $eloquentPage2]);
+        $eloquentCollection = new LaravelCollection([
+            $eloquentPage1->toArray(),
+            $eloquentPage2->toArray(),
+        ]);
 
         $mapper = new PageMapper();
         $collection = $mapper->mapToDomainModels($eloquentCollection);

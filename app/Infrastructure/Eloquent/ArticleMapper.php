@@ -24,16 +24,16 @@ final class ArticleMapper implements ModelMapperInterface
         return new LaravelCollection($domainModels);
     }
 
-    public function mapToDomainModel(object $model): Article
+    public function mapToDomainModel(array $model): Article
     {
         return new Article(
-            $model->content,
-            $model->description,
-            new DateTimeImmutable($model->published_at),
-            $model->slug,
-            new ArticleStatus((int) $model->status),
-            $model->title,
-            $model->uuid
+            $model['content'],
+            $model['description'],
+            new DateTimeImmutable($model['published_at']),
+            $model['slug'],
+            new ArticleStatus((int) $model['status']),
+            $model['title'],
+            $model['uuid']
         );
     }
 }
