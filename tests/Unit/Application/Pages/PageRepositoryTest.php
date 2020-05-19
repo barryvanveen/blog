@@ -9,10 +9,12 @@ use App\Application\Pages\Events\PageWasUpdated;
 use App\Application\Pages\PageRepository;
 use App\Domain\Pages\Models\Page;
 use App\Infrastructure\Adapters\LaravelEventBus;
-use App\Infrastructure\Adapters\LaravelQueryBuilderFactory;
+use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\PageMapper;
+use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Tests\TestCase;
@@ -34,7 +36,7 @@ class PageRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = $this->app->make(LaravelQueryBuilderFactory::class);
+        $queryBuilder = new LaravelQueryBuilder(PageEloquentModel::query());
         $pageMapper = $this->app->make(PageMapper::class);
 
         $this->laravelBusFake = Event::fake();
@@ -44,7 +46,7 @@ class PageRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function itRetrievesAllArticlesInTheCorrectOrder(): void
+    public function itRetrievesAllPagesInTheCorrectOrder(): void
     {
         // arrange
         factory(PageEloquentModel::class)->create(['slug' => 'page3']);
@@ -100,6 +102,45 @@ class PageRepositoryTest extends TestCase
         // assert
         $this->assertDatabaseHas('pages', ['title' => $page->title()]);
         $this->laravelBusFake->assertDispatchedTimes(PageWasUpdated::class);
+    }
+
+    /** @test */
+    public function itSetsTheTimestamps(): void
+    {
+        // arrange
+        $page = $this->getPage();
+
+        // act
+        $this->repository->insert($page);
+
+        // assert
+        $record = DB::table('pages')->where('slug', '=', $page->slug())->first();
+        $this->assertNotEmpty($record->created_at);
+        $this->assertNotEmpty($record->updated_at);
+    }
+
+    /** @test */
+    public function itUpdatesTheTimestamps(): void
+    {
+        // arrange
+        $oldDate = new DateTimeImmutable('-1 day');
+        factory(PageEloquentModel::class)->create([
+            'slug' => 'myslug',
+            'created_at' => $oldDate,
+            'updated_at' => $oldDate,
+        ]);
+
+        // act
+        $page = $this->getPage([
+            'slug' => 'myslug',
+        ]);
+        $this->repository->update($page);
+
+        // assert
+        $record = DB::table('pages')->where('slug', '=', $page->slug())->first();
+        $this->assertEquals($oldDate->getTimestamp(), (new DateTimeImmutable($record->created_at))->getTimestamp());
+        $this->assertNotEmpty($record->updated_at);
+        $this->assertTrue($record->updated_at > $record->created_at);
     }
 
     /** @test */

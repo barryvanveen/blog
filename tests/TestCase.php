@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Domain\Articles\Enums\ArticleStatus;
+use App\Domain\Articles\Models\Article;
 use App\Domain\Pages\Models\Page;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -24,6 +26,19 @@ abstract class TestCase extends BaseTestCase
     protected function getResponseFactory(): ResponseFactoryInterface
     {
         return new Psr17Factory();
+    }
+
+    protected function getArticle(array $attributes = []): Article
+    {
+        return new Article(
+            $attributes['content'] ?? 'foo',
+            $attributes['description'] ?? 'bar',
+            $attributes['published_at'] ?? new DateTimeImmutable('now'),
+            $attributes['slug'] ?? 'baz-baz',
+            $attributes['status'] ?? ArticleStatus::published(),
+            $attributes['title'] ?? 'Baz baz',
+            $attributes['uuid'] ?? '123123'
+        );
     }
 
     protected function getPage(array $attributes = []): Page

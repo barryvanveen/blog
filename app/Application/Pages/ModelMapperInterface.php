@@ -11,7 +11,7 @@ interface ModelMapperInterface
 {
     public function mapToDomainModels(CollectionInterface $models): CollectionInterface;
 
-    public function mapToDomainModel(object $model): Page;
+    public function mapToDomainModel(array $model): Page;
 
     public function mapToDatabaseArray(Page $page): array;
 }

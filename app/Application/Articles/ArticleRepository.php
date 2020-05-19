@@ -7,7 +7,7 @@ namespace App\Application\Articles;
 use App\Application\Articles\Events\ArticleWasCreated;
 use App\Application\Articles\Events\ArticleWasUpdated;
 use App\Application\Interfaces\EventBusInterface;
-use App\Application\Interfaces\QueryBuilderFactoryInterface;
+use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
@@ -16,8 +16,8 @@ use DateTimeImmutable;
 
 final class ArticleRepository implements ArticleRepositoryInterface
 {
-    /** @var QueryBuilderFactoryInterface */
-    private $builderFactory;
+    /** @var QueryBuilderInterface */
+    private $queryBuilder;
 
     /** @var ModelMapperInterface */
     private $modelMapper;
@@ -26,19 +26,18 @@ final class ArticleRepository implements ArticleRepositoryInterface
     private $eventBus;
 
     public function __construct(
-        QueryBuilderFactoryInterface $builderFactory,
+        QueryBuilderInterface $builderFactory,
         ModelMapperInterface $modelMapper,
         EventBusInterface $eventBus
     ) {
-        $this->builderFactory = $builderFactory;
+        $this->queryBuilder = $builderFactory;
         $this->modelMapper = $modelMapper;
         $this->eventBus = $eventBus;
     }
 
     public function allOrdered(): CollectionInterface
     {
-        $articles = $this->builderFactory
-            ->table('articles')
+        $articles = $this->queryBuilder
             ->orderBy('published_at', 'desc')
             ->get();
 
@@ -47,8 +46,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function allPublishedAndOrdered(): CollectionInterface
     {
-        $articles = $this->builderFactory
-            ->table('articles')
+        $articles = $this->queryBuilder
             ->where('status', '=', (string) ArticleStatus::published())
             ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
             ->orderBy('published_at', 'desc')
@@ -59,8 +57,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function insert(Article $article): void
     {
-        $this->builderFactory
-            ->table('articles')
+        $this->queryBuilder
             ->insert($article->toArray());
 
         $this->eventBus->dispatch(new ArticleWasCreated());
@@ -68,8 +65,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function update(Article $article): void
     {
-        $this->builderFactory
-            ->table('articles')
+        $this->queryBuilder
             ->where('uuid', '=', $article->uuid())
             ->update($article->toArray());
 
@@ -78,8 +74,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function getPublishedByUuid(string $uuid): Article
     {
-        $article = $this->builderFactory
-            ->table('articles')
+        $article = $this->queryBuilder
             ->where('uuid', '=', $uuid)
             ->where('status', '=', (string) ArticleStatus::published())
             ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
@@ -90,8 +85,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
 
     public function getByUuid(string $uuid): Article
     {
-        $article = $this->builderFactory
-            ->table('articles')
+        $article = $this->queryBuilder
             ->where('uuid', '=', $uuid)
             ->first();
 

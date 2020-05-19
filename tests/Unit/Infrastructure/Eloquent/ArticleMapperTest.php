@@ -27,7 +27,7 @@ class ArticleMapperTest extends TestCase
         ]);
 
         $mapper = new ArticleMapper();
-        $article = $mapper->mapToDomainModel($eloquentArticle);
+        $article = $mapper->mapToDomainModel($eloquentArticle->toArray());
 
         $this->assertEquals($eloquentArticle->slug, $article->slug());
         $this->assertEquals($eloquentArticle->title, $article->title());
@@ -50,7 +50,10 @@ class ArticleMapperTest extends TestCase
             'status' => 0,
         ]);
 
-        $eloquentCollection = new LaravelCollection([$eloquentArticle1, $eloquentArticle2]);
+        $eloquentCollection = new LaravelCollection([
+            $eloquentArticle1->toArray(),
+            $eloquentArticle2->toArray(),
+        ]);
 
         $mapper = new ArticleMapper();
         $collection = $mapper->mapToDomainModels($eloquentCollection);
