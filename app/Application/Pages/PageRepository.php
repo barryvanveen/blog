@@ -62,11 +62,6 @@ final class PageRepository implements PageRepositoryInterface
         $this->eventBus->dispatch(new PageWasUpdated($page->slug()));
     }
 
-    public function about(): Page
-    {
-        return $this->getBySlug(self::SLUG_ABOUT);
-    }
-
     public function getBySlug(string $slug): Page
     {
         $page = $this->queryBuilder
@@ -74,5 +69,10 @@ final class PageRepository implements PageRepositoryInterface
             ->first();
 
         return $this->modelMapper->mapToDomainModel($page);
+    }
+
+    public function about(): Page
+    {
+        return $this->getBySlug(self::SLUG_ABOUT);
     }
 }
