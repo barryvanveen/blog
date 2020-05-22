@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Infrastructure\Providers;
 
 use App\Application\Interfaces\CommandBusInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Application\Pages\Commands\CreatePage;
 use App\Application\Pages\Commands\UpdatePage;
+use App\Application\Pages\Events\PageWasUpdated;
 use App\Application\Pages\Handlers\CreatePageHandler;
 use App\Application\Pages\Handlers\UpdatePageHandler;
+use App\Application\Pages\Listeners\PageListener;
 use App\Application\Pages\ModelMapperInterface;
 use App\Application\Pages\PageRepository;
 use App\Domain\Pages\PageRepositoryInterface;
@@ -27,10 +30,13 @@ use Illuminate\Support\ServiceProvider;
 class PagesServiceProvider extends ServiceProvider
 {
     public function boot(
-        CommandBusInterface $commandBus
+        CommandBusInterface $commandBus,
+        EventBusInterface $eventBus
     ): void {
         $commandBus->subscribe(CreatePage::class, CreatePageHandler::class);
         $commandBus->subscribe(UpdatePage::class, UpdatePageHandler::class);
+
+        $eventBus->subscribe(PageWasUpdated::class, PageListener::class);
     }
 
     public function register(): void

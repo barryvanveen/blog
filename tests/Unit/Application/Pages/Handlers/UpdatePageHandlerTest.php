@@ -24,6 +24,7 @@ class UpdatePageHandlerTest extends TestCase
         // arrange
         /** @var PageEloquentModel $page */
         $page = factory(PageEloquentModel::class)->create([
+            'slug' => 'about',
             'title' => 'my old title',
         ]);
 

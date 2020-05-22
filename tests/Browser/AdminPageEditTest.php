@@ -26,7 +26,9 @@ class AdminPageEditTest extends DuskTestCase
         parent::setUp();
 
         $this->user = factory(UserEloquentModel::class)->create();
-        $this->page = factory(PageEloquentModel::class)->create();
+        $this->page = factory(PageEloquentModel::class)->create([
+            'slug' => 'about',
+        ]);
     }
 
     /** @test */
