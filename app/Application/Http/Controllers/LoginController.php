@@ -6,16 +6,17 @@ namespace App\Application\Http\Controllers;
 
 use App\Application\Auth\Commands\Login;
 use App\Application\Auth\Commands\Logout;
+use App\Application\Auth\Events\LockoutWasTriggered;
 use App\Application\Auth\Exceptions\FailedLoginException;
 use App\Application\Auth\Exceptions\LockoutException;
 use App\Application\Auth\Requests\LoginRequestInterface;
 use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Interfaces\CommandBusInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\GuardInterface;
 use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\TranslatorInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 class LoginController
 {
@@ -31,26 +32,26 @@ class LoginController
     /** @var SessionInterface */
     private $session;
 
-    /** @var LoggerInterface */
-    private $logger;
-
     /** @var GuardInterface */
     private $guard;
+
+    /** @var EventBusInterface */
+    private $eventBus;
 
     public function __construct(
         ResponseBuilderInterface $responseBuilder,
         CommandBusInterface $commandBus,
         TranslatorInterface $translator,
         SessionInterface $session,
-        LoggerInterface $logger,
-        GuardInterface $guard
+        GuardInterface $guard,
+        EventBusInterface $eventBus
     ) {
         $this->responseBuilder = $responseBuilder;
         $this->commandBus = $commandBus;
         $this->translator = $translator;
         $this->session = $session;
-        $this->logger = $logger;
         $this->guard = $guard;
+        $this->eventBus = $eventBus;
     }
 
     public function form(): ResponseInterface
@@ -84,7 +85,9 @@ class LoginController
 
             return $this->responseBuilder->redirectBack();
         } catch (LockoutException $e) {
-            $this->logger->warning('Lockout triggered');
+            $this->eventBus->dispatch(
+                new LockoutWasTriggered($request->email(), $request->ip())
+            );
 
             $this->session->flashErrors([
                 'email' => $this->translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()]),
