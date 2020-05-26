@@ -52,6 +52,8 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_KEY'),
         ],
 
         'postmark' => [
@@ -85,8 +87,18 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('EMAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('EMAIL_FROM_NAME', 'Example'),
+    ],
+
+    'reply_to' => [
+        'address' => env('EMAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('EMAIL_FROM_NAME', 'Example'),
+    ],
+
+    'to' => [
+        'address' => env('EMAIL_ADMIN_TO', 'hello@example.com'),
+        'name' => 'Webmaster',
     ],
 
     /*
