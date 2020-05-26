@@ -171,6 +171,57 @@ class ResponseBuilderTest extends TestCase
     }
 
     /** @test */
+    public function itRedirectsBackWithoutErrors(): void
+    {
+        // arrange
+        $request = $this->request->withHeader('referer', 'http://referer.url');
+
+        $this->session->flashErrors(Argument::any())
+            ->shouldNotBeCalled();
+
+        $this->responseBuilder = new ResponseBuilder(
+            $this->viewBuilder->reveal(),
+            $this->responseFactory,
+            $this->streamFactory,
+            $this->urlGenerator->reveal(),
+            $request,
+            $this->session->reveal()
+        );
+
+        // act
+        $this->responseBuilder->redirectBack();
+    }
+
+    /** @test */
+    public function itRedirectsBackWithErrors(): void
+    {
+        // arrange
+        $request = $this->request->withHeader('referer', 'http://referer.url');
+
+        $errors = [
+            'key' => 'value',
+        ];
+
+        $this->session->flashErrors($errors)
+            ->shouldBeCalled();
+
+        $this->responseBuilder = new ResponseBuilder(
+            $this->viewBuilder->reveal(),
+            $this->responseFactory,
+            $this->streamFactory,
+            $this->urlGenerator->reveal(),
+            $request,
+            $this->session->reveal()
+        );
+
+        // act
+        $this->responseBuilder->redirectBack(
+            StatusCode::STATUS_FOUND,
+            $errors
+        );
+    }
+
+    /** @test */
     public function itRedirectsToIntendedUrl(): void
     {
         // arrange
