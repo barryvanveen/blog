@@ -70,9 +70,15 @@ class ResponseBuilder implements ResponseBuilderInterface
         return $response->withHeader('Location', $location);
     }
 
-    public function redirectBack(int $status = StatusCode::STATUS_FOUND): ResponseInterface
-    {
+    public function redirectBack(
+        int $status = StatusCode::STATUS_FOUND,
+        array $errors = []
+    ): ResponseInterface {
         $location = $this->determinePreviousUrl();
+
+        if (count($errors) > 0) {
+            $this->session->flashErrors($errors);
+        }
 
         return $this->responseFactory->createResponse($status)
             ->withHeader('Location', $location);

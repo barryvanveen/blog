@@ -17,7 +17,10 @@ interface ResponseBuilderInterface
         int $status = StatusCode::STATUS_FOUND
     ): ResponseInterface;
 
-    public function redirectBack(int $status = StatusCode::STATUS_FOUND): ResponseInterface;
+    public function redirectBack(
+        int $status = StatusCode::STATUS_FOUND,
+        array $errors = []
+    ): ResponseInterface;
 
     public function redirectIntended(
         string $fallbackRoute,
