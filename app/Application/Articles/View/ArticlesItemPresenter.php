@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\View;
 
-use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
@@ -21,9 +20,6 @@ final class ArticlesItemPresenter implements PresenterInterface
     /** @var ArticleShowRequestInterface */
     private $request;
 
-    /** @var MarkdownConverterInterface */
-    private $markdownConverter;
-
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
@@ -33,13 +29,11 @@ final class ArticlesItemPresenter implements PresenterInterface
     public function __construct(
         ArticleRepositoryInterface $repository,
         ArticleShowRequestInterface $request,
-        MarkdownConverterInterface $markdownConverter,
         UrlGeneratorInterface $urlGenerator,
         DateTimeFormatterInterface $dateTimeFormatter
     ) {
         $this->repository = $repository;
         $this->request = $request;
-        $this->markdownConverter = $markdownConverter;
         $this->urlGenerator = $urlGenerator;
         $this->dateTimeFormatter = $dateTimeFormatter;
     }
@@ -52,7 +46,7 @@ final class ArticlesItemPresenter implements PresenterInterface
             'title' => $article->title(),
             'publicationDateInAtomFormat' => $this->publicationDateInAtomFormat($article),
             'publicationDateInHumanFormat' => $this->publicationDateInHumanFormat($article),
-            'content' => $this->htmlContent($article),
+            'content' => $article->content(),
             'metaData' => $this->buildMetaData($article),
         ];
     }
@@ -65,13 +59,6 @@ final class ArticlesItemPresenter implements PresenterInterface
     private function publicationDateInHumanFormat(Article $article): string
     {
         return $this->dateTimeFormatter->humanReadable($article->publishedAt());
-    }
-
-    private function htmlContent(Article $article): string
-    {
-        return $this->markdownConverter->convertToHtml(
-            $article->content()
-        );
     }
 
     private function buildMetaData(Article $article): MetaData

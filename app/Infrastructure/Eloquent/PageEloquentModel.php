@@ -23,4 +23,10 @@ class PageEloquentModel extends Model
     protected $guarded = [];
 
     protected $table = 'pages';
+
+    protected $keyType = 'string';
+
+    protected $primaryKey = 'slug';
+
+    public $incrementing = false;
 }

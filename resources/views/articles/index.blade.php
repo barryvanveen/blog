@@ -27,7 +27,7 @@
                             </a>
                         </h2>
                         <p class="text-gray-700 text-base mb-0" itemprop="description">
-                            {{ $article['description'] }}
+                            {!! $article['description'] !!}
                         </p>
                     </header>
                 </div>
