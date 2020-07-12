@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesItemPresenter;
-use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -29,7 +28,6 @@ class ArticlesItemPresenterTest extends TestCase
         $uuid = 'myMockUuid';
         $title = 'titleString';
         $content = 'contentString';
-        $html = 'htmlContentString';
 
         $article = new Article(
             $content,
@@ -49,10 +47,6 @@ class ArticlesItemPresenterTest extends TestCase
         $request = $this->prophesize(ArticleShowRequestInterface::class);
         $request->uuid()->willReturn($uuid);
 
-        /** @var ObjectProphecy|MarkdownConverterInterface $converter */
-        $converter = $this->prophesize(MarkdownConverterInterface::class);
-        $converter->convertToHtml(Argument::exact($content))->willReturn($html);
-
         /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $urlGenerator->route(Argument::cetera())->willReturn('http://my-article-url');
@@ -65,7 +59,6 @@ class ArticlesItemPresenterTest extends TestCase
         $presenter = new ArticlesItemPresenter(
             $repository->reveal(),
             $request->reveal(),
-            $converter->reveal(),
             $urlGenerator->reveal(),
             $dateTimeFormatter->reveal()
         );
@@ -75,7 +68,7 @@ class ArticlesItemPresenterTest extends TestCase
         $this->assertEquals($title, $result['title']);
         $this->assertEquals('metadata-string', $result['publicationDateInAtomFormat']);
         $this->assertEquals('humanReadable-string', $result['publicationDateInHumanFormat']);
-        $this->assertEquals($html, $result['content']);
+        $this->assertEquals($content, $result['content']);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }
 }

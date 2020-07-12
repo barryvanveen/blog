@@ -26,4 +26,10 @@ class ArticleEloquentModel extends Model
     protected $guarded = [];
 
     protected $table = 'articles';
+
+    protected $keyType = 'string';
+
+    protected $primaryKey = 'uuid';
+
+    public $incrementing = false;
 }

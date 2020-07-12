@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Pages\View;
 
-use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
@@ -17,9 +16,6 @@ final class PagesAboutPresenter implements PresenterInterface
     /** @var PageRepositoryInterface */
     private $repository;
 
-    /** @var MarkdownConverterInterface */
-    private $markdownConverter;
-
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
@@ -28,12 +24,10 @@ final class PagesAboutPresenter implements PresenterInterface
 
     public function __construct(
         PageRepositoryInterface $repository,
-        MarkdownConverterInterface $markdownConverter,
         UrlGeneratorInterface $urlGenerator,
         DateTimeFormatterInterface $dateTimeFormatter
     ) {
         $this->repository = $repository;
-        $this->markdownConverter = $markdownConverter;
         $this->urlGenerator = $urlGenerator;
         $this->dateTimeFormatter = $dateTimeFormatter;
     }
@@ -46,7 +40,7 @@ final class PagesAboutPresenter implements PresenterInterface
             'title' => $page->title(),
             'lastUpdatedDateInAtomFormat' => $this->lastUpdateInAtomFormat($page),
             'lastUpdatedDateInHumanFormat' => $this->lastUpdateInHumanFormat($page),
-            'content' => $this->htmlContent($page),
+            'content' => $page->content(),
             'metaData' => $this->buildMetaData($page),
         ];
     }
@@ -59,13 +53,6 @@ final class PagesAboutPresenter implements PresenterInterface
     private function lastUpdateInHumanFormat(Page $page): string
     {
         return $this->dateTimeFormatter->humanReadable($page->lastUpdated());
-    }
-
-    private function htmlContent(Page $page): string
-    {
-        return $this->markdownConverter->convertToHtml(
-            $page->content()
-        );
     }
 
     private function buildMetaData(Page $page): MetaData

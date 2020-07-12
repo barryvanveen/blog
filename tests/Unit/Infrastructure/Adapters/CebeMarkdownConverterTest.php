@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Adapters;
 
-use App\Infrastructure\Adapters\CommonMarkMarkdownConverter;
-use League\CommonMark\CommonMarkConverter;
+use App\Infrastructure\Adapters\CebeMarkdownConverter;
 use Tests\TestCase;
+use cebe\markdown\GithubMarkdown;
 
 /**
- * @covers \App\Infrastructure\Adapters\CommonMarkMarkdownConverter
+ * @covers \App\Infrastructure\Adapters\CebeMarkdownConverter
  */
-class CommonMarkMarkdownConverterTest extends TestCase
+class CebeMarkdownConverterTest extends TestCase
 {
     /**
      * @test
@@ -20,8 +20,8 @@ class CommonMarkMarkdownConverterTest extends TestCase
      */
     public function itConvertsMarkdownToHtml(string $input, string $expected): void
     {
-        $converter = new CommonMarkMarkdownConverter(
-            new CommonMarkConverter()
+        $converter = new CebeMarkdownConverter(
+            new GithubMarkdown()
         );
 
         $this->assertEquals($expected, $converter->convertToHtml($input));
@@ -89,7 +89,7 @@ class MyFooClass
             ],
             [
                 '<img src="images/dropbox-app-aanmaken.png?w=320" alt="Dropbox app aanmaken">',
-                "<img src=\"images/dropbox-app-aanmaken.png?w=320\" alt=\"Dropbox app aanmaken\">\n",
+                "<p><img src=\"images/dropbox-app-aanmaken.png?w=320\" alt=\"Dropbox app aanmaken\"></p>\n",
             ],
             [
                 '<figcaption>Dropbox app details bekijken</figcaption>',

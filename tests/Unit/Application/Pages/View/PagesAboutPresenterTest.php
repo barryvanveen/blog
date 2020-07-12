@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Pages\View;
 
-use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\Pages\View\PagesAboutPresenter;
 use App\Application\View\DateTimeFormatterInterface;
@@ -24,7 +23,6 @@ class PagesAboutPresenterTest extends TestCase
     {
         $title = 'titleString';
         $content = 'contentString';
-        $html = 'htmlContentString';
 
         $page = $this->getPage([
             'title' => $title,
@@ -34,10 +32,6 @@ class PagesAboutPresenterTest extends TestCase
         /** @var ObjectProphecy|PageRepositoryInterface $repository */
         $repository = $this->prophesize(PageRepositoryInterface::class);
         $repository->about()->willReturn($page);
-
-        /** @var ObjectProphecy|MarkdownConverterInterface $converter */
-        $converter = $this->prophesize(MarkdownConverterInterface::class);
-        $converter->convertToHtml(Argument::exact($content))->willReturn($html);
 
         /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
@@ -50,7 +44,6 @@ class PagesAboutPresenterTest extends TestCase
 
         $presenter = new PagesAboutPresenter(
             $repository->reveal(),
-            $converter->reveal(),
             $urlGenerator->reveal(),
             $dateTimeFormatter->reveal()
         );
@@ -60,7 +53,7 @@ class PagesAboutPresenterTest extends TestCase
         $this->assertEquals($title, $result['title']);
         $this->assertEquals('metadata-string', $result['lastUpdatedDateInAtomFormat']);
         $this->assertEquals('humanReadable-string', $result['lastUpdatedDateInHumanFormat']);
-        $this->assertEquals($html, $result['content']);
+        $this->assertEquals($content, $result['content']);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }
 }
