@@ -9,6 +9,7 @@ const baseConfig = {
     context: settings.paths.base,
     entry: {
         "app": path.join(settings.paths.resources, '/js/app.js'),
+        "admin": path.join(settings.paths.resources, '/js/admin.js'),
     },
     output: {
         path: settings.paths.output,
