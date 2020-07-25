@@ -14,7 +14,7 @@
     'errors' => $errors,
 ])
 
-@include('partials.input.textarea', [
+@include('partials.input.editor', [
     'title' => 'Description',
     'name' => 'description',
     'value' => $page['description'] ?? '',
@@ -22,7 +22,7 @@
     'errors' => $errors,
 ])
 
-@include('partials.input.textarea', [
+@include('partials.input.editor', [
     'title' => 'Content',
     'name' => 'content',
     'value' => $page['content'] ?? '',
