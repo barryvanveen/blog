@@ -1,2 +1,4 @@
 @presenter(\App\Application\View\JavascriptPresenter)
-<script src="{{ $js_path }}"></script>
+@foreach($js_paths as $path)
+    <script src="{{ $path  }}"></script>
+@endforeach

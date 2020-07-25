@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\View;
 
 use App\Application\Interfaces\ConfigurationInterface;
+use App\Application\Interfaces\RouterInterface;
 use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\AssetUrlBuilderInterface;
@@ -18,12 +19,19 @@ use Tests\TestCase;
  */
 class HeadHtmlPresenterTest extends TestCase
 {
-    /** @test */
-    public function itPassesTheCorrectVariables(): void
+    /** @var RouterInterface|ObjectProphecy */
+    private $router;
+
+    /** @var HeadHtmlPresenter */
+    private $presenter;
+
+    public function setUp(): void
     {
+        parent::setUp();
+
         /** @var ObjectProphecy|AssetUrlBuilderInterface $assetBuilder */
         $assetBuilder = $this->prophesize(AssetUrlBuilderInterface::class);
-        $assetBuilder->get(Argument::exact('app.css'))->willReturn('/path/to/app.css');
+        $assetBuilder->get(Argument::any())->willReturnArgument(0);
 
         /** @var ObjectProphecy|ConfigurationInterface $configuration */
         $configuration = $this->prophesize(ConfigurationInterface::class);
@@ -37,18 +45,46 @@ class HeadHtmlPresenterTest extends TestCase
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $urlGenerator->route(Argument::cetera())->willReturn('http://myapp.dev/about');
 
-        $presenter = new HeadHtmlPresenter(
+        /** @var RouterInterface|ObjectProphecy $router */
+        $this->router = $this->prophesize(RouterInterface::class);
+
+        $this->presenter = new HeadHtmlPresenter(
             $assetBuilder->reveal(),
             $configuration->reveal(),
             $session->reveal(),
-            $urlGenerator->reveal()
+            $urlGenerator->reveal(),
+            $this->router->reveal()
         );
+    }
+
+    /** @test */
+    public function itPassesNoneAdminVariables(): void
+    {
+        $this->router->currentRouteIsAdminRoute()->willReturn(false);
 
         $this->assertEquals([
             'base_url' => 'http://myapp.dev',
             'csrf_token' => 'myMockToken',
-            'css_path' => '/path/to/app.css',
+            'css_paths' => [
+                'app.css',
+            ],
             'about_url' => 'http://myapp.dev/about',
-        ], $presenter->present());
+        ], $this->presenter->present());
+    }
+
+    /** @test */
+    public function itPasseszAdminVariables(): void
+    {
+        $this->router->currentRouteIsAdminRoute()->willReturn(true);
+
+        $this->assertEquals([
+            'base_url' => 'http://myapp.dev',
+            'csrf_token' => 'myMockToken',
+            'css_paths' => [
+                'app.css',
+                'admin.css',
+            ],
+            'about_url' => 'http://myapp.dev/about',
+        ], $this->presenter->present());
     }
 }
