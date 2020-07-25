@@ -13,5 +13,7 @@
     @yield('headHtmlMetaTags')
 
     <link rel="author" href="{{ $about_url }}">
-    <link href="{{ $css_path }}" rel="stylesheet" type="text/css">
+    @foreach($css_paths as $path)
+        <link href="{{ $path }}" rel="stylesheet" type="text/css">
+    @endforeach
 </head>
