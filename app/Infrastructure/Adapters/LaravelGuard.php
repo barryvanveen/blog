@@ -9,23 +9,23 @@ use App\Domain\Users\Models\User;
 use App\Infrastructure\Eloquent\UserEloquentModel;
 use App\Infrastructure\Exceptions\InvalidGuardException;
 use Illuminate\Contracts\Auth\Factory;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\UnauthorizedException;
 
 class LaravelGuard implements GuardInterface
 {
-    /** @var StatefulGuard&Guard */
+    /** @var StatefulGuard */
     private $laravelGuard;
 
     public function __construct(Factory $authFactory)
     {
-        $this->laravelGuard = $authFactory->guard();
+        $guard = $authFactory->guard();
 
-        if (($this->laravelGuard instanceof StatefulGuard) === false ||
-            ($this->laravelGuard instanceof Guard) === false) {
-            throw InvalidGuardException::becauseGuardDoesNotExtendTheCorrectInterfaces(get_class($this->laravelGuard));
+        if (($guard instanceof StatefulGuard) === false) {
+            throw InvalidGuardException::becauseGuardDoesNotExtendTheCorrectInterfaces(get_class($guard));
         }
+
+        $this->laravelGuard = $guard;
     }
 
     public function attempt(string $email, string $password): bool

@@ -9,6 +9,9 @@
         <directory name="app" />
         <ignoreFiles>
             <directory name="vendor" />
+            <file name="app/Infrastructure/Eloquent/ArticleEloquentModel.php" />
+            <file name="app/Infrastructure/Eloquent/PageEloquentModel.php" />
+            <file name="app/Infrastructure/Eloquent/UserEloquentModel.php" />
         </ignoreFiles>
     </projectFiles>
 
