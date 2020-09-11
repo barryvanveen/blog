@@ -105,6 +105,15 @@ class ResponseBuilder implements ResponseBuilderInterface
             ->withHeader('Content-Type', 'text/xml');
     }
 
+    public function json(array $data, int $status = StatusCode::STATUS_OK): ResponseInterface
+    {
+        $body = $this->streamFactory->createStream(json_encode($data));
+
+        return $this->responseFactory->createResponse($status)
+            ->withBody($body)
+            ->withHeader('Content-Type', 'application/json');
+    }
+
     private function determinePreviousUrl(): string
     {
         $referrer = $this->request->hasHeader('referer') ? $this->request->getHeader('referer')[0] : null;

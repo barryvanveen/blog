@@ -277,4 +277,23 @@ class ResponseBuilderTest extends TestCase
         $this->assertArrayHasKey('Content-Type', $headers);
         $this->assertEquals('text/xml', $headers['Content-Type'][0]);
     }
+
+    /** @test */
+    public function itReturnsJsonResponse(): void
+    {
+        // arrange
+        $input = ['foo' => 'bar'];
+
+        // act
+        $response = $this->responseBuilder->json($input);
+
+        // assert
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(StatusCode::STATUS_OK, $response->getStatusCode());
+        $this->assertEquals(json_encode($input), $response->getBody());
+
+        $headers = $response->getHeaders();
+        $this->assertArrayHasKey('Content-Type', $headers);
+        $this->assertEquals('application/json', $headers['Content-Type'][0]);
+    }
 }
