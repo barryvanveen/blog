@@ -33,4 +33,17 @@ class AdminTest extends TestCase
         $response->assertOk();
         $response->assertSee($user->name);
     }
+
+    /** @test */
+    public function markdownToHtml(): void
+    {
+        /** @var UserEloquentModel $user */
+        $user = factory(UserEloquentModel::class)->create();
+        Auth::login($user);
+
+        $response = $this->post(route('admin.markdown-to-html'), ['markdown' => '# FOO']);
+
+        $response->assertOk();
+        $response->assertJson(["html" => "<h1>FOO</h1>\n"]);
+    }
 }
