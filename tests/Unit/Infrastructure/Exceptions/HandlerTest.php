@@ -14,9 +14,11 @@ use App\Infrastructure\Exceptions\Handler;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -62,6 +64,9 @@ class HandlerTest extends TestCase
     /** @var ObjectProphecy|Request */
     private $request;
 
+    /** @var ObjectProphecy|ResponseFactory */
+    private $responseFactory;
+
     /** @var Handler */
     private $handler;
 
@@ -73,15 +78,17 @@ class HandlerTest extends TestCase
         $this->viewFactory = $this->prophesize(Factory::class);
         $this->redirector = $this->prophesize(Redirector::class);
         $this->urlGenerator = $this->prophesize(UrlGenerator::class);
-        $this->request = $this->prophesize(Request::class);
-
         $this->urlGenerator->route('login')->willReturn(self::PATH_TO_LOGIN);
+        $this->request = $this->prophesize(Request::class);
+        $this->request->expectsJson()->willReturn(false);
+        $this->responseFactory = $this->prophesize(ResponseFactory::class);
 
         $this->handler = new Handler(
             $this->logger->reveal(),
             $this->viewFactory->reveal(),
             $this->redirector->reveal(),
-            $this->urlGenerator->reveal()
+            $this->urlGenerator->reveal(),
+            $this->responseFactory->reveal()
         );
     }
 
@@ -231,6 +238,22 @@ class HandlerTest extends TestCase
     }
 
     /** @test */
+    public function itReturnsAJsonErrorMessageOnAuthenticationExceptions(): void
+    {
+        // arrange
+        $exception = new AuthenticationException();
+
+        $this->request->expectsJson()->willReturn(true);
+        $this->responseFactory->json(Argument::cetera())->willReturn(new JsonResponse());
+
+        // act
+        $response = $this->handler->render($this->request->reveal(), $exception);
+
+        // assert
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
+
+    /** @test */
     public function itRedirectsOnValidationExceptions(): void
     {
         $input = [
@@ -278,5 +301,36 @@ class HandlerTest extends TestCase
         $session->flash('errors', Argument::that(function (ViewErrorBag $errorBag) {
             return ($errorBag->first('email') === 'Email message');
         }))->shouldBeCalled();
+    }
+
+    /** @test */
+    public function itReturnsAJsonErrorMessageOnValidationExceptions(): void
+    {
+        // arrange
+        $input = [
+            'email' => 123,
+            'password' => 'secret',
+        ];
+
+        $rules = [
+            'email' => 'string',
+        ];
+
+        $validator = Validator::make($input, $rules, [
+            'email.string' => 'Email message',
+        ]);
+
+        $exception = (new ValidationException($validator))
+            ->errorBag('default')
+            ->redirectTo(self::REDIRECT_TO_PATH);
+
+        $this->request->expectsJson()->willReturn(true);
+        $this->responseFactory->json(Argument::cetera())->willReturn(new JsonResponse());
+
+        // act
+        $response = $this->handler->render($this->request->reveal(), $exception);
+
+        // assert
+        $this->assertInstanceOf(JsonResponse::class, $response);
     }
 }

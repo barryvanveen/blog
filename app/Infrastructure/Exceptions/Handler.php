@@ -10,14 +10,17 @@ use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
 use App\Application\Http\Exceptions\ServiceUnavailableException;
+use App\Application\Http\StatusCode;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Exceptions\WhoopsHandler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -62,16 +65,21 @@ final class Handler implements ExceptionHandlerContract
     /** @var UrlGenerator */
     private $urlGenerator;
 
+    /** @var ResponseFactory */
+    private $responseFactory;
+
     public function __construct(
         LoggerInterface $logger,
         Factory $viewFactory,
         Redirector $redirector,
-        UrlGenerator $urlGenerator
+        UrlGenerator $urlGenerator,
+        ResponseFactory $responseFactory
     ) {
         $this->logger = $logger;
         $this->viewFactory = $viewFactory;
         $this->redirector = $redirector;
         $this->urlGenerator = $urlGenerator;
+        $this->responseFactory = $responseFactory;
     }
 
     public function report(Throwable $exception)
@@ -92,12 +100,17 @@ final class Handler implements ExceptionHandlerContract
         return count($matches) === 0;
     }
 
-    public function render($request, Throwable $exception): SymfonyResponse
+    /**
+     * @param Request $request
+     * @param Throwable $exception
+     * @return SymfonyResponse
+     */
+    public function render($request, Throwable $exception)
     {
         $exception = $this->mapFrameworkExceptionToHttpException($exception);
 
         if ($exception instanceof AuthenticationException) {
-            return $this->unauthenticated();
+            return $this->unauthenticated($request);
         } elseif ($exception instanceof ValidationException) {
             return $this->invalid($request, $exception);
         }
@@ -122,13 +135,30 @@ final class Handler implements ExceptionHandlerContract
         return $exception;
     }
 
-    private function unauthenticated(): RedirectResponse
+    /**
+     * @param Request $request
+     * @return JsonResponse|RedirectResponse
+     */
+    private function unauthenticated(Request $request)
     {
+        if ($request->expectsJson()) {
+            return $this->responseFactory->json(['message' => 'Forbidden'], StatusCode::STATUS_UNAUTHORIZED);
+        }
+
         return $this->redirector->guest($this->urlGenerator->route('login'));
     }
 
-    private function invalid(Request $request, ValidationException $exception): RedirectResponse
+    /**
+     * @param Request $request
+     * @param ValidationException $exception
+     * @return JsonResponse|RedirectResponse
+     */
+    private function invalid(Request $request, ValidationException $exception)
     {
+        if ($request->expectsJson()) {
+            return $this->responseFactory->json($exception->errors(), StatusCode::STATUS_BAD_REQUEST);
+        }
+
         return $this->redirector->to($exception->redirectTo)
             ->withInput(Arr::except($request->input(), $this->dontFlash))
             ->withErrors($exception->errors(), $exception->errorBag);

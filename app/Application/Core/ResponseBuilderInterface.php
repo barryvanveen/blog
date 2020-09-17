@@ -28,4 +28,9 @@ interface ResponseBuilderInterface
     ): ResponseInterface;
 
     public function xml(string $view): ResponseInterface;
+
+    public function json(
+        array $data,
+        int $status = StatusCode::STATUS_OK
+    ): ResponseInterface;
 }

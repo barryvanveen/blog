@@ -35,4 +35,5 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/pages/{slug}', [\App\Application\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
 
     Route::get('/admin/elements', [\App\Application\Http\Controllers\Admin\ElementsController::class, 'index'])->name('admin.elements');
+    Route::post('/admin/markdown-to-html', [\App\Application\Http\Controllers\Admin\MarkdownController::class, 'index'])->name('admin.markdown-to-html');
 });
