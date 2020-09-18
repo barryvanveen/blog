@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\View;
 
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
@@ -26,16 +27,21 @@ final class ArticlesItemPresenter implements PresenterInterface
     /** @var DateTimeFormatterInterface */
     private $dateTimeFormatter;
 
+    /** @var MarkdownConverterInterface */
+    private $markdownConverter;
+
     public function __construct(
         ArticleRepositoryInterface $repository,
         ArticleShowRequestInterface $request,
         UrlGeneratorInterface $urlGenerator,
-        DateTimeFormatterInterface $dateTimeFormatter
+        DateTimeFormatterInterface $dateTimeFormatter,
+        MarkdownConverterInterface $markdownConverter
     ) {
         $this->repository = $repository;
         $this->request = $request;
         $this->urlGenerator = $urlGenerator;
         $this->dateTimeFormatter = $dateTimeFormatter;
+        $this->markdownConverter = $markdownConverter;
     }
 
     public function present(): array
@@ -46,7 +52,7 @@ final class ArticlesItemPresenter implements PresenterInterface
             'title' => $article->title(),
             'publicationDateInAtomFormat' => $this->publicationDateInAtomFormat($article),
             'publicationDateInHumanFormat' => $this->publicationDateInHumanFormat($article),
-            'content' => $article->content(),
+            'content' => $this->markdownConverter->convertToHtml($article->content()),
             'metaData' => $this->buildMetaData($article),
         ];
     }

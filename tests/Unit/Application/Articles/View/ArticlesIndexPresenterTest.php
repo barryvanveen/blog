@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesIndexPresenter;
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Enums\ArticleStatus;
@@ -46,9 +47,14 @@ class ArticlesIndexPresenterTest extends TestCase
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $urlGenerator->route(Argument::cetera())->willReturn('http://myurl');
 
+        /** @var ObjectProphecy|MarkdownConverterInterface $markdownConverter */
+        $markdownConverter = $this->prophesize(MarkdownConverterInterface::class);
+        $markdownConverter->convertToHtml(Argument::any())->willReturn('htmlString');
+
         $presenter = new ArticlesIndexPresenter(
             $repository->reveal(),
-            $urlGenerator->reveal()
+            $urlGenerator->reveal(),
+            $markdownConverter->reveal()
         );
 
         $result = $presenter->present();
@@ -56,6 +62,7 @@ class ArticlesIndexPresenterTest extends TestCase
         $this->assertArrayHasKey('articles', $result);
         $this->assertCount(1, $result['articles']);
         $this->assertEquals('myTitle', $result['articles'][0]['title']);
+        $this->assertEquals('htmlString', $result['articles'][0]['description']);
 
         $this->assertArrayHasKey('metaData', $result);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);

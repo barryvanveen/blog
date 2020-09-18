@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\View;
 
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -18,12 +19,17 @@ final class ArticlesIndexPresenter implements PresenterInterface
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
+    /** @var MarkdownConverterInterface */
+    private $markdownConverter;
+
     public function __construct(
         ArticleRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        MarkdownConverterInterface $markdownConverter
     ) {
         $this->repository = $repository;
         $this->urlGenerator = $urlGenerator;
+        $this->markdownConverter = $markdownConverter;
     }
 
     public function present(): array
@@ -44,7 +50,7 @@ final class ArticlesIndexPresenter implements PresenterInterface
         foreach ($articles as $article) {
             $presentableArticles[] = [
                 'title' => $article->title(),
-                'description' => $article->description(),
+                'description' => $this->markdownConverter->convertToHtml($article->description()),
                 'url' => $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()]),
             ];
         }
