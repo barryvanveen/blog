@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\View;
 
 use App\Application\Interfaces\RouterInterface;
+use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Application\View\JavascriptPresenter;
 use Prophecy\Argument;
@@ -33,20 +34,27 @@ class JavascriptPresenterTest extends TestCase
         $assetBuilder = $this->prophesize(AssetUrlBuilderInterface::class);
         $assetBuilder->get(Argument::any())->willReturnArgument(0);
 
+        /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
+        $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
+        $urlGenerator->route(Argument::any())->willReturnArgument(0);
+
         $this->presenter = new JavascriptPresenter(
             $this->router->reveal(),
-            $assetBuilder->reveal()
+            $assetBuilder->reveal(),
+            $urlGenerator->reveal()
         );
     }
 
     /** @test */
-    public function itPassesNonAdminVariables(): void
+    public function itOutputsNonAdminVariables(): void
     {
         $this->router
             ->currentRouteIsAdminRoute()
             ->willReturn(false);
 
         $this->assertEquals([
+            'js_variables' => [
+            ],
             'js_paths' => [
                 'app.js',
             ],
@@ -54,13 +62,16 @@ class JavascriptPresenterTest extends TestCase
     }
 
     /** @test */
-    public function itPassesAdminVariables(): void
+    public function itOutputsAdminVariables(): void
     {
         $this->router
             ->currentRouteIsAdminRoute()
             ->willReturn(true);
 
         $this->assertEquals([
+            'js_variables' => [
+                'markdown_to_html_url' => 'admin.markdown-to-html',
+            ],
             'js_paths' => [
                 'app.js',
                 'admin.js',
