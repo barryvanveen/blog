@@ -42,8 +42,8 @@ class ImportData extends Command
 
         $articles = $remoteBlogs->map(function (object $blog) {
             return [
-                'content' =>  $this->markdownConverter->convertToHtml($blog->text),
-                'description' =>  $this->markdownConverter->convertToHtml($blog->summary),
+                'content' =>  $blog->text,
+                'description' =>  $blog->summary,
                 'published_at' => $blog->publication_date,
                 'slug' => $blog->slug,
                 'status' => $blog->online,
@@ -79,8 +79,8 @@ class ImportData extends Command
 
         $pages = $remotePages->map(function (object $page) {
             return [
-                'content' =>  $this->markdownConverter->convertToHtml($page->text),
-                'description' =>  $this->markdownConverter->convertToHtml($page->text),
+                'content' =>  $page->text,
+                'description' =>  $page->text,
                 'slug' => $this->mapPageSlugs($page->slug),
                 'title' => $page->title,
                 'created_at' => $page->created_at,

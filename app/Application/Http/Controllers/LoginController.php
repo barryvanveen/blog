@@ -15,7 +15,6 @@ use App\Application\Http\StatusCode;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\GuardInterface;
-use App\Application\Interfaces\TranslatorInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class LoginController
@@ -26,9 +25,6 @@ class LoginController
     /** @var CommandBusInterface */
     private $commandBus;
 
-    /** @var TranslatorInterface */
-    private $translator;
-
     /** @var GuardInterface */
     private $guard;
 
@@ -38,13 +34,11 @@ class LoginController
     public function __construct(
         ResponseBuilderInterface $responseBuilder,
         CommandBusInterface $commandBus,
-        TranslatorInterface $translator,
         GuardInterface $guard,
         EventBusInterface $eventBus
     ) {
         $this->responseBuilder = $responseBuilder;
         $this->commandBus = $commandBus;
-        $this->translator = $translator;
         $this->guard = $guard;
         $this->eventBus = $eventBus;
     }
@@ -77,7 +71,7 @@ class LoginController
             return $this->responseBuilder->redirectBack(
                 StatusCode::STATUS_FOUND,
                 [
-                    'email' => [$this->translator->get('auth.failed')],
+                    'email' => ['These credentials do not match our records.'],
                 ]
             );
         } catch (LockoutException $e) {
@@ -88,7 +82,7 @@ class LoginController
             return $this->responseBuilder->redirectBack(
                 StatusCode::STATUS_FOUND,
                 [
-                    'email' => $this->translator->get('auth.throttle', ['seconds' => $e->tryAgainIn()]),
+                    'email' => ['Too many login attempts. Please try again in '.$e->tryAgainIn().' seconds.'],
                 ]
             );
         }

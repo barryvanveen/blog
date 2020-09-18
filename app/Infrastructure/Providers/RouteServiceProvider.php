@@ -9,12 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected $namespace = 'App\Infrastructure\Http\Controllers';
-
     public function map(): void
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }
 }

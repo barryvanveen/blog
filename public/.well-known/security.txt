@@ -1,0 +1,3 @@
+Contact: mailto:barryvanveen@gmail.com
+Preferred-Languages: en, nl
+Canonical: https://barryvanveen.nl/.well-known/security.txt

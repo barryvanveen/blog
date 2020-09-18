@@ -1,5 +1,5 @@
 <div class="mb-4">
-    <label class="block font-bold mb-2" for="{{ $name }}">{{ $title }}</label>
+    <label class="block font-bold mb-2">{{ $title }}</label>
 
     <div class="mt-2">
         @foreach($options as $option)
