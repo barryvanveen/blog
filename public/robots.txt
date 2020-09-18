@@ -1,2 +1,3 @@
 User-agent: *
-Disallow:
+Disallow: /admin/
+Sitemap: https://barryvanveen.nl/sitemap.xml
