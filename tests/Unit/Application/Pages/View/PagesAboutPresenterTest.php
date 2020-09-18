@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Pages\View;
 
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\Pages\View\PagesAboutPresenter;
 use App\Application\View\DateTimeFormatterInterface;
@@ -22,11 +23,10 @@ class PagesAboutPresenterTest extends TestCase
     public function itPresentsTheCorrectValues(): void
     {
         $title = 'titleString';
-        $content = 'contentString';
 
         $page = $this->getPage([
             'title' => $title,
-            'content' => $content,
+            'content' => 'contentString',
         ]);
 
         /** @var ObjectProphecy|PageRepositoryInterface $repository */
@@ -42,10 +42,15 @@ class PagesAboutPresenterTest extends TestCase
         $dateTimeFormatter->metadata(Argument::any())->willReturn('metadata-string');
         $dateTimeFormatter->humanReadable(Argument::any())->willReturn('humanReadable-string');
 
+        /** @var ObjectProphecy|MarkdownConverterInterface $markdownConverter */
+        $markdownConverter = $this->prophesize(MarkdownConverterInterface::class);
+        $markdownConverter->convertToHtml(Argument::any())->willReturn('htmlString');
+
         $presenter = new PagesAboutPresenter(
             $repository->reveal(),
             $urlGenerator->reveal(),
-            $dateTimeFormatter->reveal()
+            $dateTimeFormatter->reveal(),
+            $markdownConverter->reveal()
         );
 
         $result = $presenter->present();
@@ -53,7 +58,7 @@ class PagesAboutPresenterTest extends TestCase
         $this->assertEquals($title, $result['title']);
         $this->assertEquals('metadata-string', $result['lastUpdatedDateInAtomFormat']);
         $this->assertEquals('humanReadable-string', $result['lastUpdatedDateInHumanFormat']);
-        $this->assertEquals($content, $result['content']);
+        $this->assertEquals('htmlString', $result['content']);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }
 }

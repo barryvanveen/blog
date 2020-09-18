@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Pages\View;
 
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
@@ -22,14 +23,19 @@ final class PagesAboutPresenter implements PresenterInterface
     /** @var DateTimeFormatterInterface */
     private $dateTimeFormatter;
 
+    /** @var MarkdownConverterInterface */
+    private MarkdownConverterInterface $markdownConverter;
+
     public function __construct(
         PageRepositoryInterface $repository,
         UrlGeneratorInterface $urlGenerator,
-        DateTimeFormatterInterface $dateTimeFormatter
+        DateTimeFormatterInterface $dateTimeFormatter,
+        MarkdownConverterInterface $markdownConverter
     ) {
         $this->repository = $repository;
         $this->urlGenerator = $urlGenerator;
         $this->dateTimeFormatter = $dateTimeFormatter;
+        $this->markdownConverter = $markdownConverter;
     }
 
     public function present(): array
@@ -40,7 +46,7 @@ final class PagesAboutPresenter implements PresenterInterface
             'title' => $page->title(),
             'lastUpdatedDateInAtomFormat' => $this->lastUpdateInAtomFormat($page),
             'lastUpdatedDateInHumanFormat' => $this->lastUpdateInHumanFormat($page),
-            'content' => $page->content(),
+            'content' => $this->markdownConverter->convertToHtml($page->content()),
             'metaData' => $this->buildMetaData($page),
         ];
     }

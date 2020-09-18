@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesItemPresenter;
+use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -27,10 +28,9 @@ class ArticlesItemPresenterTest extends TestCase
     {
         $uuid = 'myMockUuid';
         $title = 'titleString';
-        $content = 'contentString';
 
         $article = new Article(
-            $content,
+            'contentString',
             'descriptionString',
             DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 19:56:48'),
             'slug-string',
@@ -56,11 +56,16 @@ class ArticlesItemPresenterTest extends TestCase
         $dateTimeFormatter->metadata(Argument::any())->willReturn('metadata-string');
         $dateTimeFormatter->humanReadable(Argument::any())->willReturn('humanReadable-string');
 
+        /** @var ObjectProphecy|MarkdownConverterInterface $markdownConverter */
+        $markdownConverter = $this->prophesize(MarkdownConverterInterface::class);
+        $markdownConverter->convertToHtml(Argument::any())->willReturn('htmlString');
+
         $presenter = new ArticlesItemPresenter(
             $repository->reveal(),
             $request->reveal(),
             $urlGenerator->reveal(),
-            $dateTimeFormatter->reveal()
+            $dateTimeFormatter->reveal(),
+            $markdownConverter->reveal()
         );
 
         $result = $presenter->present();
@@ -68,7 +73,7 @@ class ArticlesItemPresenterTest extends TestCase
         $this->assertEquals($title, $result['title']);
         $this->assertEquals('metadata-string', $result['publicationDateInAtomFormat']);
         $this->assertEquals('humanReadable-string', $result['publicationDateInHumanFormat']);
-        $this->assertEquals($content, $result['content']);
+        $this->assertEquals('htmlString', $result['content']);
         $this->assertInstanceOf(MetaData::class, $result['metaData']);
     }
 }
