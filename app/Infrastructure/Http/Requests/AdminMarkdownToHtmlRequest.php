@@ -12,7 +12,7 @@ class AdminMarkdownToHtmlRequest extends BaseRequest implements AdminMarkdownToH
     public function rules(): array
     {
         return [
-            'markdown' => 'required|string',
+            'markdown' => 'string|nullable',
         ];
     }
 
