@@ -1,16 +1,26 @@
-<div class="mb-4">
-    <label class="block font-bold mb-2" for="{{ $name }}">{{ $title }}</label>
+<div class="mb-8 editor-container-60">
+    <label class="block font-bold mb-2" for="editor-{{ $name }}">{{ $title }}</label>
 
-    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-              name="{{ $name }}"
-              type="textarea"
-              placeholder="{{ $placeholder }}"
-              data-editor
-    >{{ $value }}</textarea>
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                      id="editor-{{ $name }}"
+                      name="{{ $name }}"
+                      type="textarea"
+                      placeholder="{{ $placeholder }}"
+                      data-editor
+                      data-preview="#editor-preview-{{ $name }}"
+            >{{ $value }}</textarea>
 
-    @if ($errors->has($name))
-        @foreach($errors->get($name) as $error)
-            <p class="text-red-500 italic">{{ $error }}</p>
-        @endforeach
-    @endif
+            @if ($errors->has($name))
+                @foreach($errors->get($name) as $error)
+                    <p class="text-red-500 italic">{{ $error }}</p>
+                @endforeach
+            @endif
+        </div>
+
+        <div class="border rounded w-full py-2 px-3 leading-tight"
+             id="editor-preview-{{ $name }}">
+        </div>
+    </div>
 </div>
