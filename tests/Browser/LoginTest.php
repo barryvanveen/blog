@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\LoginPage;
@@ -18,7 +19,7 @@ class LoginTest extends DuskTestCase
     public function login(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
 
         $this->browse(function (Browser $browser) use ($user) {
             $browser
@@ -38,7 +39,7 @@ class LoginTest extends DuskTestCase
     public function loginFailsWithoutCsrfToken(): void
     {
         /** @var UserEloquentModel $user2 */
-        $user2 = factory(UserEloquentModel::class)->create();
+        $user2 = UserFactory::new()->create();
 
         Browser::macro('clearCsrfInputs', function () {
             $this->script("var form = document.forms.login; var token = form.elements._token; token.value = '';");

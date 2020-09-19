@@ -10,6 +10,7 @@ use App\Domain\Pages\PageRepositoryInterface;
 use App\Infrastructure\Adapters\LaravelCollection;
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\PageMapper;
+use Database\Factories\PageFactory;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -23,12 +24,12 @@ class AdminPagesIndexPresenterTest extends TestCase
     public function itPresentsTheCorrectValues(): void
     {
         /** @var PageEloquentModel $page1 */
-        $page1 = factory(PageEloquentModel::class)->make([
+        $page1 = PageFactory::new()->make([
             'slug' => 'page1',
         ]);
 
         /** @var PageEloquentModel $page2 */
-        $page2 = factory(PageEloquentModel::class)->make([
+        $page2 = PageFactory::new()->make([
             'slug' => 'page2',
         ]);
 

@@ -8,6 +8,7 @@ use App\Infrastructure\Adapters\LaravelGuard;
 use App\Infrastructure\Eloquent\UserEloquentModel;
 use App\Infrastructure\Exceptions\InvalidGuardException;
 use Auth;
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\UnauthorizedException;
@@ -33,7 +34,7 @@ class LaravelGuardTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(UserEloquentModel::class)->create([
+        $this->user = UserFactory::new()->create([
             'email' => 'foo@bar.baz',
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         ]);

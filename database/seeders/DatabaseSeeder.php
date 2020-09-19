@@ -2,21 +2,24 @@
 
 declare(strict_types=1);
 
-use App\Infrastructure\Eloquent\ArticleEloquentModel;
-use App\Infrastructure\Eloquent\PageEloquentModel;
-use App\Infrastructure\Eloquent\UserEloquentModel;
+namespace Database\Seeders;
+
+use Database\Factories\ArticleFactory;
+use Database\Factories\PageFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        factory(UserEloquentModel::class)->create([
+        UserFactory::new()->create([
             'email' => 'admin@example.com',
             'name' => 'Barry',
         ]);
 
-        factory(ArticleEloquentModel::class, 10)->create();
+        ArticleFactory::new()->count(10)->create();
 
         $pages = [
             'Home',
@@ -25,7 +28,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($pages as $title) {
-            factory(PageEloquentModel::class)->create([
+            PageFactory::new()->create([
                 'title' => $title,
                 'slug' => Str::slug($title),
             ]);

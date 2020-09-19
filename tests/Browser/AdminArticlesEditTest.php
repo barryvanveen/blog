@@ -6,6 +6,8 @@ namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\ArticleFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\AdminArticlesEditPage;
@@ -25,8 +27,8 @@ class AdminArticlesEditTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->user = factory(UserEloquentModel::class)->create();
-        $this->article = factory(ArticleEloquentModel::class)->create();
+        $this->user = UserFactory::new()->create();
+        $this->article = ArticleFactory::new()->create();
     }
 
     /** @test */

@@ -11,6 +11,7 @@ use App\Domain\Articles\Enums\ArticleStatus;
 use App\Infrastructure\Adapters\LaravelCollection;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
+use Database\Factories\ArticleFactory;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -24,13 +25,13 @@ class AdminArticlesIndexPresenterTest extends TestCase
     public function itPresentsTheCorrectValues(): void
     {
         /** @var ArticleEloquentModel $article1 */
-        $article1 = factory(ArticleEloquentModel::class)->make([
+        $article1 = ArticleFactory::new()->make([
             'published_at' => '2020-01-17 17:03:05',
             'status' => (string) ArticleStatus::published(),
         ]);
 
         /** @var ArticleEloquentModel $article2 */
-        $article2 = factory(ArticleEloquentModel::class)->make([
+        $article2 = ArticleFactory::new()->make([
             'published_at' => '2020-02-18 17:03:05',
             'status' => (string) ArticleStatus::unpublished(),
         ]);

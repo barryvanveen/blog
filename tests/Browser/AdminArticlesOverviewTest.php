@@ -6,6 +6,8 @@ namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\ArticleFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\AdminArticlesOverviewPage;
@@ -22,7 +24,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->user = factory(UserEloquentModel::class)->create();
+        $this->user = UserFactory::new()->create();
     }
 
     /** @test */
@@ -39,7 +41,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
     public function viewArticles(): void
     {
         /** @var ArticleEloquentModel[] $visibleArticles */
-        $articles = factory(ArticleEloquentModel::class, 3)->create();
+        $articles = ArticleFactory::new()->count(3)->create();
 
         $this->browse(function (Browser $browser) use ($articles) {
             $browser
@@ -56,7 +58,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
     /** @test */
     public function editArticle(): void
     {
-        $article = factory(ArticleEloquentModel::class)->create();
+        $article = ArticleFactory::new()->create();
 
         $this->browse(function (Browser $browser) use ($article) {
             $browser

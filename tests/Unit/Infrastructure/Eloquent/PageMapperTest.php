@@ -8,6 +8,7 @@ use App\Domain\Core\CollectionInterface;
 use App\Infrastructure\Adapters\LaravelCollection;
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\PageMapper;
+use Database\Factories\PageFactory;
 use Tests\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class PageMapperTest extends TestCase
     public function itConvertsAnEloquentModelToDomainModel(): void
     {
         /** @var PageEloquentModel $eloquentPage */
-        $eloquentPage = factory(PageEloquentModel::class)->make();
+        $eloquentPage = PageFactory::new()->make();
 
         $mapper = new PageMapper();
         $page = $mapper->mapToDomainModel($eloquentPage->toArray());
@@ -32,10 +33,10 @@ class PageMapperTest extends TestCase
     public function itConvertsAnArrayOfEloquentModelsIntoCollectionOfDomainModels(): void
     {
         /** @var PageEloquentModel $eloquentPage1 */
-        $eloquentPage1 = factory(PageEloquentModel::class)->make();
+        $eloquentPage1 = PageFactory::new()->make();
 
         /** @var PageEloquentModel $eloquentPage2 */
-        $eloquentPage2 = factory(PageEloquentModel::class)->make();
+        $eloquentPage2 = PageFactory::new()->make();
 
         $eloquentCollection = new LaravelCollection([
             $eloquentPage1->toArray(),

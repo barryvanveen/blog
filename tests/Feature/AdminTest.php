@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -25,7 +26,7 @@ class AdminTest extends TestCase
     public function displaysDashboard(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
         Auth::login($user);
 
         $response = $this->get(route('admin.dashboard'));
@@ -38,7 +39,7 @@ class AdminTest extends TestCase
     public function markdownToHtml(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
         Auth::login($user);
 
         $response = $this->post(route('admin.markdown-to-html'), ['markdown' => '# FOO']);

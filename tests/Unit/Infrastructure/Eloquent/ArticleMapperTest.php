@@ -9,6 +9,7 @@ use App\Domain\Core\CollectionInterface;
 use App\Infrastructure\Adapters\LaravelCollection;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
+use Database\Factories\ArticleFactory;
 use DateTimeInterface;
 use Tests\TestCase;
 
@@ -21,7 +22,7 @@ class ArticleMapperTest extends TestCase
     public function itConvertsAnEloquentModelToDomainModel(): void
     {
         /** @var ArticleEloquentModel $eloquentArticle */
-        $eloquentArticle = factory(ArticleEloquentModel::class)->make([
+        $eloquentArticle = ArticleFactory::new()->make([
             'published_at' => '2020-05-05 20:36:00',
             'status' => '1',
         ]);
@@ -39,13 +40,13 @@ class ArticleMapperTest extends TestCase
     public function itConvertsAnArrayOfEloquentModelsIntoCollectionOfDomainModels(): void
     {
         /** @var ArticleEloquentModel $eloquentArticle1 */
-        $eloquentArticle1 = factory(ArticleEloquentModel::class)->make([
+        $eloquentArticle1 = ArticleFactory::new()->make([
             'published_at' => '2020-05-05 20:36:00',
             'status' => 1,
         ]);
 
         /** @var ArticleEloquentModel $eloquentArticle2 */
-        $eloquentArticle2 = factory(ArticleEloquentModel::class)->make([
+        $eloquentArticle2 = ArticleFactory::new()->make([
             'published_at' => '2020-05-06 20:36:00',
             'status' => 0,
         ]);

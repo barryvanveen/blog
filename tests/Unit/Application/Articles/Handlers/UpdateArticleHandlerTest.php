@@ -8,6 +8,7 @@ use App\Application\Articles\Commands\UpdateArticle;
 use App\Application\Articles\Handlers\UpdateArticleHandler;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use Database\Factories\ArticleFactory;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -25,7 +26,7 @@ class UpdateArticleHandlerTest extends TestCase
     {
         // arrange
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->create([
+        $article = ArticleFactory::new()->create([
             'status' => ArticleStatus::unpublished(),
             'title' => 'My title',
         ]);
