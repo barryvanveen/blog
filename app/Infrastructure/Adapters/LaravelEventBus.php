@@ -20,17 +20,17 @@ final class LaravelEventBus implements EventBusInterface
         $this->laravelDispatcher = $laravelDispatcher;
     }
 
-    public function subscribe(string $commandClassName, string $listenerClassName): void
+    public function subscribe(string $eventClassName, string $listenerClassName): void
     {
-        if ($this->doesNotImplementInterface($commandClassName, EventInterface::class)) {
-            throw LaravelEventBusException::becauseEventIsInvalid($commandClassName);
+        if ($this->doesNotImplementInterface($eventClassName, EventInterface::class)) {
+            throw LaravelEventBusException::becauseEventIsInvalid($eventClassName);
         }
 
         if ($this->doesNotImplementInterface($listenerClassName, EventListenerInterface::class)) {
             throw LaravelEventBusException::becauseListenerIsInvalid($listenerClassName);
         }
 
-        $this->laravelDispatcher->listen($commandClassName, $listenerClassName);
+        $this->laravelDispatcher->listen($eventClassName, $listenerClassName);
     }
 
     private function doesNotImplementInterface(string $subject, string $interface): bool

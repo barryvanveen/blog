@@ -22,7 +22,7 @@ class LaravelCollection extends IteratorIterator implements CollectionInterface
 
     public static function make(array $items = []): CollectionInterface
     {
-        return new static($items);
+        return new self($items);
     }
 
     public function all(): array
