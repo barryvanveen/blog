@@ -16,7 +16,7 @@ const registerInputEventListener = (el) => {
     return
   }
 
-  el.addEventListener('input', debouncedInputChangedListener)
+  el.addEventListener('input', debounce(updatePreview, 1000))
   el.dispatchEvent(new Event('input'))
 }
 
@@ -57,8 +57,6 @@ const updatePreview = (event) => {
     .then(data => setHtmlOnPreviewElement(data.html, event.target))
     .catch(err => console.warn('Something went wrong.', err))
 }
-
-const debouncedInputChangedListener = (event) => debounce(updatePreview(event), 500)
 
 const preview = () => {
   initPreviews()
