@@ -2,20 +2,26 @@
 
 declare(strict_types=1);
 
+namespace Database\Factories;
+
 use App\Infrastructure\Eloquent\PageEloquentModel;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/* @var Illuminate\Database\Eloquent\Factory $factory */
+class PageFactory extends Factory
+{
+    protected $model = PageEloquentModel::class;
 
-$factory->define(PageEloquentModel::class, function (Faker $faker) {
-    $title = $faker->sentence;
+    public function definition(): array
+    {
+        $title = $this->faker->sentence;
 
-    return [
-        'content' => $faker->paragraph,
-        'description' => $faker->paragraph,
-        'slug' => Str::slug($title),
-        'title' => $title,
-        'updated_at' => $faker->dateTimeBetween('-1 year'),
-    ];
-});
+        return [
+            'content' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph,
+            'slug' => Str::slug($title),
+            'title' => $title,
+            'updated_at' => $this->faker->dateTimeBetween('-1 year'),
+        ];
+    }
+}

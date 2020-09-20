@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use Database\Factories\ArticleFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,11 +15,11 @@ class RssTest extends TestCase
     /** @test */
     public function seeArticleRssFeed(): void
     {
-        factory(ArticleEloquentModel::class)->states(['published', 'published_in_past'])->create([
+        ArticleFactory::new()->published()->publishedInPast()->create([
             'title' => 'FooArticle',
         ]);
 
-        factory(ArticleEloquentModel::class)->states(['unpublished', 'published_in_future'])->create([
+        ArticleFactory::new()->unpublished()->publishedInFuture()->create([
             'title' => 'BarArticle',
         ]);
 

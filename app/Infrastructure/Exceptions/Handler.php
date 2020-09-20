@@ -102,12 +102,12 @@ final class Handler implements ExceptionHandlerContract
 
     /**
      * @param Request $request
-     * @param Throwable $exception
+     * @param Throwable $e
      * @return SymfonyResponse
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e)
     {
-        $exception = $this->mapFrameworkExceptionToHttpException($exception);
+        $exception = $this->mapFrameworkExceptionToHttpException($e);
 
         if ($exception instanceof AuthenticationException) {
             return $this->unauthenticated($request);

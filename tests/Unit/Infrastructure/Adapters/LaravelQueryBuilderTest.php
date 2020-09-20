@@ -7,6 +7,7 @@ namespace Tests\Unit\Infrastructure\Adapters;
 use App\Application\Exceptions\RecordNotFoundException;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use Database\Factories\ArticleFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -40,7 +41,7 @@ class LaravelQueryBuilderTest extends TestCase
     public function itGetsACollectionOfArticles(): void
     {
         /** @var ArticleEloquentModel[] $articles */
-        $articles = factory(ArticleEloquentModel::class, 3)->create();
+        $articles = ArticleFactory::new()->count(3)->create();
 
         /** @var ArticleEloquentModel[] $collection */
         $collection = $this->queryBuilder
@@ -57,17 +58,17 @@ class LaravelQueryBuilderTest extends TestCase
     public function itGetsAnAscOrderedCollectionOfArticles(): void
     {
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'ccc',
         ]);
 
@@ -87,17 +88,17 @@ class LaravelQueryBuilderTest extends TestCase
     public function itGetsADescOrderedCollectionOfArticles(): void
     {
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'ccc',
         ]);
 
@@ -117,17 +118,17 @@ class LaravelQueryBuilderTest extends TestCase
     public function itGetsTheFirstRecord(): void
     {
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'ccc',
         ]);
 
@@ -142,12 +143,12 @@ class LaravelQueryBuilderTest extends TestCase
     public function itFiltersTheRecordsByEquality(): void
     {
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
@@ -162,19 +163,19 @@ class LaravelQueryBuilderTest extends TestCase
     public function itFiltersTheRecordsByComparison(): void
     {
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'published_at' => '2020-01-01 00:00:00',
             'slug' => 'aaa',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'published_at' => '2020-01-03 00:00:00',
             'slug' => 'bbb',
         ]);
 
         /** @var ArticleEloquentModel $articles */
-        factory(ArticleEloquentModel::class)->create([
+        ArticleFactory::new()->create([
             'published_at' => '2020-01-02 00:00:00',
             'slug' => 'ccc',
         ]);
@@ -204,7 +205,7 @@ class LaravelQueryBuilderTest extends TestCase
     public function itInsertsARecord(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->make();
+        $article = ArticleFactory::new()->make();
 
         $this->assertDatabaseMissing('articles', [
             'uuid' => $article->uuid,
@@ -230,7 +231,7 @@ class LaravelQueryBuilderTest extends TestCase
     public function itUpdatesARecord(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->create();
+        $article = ArticleFactory::new()->create();
 
         $this->assertDatabaseHas('articles', [
             'uuid' => $article->uuid,

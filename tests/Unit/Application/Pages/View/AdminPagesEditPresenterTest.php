@@ -11,6 +11,7 @@ use App\Domain\Pages\PageRepositoryInterface;
 use App\Domain\Pages\Requests\AdminPageEditRequestInterface;
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\PageMapper;
+use Database\Factories\PageFactory;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -24,7 +25,7 @@ class AdminPagesEditPresenterTest extends TestCase
     public function itPresentsTheCorrectValues(): void
     {
         /** @var PageEloquentModel $page */
-        $page = factory(PageEloquentModel::class)->make();
+        $page = PageFactory::new()->make();
 
         $mapper = new PageMapper();
 

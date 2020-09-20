@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -26,7 +27,7 @@ class LoginTest extends TestCase
     public function loginWorksWithCorrectCredentials(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
 
         $response = $this->post(route('login.post'), [
             'email' => $user->email,
@@ -40,7 +41,7 @@ class LoginTest extends TestCase
     public function loginFailsWithWrongCredentials(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
 
         $this->get(route('login'));
 
@@ -58,7 +59,7 @@ class LoginTest extends TestCase
     public function redirectIfAuthenticated(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
 
         Auth::login($user);
 
@@ -71,7 +72,7 @@ class LoginTest extends TestCase
     public function logout(): void
     {
         /** @var UserEloquentModel $user */
-        $user = factory(UserEloquentModel::class)->create();
+        $user = UserFactory::new()->create();
 
         Auth::login($user);
 

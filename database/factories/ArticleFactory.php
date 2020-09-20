@@ -2,46 +2,60 @@
 
 declare(strict_types=1);
 
+namespace Database\Factories;
+
 use App\Application\Core\UniqueIdGenerator;
 use App\Domain\Articles\Enums\ArticleStatus;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/* @var Illuminate\Database\Eloquent\Factory $factory */
+class ArticleFactory extends Factory
+{
+    protected $model = ArticleEloquentModel::class;
 
-$factory->define(ArticleEloquentModel::class, function (Faker $faker) {
-    $uniqueIdGenerator = new UniqueIdGenerator();
+    public function definition(): array
+    {
+        $uniqueIdGenerator = new UniqueIdGenerator();
 
-    $title = $faker->sentence;
+        $title = $this->faker->sentence;
 
-    return [
-        'content' => $faker->paragraph,
-        'description' => $faker->paragraph,
-        'published_at' => $faker->dateTimeBetween('-1 year', '-1 hour'),
-        'slug' => Str::slug($title),
-        'status' => ArticleStatus::published(),
-        'title' => $title,
-        'uuid' => $uniqueIdGenerator->generate(),
-    ];
-});
+        return [
+            'content' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph,
+            'published_at' => $this->faker->dateTimeBetween('-1 year', '-1 hour'),
+            'slug' => Str::slug($title),
+            'status' => ArticleStatus::published(),
+            'title' => $title,
+            'uuid' => $uniqueIdGenerator->generate(),
+        ];
+    }
 
-$factory->state(ArticleEloquentModel::class, 'published', [
-    'status' => ArticleStatus::published(),
-]);
+    public function published(): self
+    {
+        return $this->state([
+            'status' => ArticleStatus::published(),
+        ]);
+    }
 
-$factory->state(ArticleEloquentModel::class, 'unpublished', [
-    'status' => ArticleStatus::unpublished(),
-]);
+    public function unpublished(): self
+    {
+        return $this->state([
+            'status' => ArticleStatus::unpublished(),
+        ]);
+    }
 
-$factory->state(ArticleEloquentModel::class, 'published_in_past', function (Faker $faker) {
-    return [
-        'published_at' => $faker->dateTimeBetween('-1 year', '-1 hour'),
-    ];
-});
+    public function publishedInPast()
+    {
+        return $this->state([
+            'published_at' => $this->faker->dateTimeBetween('-1 year', '-1 hour'),
+        ]);
+    }
 
-$factory->state(ArticleEloquentModel::class, 'published_in_future', function (Faker $faker) {
-    return [
-        'published_at' => $faker->dateTimeBetween('+1 hour', '+1 year'),
-    ];
-});
+    public function publishedInFuture()
+    {
+        return $this->state([
+            'published_at' => $this->faker->dateTimeBetween('+1 hour', '+1 year'),
+        ]);
+    }
+}

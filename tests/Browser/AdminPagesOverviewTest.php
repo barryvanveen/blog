@@ -6,6 +6,8 @@ namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\PageFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\AdminPagesOverviewPage;
@@ -22,7 +24,7 @@ class AdminPagesOverviewTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->user = factory(UserEloquentModel::class)->create();
+        $this->user = UserFactory::new()->create();
     }
 
     /** @test */
@@ -39,7 +41,7 @@ class AdminPagesOverviewTest extends DuskTestCase
     public function viewPages(): void
     {
         /** @var PageEloquentModel[] $pages */
-        $pages = factory(PageEloquentModel::class, 3)->create();
+        $pages = PageFactory::new()->count(3)->create();
 
         $this->browse(function (Browser $browser) use ($pages) {
             $browser
@@ -57,7 +59,7 @@ class AdminPagesOverviewTest extends DuskTestCase
     public function editPage(): void
     {
         /** @var PageEloquentModel $page */
-        $page = factory(PageEloquentModel::class)->create();
+        $page = PageFactory::new()->create();
 
         $this->browse(function (Browser $browser) use ($page) {
             $browser

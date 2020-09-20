@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\AdminPagesCreatePage;
@@ -21,7 +22,7 @@ class AdminPagesCreateTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->user = factory(UserEloquentModel::class)->create();
+        $this->user = UserFactory::new()->create();
     }
 
     /** @test */

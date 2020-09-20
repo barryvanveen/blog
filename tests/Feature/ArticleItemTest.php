@@ -6,6 +6,7 @@ namespace Tests\Feature;
 
 use App\Application\Http\StatusCode;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use Database\Factories\ArticleFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -17,7 +18,7 @@ class ArticleItemTest extends TestCase
     public function seePublishedArticle(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->states(['published', 'published_in_past'])->create([
+        $article = ArticleFactory::new()->published()->publishedInPast()->create([
             'title' => 'FooArticle',
         ]);
 
@@ -31,7 +32,7 @@ class ArticleItemTest extends TestCase
     public function unpublishedArticleResultsIn404ErrorPage(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->states(['published', 'published_in_future'])->create([
+        $article = ArticleFactory::new()->published()->publishedInFuture()->create([
             'title' => 'FooArticle',
         ]);
 
@@ -45,7 +46,7 @@ class ArticleItemTest extends TestCase
     public function itRedirectsToTheCorrectSlug(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->states(['published', 'published_in_past'])->create([
+        $article = ArticleFactory::new()->published()->publishedInPast()->create([
             'uuid' => 'myuuid',
             'slug' => 'my-slug-string',
         ]);

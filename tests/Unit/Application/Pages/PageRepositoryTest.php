@@ -12,6 +12,7 @@ use App\Infrastructure\Adapters\LaravelEventBus;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\PageMapper;
+use Database\Factories\PageFactory;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -49,10 +50,10 @@ class PageRepositoryTest extends TestCase
     public function itRetrievesAllPagesInTheCorrectOrder(): void
     {
         // arrange
-        factory(PageEloquentModel::class)->create(['slug' => 'page3']);
-        factory(PageEloquentModel::class)->create(['slug' => 'page2']);
-        factory(PageEloquentModel::class)->create(['slug' => 'page1']);
-        factory(PageEloquentModel::class)->create(['slug' => 'page4']);
+        PageFactory::new()->create(['slug' => 'page3']);
+        PageFactory::new()->create(['slug' => 'page2']);
+        PageFactory::new()->create(['slug' => 'page1']);
+        PageFactory::new()->create(['slug' => 'page4']);
 
         // act
         /** @var Page[] $pages */
@@ -124,7 +125,7 @@ class PageRepositoryTest extends TestCase
     {
         // arrange
         $oldDate = new DateTimeImmutable('-1 day');
-        factory(PageEloquentModel::class)->create([
+        PageFactory::new()->create([
             'slug' => 'myslug',
             'created_at' => $oldDate,
             'updated_at' => $oldDate,
@@ -148,7 +149,7 @@ class PageRepositoryTest extends TestCase
     {
         // arrange
         /** @var PageEloquentModel $eloquentPage */
-        $eloquentPage = factory(PageEloquentModel::class)->create([
+        $eloquentPage = PageFactory::new()->create([
             'slug' => 'about',
         ]);
         $page = $this->repository->about();

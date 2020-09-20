@@ -6,6 +6,8 @@ namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\PageEloquentModel;
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\PageFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\AdminPagesEditPage;
@@ -25,8 +27,8 @@ class AdminPageEditTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->user = factory(UserEloquentModel::class)->create();
-        $this->page = factory(PageEloquentModel::class)->create([
+        $this->user = UserFactory::new()->create();
+        $this->page = PageFactory::new()->create([
             'slug' => 'about',
         ]);
     }

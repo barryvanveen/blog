@@ -12,6 +12,7 @@ use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
+use Database\Factories\ArticleFactory;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -25,7 +26,7 @@ class AdminArticlesEditPresenterTest extends TestCase
     public function itPresentsTheCorrectValues(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->make([
+        $article = ArticleFactory::new()->make([
             'published_at' => '2020-01-23 20:30:26',
             'status' => (string) ArticleStatus::published(),
         ]);

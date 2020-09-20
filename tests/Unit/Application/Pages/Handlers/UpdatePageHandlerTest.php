@@ -7,6 +7,7 @@ namespace Tests\Unit\Application\Pages\Handlers;
 use App\Application\Pages\Commands\UpdatePage;
 use App\Application\Pages\Handlers\UpdatePageHandler;
 use App\Infrastructure\Eloquent\PageEloquentModel;
+use Database\Factories\PageFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -23,7 +24,7 @@ class UpdatePageHandlerTest extends TestCase
     {
         // arrange
         /** @var PageEloquentModel $page */
-        $page = factory(PageEloquentModel::class)->create([
+        $page = PageFactory::new()->create([
             'slug' => 'about',
             'title' => 'my old title',
         ]);

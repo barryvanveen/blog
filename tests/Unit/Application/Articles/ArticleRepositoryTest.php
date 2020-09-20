@@ -15,6 +15,7 @@ use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\ArticleMapper;
 use Carbon\Carbon;
+use Database\Factories\ArticleFactory;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -29,11 +30,11 @@ class ArticleRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var ArticleRepository */
-    protected $repository;
+    protected ArticleRepository $repository;
 
-    /** @var EventFake */
-    private $laravelBusFake;
+    private EventFake $laravelBusFake;
+
+    private ArticleFactory $articleFactory;
 
     public function setUp(): void
     {
@@ -46,28 +47,30 @@ class ArticleRepositoryTest extends TestCase
         $eventBus = new LaravelEventBus($this->laravelBusFake);
 
         $this->repository = new ArticleRepository($queryBuilder, $articleMapper, $eventBus);
+
+        $this->articleFactory = ArticleFactory::new();
     }
 
     /** @test */
     public function itRetrievesAllArticlesInTheCorrectOrder(): void
     {
         // arrange
-        factory(ArticleEloquentModel::class)->create([
+        $this->articleFactory->create([
             'published_at' => Carbon::now()->subDays(4),
             'status' => ArticleStatus::published(),
             'title' => 'article1',
         ]);
-        factory(ArticleEloquentModel::class)->create([
+        $this->articleFactory->create([
             'published_at' => Carbon::now()->subDays(2),
             'status' => ArticleStatus::unpublished(),
             'title' => 'article2',
         ]);
-        factory(ArticleEloquentModel::class)->create([
+        $this->articleFactory->create([
             'published_at' => Carbon::now()->addDays(2),
             'status' => ArticleStatus::published(),
             'title' => 'article3',
         ]);
-        factory(ArticleEloquentModel::class)->create([
+        $this->articleFactory->create([
             'published_at' => Carbon::now()->addDays(4),
             'status' => ArticleStatus::unpublished(),
             'title' => 'article4',
@@ -91,13 +94,10 @@ class ArticleRepositoryTest extends TestCase
         // arrange
         $dateInPast = Carbon::now()->subDay();
         $dateInFuture = Carbon::now()->addDay();
-        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInPast, 'status' => ArticleStatus::published(), 'title' => 'article1']);
-        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInPast, 'status' => ArticleStatus::unpublished() ,
-            'title' => 'article2']);
-        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInFuture, 'status' =>
-            ArticleStatus::published(), 'title' => 'article3']);
-        factory(ArticleEloquentModel::class)->create(['published_at' => $dateInFuture, 'status' => ArticleStatus::unpublished(),
-            'title' => 'article4']);
+        $this->articleFactory->create(['published_at' => $dateInPast, 'status' => ArticleStatus::published(), 'title' => 'article1']);
+        $this->articleFactory->create(['published_at' => $dateInPast, 'status' => ArticleStatus::unpublished(), 'title' => 'article2']);
+        $this->articleFactory->create(['published_at' => $dateInFuture, 'status' => ArticleStatus::published(), 'title' => 'article3']);
+        $this->articleFactory->create(['published_at' => $dateInFuture, 'status' => ArticleStatus::unpublished(), 'title' => 'article4']);
 
         // act
         /** @var Article[] $articles */
@@ -116,9 +116,9 @@ class ArticleRepositoryTest extends TestCase
         $lastWeek = Carbon::now()->subWeek();
         $lastYear = Carbon::now()->subYear();
 
-        factory(ArticleEloquentModel::class)->create(['published_at' => $lastWeek, 'status' => ArticleStatus::published(), 'title' => 'article2']);
-        factory(ArticleEloquentModel::class)->create(['published_at' => $lastYear, 'status' => ArticleStatus::published(), 'title' => 'article3']);
-        factory(ArticleEloquentModel::class)->create(['published_at' => $yesterday, 'status' => ArticleStatus::published(), 'title' => 'article1']);
+        $this->articleFactory->create(['published_at' => $lastWeek, 'status' => ArticleStatus::published(), 'title' => 'article2']);
+        $this->articleFactory->create(['published_at' => $lastYear, 'status' => ArticleStatus::published(), 'title' => 'article3']);
+        $this->articleFactory->create(['published_at' => $yesterday, 'status' => ArticleStatus::published(), 'title' => 'article1']);
 
         // act
         /** @var Article[] $articles */
@@ -207,7 +207,7 @@ class ArticleRepositoryTest extends TestCase
     {
         // arrange
         $oldDate = new DateTimeImmutable('-1 day');
-        factory(ArticleEloquentModel::class)->create([
+        $this->articleFactory->create([
             'uuid' => 'myuuid',
             'created_at' => $oldDate,
             'updated_at' => $oldDate,
@@ -230,10 +230,13 @@ class ArticleRepositoryTest extends TestCase
     public function itRetrievesAPublishedArticleByUUID(): void
     {
         // arrange
+        $dateInPast = Carbon::now()->subDay();
+
         /** @var ArticleEloquentModel $eloquentArticle */
-        $eloquentArticle = factory(ArticleEloquentModel::class)
-            ->states(['published', 'published_in_past'])
-            ->create();
+        $eloquentArticle = $this->articleFactory->create([
+            'published_at' => $dateInPast,
+            'status' => ArticleStatus::published(),
+        ]);
         $article = $this->repository->getPublishedByUuid($eloquentArticle->uuid);
 
         // assert
@@ -246,10 +249,13 @@ class ArticleRepositoryTest extends TestCase
     public function itThrowsAnExceptionWhenRetrievingAnUnpublishedArticle(): void
     {
         // arrange
+        $dateInPast = Carbon::now()->subDay();
+
         /** @var ArticleEloquentModel $eloquentArticle */
-        $eloquentArticle = factory(ArticleEloquentModel::class)
-            ->states(['unpublished', 'published_in_past'])
-            ->create();
+        $eloquentArticle = $this->articleFactory->create([
+            'published_at' => $dateInPast,
+            'status' => ArticleStatus::unpublished(),
+        ]);
 
         // assert
         $this->expectException(RecordNotFoundException::class);
@@ -260,10 +266,13 @@ class ArticleRepositoryTest extends TestCase
     public function itThrowsAnExceptionWhenRetrievingAnArticlePublishedInTheFuture(): void
     {
         // arrange
+        $dateInFuture = Carbon::now()->addDay();
+
         /** @var ArticleEloquentModel $eloquentArticle */
-        $eloquentArticle = factory(ArticleEloquentModel::class)
-            ->states(['published', 'published_in_future'])
-            ->create();
+        $eloquentArticle = $this->articleFactory->create([
+            'published_at' => $dateInFuture,
+            'status' => ArticleStatus::published(),
+        ]);
 
         // assert
         $this->expectException(RecordNotFoundException::class);
@@ -275,7 +284,7 @@ class ArticleRepositoryTest extends TestCase
     {
         // arrange
         /** @var ArticleEloquentModel $eloquentArticle */
-        $eloquentArticle = factory(ArticleEloquentModel::class)->create();
+        $eloquentArticle = $this->articleFactory->create();
         $article = $this->repository->getByUuid($eloquentArticle->uuid);
 
         // assert

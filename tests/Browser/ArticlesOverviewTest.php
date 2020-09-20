@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Browser;
 
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use Database\Factories\ArticleFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ArticlesOverviewPage;
@@ -18,9 +19,9 @@ class ArticlesOverviewTest extends DuskTestCase
     public function viewArticles(): void
     {
         /** @var ArticleEloquentModel[] $visibleArticles */
-        $visibleArticles = factory(ArticleEloquentModel::class, 2)->states('published_in_past')->create();
+        $visibleArticles = ArticleFactory::new()->count(2)->publishedInPast()->create();
         /** @var ArticleEloquentModel[] $unvisibleArticles */
-        $unvisibleArticles = factory(ArticleEloquentModel::class, 2)->states('published_in_future')->create();
+        $unvisibleArticles = ArticleFactory::new()->count(2)->publishedInFuture()->create();
 
         $this->browse(function (Browser $browser) use ($visibleArticles, $unvisibleArticles) {
             $browser
@@ -41,7 +42,7 @@ class ArticlesOverviewTest extends DuskTestCase
     public function clickToArticlePage(): void
     {
         /** @var ArticleEloquentModel $article */
-        $article = factory(ArticleEloquentModel::class)->create();
+        $article = ArticleFactory::new()->create();
 
         $this->browse(function (Browser $browser) use ($article) {
             $browser
