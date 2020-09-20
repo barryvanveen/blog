@@ -45,6 +45,8 @@ class AdminTest extends TestCase
         $response = $this->post(route('admin.markdown-to-html'), ['markdown' => '# FOO']);
 
         $response->assertOk();
-        $response->assertJson(["html" => "<h1>FOO</h1>\n"]);
+        $response->assertJson(["html" => '<h1>
+<a id="user-content-foo" class="anchor" href="#foo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FOO</h1>
+']);
     }
 }
