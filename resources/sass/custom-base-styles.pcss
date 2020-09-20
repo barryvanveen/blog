@@ -53,21 +53,11 @@ main {
     }
 
     pre {
-        @apply overflow-auto bg-gray-900 text-white p-3;
-    }
-
-    pre code {
-        @apply text-sm break-all whitespace-pre-wrap bg-gray-900;
-    }
-
-    @screen sm {
-        pre code {
-            @apply whitespace-pre overflow-x-scroll;
-        }
+        @apply overflow-auto bg-gray-200 p-4 text-sm whitespace-pre overflow-x-scroll;
     }
 
     code {
-        @apply text-sm bg-gray-200 p-1;
+        @apply text-sm bg-gray-200 py-1 px-2;
     }
 
     table {
