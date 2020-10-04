@@ -6,7 +6,7 @@
 @section('body')
     <h1>{{ $title }}</h1>
 
-    <form action="{{ $create_article_url }}" method="post" name="create">
+    <form action="{{ $store_url }}" method="post" name="create">
         @include('partials.input.csrf')
 
         @include('articles.admin.formfields', [
