@@ -14,10 +14,14 @@ use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Comments\CommentRepositoryInterface;
 use App\Domain\Comments\Requests\AdminCommentCreateRequestInterface;
+use App\Domain\Comments\Requests\AdminCommentEditRequestInterface;
+use App\Domain\Comments\Requests\AdminCommentUpdateRequestInterface;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\CommentEloquentModel;
 use App\Infrastructure\Eloquent\CommentMapper;
 use App\Infrastructure\Http\Requests\AdminCommentCreateRequest;
+use App\Infrastructure\Http\Requests\AdminCommentEditRequest;
+use App\Infrastructure\Http\Requests\AdminCommentUpdateRequest;
 use Illuminate\Support\ServiceProvider;
 
 class CommentsServiceProvider extends ServiceProvider
@@ -42,5 +46,7 @@ class CommentsServiceProvider extends ServiceProvider
         $this->app->bind(ModelMapperInterface::class, CommentMapper::class);
         $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
         $this->app->bind(AdminCommentCreateRequestInterface::class, AdminCommentCreateRequest::class);
+        $this->app->bind(AdminCommentEditRequestInterface::class, AdminCommentEditRequest::class);
+        $this->app->bind(AdminCommentUpdateRequestInterface::class, AdminCommentUpdateRequest::class);
     }
 }
