@@ -35,7 +35,7 @@ class AdminArticlesCreatePresenterTest extends TestCase
 
         $this->assertEquals([
             'title' => 'New article',
-            'create_article_url' => 'http://myurl',
+            'store_url' => 'http://myurl',
             'statuses' => [
                 '0' => [
                     'value' => '0',

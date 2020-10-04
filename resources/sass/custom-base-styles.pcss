@@ -66,7 +66,7 @@ main {
 
     table td,
     table th {
-        @apply px-4 py-2;
+        @apply px-2 py-2 break-words;
     }
 
     table tbody tr {
@@ -75,6 +75,14 @@ main {
 
     table tbody tr:nth-child(2n-1) {
         @apply bg-gray-200;
+    }
+
+    table tbody tr.online {
+        @apply bg-green-200;
+    }
+
+    table tbody tr.offline {
+        @apply bg-red-200;
     }
 
     figure {

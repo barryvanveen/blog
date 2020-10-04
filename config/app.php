@@ -171,6 +171,7 @@ return [
         App\Infrastructure\Providers\AppServiceProvider::class,
         App\Infrastructure\Providers\ArticlesServiceProvider::class,
         App\Infrastructure\Providers\AuthServiceProvider::class,
+        App\Infrastructure\Providers\CommentsServiceProvider::class,
         App\Infrastructure\Providers\DropboxServiceProvider::class,
         App\Infrastructure\Providers\PagesServiceProvider::class,
         App\Infrastructure\Providers\Psr7ServiceProvider::class,

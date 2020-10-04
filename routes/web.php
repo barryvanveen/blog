@@ -28,6 +28,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/articles/{uuid}/edit', [\App\Application\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('admin.articles.edit');
     Route::put('/admin/articles/{uuid}', [\App\Application\Http\Controllers\Admin\ArticlesController::class, 'update'])->name('admin.articles.update');
 
+    Route::get('/admin/comments', [\App\Application\Http\Controllers\Admin\CommentsController::class, 'index'])->name('admin.comments.index');
+    Route::get('/admin/comments/create', [\App\Application\Http\Controllers\Admin\CommentsController::class, 'create'])->name('admin.comments.create');
+    Route::post('/admin/comments', [\App\Application\Http\Controllers\Admin\CommentsController::class, 'store'])->name('admin.comments.store');
+    Route::get('/admin/comments/{uuid}/edit', [\App\Application\Http\Controllers\Admin\CommentsController::class, 'edit'])->name('admin.comments.edit');
+    Route::put('/admin/comments/{uuid}', [\App\Application\Http\Controllers\Admin\CommentsController::class, 'update'])->name('admin.comments.update');
+
     Route::get('/admin/pages', [\App\Application\Http\Controllers\Admin\PagesController::class, 'index'])->name('admin.pages.index');
     Route::get('/admin/pages/create', [\App\Application\Http\Controllers\Admin\PagesController::class, 'create'])->name('admin.pages.create');
     Route::post('/admin/pages', [\App\Application\Http\Controllers\Admin\PagesController::class, 'store'])->name('admin.pages.store');

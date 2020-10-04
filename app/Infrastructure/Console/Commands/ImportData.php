@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class ImportData extends Command
 {
+    /** @var string */
     protected $signature = 'import-data';
 
+    /** @var string */
     protected $description = 'Import and convert articles and pages from remote mysql';
 
-    /** @var MarkdownConverterInterface */
-    private $markdownConverter;
+    private MarkdownConverterInterface $markdownConverter;
 
     public function __construct(
         MarkdownConverterInterface $markdownConverter
@@ -29,6 +30,9 @@ class ImportData extends Command
     {
         $articles = $this->refreshArticles();
         $this->line("Imported $articles articles.");
+
+        $comments = $this->refreshComments();
+        $this->line("Imported $comments comments.");
 
         $pages = $this->refreshPages();
         $this->line("Imported $pages pages.");
@@ -64,6 +68,43 @@ class ImportData extends Command
             DB::connection('mysql')
                 ->table('articles')
                 ->insert($article);
+
+            $count ++;
+        }
+
+        return $count;
+    }
+
+    private function refreshComments(): int
+    {
+        $remoteComments = DB::connection('remote_mysql')
+            ->table('comments')
+            ->get();
+
+        $comments = $remoteComments->map(function (object $comment) {
+            return [
+                'article_uuid' =>  $comment->blog_id,
+                'content' =>  $comment->text,
+                'email' =>  $comment->email,
+                'ip' => $comment->ip,
+                'name' => $comment->name,
+                'status' => $comment->online,
+                'uuid' => $comment->id,
+                'created_at' => $comment->created_at,
+                'updated_at' => $comment->updated_at,
+            ];
+        });
+
+        DB::connection('mysql')
+            ->table('comments')
+            ->truncate();
+
+        $count = 0;
+
+        foreach ($comments as $comment) {
+            DB::connection('mysql')
+                ->table('comments')
+                ->insert($comment);
 
             $count ++;
         }

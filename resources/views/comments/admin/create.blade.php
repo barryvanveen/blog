@@ -1,4 +1,4 @@
-@presenter(App\Application\Articles\View\AdminArticlesCreatePresenter)
+@presenter(App\Application\Comments\View\AdminCommentsCreatePresenter)
 @extends('layouts.base')
 
 @section('title', $title)
@@ -9,9 +9,10 @@
     <form action="{{ $store_url }}" method="post" name="create">
         @include('partials.input.csrf')
 
-        @include('articles.admin.formfields', [
-            'article' => $article,
+        @include('comments.admin.formfields', [
+            'articles' => $articles,
             'statuses' => $statuses,
+            'comment' => $comment,
             'errors' => $errors,
             'submit' => 'Create',
         ])
