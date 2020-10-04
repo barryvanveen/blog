@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Comments;
 
 use App\Application\Comments\CommentRepository;
+use App\Application\Comments\Events\CommentWasCreated;
+use App\Application\Interfaces\EventBusInterface;
 use App\Domain\Comments\Comment;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
 use App\Infrastructure\Eloquent\CommentEloquentModel;
@@ -12,6 +14,8 @@ use App\Infrastructure\Eloquent\CommentMapper;
 use Carbon\Carbon;
 use Database\Factories\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
 
 /**
@@ -21,8 +25,10 @@ class CommentRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected CommentRepository $repository;
+    /** @var ObjectProphecy|EventBusInterface */
+    private ObjectProphecy $eventBus;
 
+    private CommentRepository $repository;
     private CommentFactory $commentFactory;
 
     public function setUp(): void
@@ -31,8 +37,13 @@ class CommentRepositoryTest extends TestCase
 
         $queryBuilder = new LaravelQueryBuilder(CommentEloquentModel::query());
         $commentMapper = new CommentMapper();
+        $this->eventBus = $this->prophesize(EventBusInterface::class);
 
-        $this->repository = new CommentRepository($queryBuilder, $commentMapper);
+        $this->repository = new CommentRepository(
+            $queryBuilder,
+            $commentMapper,
+            $this->eventBus->reveal()
+        );
 
         $this->commentFactory = CommentFactory::new();
     }
@@ -82,5 +93,19 @@ class CommentRepositoryTest extends TestCase
         $this->assertInstanceOf(Comment::class, $comment);
         $this->assertEquals($eloquentComment->uuid, $comment->uuid());
         $this->assertEquals($eloquentComment->content, $comment->content());
+    }
+
+    /** @test */
+    public function itCreatesAComment(): void
+    {
+        // arrange
+        $comment = $this->getComment();
+
+        // act
+        $this->repository->insert($comment);
+
+        // assert
+        $this->assertDatabaseHas('comments', ['uuid' => $comment->uuid()]);
+        $this->eventBus->dispatch(Argument::type(CommentWasCreated::class))->shouldHaveBeenCalled();
     }
 }
