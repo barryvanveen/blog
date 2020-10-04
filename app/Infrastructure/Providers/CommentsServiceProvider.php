@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Infrastructure\Providers;
 
 use App\Application\Comments\Commands\CreateComment;
+use App\Application\Comments\Commands\UpdateComment;
 use App\Application\Comments\CommentRepository;
 use App\Application\Comments\Handlers\CreateCommentHandler;
+use App\Application\Comments\Handlers\UpdateCommentHandler;
 use App\Application\Comments\ModelMapperInterface;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\QueryBuilderInterface;
@@ -24,6 +26,7 @@ class CommentsServiceProvider extends ServiceProvider
         CommandBusInterface $commandBus
     ): void {
         $commandBus->subscribe(CreateComment::class, CreateCommentHandler::class);
+        $commandBus->subscribe(UpdateComment::class, UpdateCommentHandler::class);
     }
 
     public function register(): void
