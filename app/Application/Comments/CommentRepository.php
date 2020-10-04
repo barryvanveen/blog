@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Comments;
 
 use App\Application\Comments\Events\CommentWasCreated;
+use App\Application\Comments\Events\CommentWasUpdated;
 use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Comments\Comment;
@@ -53,5 +54,14 @@ final class CommentRepository implements CommentRepositoryInterface
             ->insert($comment->toArray());
 
         $this->eventBus->dispatch(new CommentWasCreated());
+    }
+
+    public function update(Comment $comment): void
+    {
+        $this->queryBuilder
+            ->where('uuid', '=', $comment->uuid())
+            ->update($comment->toArray());
+
+        $this->eventBus->dispatch(new CommentWasUpdated($comment->uuid()));
     }
 }

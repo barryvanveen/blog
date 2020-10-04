@@ -13,4 +13,6 @@ interface CommentRepositoryInterface
     public function getByUuid(string $uuid): Comment;
 
     public function insert(Comment $comment): void;
+
+    public function update(Comment $comment): void;
 }

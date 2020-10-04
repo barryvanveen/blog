@@ -6,6 +6,7 @@ namespace Tests\Unit\Application\Comments;
 
 use App\Application\Comments\CommentRepository;
 use App\Application\Comments\Events\CommentWasCreated;
+use App\Application\Comments\Events\CommentWasUpdated;
 use App\Application\Interfaces\EventBusInterface;
 use App\Domain\Comments\Comment;
 use App\Infrastructure\Adapters\LaravelQueryBuilder;
@@ -96,10 +97,12 @@ class CommentRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function itCreatesAComment(): void
+    public function itCreatesAndUpdatesAComment(): void
     {
         // arrange
-        $comment = $this->getComment();
+        $comment = $this->getComment([
+            'name' => 'My Name',
+        ]);
 
         // act
         $this->repository->insert($comment);
@@ -107,5 +110,22 @@ class CommentRepositoryTest extends TestCase
         // assert
         $this->assertDatabaseHas('comments', ['uuid' => $comment->uuid()]);
         $this->eventBus->dispatch(Argument::type(CommentWasCreated::class))->shouldHaveBeenCalled();
+
+        // act again
+        $updatedComment = new Comment(
+            $comment->articleUuid(),
+            $comment->content(),
+            $comment->createdAt(),
+            $comment->email(),
+            $comment->ip(),
+            'My New Name',
+            $comment->status(),
+            $comment->uuid()
+        );
+        $this->repository->update($updatedComment);
+
+        // assert
+        $this->assertDatabaseHas('comments', ['uuid' => $comment->uuid(), 'name' => 'My New Name']);
+        $this->eventBus->dispatch(Argument::type(CommentWasUpdated::class))->shouldHaveBeenCalled();
     }
 }
