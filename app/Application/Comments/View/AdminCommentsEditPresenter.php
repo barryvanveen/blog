@@ -42,7 +42,7 @@ final class AdminCommentsEditPresenter implements PresenterInterface
 
         return [
             'title' => 'Edit comment',
-            'update_url' => $this->urlGenerator->route('admin.comments.update', ['uuid' => $this->request->uuid()]),
+            'url' => $this->urlGenerator->route('admin.comments.update', ['uuid' => $this->request->uuid()]),
             'articles' => $this->articles(),
             'statuses' => $this->statuses(),
             'comment' => $this->comment($comment),

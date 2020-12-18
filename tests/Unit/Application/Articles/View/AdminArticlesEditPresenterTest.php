@@ -61,7 +61,7 @@ class AdminArticlesEditPresenterTest extends TestCase
 
         $this->assertEquals([
             'title' => 'Edit article',
-            'update_article_url' => 'http://myurl',
+            'url' => 'http://myurl',
             'statuses' => [
                 '0' => [
                     'value' => '0',

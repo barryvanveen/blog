@@ -31,7 +31,7 @@ final class AdminCommentsCreatePresenter implements PresenterInterface
     {
         return [
             'title' => 'New comment',
-            'store_url' => $this->urlGenerator->route('admin.comments.store'),
+            'url' => $this->urlGenerator->route('admin.comments.store'),
             'articles' => $this->articles(),
             'statuses' => $this->statuses(),
             'comment' => $this->comment(),

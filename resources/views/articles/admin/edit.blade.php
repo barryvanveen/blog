@@ -4,17 +4,17 @@
 @section('title', $title)
 
 @section('body')
-    <h1>{{ $title }}</h1>
-
-    <form action="{{ $update_article_url }}" method="post" name="edit">
-        @include('partials.input.csrf')
-        @method('PUT')
-
-        @include('articles.admin.formfields', [
+    @include('partials.admin.create_or_update', [
+        'title' => $title,
+        'url' => $url,
+        'method' => 'PUT',
+        'form_name' => 'edit',
+        'formfields_template' => 'articles.admin.formfields',
+        'formfields_data' => [
             'article' => $article,
             'statuses' => $statuses,
             'errors' => $errors,
-            'submit' => 'Edit',
-        ])
-    </form>
+        ],
+        'submit' => 'Edit',
+    ])
 @endsection

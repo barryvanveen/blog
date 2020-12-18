@@ -35,7 +35,7 @@ class AdminPagesCreatePresenterTest extends TestCase
 
         $this->assertEquals([
             'title' => 'New page',
-            'create_url' => 'http://myurl',
+            'url' => 'http://myurl',
             'page' => [
                 'title' => 'old title',
                 'slug' => '',

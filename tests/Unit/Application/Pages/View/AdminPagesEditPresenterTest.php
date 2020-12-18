@@ -57,7 +57,7 @@ class AdminPagesEditPresenterTest extends TestCase
 
         $this->assertEquals([
             'title' => 'Edit page',
-            'update_url' => 'http://myurl',
+            'url' => 'http://myurl',
             'page' => [
                 'title' => 'old title',
                 'slug' => $page->slug,

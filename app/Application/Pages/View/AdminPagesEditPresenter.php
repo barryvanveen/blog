@@ -44,7 +44,7 @@ final class AdminPagesEditPresenter implements PresenterInterface
 
         return [
             'title' => 'Edit page',
-            'update_url' => $this->urlGenerator->route('admin.pages.update', ['slug' => $page->slug()]),
+            'url' => $this->urlGenerator->route('admin.pages.update', ['slug' => $page->slug()]),
             'page' => $this->page($page),
         ];
     }
