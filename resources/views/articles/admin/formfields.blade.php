@@ -37,9 +37,3 @@
     'placeholder' => 'Content goes here...',
     'errors' => $errors,
 ])
-
-@include('partials.input.button', [
-    'type' => 'submit',
-    'name' => 'submit',
-    'title' => $submit,
-])

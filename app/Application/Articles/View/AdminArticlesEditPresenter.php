@@ -45,7 +45,7 @@ final class AdminArticlesEditPresenter implements PresenterInterface
 
         return [
             'title' => 'Edit article',
-            'update_article_url' => $this->urlGenerator->route('admin.articles.update', ['uuid' => $this->request->uuid()]),
+            'url' => $this->urlGenerator->route('admin.articles.update', ['uuid' => $this->request->uuid()]),
             'statuses' => $this->statuses(),
             'article' => $this->article($article),
         ];
