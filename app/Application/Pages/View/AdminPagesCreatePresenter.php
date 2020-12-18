@@ -28,7 +28,7 @@ final class AdminPagesCreatePresenter implements PresenterInterface
     {
         return [
             'title' => 'New page',
-            'create_url' => $this->urlGenerator->route('admin.pages.store'),
+            'url' => $this->urlGenerator->route('admin.pages.store'),
             'page' => $this->page(),
         ];
     }
