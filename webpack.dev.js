@@ -1,5 +1,5 @@
 const common = require('./webpack.common.js');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 module.exports = [
     merge(
@@ -10,7 +10,11 @@ module.exports = [
             watchOptions: {
                 poll: true,
                 ignored: [
-                    /node_modules/,
+                    'app/**',
+                    'node_modules/**',
+                    'storage/**',
+                    'tests/**',
+                    'vendor/**',
                 ],
             },
         }

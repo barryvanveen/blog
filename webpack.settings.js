@@ -11,6 +11,6 @@ module.exports = {
         publicImagesPostfix: "images/",
     },
     output: {
-        filename: "[name].[hash]",
+        filename: "[name].[contenthash]",
     },
 };

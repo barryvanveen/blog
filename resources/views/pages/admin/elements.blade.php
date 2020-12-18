@@ -39,18 +39,84 @@
 
             <h2>Making the change</h2>
             <p>It was actually quite simple, there are just a few protected attributes you have to change on the Eloquent model(s), as can be seen in this code sample:</p>
-            <pre><code class="language-php">class Article extends Model
+            <div class="highlight highlight-text-html-php"><pre><span class="pl-s">'remote_mysql'</span> =&gt; [
+    <span class="pl-s">'driver'</span> =&gt; <span class="pl-s">'mysql'</span>,
+    <span class="pl-s">'host'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_HOST'</span>, <span class="pl-s">'127.0.0.1'</span>),
+    <span class="pl-s">'port'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_PORT'</span>, <span class="pl-s">'13306'</span>),
+    <span class="pl-s">'database'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_DATABASE'</span>, <span class="pl-s">'forge'</span>),
+    <span class="pl-s">'username'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_USERNAME'</span>, <span class="pl-s">'forge'</span>),
+    <span class="pl-s">'password'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_PASSWORD'</span>, <span class="pl-s">''</span>),
+    <span class="pl-c">// ... </span>
+],</pre></div>
+
+            <div class="highlight highlight-text-html-php"><pre><span class="pl-k">class</span> <span class="pl-v">Article</span> <span class="pl-k">extends</span> <span class="pl-v">Model</span>
 {
-    // column name of key
-    protected $primaryKey = 'uuid';
+    <span class="pl-c">// column name of key</span>
+    <span class="pl-k">protected</span> <span class="pl-c1"><span class="pl-c1">$</span>primaryKey</span> = <span class="pl-s">'uuid'</span>;
 
-    // type of key
-    protected $keyType = 'string';
+    <span class="pl-c">// type of key</span>
+    <span class="pl-k">protected</span> <span class="pl-c1"><span class="pl-c1">$</span>keyType</span> = <span class="pl-s">'string'</span>;
 
-    // whether the key is automatically incremented or not
-    public $incrementing = false;
-}
-</code></pre>
+    <span class="pl-c">// whether the key is automatically incremented or not</span>
+    <span class="pl-k">public</span> <span class="pl-c1"><span class="pl-c1">$</span>incrementing</span> = <span class="pl-c1">false</span>;
+}</pre></div>
+
+            <div class="highlight highlight-source-shell"><pre><span class="pl-k">&lt;</span>IfModule mod_rewrite.c<span class="pl-k">&gt;</span>
+    <span class="pl-k">&lt;</span>IfModule mod_negotiation.c<span class="pl-k">&gt;</span>
+        Options -MultiViews
+    <span class="pl-k">&lt;</span>/IfModule<span class="pl-k">&gt;</span>
+
+    <span class="pl-c"><span class="pl-c">#</span> set Expire and Cache Control headers for css and js</span>
+    <span class="pl-k">&lt;</span>IfModule mod_expires.c<span class="pl-k">&gt;</span>
+        ExpiresActive On
+        ExpiresDefault <span class="pl-s"><span class="pl-pds">"</span>access<span class="pl-pds">"</span></span>
+        ExpiresByType text/css <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresByType application/javascript <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+
+        ExpiresByType font/truetype <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresByType font/opentype <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresByType application/x-font-woff <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresByType image/svg+xml <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresByType application/vnd.ms-fontobject <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresByType image/vnd.microsoft.icon <span class="pl-s"><span class="pl-pds">"</span>access plus 1 month<span class="pl-pds">"</span></span>
+    <span class="pl-k">&lt;</span>/IfModule<span class="pl-k">&gt;</span>
+
+    RewriteEngine On
+
+    <span class="pl-c"><span class="pl-c">#</span> Redirect to preferred domain</span>
+    RewriteCond %{HTTP_HOST} <span class="pl-k">!</span>(^barryvanveen<span class="pl-cce">\.</span>test<span class="pl-k">|</span>^barryvanveen<span class="pl-cce">\.</span>nl)$ [NC]
+    RewriteRule ^(.<span class="pl-k">*</span>)$ https://barryvanveen.nl/<span class="pl-smi">$1</span> [R<span class="pl-k">=</span>301,L]
+
+    <span class="pl-c"><span class="pl-c">#</span> Redirect old Dutch urls to English urls</span>
+    RewriteRule ^over-mij$ https://barryvanveen.nl/about-me [L,R<span class="pl-k">=</span>301]
+    RewriteRule ^over-mij/boeken-die-ik-heb-gelezen$ https://barryvanveen.nl/about-me/books-that-i-have-read [L,R<span class="pl-k">=</span>301]
+
+    <span class="pl-c"><span class="pl-c">#</span> Redirect to HTTPS domain</span>
+    RewriteCond %{HTTP_HOST} ^barryvanveen.nl$ [NC]
+    RewriteCond %{HTTPS} <span class="pl-k">!</span>=on [NC]
+    RewriteRule ^(.<span class="pl-k">*</span>)$ https://barryvanveen.nl/<span class="pl-smi">$1</span> [R<span class="pl-k">=</span>301,L]
+
+    <span class="pl-c"><span class="pl-c">#</span> Redirect assets with filehash in name to actual filename</span>
+    RewriteRule ^dist/css/(.<span class="pl-k">*</span>)<span class="pl-cce">\.</span>[0-9a-f]{8}<span class="pl-cce">\.</span>css$ /dist/css/<span class="pl-smi">$1</span>.css [L]
+    RewriteRule ^dist/js/(.<span class="pl-k">*</span>)<span class="pl-cce">\.</span>[0-9a-f]{8}<span class="pl-cce">\.</span>js$ /dist/js/<span class="pl-smi">$1</span>.js [L]
+
+    <span class="pl-c"><span class="pl-c">#</span> Remove trailing slashes if not a folder</span>
+    RewriteCond %{REQUEST_FILENAME} <span class="pl-k">!</span>-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R<span class="pl-k">=</span>301]
+
+    <span class="pl-c"><span class="pl-c">#</span> Handle request using index.php</span>
+    RewriteCond %{REQUEST_FILENAME} <span class="pl-k">!</span>-d
+    RewriteCond %{REQUEST_FILENAME} <span class="pl-k">!</span>-f
+    RewriteRule ^ index.php [L]
+<span class="pl-k">&lt;</span>/IfModule<span class="pl-k">&gt;</span></pre></div>
+
+    <div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>repositories<span class="pl-pds">"</span></span>:[
+    {
+        <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>vcs<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>git@github.com:barryvanveen/secret.git<span class="pl-pds">"</span></span>
+    }
+]</pre></div>
 
             <h2>Results</h2>
             <table class="table table-striped">
