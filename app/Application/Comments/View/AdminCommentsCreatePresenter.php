@@ -13,6 +13,8 @@ use App\Domain\Comments\CommentStatus;
 
 final class AdminCommentsCreatePresenter implements PresenterInterface
 {
+    use PresentsArticles, PresentsCommentStatuses;
+
     private UrlGeneratorInterface $urlGenerator;
     private SessionInterface $session;
     private ArticleRepositoryInterface $articleRepository;
@@ -35,41 +37,6 @@ final class AdminCommentsCreatePresenter implements PresenterInterface
             'articles' => $this->articles(),
             'statuses' => $this->statuses(),
             'comment' => $this->comment(),
-        ];
-    }
-
-    private function articles(): array
-    {
-        $articles = $this->articleRepository->allOrdered();
-
-        $placeholder = [
-            [
-                'value' => '',
-                'name' => '__Comment on article__',
-            ],
-        ];
-
-        $articles = $articles->map(function (Article $article) {
-            return [
-                'value' => $article->uuid(),
-                'name' => $article->title(),
-            ];
-        });
-
-        return array_merge($placeholder, $articles);
-    }
-
-    private function statuses(): array
-    {
-        return [
-            [
-                'value' => (string) CommentStatus::unpublished(),
-                'title' => 'Offline',
-            ],
-            [
-                'value' => (string) CommentStatus::published(),
-                'title' => 'Online',
-            ],
         ];
     }
 
