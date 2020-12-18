@@ -27,7 +27,7 @@ class LaravelCache implements CacheInterface
         return $this->cache->get($key);
     }
 
-    public function put(string $key, $value, int $ttl)
+    public function put(string $key, $value, int $ttl): bool
     {
         return $this->cache->put($key, $value, $ttl);
     }

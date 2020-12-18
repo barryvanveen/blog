@@ -25,7 +25,7 @@ final class MarkdownMailable extends Mailable
         $this->subject($subject);
     }
 
-    public function build()
+    public function build(): self
     {
         return $this->markdown($this->template)
             ->with($this->variables);
