@@ -16,6 +16,8 @@ use App\Domain\Comments\Requests\AdminCommentEditRequestInterface;
 
 final class AdminCommentsEditPresenter implements PresenterInterface
 {
+    use PresentsArticles, PresentsCommentStatuses;
+
     private CommentRepositoryInterface $repository;
     private UrlGeneratorInterface $urlGenerator;
     private AdminCommentEditRequestInterface $request;
@@ -46,41 +48,6 @@ final class AdminCommentsEditPresenter implements PresenterInterface
             'articles' => $this->articles(),
             'statuses' => $this->statuses(),
             'comment' => $this->comment($comment),
-        ];
-    }
-
-    private function articles(): array
-    {
-        $articles = $this->articleRepository->allOrdered();
-
-        $placeholder = [
-            [
-                'value' => '',
-                'name' => '__Comment on article__',
-            ],
-        ];
-
-        $articles = $articles->map(function (Article $article) {
-            return [
-                'value' => $article->uuid(),
-                'name' => $article->title(),
-            ];
-        });
-
-        return array_merge($placeholder, $articles);
-    }
-
-    private function statuses(): array
-    {
-        return [
-            [
-                'value' => (string) CommentStatus::unpublished(),
-                'title' => 'Offline',
-            ],
-            [
-                'value' => (string) CommentStatus::published(),
-                'title' => 'Online',
-            ],
         ];
     }
 
