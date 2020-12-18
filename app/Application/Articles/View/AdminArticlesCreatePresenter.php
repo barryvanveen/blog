@@ -12,6 +12,8 @@ use DateTimeImmutable;
 
 final class AdminArticlesCreatePresenter implements PresenterInterface
 {
+    use PresentsArticleStatuses;
+
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
@@ -33,20 +35,6 @@ final class AdminArticlesCreatePresenter implements PresenterInterface
             'store_url' => $this->urlGenerator->route('admin.articles.store'),
             'statuses' => $this->statuses(),
             'article' => $this->article(),
-        ];
-    }
-
-    private function statuses(): array
-    {
-        return [
-            [
-                'value' => (string) ArticleStatus::unpublished(),
-                'title' => 'Not published',
-            ],
-            [
-                'value' => (string) ArticleStatus::published(),
-                'title' => 'Published',
-            ],
         ];
     }
 

@@ -8,12 +8,13 @@ use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Enums\ArticleStatus;
 use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\AdminArticleEditRequestInterface;
 
 final class AdminArticlesEditPresenter implements PresenterInterface
 {
+    use PresentsArticleStatuses;
+
     /** @var ArticleRepositoryInterface */
     private $repository;
 
@@ -50,21 +51,6 @@ final class AdminArticlesEditPresenter implements PresenterInterface
             'article' => $this->article($article),
         ];
     }
-
-    private function statuses(): array
-    {
-        return [
-            [
-                'value' => (string) ArticleStatus::unpublished(),
-                'title' => 'Not published',
-            ],
-            [
-                'value' => (string) ArticleStatus::published(),
-                'title' => 'Published',
-            ],
-        ];
-    }
-
     private function article(Article $article): array
     {
         return [
