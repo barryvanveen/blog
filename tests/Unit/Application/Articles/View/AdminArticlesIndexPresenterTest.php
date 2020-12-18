@@ -63,16 +63,16 @@ class AdminArticlesIndexPresenterTest extends TestCase
             'title' => 'Articles',
             'articles' => [
                 [
+                    'is_online' => true,
                     'uuid' => $article1->uuid,
                     'title' => $article1->title,
-                    'status' => 'online',
                     'published_at' => 'Jan 17, 2020',
                     'edit_url' => 'http://editurl',
                 ],
                 [
+                    'is_online' => false,
                     'uuid' => $article2->uuid,
                     'title' => $article2->title,
-                    'status' => 'offline',
                     'published_at' => 'Feb 18, 2020',
                     'edit_url' => 'http://editurl',
                 ],
