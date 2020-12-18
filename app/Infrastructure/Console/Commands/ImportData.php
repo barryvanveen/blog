@@ -26,7 +26,7 @@ class ImportData extends Command
         $this->markdownConverter = $markdownConverter;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $articles = $this->refreshArticles();
         $this->line("Imported $articles articles.");
@@ -150,6 +150,9 @@ class ImportData extends Command
         return $count;
     }
 
+    /**
+     * @return false|string
+     */
     private function mapPageSlugs(string $originalSlug)
     {
         switch ($originalSlug) {

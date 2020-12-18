@@ -65,7 +65,10 @@ class GithubMarkdownConverterTest extends TestCase
         $this->client = $this->prophesize(ClientInterface::class);
         $this->client->sendRequest(Argument::any())->willReturn($response);
 
+        /** @var ObjectProphecy|CacheInterface cache */
         $this->cache = $this->prophesize(CacheInterface::class);
+        $this->cache->put(Argument::cetera())->willReturn(true);
+
         $this->logger = $this->prophesize(LoggerInterface::class);
 
         /** @var ObjectProphecy|ConfigurationInterface $configuration */
