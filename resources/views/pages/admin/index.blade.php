@@ -6,11 +6,7 @@
 @endsection
 
 @section('body')
-    <div class="flex justify-between items-center">
-        <h1 class="">{{ $title }}</h1>
-
-        <a href="{{ $create_url }}" class="bg-blue-500 hover:bg-blue-700 text-white hover:text-white font-bold no-underline hover:no-underline py-2 px-4 rounded focus:outline-none focus:shadow-outline">New</a>
-    </div>
+    @include('partials.admin.index_header', ['title' => $title, 'create_url' => $create_url])
 
     <table>
         <thead>
