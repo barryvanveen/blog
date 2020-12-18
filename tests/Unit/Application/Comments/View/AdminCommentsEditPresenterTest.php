@@ -61,7 +61,7 @@ class AdminCommentsEditPresenterTest extends TestCase
 
         $this->assertEquals([
             'title' => 'Edit comment',
-            'update_url' => 'http://myurl',
+            'url' => 'http://myurl',
             'statuses' => [
                 '0' => [
                     'value' => '0',

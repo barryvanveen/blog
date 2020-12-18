@@ -47,7 +47,7 @@ class AdminCommentsCreatePresenterTest extends TestCase
 
         $this->assertEquals([
             'title' => 'New comment',
-            'store_url' => 'http://myurl',
+            'url' => 'http://myurl',
             'statuses' => [
                 '0' => [
                     'value' => '0',
