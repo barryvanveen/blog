@@ -1,5 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin }  = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const path = require('path');
@@ -56,13 +56,14 @@ const baseConfig = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            ident: 'postcss',
-                            plugins: [
-                                require('postcss-import'),
-                                require('tailwindcss'),
-                                require('postcss-nested'),
-                                require('autoprefixer'),
-                            ],
+                            postcssOptions: {
+                                plugins: [
+                                    require('postcss-import'),
+                                    require('tailwindcss'),
+                                    require('postcss-nested'),
+                                    require('autoprefixer'),
+                                ],
+                            },
                         },
                     },
                 ],
@@ -93,7 +94,7 @@ const baseConfig = {
             verbose: true,
             dry: false
         }),
-        new ManifestPlugin({
+        new WebpackManifestPlugin({
             publicPath: './dist/',
         }),
         new MiniCssExtractPlugin({
