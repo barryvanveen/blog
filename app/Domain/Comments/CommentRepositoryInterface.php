@@ -10,6 +10,8 @@ interface CommentRepositoryInterface
 {
     public function allOrdered(): CollectionInterface;
 
+    public function onlineOrderedByArticleUuid(string $uuid): CollectionInterface;
+
     public function getByUuid(string $uuid): Comment;
 
     public function insert(Comment $comment): void;

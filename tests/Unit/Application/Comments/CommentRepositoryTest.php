@@ -83,6 +83,44 @@ class CommentRepositoryTest extends TestCase
     }
 
     /** @test */
+    public function itRetrievesAllCommentsForAnArticleInOrder(): void
+    {
+        $article1 = 'asd';
+        $article2 = 'qwe';
+
+        // arrange
+        $this->commentFactory->create([
+            'article_uuid' => $article1,
+            'content' => 'comment1',
+            'created_at' => Carbon::now()->subDays(4),
+        ]);
+        $this->commentFactory->create([
+            'article_uuid' => $article1,
+            'content' => 'comment2',
+            'created_at' => Carbon::now()->subDays(1),
+        ]);
+        $this->commentFactory->create([
+            'article_uuid' => $article2,
+            'content' => 'comment3',
+            'created_at' => Carbon::now()->subDays(2),
+        ]);
+        $this->commentFactory->unpublished()->create([
+            'article_uuid' => $article1,
+            'content' => 'comment4',
+            'created_at' => Carbon::now()->subDays(3),
+        ]);
+
+        // act
+        /** @var Comment[] $comments */
+        $comments = $this->repository->onlineOrderedByArticleUuid($article1)->toArray();
+
+        // assert
+        $this->assertCount(2, $comments);
+        $this->assertEquals('comment1', $comments[0]->content());
+        $this->assertEquals('comment2', $comments[1]->content());
+    }
+
+    /** @test */
     public function itRetrievesACommentByUUID(): void
     {
         // arrange
