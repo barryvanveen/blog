@@ -15,20 +15,15 @@ use App\Domain\Utils\MetaData;
 
 final class ArticlesItemPresenter implements PresenterInterface
 {
-    /** @var ArticleRepositoryInterface */
-    private $repository;
+    private ArticleRepositoryInterface $repository;
 
-    /** @var ArticleShowRequestInterface */
-    private $request;
+    private ArticleShowRequestInterface $request;
 
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    /** @var DateTimeFormatterInterface */
-    private $dateTimeFormatter;
+    private DateTimeFormatterInterface $dateTimeFormatter;
 
-    /** @var MarkdownConverterInterface */
-    private $markdownConverter;
+    private MarkdownConverterInterface $markdownConverter;
 
     public function __construct(
         ArticleRepositoryInterface $repository,

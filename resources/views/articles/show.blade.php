@@ -28,6 +28,8 @@
             {!! $content !!}
         </div>
     </article>
+
+    @include('comments.comments')
 @endsection
 
 @section('related')

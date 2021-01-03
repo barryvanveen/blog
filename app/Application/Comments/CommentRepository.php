@@ -10,6 +10,7 @@ use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Comments\Comment;
 use App\Domain\Comments\CommentRepositoryInterface;
+use App\Domain\Comments\CommentStatus;
 use App\Domain\Core\CollectionInterface;
 
 final class CommentRepository implements CommentRepositoryInterface
@@ -34,6 +35,17 @@ final class CommentRepository implements CommentRepositoryInterface
     {
         $comments = $this->queryBuilder
             ->orderBy('created_at', 'desc')
+            ->get();
+
+        return $this->modelMapper->mapToDomainModels($comments);
+    }
+
+    public function onlineOrderedByArticleUuid(string $uuid): CollectionInterface
+    {
+        $comments = $this->queryBuilder
+            ->where('status', '=', (string) CommentStatus::published())
+            ->where('article_uuid', '=', $uuid)
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return $this->modelMapper->mapToDomainModels($comments);
