@@ -190,4 +190,61 @@
         <div class="h-32 w-full bg-repeat bg-image-5"></div>
     </div>
 
+    <section>
+        <h2 id="comments">Comments (<span itemprop="commentCount">10</span>)</h2>
+        <p>Got a question? Liked the article or got a suggestion? Leave a comment to let us know.</p>
+
+        <div class="my-4" id="comment-35" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+            <div>
+                <span class="font-bold" itemprop="author">Michael from codebymike.at</span>
+                <span class="text-gray-700 text-sm">
+                    <time itemprop="dateCreated" datetime="2016-12-25T20:34:19+00:00">Dec 25, 2016</time>
+                </span>
+            </div>
+            <div>
+                <div class="col-xs-12" itemprop="text">Thanks for the article.
+                    But wouldn't it be better to set the headers in the .htaccess so they are served for all files? Plus performance will be better. </div>
+            </div>
+        </div>
+        <div class="my-4" id="comment-36" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+            <div>
+                <span class="font-bold" itemprop="author">Barry van Veen</span>
+                <span class="text-gray-700 text-sm">
+                    <time itemprop="dateCreated" datetime="2016-12-26T11:39:13+00:00">Dec 26, 2016</time>
+                </span>
+            </div>
+            <div>
+                <div class="col-xs-12" itemprop="text">Hi Michael,
+
+                    I don't think it makes a real difference since most headers are primarily needed for the HTML document you are serving. For me, serving the headers through PHP is fine and allows me to configure it differently for my development en production environment.
+
+                    Here's a blog that configures the same headers with a .htaccess file: https://danielnixon.org/http-security-headers/.</div>
+            </div>
+        </div>
+        <div class="my-4" id="comment-51" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+            <div>
+                <span class="font-bold" itemprop="author">Mattias</span>
+                <span class="text-gray-700 text-sm">
+            <time itemprop="dateCreated" datetime="2017-12-24T01:39:55+00:00">Dec 24, 2017</time>
+        </span>
+            </div>
+            <div>
+                <div class="col-xs-12" itemprop="text">Thanks for a great article!
+
+                    I have some issues though. I get the following error:
+
+                    VM2260:1 Refused to connect to 'https://l.sharethis.com/pview?event=pview&amp;version=st_insights.js&amp;lang=en&amp;fpc=1234&amp;sessionID=1234&amp;hostname=myhost.com&amp;location=%2F&amp;product=inline-share-buttons&amp;publisher=etc' because it violates the following Content Security Policy directive: "connect-src ".
+
+                    I have tried adding it to the connect-src attribute like so:
+
+                    'connect-src' =&gt; [
+                    'l.sharethis.com',
+                    'https://l.sharethis.com/',
+                    'https://l.sharethis.com'
+                    ],
+
+                    But it does not work. What can I do?</div>
+            </div>
+        </div>
+    </section>
 @endsection
