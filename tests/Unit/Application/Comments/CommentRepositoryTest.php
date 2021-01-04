@@ -36,7 +36,7 @@ class CommentRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = new LaravelQueryBuilder(CommentEloquentModel::query());
+        $queryBuilder = new LaravelQueryBuilder(new CommentEloquentModel());
         $commentMapper = new CommentMapper();
         $this->eventBus = $this->prophesize(EventBusInterface::class);
 

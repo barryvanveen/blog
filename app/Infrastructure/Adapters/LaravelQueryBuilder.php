@@ -8,15 +8,25 @@ use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Core\CollectionInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class LaravelQueryBuilder implements QueryBuilderInterface
 {
-    /** @var Builder */
-    private $builder;
+    private Model $model;
 
-    public function __construct(Builder $builder)
+    private Builder $builder;
+
+    public function __construct(Model $model)
     {
-        $this->builder = $builder;
+        $this->model = $model;
+        $this->builder = $model->newQuery();
+    }
+
+    public function new(): QueryBuilderInterface
+    {
+        $this->builder = $this->model->newQuery();
+
+        return $this;
     }
 
     public function get(array $columns = ['*']): CollectionInterface
@@ -66,5 +76,14 @@ class LaravelQueryBuilder implements QueryBuilderInterface
         $this->builder->where($column, $operator, $value, $boolean);
 
         return $this;
+    }
+
+    public function toSql(): string
+    {
+        return str_replace_array(
+            '?',
+            $this->builder->getBindings(),
+            $this->builder->toSql()
+        );
     }
 }

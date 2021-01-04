@@ -37,6 +37,7 @@ final class PageRepository implements PageRepositoryInterface
     public function allOrdered(): CollectionInterface
     {
         $pages = $this->queryBuilder
+            ->new()
             ->orderBy('slug', 'asc')
             ->get();
 
@@ -48,6 +49,7 @@ final class PageRepository implements PageRepositoryInterface
         $record = $this->modelMapper->mapToDatabaseArray($page);
 
         $this->queryBuilder
+            ->new()
             ->insert($record);
     }
 
@@ -56,6 +58,7 @@ final class PageRepository implements PageRepositoryInterface
         $record = $this->modelMapper->mapToDatabaseArray($page);
 
         $this->queryBuilder
+            ->new()
             ->where('slug', '=', $page->slug())
             ->update($record);
 
@@ -65,6 +68,7 @@ final class PageRepository implements PageRepositoryInterface
     public function getBySlug(string $slug): Page
     {
         $page = $this->queryBuilder
+            ->new()
             ->where('slug', '=', $slug)
             ->first();
 

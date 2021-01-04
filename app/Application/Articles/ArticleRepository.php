@@ -38,6 +38,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     public function allOrdered(): CollectionInterface
     {
         $articles = $this->queryBuilder
+            ->new()
             ->orderBy('published_at', 'desc')
             ->get();
 
@@ -47,6 +48,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     public function allPublishedAndOrdered(): CollectionInterface
     {
         $articles = $this->queryBuilder
+            ->new()
             ->where('status', '=', (string) ArticleStatus::published())
             ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
             ->orderBy('published_at', 'desc')
@@ -58,6 +60,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     public function insert(Article $article): void
     {
         $this->queryBuilder
+            ->new()
             ->insert($article->toArray());
 
         $this->eventBus->dispatch(new ArticleWasCreated());
@@ -66,6 +69,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     public function update(Article $article): void
     {
         $this->queryBuilder
+            ->new()
             ->where('uuid', '=', $article->uuid())
             ->update($article->toArray());
 
@@ -75,6 +79,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     public function getPublishedByUuid(string $uuid): Article
     {
         $article = $this->queryBuilder
+            ->new()
             ->where('uuid', '=', $uuid)
             ->where('status', '=', (string) ArticleStatus::published())
             ->where('published_at', '<=', (new DateTimeImmutable())->format(DateTimeImmutable::ATOM))
@@ -86,6 +91,7 @@ final class ArticleRepository implements ArticleRepositoryInterface
     public function getByUuid(string $uuid): Article
     {
         $article = $this->queryBuilder
+            ->new()
             ->where('uuid', '=', $uuid)
             ->first();
 

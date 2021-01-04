@@ -38,9 +38,7 @@ class CommentsServiceProvider extends ServiceProvider
         $this->app->when(CommentRepository::class)
             ->needs(QueryBuilderInterface::class)
             ->give(function () {
-                return new LaravelQueryBuilder(
-                    CommentEloquentModel::query()
-                );
+                return new LaravelQueryBuilder(new CommentEloquentModel());
             });
 
         $this->app->bind(ModelMapperInterface::class, CommentMapper::class);

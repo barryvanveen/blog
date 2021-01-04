@@ -22,11 +22,11 @@ final class CommentRepository implements CommentRepositoryInterface
     private EventBusInterface $eventBus;
 
     public function __construct(
-        QueryBuilderInterface $builderFactory,
+        QueryBuilderInterface $queryBuilder,
         ModelMapperInterface $modelMapper,
         EventBusInterface $eventBus
     ) {
-        $this->queryBuilder = $builderFactory;
+        $this->queryBuilder = $queryBuilder;
         $this->modelMapper = $modelMapper;
         $this->eventBus = $eventBus;
     }
@@ -34,6 +34,7 @@ final class CommentRepository implements CommentRepositoryInterface
     public function allOrdered(): CollectionInterface
     {
         $comments = $this->queryBuilder
+            ->new()
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -43,6 +44,7 @@ final class CommentRepository implements CommentRepositoryInterface
     public function onlineOrderedByArticleUuid(string $uuid): CollectionInterface
     {
         $comments = $this->queryBuilder
+            ->new()
             ->where('status', '=', (string) CommentStatus::published())
             ->where('article_uuid', '=', $uuid)
             ->orderBy('created_at', 'asc')
@@ -54,6 +56,7 @@ final class CommentRepository implements CommentRepositoryInterface
     public function getByUuid(string $uuid): Comment
     {
         $comment = $this->queryBuilder
+            ->new()
             ->where('uuid', '=', $uuid)
             ->first();
 
@@ -63,6 +66,7 @@ final class CommentRepository implements CommentRepositoryInterface
     public function insert(Comment $comment): void
     {
         $this->queryBuilder
+            ->new()
             ->insert($comment->toArray());
 
         $this->eventBus->dispatch(new CommentWasCreated());
@@ -71,6 +75,7 @@ final class CommentRepository implements CommentRepositoryInterface
     public function update(Comment $comment): void
     {
         $this->queryBuilder
+            ->new()
             ->where('uuid', '=', $comment->uuid())
             ->update($comment->toArray());
 

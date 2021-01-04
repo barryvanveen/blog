@@ -26,7 +26,7 @@ class LaravelQueryBuilderTest extends TestCase
     {
         parent::setUp();
 
-        $this->queryBuilder = new LaravelQueryBuilder(ArticleEloquentModel::query());
+        $this->queryBuilder = new LaravelQueryBuilder(new ArticleEloquentModel());
     }
 
     /** @test */
@@ -249,5 +249,20 @@ class LaravelQueryBuilderTest extends TestCase
         $this->assertDatabaseHas('articles', [
             'uuid' => 'newUuid',
         ]);
+    }
+
+    /** @test */
+    public function itStartsWithANewQuery(): void
+    {
+        $query1 = $this->queryBuilder->new()
+            ->where('uuid', '=', 'foo')
+            ->toSql();
+
+        $query2 = $this->queryBuilder->new()
+            ->where('uuid', '=', 'bar')
+            ->toSql();
+
+        $this->assertEquals('select * from "articles" where "uuid" = foo', $query1);
+        $this->assertEquals('select * from "articles" where "uuid" = bar', $query2);
     }
 }

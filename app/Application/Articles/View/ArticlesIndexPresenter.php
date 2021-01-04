@@ -6,30 +6,37 @@ namespace App\Application\Articles\View;
 
 use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
+use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
+use App\Domain\Comments\CommentRepositoryInterface;
 use App\Domain\Utils\MetaData;
 
 final class ArticlesIndexPresenter implements PresenterInterface
 {
-    /** @var ArticleRepositoryInterface */
-    private $repository;
+    private ArticleRepositoryInterface $repository;
 
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    /** @var MarkdownConverterInterface */
-    private $markdownConverter;
+    private MarkdownConverterInterface $markdownConverter;
+
+    private DateTimeFormatterInterface $dateTimeFormatter;
+
+    private CommentRepositoryInterface $commentRepository;
 
     public function __construct(
         ArticleRepositoryInterface $repository,
         UrlGeneratorInterface $urlGenerator,
-        MarkdownConverterInterface $markdownConverter
+        MarkdownConverterInterface $markdownConverter,
+        DateTimeFormatterInterface $dateTimeFormatter,
+        CommentRepositoryInterface $commentRepository
     ) {
         $this->repository = $repository;
         $this->urlGenerator = $urlGenerator;
         $this->markdownConverter = $markdownConverter;
+        $this->dateTimeFormatter = $dateTimeFormatter;
+        $this->commentRepository = $commentRepository;
     }
 
     public function present(): array
@@ -48,10 +55,14 @@ final class ArticlesIndexPresenter implements PresenterInterface
         $presentableArticles = [];
 
         foreach ($articles as $article) {
+            $comments = $this->commentRepository->onlineOrderedByArticleUuid($article->uuid());
+
             $presentableArticles[] = [
                 'title' => $article->title(),
                 'description' => $this->markdownConverter->convertToHtml($article->description()),
                 'url' => $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()]),
+                'publication_date' => $this->dateTimeFormatter->humanReadable($article->publishedAt()),
+                'comments' => $comments->count(),
             ];
         }
 
