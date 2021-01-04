@@ -37,7 +37,7 @@ class PageRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = new LaravelQueryBuilder(PageEloquentModel::query());
+        $queryBuilder = new LaravelQueryBuilder(new PageEloquentModel());
         $pageMapper = $this->app->make(PageMapper::class);
 
         $this->laravelBusFake = Event::fake();

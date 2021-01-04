@@ -8,6 +8,8 @@ use App\Domain\Core\CollectionInterface;
 
 interface QueryBuilderInterface
 {
+    public function new(): QueryBuilderInterface;
+
     public function get(array $columns = ['*']): CollectionInterface;
 
     public function first(): array;
@@ -20,4 +22,6 @@ interface QueryBuilderInterface
 
     public function where(string $column, string $operator, string $value, string $boolean = 'and'):
     QueryBuilderInterface;
+
+    public function toSql(): string;
 }

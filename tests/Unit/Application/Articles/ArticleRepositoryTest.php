@@ -40,7 +40,7 @@ class ArticleRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = new LaravelQueryBuilder(ArticleEloquentModel::query());
+        $queryBuilder = new LaravelQueryBuilder(new ArticleEloquentModel());
         $articleMapper = $this->app->make(ArticleMapper::class);
 
         $this->laravelBusFake = Event::fake();
