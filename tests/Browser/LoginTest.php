@@ -41,8 +41,8 @@ class LoginTest extends DuskTestCase
         /** @var UserEloquentModel $user2 */
         $user2 = UserFactory::new()->create();
 
-        Browser::macro('clearCsrfInputs', function () {
-            $this->script("var form = document.forms.login; var token = form.elements._token; token.value = '';");
+        Browser::macro('removeCsrfInput', function () {
+            $this->script("var form = document.forms.login; var token = form.elements._token; token.remove();");
 
             return $this;
         });
@@ -53,7 +53,7 @@ class LoginTest extends DuskTestCase
                 ->visit(new LoginPage())
                 ->type('email', $user2->email)
                 ->type('password', 'secret')
-                ->clearCsrfInputs()
+                ->removeCsrfInput()
 
                 ->press('Login')
 
