@@ -14,7 +14,7 @@ class AdminDashboardPage extends Page
     public function elements()
     {
         return [
-            '@logoutButton' => 'form[name=logout] input[name=submit]',
+            '@logoutButton' => 'form[name=logout] input[type="submit"]',
         ];
     }
 }

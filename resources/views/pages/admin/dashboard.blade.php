@@ -12,6 +12,6 @@
     <form action="{{ $form_url }}" method="post" name="logout">
         @include('partials.input.csrf')
 
-        @include('partials.input.button', ['type' => 'submit', 'name' => 'submit', 'title' => 'Logout'])
+        @include('partials.input.button', ['type' => 'submit', 'name' => 'submitButton', 'title' => 'Logout'])
     </form>
 @endsection
