@@ -54,6 +54,7 @@ class AdminArticlesEditTest extends DuskTestCase
                 ->assertSee('Edit article')
                 ->assertInputValue('@title', $this->article->title)
                 ->type('@title', $newTitle)
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->assertRouteIs('admin.articles.index')
 
@@ -74,6 +75,7 @@ class AdminArticlesEditTest extends DuskTestCase
                 ->assertInputValue('@title', $this->article->title)
                 ->type('@title', '')
                 ->type('@publicationDate', $publicationDate)
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->assertRouteIs('admin.articles.edit', ['uuid' => $this->article->uuid])
                 ->assertSeeIn('@titleError', "The title field is required.")

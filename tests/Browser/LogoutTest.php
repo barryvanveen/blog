@@ -25,8 +25,8 @@ class LogoutTest extends DuskTestCase
             $browser
                 ->loginAs($user->uuid)
                 ->visit(new AdminDashboardPage())
+                ->waitForCsrfToken()
                 ->click('@logoutButton')
-
                 ->assertRouteIs('home')
                 ->assertGuest();
         });

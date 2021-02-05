@@ -56,6 +56,7 @@ class AdminPageEditTest extends DuskTestCase
                 ->assertSee('Edit page')
                 ->assertInputValue('@title', $this->page->title)
                 ->type('@title', $newTitle)
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->assertRouteIs('admin.pages.index')
 
@@ -76,6 +77,7 @@ class AdminPageEditTest extends DuskTestCase
                 ->assertInputValue('@title', $this->page->title)
                 ->type('@title', '')
                 ->type('@content', $content)
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->assertRouteIs('admin.pages.edit', ['slug' => $this->page->slug])
                 ->assertSeeIn('@titleError', "The title field is required.")

@@ -27,9 +27,8 @@ class LoginTest extends DuskTestCase
                 ->visit(new LoginPage())
                 ->type('email', $user->email)
                 ->type('password', 'secret')
-
-                ->press('Login')
-
+                ->waitForCsrfToken()
+                ->press('@submit')
                 ->assertRouteIs('admin.dashboard')
                 ->assertAuthenticatedAs($user);
         });
@@ -41,12 +40,6 @@ class LoginTest extends DuskTestCase
         /** @var UserEloquentModel $user2 */
         $user2 = UserFactory::new()->create();
 
-        Browser::macro('removeCsrfInput', function () {
-            $this->script("var form = document.forms.login; var token = form.elements._token; token.remove();");
-
-            return $this;
-        });
-
         $this->browse(function (Browser $browser) use ($user2) {
             $browser
                 ->logout() // reset any previous sessions
@@ -54,9 +47,7 @@ class LoginTest extends DuskTestCase
                 ->type('email', $user2->email)
                 ->type('password', 'secret')
                 ->removeCsrfInput()
-
-                ->press('Login')
-
+                ->press('@submit')
                 ->assertRouteIs('login')
                 ->assertSee('419')
                 ->assertGuest();
@@ -72,9 +63,8 @@ class LoginTest extends DuskTestCase
                 ->visit(new LoginPage())
                 ->type('email', 'nonexistent@example.com')
                 ->type('password', 'secret')
-
-                ->press('Login')
-
+                ->waitForCsrfToken()
+                ->press('@submit')
                 ->assertRouteIs('login')
                 ->assertSee(__('auth.failed'))
                 ->assertGuest();

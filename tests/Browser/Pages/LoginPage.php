@@ -10,4 +10,11 @@ class LoginPage extends Page
     {
         return route('login');
     }
+
+    public function elements()
+    {
+        return [
+            '@submit' => 'main form[name="login"] input[type="submit"]',
+        ];
+    }
 }
