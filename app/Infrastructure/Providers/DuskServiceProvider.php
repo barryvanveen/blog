@@ -11,6 +11,10 @@ class DuskServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        if (config('app.env') === 'production') {
+            return;
+        }
+
         Browser::macro('removeCsrfInput', function () {
             /** @var Browser $this */
             $this->script('var token = document.querySelector(\'input[name="_token"]\'); token.remove();');
