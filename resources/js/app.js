@@ -1,3 +1,5 @@
+import csrfTokenRefresher from './app/csrfTokenRefresher'
+
 const styles = require('../sass/app.pcss');  // eslint-disable-line
 
-console.log('it works!')
+csrfTokenRefresher()

@@ -8,7 +8,7 @@
 
     @include('partials.input.button', [
         'type' => 'submit',
-        'name' => 'submit',
+        'name' => 'submitButton',
         'title' => $submit,
     ])
 </form>

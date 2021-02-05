@@ -52,6 +52,7 @@ class AdminArticlesCreateTest extends DuskTestCase
                 ->assertRadioSelected('@status', (string) ArticleStatus::published())
                 ->type('@description', 'Description')
                 ->type('@content', 'Content')
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->assertRouteIs('admin.articles.index')
                 ->assertSee($title);
@@ -72,7 +73,7 @@ class AdminArticlesCreateTest extends DuskTestCase
                 ->assertRadioSelected('@status', (string) ArticleStatus::published())
                 ->type('@description', 'Description')
                 ->type('@content', 'Content')
-                ->click('@submit')
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->assertRouteIs('admin.articles.create')
                 ->assertSeeIn('@titleError', "The title field is required.")
