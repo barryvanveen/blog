@@ -1,3 +1,4 @@
+const ESLintPlugin = require('eslint-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { WebpackManifestPlugin }  = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -19,19 +20,6 @@ const baseConfig = {
     target: settings.target,
     module: {
         rules: [
-            {
-                enforce: 'pre',
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'eslint-loader',
-                        options: {
-                            fix: true,
-                        },
-                    },
-                ],
-            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -82,6 +70,9 @@ const baseConfig = {
         ],
     },
     plugins: [
+        new ESLintPlugin({
+            fix: true,
+        }),
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: [
                 '**/*',
