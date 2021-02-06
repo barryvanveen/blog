@@ -1,5 +1,6 @@
 import debounce from '../util/debounce'
 import getVariable from '../util/variables'
+import Prism from 'prismjs'
 
 const initPreviews = () => {
   const editors = document.querySelectorAll('[data-editor]')
@@ -48,6 +49,7 @@ const setHtmlOnPreviewElement = (html, el) => {
   }
 
   previewEl.innerHTML = html
+  Prism.highlightAll()
 }
 
 const updatePreview = (event) => {

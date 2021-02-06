@@ -28,7 +28,7 @@ use App\Application\View\AssetUrlBuilder;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Application\View\DateTimeFormatter;
 use App\Application\View\DateTimeFormatterInterface;
-use App\Infrastructure\Adapters\GithubMarkdownConverter;
+use App\Infrastructure\Adapters\CebeMarkdownConverter;
 use App\Infrastructure\Adapters\GlideImageServer;
 use App\Infrastructure\Adapters\LaravelCache;
 use App\Infrastructure\Adapters\LaravelCommandBus;
@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GuardInterface::class, LaravelGuard::class);
         $this->app->bind(ImageServerInterface::class, GlideImageServer::class);
         $this->app->bind(MailerInterface::class, LaravelMailer::class);
-        $this->app->bind(MarkdownConverterInterface::class, GithubMarkdownConverter::class);
+        $this->app->bind(MarkdownConverterInterface::class, CebeMarkdownConverter::class);
         $this->app->bind(PathBuilderInterface::class, LaravelPathBuilder::class);
         $this->app->bind(RateLimiterInterface::class, LaravelRateLimiter::class);
         $this->app->bind(ResponseBuilderInterface::class, ResponseBuilder::class);

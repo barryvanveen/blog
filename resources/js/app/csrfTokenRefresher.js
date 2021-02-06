@@ -25,9 +25,7 @@ const getFreshToken = async () => {
 }
 
 const csrfTokenRefresher = () => {
-  document.addEventListener('DOMContentLoaded', () => {
-    initCsrfTokenRefresher()
-  })
+  initCsrfTokenRefresher()
 }
 
 export default csrfTokenRefresher
