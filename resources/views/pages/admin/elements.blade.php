@@ -39,84 +39,90 @@
 
             <h2>Making the change</h2>
             <p>It was actually quite simple, there are just a few protected attributes you have to change on the Eloquent model(s), as can be seen in this code sample:</p>
-            <div class="highlight highlight-text-html-php"><pre><span class="pl-s">'remote_mysql'</span> =&gt; [
-    <span class="pl-s">'driver'</span> =&gt; <span class="pl-s">'mysql'</span>,
-    <span class="pl-s">'host'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_HOST'</span>, <span class="pl-s">'127.0.0.1'</span>),
-    <span class="pl-s">'port'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_PORT'</span>, <span class="pl-s">'13306'</span>),
-    <span class="pl-s">'database'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_DATABASE'</span>, <span class="pl-s">'forge'</span>),
-    <span class="pl-s">'username'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_USERNAME'</span>, <span class="pl-s">'forge'</span>),
-    <span class="pl-s">'password'</span> =&gt; <span class="pl-en">env</span>(<span class="pl-s">'REMOTE_DB_PASSWORD'</span>, <span class="pl-s">''</span>),
-    <span class="pl-c">// ... </span>
-],</pre></div>
 
-            <div class="highlight highlight-text-html-php"><pre><span class="pl-k">class</span> <span class="pl-v">Article</span> <span class="pl-k">extends</span> <span class="pl-v">Model</span>
-{
-    <span class="pl-c">// column name of key</span>
-    <span class="pl-k">protected</span> <span class="pl-c1"><span class="pl-c1">$</span>primaryKey</span> = <span class="pl-s">'uuid'</span>;
+            <!-- Code php -->
+            <pre class="  language-php"><code class="  language-php"><span class="token string single-quoted-string">'remote_mysql'</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span>
+    <span class="token string single-quoted-string">'driver'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'mysql'</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'host'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_HOST'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'127.0.0.1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'port'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_PORT'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'13306'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'database'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_DATABASE'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'forge'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'username'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_USERNAME'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'forge'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token string single-quoted-string">'password'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_PASSWORD'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">''</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// ... </span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span>
+</code></pre>
 
-    <span class="pl-c">// type of key</span>
-    <span class="pl-k">protected</span> <span class="pl-c1"><span class="pl-c1">$</span>keyType</span> = <span class="pl-s">'string'</span>;
+    <pre class="  language-php"><code class="  language-php"><span class="token keyword">class</span> Article <span class="token keyword">extends</span> <span class="token class-name">Model</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// column name of key</span>
+    <span class="token keyword">protected</span> <span class="token variable">$primaryKey</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'uuid'</span><span class="token punctuation">;</span>
 
-    <span class="pl-c">// whether the key is automatically incremented or not</span>
-    <span class="pl-k">public</span> <span class="pl-c1"><span class="pl-c1">$</span>incrementing</span> = <span class="pl-c1">false</span>;
-}</pre></div>
+    <span class="token comment">// type of key</span>
+    <span class="token keyword">protected</span> <span class="token variable">$keyType</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'string'</span><span class="token punctuation">;</span>
 
-            <div class="highlight highlight-source-shell"><pre><span class="pl-k">&lt;</span>IfModule mod_rewrite.c<span class="pl-k">&gt;</span>
-    <span class="pl-k">&lt;</span>IfModule mod_negotiation.c<span class="pl-k">&gt;</span>
+    <span class="token comment">// whether the key is automatically incremented or not</span>
+    <span class="token keyword">public</span> <span class="token variable">$incrementing</span> <span class="token operator">=</span> <span class="token constant boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+    <pre class="  language-bash"><code class="  language-bash"><span class="token operator">&lt;</span>IfModule mod_rewrite.c<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>IfModule mod_negotiation.c<span class="token operator">&gt;</span>
         Options -MultiViews
-    <span class="pl-k">&lt;</span>/IfModule<span class="pl-k">&gt;</span>
+    <span class="token operator">&lt;</span>/IfModule<span class="token operator">&gt;</span>
 
-    <span class="pl-c"><span class="pl-c">#</span> set Expire and Cache Control headers for css and js</span>
-    <span class="pl-k">&lt;</span>IfModule mod_expires.c<span class="pl-k">&gt;</span>
+    <span class="token comment"># set Expire and Cache Control headers for css and js</span>
+    <span class="token operator">&lt;</span>IfModule mod_expires.c<span class="token operator">&gt;</span>
         ExpiresActive On
-        ExpiresDefault <span class="pl-s"><span class="pl-pds">"</span>access<span class="pl-pds">"</span></span>
-        ExpiresByType text/css <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
-        ExpiresByType application/javascript <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
+        ExpiresDefault <span class="token string">"access"</span>
+        ExpiresByType text/css <span class="token string">"access plus 1 year"</span>
+        ExpiresByType application/javascript <span class="token string">"access plus 1 year"</span>
 
-        ExpiresByType font/truetype <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
-        ExpiresByType font/opentype <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
-        ExpiresByType application/x-font-woff <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
-        ExpiresByType image/svg+xml <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
-        ExpiresByType application/vnd.ms-fontobject <span class="pl-s"><span class="pl-pds">"</span>access plus 1 year<span class="pl-pds">"</span></span>
-        ExpiresByType image/vnd.microsoft.icon <span class="pl-s"><span class="pl-pds">"</span>access plus 1 month<span class="pl-pds">"</span></span>
-    <span class="pl-k">&lt;</span>/IfModule<span class="pl-k">&gt;</span>
+        ExpiresByType font/truetype <span class="token string">"access plus 1 year"</span>
+        ExpiresByType font/opentype <span class="token string">"access plus 1 year"</span>
+        ExpiresByType application/x-font-woff <span class="token string">"access plus 1 year"</span>
+        ExpiresByType image/svg+xml <span class="token string">"access plus 1 year"</span>
+        ExpiresByType application/vnd.ms-fontobject <span class="token string">"access plus 1 year"</span>
+        ExpiresByType image/vnd.microsoft.icon <span class="token string">"access plus 1 month"</span>
+    <span class="token operator">&lt;</span>/IfModule<span class="token operator">&gt;</span>
 
     RewriteEngine On
 
-    <span class="pl-c"><span class="pl-c">#</span> Redirect to preferred domain</span>
-    RewriteCond %{HTTP_HOST} <span class="pl-k">!</span>(^barryvanveen<span class="pl-cce">\.</span>test<span class="pl-k">|</span>^barryvanveen<span class="pl-cce">\.</span>nl)$ [NC]
-    RewriteRule ^(.<span class="pl-k">*</span>)$ https://barryvanveen.nl/<span class="pl-smi">$1</span> [R<span class="pl-k">=</span>301,L]
+    <span class="token comment"># Redirect to preferred domain</span>
+    RewriteCond %<span class="token punctuation">{</span>HTTP_HOST<span class="token punctuation">}</span> <span class="token operator">!</span><span class="token punctuation">(</span>^barryvanveen<span class="token punctuation">\</span>.test<span class="token operator">|</span>^barryvanveen<span class="token punctuation">\</span>.nl<span class="token punctuation">)</span>$ <span class="token punctuation">[</span>NC<span class="token punctuation">]</span>
+    RewriteRule ^<span class="token punctuation">(</span>.*<span class="token punctuation">)</span>$ <a class="token url-link" href="https://barryvanveen.nl/">https://barryvanveen.nl/</a><span class="token variable">$1</span> <span class="token punctuation">[</span>R<span class="token operator">=</span><span class="token number">301</span>,L<span class="token punctuation">]</span>
 
-    <span class="pl-c"><span class="pl-c">#</span> Redirect old Dutch urls to English urls</span>
-    RewriteRule ^over-mij$ https://barryvanveen.nl/about-me [L,R<span class="pl-k">=</span>301]
-    RewriteRule ^over-mij/boeken-die-ik-heb-gelezen$ https://barryvanveen.nl/about-me/books-that-i-have-read [L,R<span class="pl-k">=</span>301]
+    <span class="token comment"># Redirect old Dutch urls to English urls</span>
+    RewriteRule ^over-mij$ <a class="token url-link" href="https://barryvanveen.nl/about-me">https://barryvanveen.nl/about-me</a> <span class="token punctuation">[</span>L,R<span class="token operator">=</span><span class="token number">301</span><span class="token punctuation">]</span>
+    RewriteRule ^over-mij/boeken-die-ik-heb-gelezen$ <a class="token url-link" href="https://barryvanveen.nl/about-me/books-that-i-have-read">https://barryvanveen.nl/about-me/books-that-i-have-read</a> <span class="token punctuation">[</span>L,R<span class="token operator">=</span><span class="token number">301</span><span class="token punctuation">]</span>
 
-    <span class="pl-c"><span class="pl-c">#</span> Redirect to HTTPS domain</span>
-    RewriteCond %{HTTP_HOST} ^barryvanveen.nl$ [NC]
-    RewriteCond %{HTTPS} <span class="pl-k">!</span>=on [NC]
-    RewriteRule ^(.<span class="pl-k">*</span>)$ https://barryvanveen.nl/<span class="pl-smi">$1</span> [R<span class="pl-k">=</span>301,L]
+    <span class="token comment"># Redirect to HTTPS domain</span>
+    RewriteCond %<span class="token punctuation">{</span>HTTP_HOST<span class="token punctuation">}</span> ^barryvanveen.nl$ <span class="token punctuation">[</span>NC<span class="token punctuation">]</span>
+    RewriteCond %<span class="token punctuation">{</span>HTTPS<span class="token punctuation">}</span> <span class="token operator">!=</span>on <span class="token punctuation">[</span>NC<span class="token punctuation">]</span>
+    RewriteRule ^<span class="token punctuation">(</span>.*<span class="token punctuation">)</span>$ <a class="token url-link" href="https://barryvanveen.nl/">https://barryvanveen.nl/</a><span class="token variable">$1</span> <span class="token punctuation">[</span>R<span class="token operator">=</span><span class="token number">301</span>,L<span class="token punctuation">]</span>
 
-    <span class="pl-c"><span class="pl-c">#</span> Redirect assets with filehash in name to actual filename</span>
-    RewriteRule ^dist/css/(.<span class="pl-k">*</span>)<span class="pl-cce">\.</span>[0-9a-f]{8}<span class="pl-cce">\.</span>css$ /dist/css/<span class="pl-smi">$1</span>.css [L]
-    RewriteRule ^dist/js/(.<span class="pl-k">*</span>)<span class="pl-cce">\.</span>[0-9a-f]{8}<span class="pl-cce">\.</span>js$ /dist/js/<span class="pl-smi">$1</span>.js [L]
+    <span class="token comment"># Redirect assets with filehash in name to actual filename</span>
+    RewriteRule ^dist/css/<span class="token punctuation">(</span>.*<span class="token punctuation">)</span><span class="token punctuation">\</span>.<span class="token punctuation">[</span><span class="token number">0</span>-9a-f<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">\</span>.css$ /dist/css/<span class="token variable">$1</span>.css <span class="token punctuation">[</span>L<span class="token punctuation">]</span>
+    RewriteRule ^dist/js/<span class="token punctuation">(</span>.*<span class="token punctuation">)</span><span class="token punctuation">\</span>.<span class="token punctuation">[</span><span class="token number">0</span>-9a-f<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">\</span>.js$ /dist/js/<span class="token variable">$1</span>.js <span class="token punctuation">[</span>L<span class="token punctuation">]</span>
 
-    <span class="pl-c"><span class="pl-c">#</span> Remove trailing slashes if not a folder</span>
-    RewriteCond %{REQUEST_FILENAME} <span class="pl-k">!</span>-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R<span class="pl-k">=</span>301]
+    <span class="token comment"># Remove trailing slashes if not a folder</span>
+    RewriteCond %<span class="token punctuation">{</span>REQUEST_FILENAME<span class="token punctuation">}</span> <span class="token operator">!</span>-d
+    RewriteCond %<span class="token punctuation">{</span>REQUEST_URI<span class="token punctuation">}</span> <span class="token punctuation">(</span>.+<span class="token punctuation">)</span>/$
+    RewriteRule ^ %1 <span class="token punctuation">[</span>L,R<span class="token operator">=</span><span class="token number">301</span><span class="token punctuation">]</span>
 
-    <span class="pl-c"><span class="pl-c">#</span> Handle request using index.php</span>
-    RewriteCond %{REQUEST_FILENAME} <span class="pl-k">!</span>-d
-    RewriteCond %{REQUEST_FILENAME} <span class="pl-k">!</span>-f
-    RewriteRule ^ index.php [L]
-<span class="pl-k">&lt;</span>/IfModule<span class="pl-k">&gt;</span></pre></div>
+    <span class="token comment"># Handle request using index.php</span>
+    RewriteCond %<span class="token punctuation">{</span>REQUEST_FILENAME<span class="token punctuation">}</span> <span class="token operator">!</span>-d
+    RewriteCond %<span class="token punctuation">{</span>REQUEST_FILENAME<span class="token punctuation">}</span> <span class="token operator">!</span>-f
+    RewriteRule ^ index.php <span class="token punctuation">[</span>L<span class="token punctuation">]</span>
+<span class="token operator">&lt;</span>/IfModule<span class="token operator">&gt;</span>
+</code></pre>
 
-    <div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>repositories<span class="pl-pds">"</span></span>:[
-    {
-        <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>vcs<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>git@github.com:barryvanveen/secret.git<span class="pl-pds">"</span></span>
-    }
-]</pre></div>
+    <pre class="  language-json"><code class="  language-json"><span class="token property">"repositories"</span><span class="token operator">:</span><span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"vcs"</span><span class="token punctuation">,</span>
+        <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"<a class="token email-link" href="mailto:git@github.com">git@github.com</a>:barryvanveen/secret.git"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre>
 
             <h2>Results</h2>
             <table class="table table-striped">
