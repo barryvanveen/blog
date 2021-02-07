@@ -191,7 +191,7 @@ return [
 
             'hashes' => [
                 'sha256' => [
-                    'sha256-UyftXeKYBypxjGmD9JjGRcVJsmA0xblM5XcJMFUqhVI=', //
+                    'o46NCqFsO7R0miT5YPCnL6OdhXUWWYGouIovNwHR6k8=', // javascript variables
                 ],
             ],
         ],
