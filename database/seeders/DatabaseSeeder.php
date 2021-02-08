@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $pages = [
             'Home',
             'About',
-            'Books that I have read',
+            'Books',
         ];
 
         foreach ($pages as $title) {

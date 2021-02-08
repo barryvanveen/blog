@@ -158,6 +158,8 @@ class ImportData extends Command
         switch ($originalSlug) {
             case 'about-me':
                 return 'about';
+            case 'books-that-i-have-read':
+                return 'books';
             default:
                 return false;
         }

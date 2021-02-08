@@ -14,6 +14,7 @@ use App\Domain\Pages\PageRepositoryInterface;
 final class PageRepository implements PageRepositoryInterface
 {
     private const SLUG_ABOUT = 'about';
+    private const SLUG_BOOKS = 'books';
 
     /** @var QueryBuilderInterface */
     private $queryBuilder;
@@ -78,5 +79,10 @@ final class PageRepository implements PageRepositoryInterface
     public function about(): Page
     {
         return $this->getBySlug(self::SLUG_ABOUT);
+    }
+
+    public function books(): Page
+    {
+        return $this->getBySlug(self::SLUG_BOOKS);
     }
 }

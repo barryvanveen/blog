@@ -10,7 +10,7 @@ use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Domain\Pages\PageRepositoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class AboutController
+class BooksController
 {
     /** @var PageRepositoryInterface */
     private $pageRepository;
@@ -29,11 +29,11 @@ class AboutController
     public function index(): ResponseInterface
     {
         try {
-            $this->pageRepository->about();
+            $this->pageRepository->books();
         } catch (RecordNotFoundException $exception) {
             throw NotFoundHttpException::create($exception);
         }
 
-        return $this->responseBuilder->ok('pages.about');
+        return $this->responseBuilder->ok('pages.books');
     }
 }
