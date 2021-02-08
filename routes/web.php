@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['cache'])->group(function () {
     Route::get('/', [\App\Application\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/about', [\App\Application\Http\Controllers\AboutController::class, 'index'])->name('about');
+    Route::get('/about/books', [\App\Application\Http\Controllers\BooksController::class, 'index'])->name('books');
     Route::get('/articles', [\App\Application\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');
     Route::get('/articles/rss', [\App\Application\Http\Controllers\ArticlesRssController::class, 'index'])->name('articles.rss');
     Route::get('/articles/{uuid}-{slug}', [\App\Application\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');

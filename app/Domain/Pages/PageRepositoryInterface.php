@@ -18,4 +18,6 @@ interface PageRepositoryInterface
     public function getBySlug(string $slug): Page;
 
     public function about(): Page;
+
+    public function books(): Page;
 }
