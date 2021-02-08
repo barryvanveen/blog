@@ -145,7 +145,7 @@ class PageRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function itRetrievesAPageBySlug(): void
+    public function itRetrievesAboutPageBySlug(): void
     {
         // arrange
         /** @var PageEloquentModel $eloquentPage */
@@ -161,10 +161,34 @@ class PageRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function itThrowsAnExceptionWhenRetrievingAnUnknownPage(): void
+    public function itThrowsAnExceptionWhenRetrievingUnknownAboutPage(): void
     {
         // assert
         $this->expectException(RecordNotFoundException::class);
         $this->repository->about();
+    }
+
+    /** @test */
+    public function itRetrievesBooksPageBySlug(): void
+    {
+        // arrange
+        /** @var PageEloquentModel $eloquentPage */
+        $eloquentPage = PageFactory::new()->create([
+            'slug' => 'books',
+        ]);
+        $page = $this->repository->books();
+
+        // assert
+        $this->assertInstanceOf(Page::class, $page);
+        $this->assertEquals($eloquentPage->slug, $page->slug());
+        $this->assertEquals($eloquentPage->title, $page->title());
+    }
+
+    /** @test */
+    public function itThrowsAnExceptionWhenRetrievingUnknownBooksPage(): void
+    {
+        // assert
+        $this->expectException(RecordNotFoundException::class);
+        $this->repository->books();
     }
 }
