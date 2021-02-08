@@ -6,7 +6,7 @@ namespace Tests\Unit\Application\Pages\View;
 
 use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
-use App\Application\Pages\View\PagesAboutPresenter;
+use App\Application\Pages\View\PagesBooksPresenter;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Domain\Pages\PageRepositoryInterface;
 use App\Domain\Utils\MetaData;
@@ -31,7 +31,7 @@ class PagesBooksPresenterTest extends TestCase
 
         /** @var ObjectProphecy|PageRepositoryInterface $repository */
         $repository = $this->prophesize(PageRepositoryInterface::class);
-        $repository->about()->willReturn($page);
+        $repository->books()->willReturn($page);
 
         /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
@@ -46,7 +46,7 @@ class PagesBooksPresenterTest extends TestCase
         $markdownConverter = $this->prophesize(MarkdownConverterInterface::class);
         $markdownConverter->convertToHtml(Argument::any())->willReturn('htmlString');
 
-        $presenter = new PagesAboutPresenter(
+        $presenter = new PagesBooksPresenter(
             $repository->reveal(),
             $urlGenerator->reveal(),
             $dateTimeFormatter->reveal(),
