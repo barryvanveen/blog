@@ -37,6 +37,8 @@ class PageListenerTest extends TestCase
 
         $this->urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $this->urlGenerator->route('about')->willReturn('aboutUrl');
+        $this->urlGenerator->route('books')->willReturn('booksUrl');
+        $this->urlGenerator->route('home')->willReturn('homeUrl');
 
         $this->listener = new PageListener(
             $this->cache->reveal(),
@@ -45,12 +47,33 @@ class PageListenerTest extends TestCase
     }
 
     /** @test */
-    public function itClearsCachesWhenAnPageWasUpdated(): void
+    public function itClearsCachesWhenAboutPageWasUpdated(): void
     {
         $this->cache->forget('aboutUrl')
             ->shouldBeCalled();
 
         $this->listener->handle(new PageWasUpdated('about'));
+    }
+
+    /** @test */
+    public function itClearsCachesWhenBooksPageWasUpdated(): void
+    {
+        $this->cache->forget('booksUrl')
+            ->shouldBeCalled();
+
+        $this->cache->forget('homeUrl')
+            ->shouldBeCalled();
+
+        $this->listener->handle(new PageWasUpdated('books'));
+    }
+
+    /** @test */
+    public function itClearsCachesWhenHomePageWasUpdated(): void
+    {
+        $this->cache->forget('homeUrl')
+            ->shouldBeCalled();
+
+        $this->listener->handle(new PageWasUpdated('home'));
     }
 
     /** @test */

@@ -31,12 +31,17 @@ final class PageListener extends BaseEventListener
 
         switch ($slug) {
             case 'about':
-                $route = $this->urlGenerator->route('about');
+                $this->cache->forget($this->urlGenerator->route('about'));
+                break;
+            case 'books':
+                $this->cache->forget($this->urlGenerator->route('books'));
+                $this->cache->forget($this->urlGenerator->route('home'));
+                break;
+            case 'home':
+                $this->cache->forget($this->urlGenerator->route('home'));
                 break;
             default:
                 throw CacheInvalidationException::unkownSlug($slug);
         }
-
-        $this->cache->forget($route);
     }
 }

@@ -15,6 +15,7 @@ final class PageRepository implements PageRepositoryInterface
 {
     private const SLUG_ABOUT = 'about';
     private const SLUG_BOOKS = 'books';
+    private const SLUG_HOME = 'home';
 
     /** @var QueryBuilderInterface */
     private $queryBuilder;
@@ -84,5 +85,10 @@ final class PageRepository implements PageRepositoryInterface
     public function books(): Page
     {
         return $this->getBySlug(self::SLUG_BOOKS);
+    }
+
+    public function home(): Page
+    {
+        return $this->getBySlug(self::SLUG_HOME);
     }
 }

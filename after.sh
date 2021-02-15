@@ -8,5 +8,8 @@
 # to apply, you may also create user-customizations.sh,
 # which will be run after this script.
 
+# timezone
+sudo timedatectl set-timezone "Europe/Amsterdam"
+
 # nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh

@@ -20,4 +20,6 @@ interface PageRepositoryInterface
     public function about(): Page;
 
     public function books(): Page;
+
+    public function home(): Page;
 }
