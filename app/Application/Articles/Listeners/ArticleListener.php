@@ -38,6 +38,9 @@ final class ArticleListener extends BaseEventListener
 
         $rssUrl = $this->urlGenerator->route('articles.rss');
         $this->cache->forget($rssUrl);
+
+        $homeUrl = $this->urlGenerator->route('home');
+        $this->cache->forget($homeUrl);
     }
 
     public function handleArticleWasUpdated(ArticleWasUpdated $event): void
@@ -48,7 +51,12 @@ final class ArticleListener extends BaseEventListener
             'uuid' => $article->uuid(),
             'slug' => $article->slug(),
         ]);
-
         $this->cache->forget($articleUrl);
+
+        $indexUrl = $this->urlGenerator->route('articles.index');
+        $this->cache->forget($indexUrl);
+
+        $homeUrl = $this->urlGenerator->route('home');
+        $this->cache->forget($homeUrl);
     }
 }
