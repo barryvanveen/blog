@@ -11,6 +11,7 @@ Route::middleware(['cache'])->group(function () {
     Route::get('/articles', [\App\Application\Http\Controllers\ArticlesController::class, 'index'])->name('articles.index');
     Route::get('/articles/rss', [\App\Application\Http\Controllers\ArticlesRssController::class, 'index'])->name('articles.rss');
     Route::get('/articles/{uuid}-{slug}', [\App\Application\Http\Controllers\ArticlesController::class, 'show'])->name('articles.show');
+    Route::post('/articles/comment', [\App\Application\Http\Controllers\CommentsController::class, 'store'])->name('comments.store');
 
     Route::get('/sitemap.xml', [\App\Application\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
     Route::get('/images/{filename}', [\App\Application\Http\Controllers\ImagesController::class, 'show'])->name('images');

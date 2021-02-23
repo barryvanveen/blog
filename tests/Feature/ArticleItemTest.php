@@ -56,4 +56,65 @@ class ArticleItemTest extends TestCase
         $response->assertStatus(StatusCode::STATUS_MOVED_PERMANENTLY);
         $response->assertRedirect(route('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug]));
     }
+
+    /** @test */
+    public function itFailsToCreateCommentWithBadInput(): void
+    {
+        $response = $this->postJson(route('comments.store'), [
+            'content' => 'myContent',
+            'email' => 'not an email',
+            'ip' => '123.123.123.123',
+            'name' => 'My Name',
+        ]);
+
+        $response->assertStatus(StatusCode::STATUS_BAD_REQUEST);
+        $response->assertJson([
+            'article_uuid' => [
+                'The article uuid field is required.',
+            ],
+            'email' => [
+                'The email must be a valid email address.',
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function itFailsToCreateCommentIfAnArticleUuidIsIncorrect(): void
+    {
+        $response = $this->postJson(route('comments.store'), [
+            'article_uuid' => 'foooo',
+            'content' => 'myContent',
+            'email' => 'john@example.com',
+            'ip' => '123.123.123.123',
+            'name' => 'My Name',
+        ]);
+
+        $response->assertStatus(StatusCode::STATUS_BAD_REQUEST);
+        $response->assertJson([
+            'error' => 'Comment could not be created.',
+        ]);
+    }
+
+    /** @test */
+    public function itCreatesComment(): void
+    {
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->publishedInPast()->create([
+            'uuid' => 'myuuid',
+            'slug' => 'my-slug-string',
+        ]);
+
+        $response = $this->postJson(route('comments.store'), [
+            'article_uuid' => $article->uuid,
+            'content' => 'myContent',
+            'email' => 'john@example.com',
+            'ip' => '123.123.123.123',
+            'name' => 'My Name',
+        ]);
+
+        $response->assertStatus(StatusCode::STATUS_OK);
+        $response->assertJson([
+            'success' => true,
+        ]);
+    }
 }
