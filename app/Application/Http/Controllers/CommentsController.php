@@ -53,7 +53,9 @@ final class CommentsController
 
             $this->commandBus->dispatch($command);
         } catch (Exception $exception) {
-            $this->logger->error("Could not save comment");
+            $this->logger->error("Could not save comment", [
+                'exception' => $exception,
+            ]);
 
             return $this->responseBuilder->json([
                 'error' => 'Comment could not be created.',
