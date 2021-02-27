@@ -69,7 +69,7 @@ final class CommentRepository implements CommentRepositoryInterface
             ->new()
             ->insert($comment->toArray());
 
-        $this->eventBus->dispatch(new CommentWasCreated());
+        $this->eventBus->dispatch(new CommentWasCreated($comment->uuid()));
     }
 
     public function update(Comment $comment): void

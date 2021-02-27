@@ -2,54 +2,59 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Articles\Listeners;
+namespace App\Application\Comments\Listeners;
 
-use App\Application\Articles\Events\ArticleWasUpdated;
+use App\Application\Comments\Events\CommentWasCreated;
+use App\Application\Comments\Events\CommentWasUpdated;
 use App\Application\Core\BaseEventListener;
 use App\Application\Interfaces\CacheInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Articles\Models\Article;
+use App\Domain\Comments\CommentRepositoryInterface;
 
-final class ArticleListener extends BaseEventListener
+final class CommentListener extends BaseEventListener
 {
     private CacheInterface $cache;
     private UrlGeneratorInterface $urlGenerator;
+    private CommentRepositoryInterface $commentRepository;
     private ArticleRepositoryInterface $articleRepository;
 
     public function __construct(
         CacheInterface $cache,
         UrlGeneratorInterface $urlGenerator,
+        CommentRepositoryInterface $commentRepository,
         ArticleRepositoryInterface $articleRepository
     ) {
         $this->cache = $cache;
         $this->urlGenerator = $urlGenerator;
+        $this->commentRepository = $commentRepository;
         $this->articleRepository = $articleRepository;
     }
 
-    public function handleArticleWasCreated(): void
+    public function handleCommentWasCreated(CommentWasCreated $event): void
     {
+        $this->clearArticleCache($event->uuid());
+
         $this->clearArticleIndexCache();
-
-        $this->clearArticleRssCache();
-
-        $this->clearHomePageCache();
     }
 
-    public function handleArticleWasUpdated(ArticleWasUpdated $event): void
+    public function handleCommentWasUpdated(CommentWasUpdated $event): void
     {
-        $article = $this->articleRepository->getByUuid($event->uuid());
+        $this->clearArticleCache($event->uuid());
+
+        $this->clearArticleIndexCache();
+    }
+
+    private function clearArticleCache(string $commentUuid): void
+    {
+        $article = $this->getArticleByComment($commentUuid);
 
         $articleUrl = $this->urlGenerator->route('articles.show', [
             'uuid' => $article->uuid(),
             'slug' => $article->slug(),
         ]);
         $this->cache->forget($articleUrl);
-
-        $this->clearArticleIndexCache();
-
-        $this->clearArticleRssCache();
-
-        $this->clearHomePageCache();
     }
 
     private function clearArticleIndexCache(): void
@@ -58,15 +63,10 @@ final class ArticleListener extends BaseEventListener
         $this->cache->forget($indexUrl);
     }
 
-    private function clearArticleRssCache(): void
+    private function getArticleByComment(string $commentUuid): Article
     {
-        $rssUrl = $this->urlGenerator->route('articles.rss');
-        $this->cache->forget($rssUrl);
-    }
+        $comment = $this->commentRepository->getByUuid($commentUuid);
 
-    private function clearHomePageCache(): void
-    {
-        $homeUrl = $this->urlGenerator->route('home');
-        $this->cache->forget($homeUrl);
+        return $this->articleRepository->getByUuid($comment->articleUuid());
     }
 }

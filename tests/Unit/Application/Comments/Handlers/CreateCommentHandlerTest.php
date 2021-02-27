@@ -7,6 +7,8 @@ namespace Tests\Unit\Application\Comments\Handlers;
 use App\Application\Comments\Commands\CreateComment;
 use App\Application\Comments\Handlers\CreateCommentHandler;
 use App\Domain\Comments\CommentStatus;
+use App\Infrastructure\Eloquent\ArticleEloquentModel;
+use Database\Factories\ArticleFactory;
 use DateTimeImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -23,8 +25,11 @@ class CreateCommentHandlerTest extends TestCase
     public function itCreatesAComment(): void
     {
         // arrange
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->create();
+
         $command = new CreateComment(
-            'article-foo',
+            $article->uuid,
             'My comment',
             new DateTimeImmutable(),
             'foo@bar.tld',
@@ -39,6 +44,6 @@ class CreateCommentHandlerTest extends TestCase
         $handler->handle($command);
 
         // assert
-        $this->assertDatabaseHas('comments', ['article_uuid' => 'article-foo', 'name' => 'My name']);
+        $this->assertDatabaseHas('comments', ['article_uuid' => $article->uuid, 'name' => 'My name']);
     }
 }

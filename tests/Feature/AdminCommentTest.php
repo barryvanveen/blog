@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Domain\Comments\CommentStatus;
+use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use App\Infrastructure\Eloquent\CommentEloquentModel;
 use App\Infrastructure\Eloquent\UserEloquentModel;
+use Database\Factories\ArticleFactory;
 use Database\Factories\CommentFactory;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -63,6 +65,9 @@ class AdminCommentTest extends TestCase
     {
         Auth::login($this->user);
 
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->create();
+
         $response = $this->get(route('admin.comments.create'));
         $response->assertOk();
 
@@ -71,7 +76,7 @@ class AdminCommentTest extends TestCase
         $response->assertSessionHasErrors();
 
         $response = $this->post(route('admin.comments.store'), [
-            'article_uuid' => '123123',
+            'article_uuid' => $article->uuid,
             'content' => 'My content',
             'created_at' => '2020-10-04 18:23:58',
             'email' => 'foo@bar.tld',
@@ -99,8 +104,12 @@ class AdminCommentTest extends TestCase
     {
         Auth::login($this->user);
 
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->create();
+
         /** @var CommentEloquentModel $comment */
         $comment = CommentFactory::new()->create([
+            'article_uuid' => $article->uuid,
             'name' => 'My Old Name',
         ]);
 
