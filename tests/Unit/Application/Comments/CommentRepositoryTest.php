@@ -21,6 +21,8 @@ use Tests\TestCase;
 
 /**
  * @covers \App\Application\Comments\CommentRepository
+ * @covers \App\Application\Comments\Events\CommentWasCreated
+ * @covers \App\Application\Comments\Events\CommentWasUpdated
  */
 class CommentRepositoryTest extends TestCase
 {

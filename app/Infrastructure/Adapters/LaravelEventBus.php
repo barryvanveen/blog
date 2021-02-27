@@ -38,8 +38,8 @@ final class LaravelEventBus implements EventBusInterface
         return ! in_array($interface, class_implements($subject), true);
     }
 
-    public function dispatch(EventInterface $command): void
+    public function dispatch(EventInterface $event): void
     {
-        $this->laravelDispatcher->dispatch($command);
+        $this->laravelDispatcher->dispatch($event);
     }
 }

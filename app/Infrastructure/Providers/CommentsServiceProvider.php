@@ -7,10 +7,14 @@ namespace App\Infrastructure\Providers;
 use App\Application\Comments\Commands\CreateComment;
 use App\Application\Comments\Commands\UpdateComment;
 use App\Application\Comments\CommentRepository;
+use App\Application\Comments\Events\CommentWasCreated;
+use App\Application\Comments\Events\CommentWasUpdated;
 use App\Application\Comments\Handlers\CreateCommentHandler;
 use App\Application\Comments\Handlers\UpdateCommentHandler;
+use App\Application\Comments\Listeners\CommentListener;
 use App\Application\Comments\ModelMapperInterface;
 use App\Application\Interfaces\CommandBusInterface;
+use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\QueryBuilderInterface;
 use App\Domain\Comments\CommentRepositoryInterface;
 use App\Domain\Comments\Requests\AdminCommentCreateRequestInterface;
@@ -29,10 +33,14 @@ use Illuminate\Support\ServiceProvider;
 class CommentsServiceProvider extends ServiceProvider
 {
     public function boot(
-        CommandBusInterface $commandBus
+        CommandBusInterface $commandBus,
+        EventBusInterface $eventBus
     ): void {
         $commandBus->subscribe(CreateComment::class, CreateCommentHandler::class);
         $commandBus->subscribe(UpdateComment::class, UpdateCommentHandler::class);
+
+        $eventBus->subscribe(CommentWasCreated::class, CommentListener::class);
+        $eventBus->subscribe(CommentWasUpdated::class, CommentListener::class);
     }
 
     public function register(): void

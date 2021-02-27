@@ -98,6 +98,9 @@ class ArticleListenerTest extends TestCase
         $this->cache->forget('indexUrl')
             ->shouldBeCalled();
 
+        $this->cache->forget('rssUrl')
+            ->shouldBeCalled();
+
         $this->cache->forget('homeUrl')
             ->shouldBeCalled();
 
