@@ -7,4 +7,6 @@
     @foreach($comments as $comment)
         @include('comments.comment', ['comment' => $comment])
     @endforeach
+
+    @include('comments.create')
 </section>

@@ -8,9 +8,23 @@ const status = (response) => {
   }
 }
 
+const get = (options) => {
+  options = options || {}
+  options.method = 'GET'
+  return options
+}
+
+const post = (options) => {
+  options = options || {}
+  options.method = 'POST'
+  return options
+}
+
 const headers = (options) => {
   options = options || {}
   options.headers = options.headers || {}
+  options.headers.Accept = 'application/json'
+  options.headers['Content-Type'] = 'application/json'
   options.headers['X-Requested-With'] = 'XMLHttpRequest'
   return options
 }
@@ -25,14 +39,27 @@ const credentials = (options) => {
   return options
 }
 
+const body = (options, data) => {
+  options = options || {}
+  options.body = JSON.stringify(data)
+  return options
+}
+
 const json = (response) => {
   return response.json()
 }
 
 const fetchJson = (url, options) => {
-  options = headers(credentials(options))
-  options.headers.Accept = 'application/json'
+  options = get(headers(credentials(options)))
   return fetch(url, options).then(status).then(json)
 }
 
-export default fetchJson
+const postJson = (url, data, options) => {
+  options = post(headers(credentials(body(options, data))))
+  return fetch(url, options).then(status).then(json)
+}
+
+export {
+  fetchJson,
+  postJson
+}

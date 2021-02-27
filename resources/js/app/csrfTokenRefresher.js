@@ -1,4 +1,4 @@
-import fetchJson from '../util/fetch'
+import { fetchJson } from '../util/fetch'
 
 const initCsrfTokenRefresher = async () => {
   const forms = document.querySelectorAll('form')

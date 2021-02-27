@@ -16,6 +16,7 @@ class CommentStoreRequest extends BaseRequest implements CommentStoreRequestInte
             'content' => 'required|string',
             'email' => 'required|email',
             'name' => 'required|string',
+            'youshouldnotfillthisfield' => 'size:0',
         ];
     }
 
