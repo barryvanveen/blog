@@ -127,6 +127,7 @@ class CommentsControllerTest extends TestCase
         $request->articleUuid()->willReturn('myArticleUuid');
         $request->content()->willReturn('myContent');
         $request->email()->willReturn('myEmail');
+        $request->honeypot()->willReturn('');
         $request->ip()->willReturn('myIp');
         $request->name()->willReturn('myName');
 

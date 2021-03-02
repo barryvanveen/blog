@@ -6,6 +6,7 @@ namespace App\Application\Http\Controllers;
 
 use App\Application\Comments\Commands\CreateComment;
 use App\Application\Core\ResponseBuilderInterface;
+use App\Application\Exceptions\HoneypotException;
 use App\Application\Http\StatusCode;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
@@ -38,6 +39,10 @@ final class CommentsController
     public function store(CommentStoreRequestInterface $request): ResponseInterface
     {
         try {
+            if ($request->honeypot() !== '') {
+                throw HoneypotException::honeypotNotEmpty();
+            }
+
             // will throw an exception if no article can be found
             $this->articleRepository->getPublishedByUuid($request->articleUuid());
 

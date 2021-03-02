@@ -12,11 +12,19 @@ class CommentStoreRequest extends BaseRequest implements CommentStoreRequestInte
     public function rules(): array
     {
         return [
-            'article_uuid' => 'required|string',
-            'content' => 'required|string',
+            'content' => 'required',
             'email' => 'required|email',
-            'name' => 'required|string',
-            'youshouldnotfillthisfield' => 'size:0',
+            'name' => 'required',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'content.required' => 'Please fill in a message for your comment',
+            'email.required' => 'Please fill in a valid email address',
+            'email.email' => 'This is not a valid email address',
+            'name.required' => 'Please fill in your name',
         ];
     }
 
@@ -33,6 +41,11 @@ class CommentStoreRequest extends BaseRequest implements CommentStoreRequestInte
     public function email(): string
     {
         return $this->getInputParameterAsString('email');
+    }
+
+    public function honeypot(): string
+    {
+        return (string) $this->input('youshouldnotfillthisfield');
     }
 
     public function ip(): string

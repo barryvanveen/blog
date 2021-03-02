@@ -12,6 +12,8 @@ interface CommentStoreRequestInterface
 
     public function email(): string;
 
+    public function honeypot(): string;
+
     public function ip(): string;
 
     public function name(): string;

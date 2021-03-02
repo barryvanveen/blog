@@ -53,9 +53,21 @@ const redirectToLatestComment = () => {
 const showFormErrors = (form, errors) => {
   Object.entries(errors).forEach(([key, value]) => {
     const input = form.querySelector('[name=' + key + ']')
+    if (!input) {
+      return
+    }
     const error = createErrorElement(value)
     insertAfter(error, input)
   })
+
+  if (!errors.error) {
+    return
+  }
+
+  const formError = createErrorElement(errors.error)
+  const submitButton = form.querySelector('input[type="submit"]')
+  insertAfter(formError, submitButton)
+  console.error(errors.error)
 }
 
 const createErrorElement = (value) => {
