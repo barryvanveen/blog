@@ -69,11 +69,8 @@ class ArticleItemTest extends TestCase
 
         $response->assertStatus(StatusCode::STATUS_BAD_REQUEST);
         $response->assertJson([
-            'article_uuid' => [
-                'The article uuid field is required.',
-            ],
             'email' => [
-                'The email must be a valid email address.',
+                'This is not a valid email address',
             ],
         ]);
     }
@@ -94,6 +91,25 @@ class ArticleItemTest extends TestCase
             'error' => 'Comment could not be created.',
         ]);
     }
+
+    /** @test */
+    public function itFailsToCreateCommentIfAnHoneypotIsNotEmpty(): void
+    {
+        $response = $this->postJson(route('comments.store'), [
+            'article_uuid' => 'foooo',
+            'content' => 'myContent',
+            'email' => 'john@example.com',
+            'ip' => '123.123.123.123',
+            'name' => 'My Name',
+            'youshouldnotfillthisfield' => 'Fooo',
+        ]);
+
+        $response->assertStatus(StatusCode::STATUS_BAD_REQUEST);
+        $response->assertJson([
+            'error' => 'Comment could not be created.',
+        ]);
+    }
+
 
     /** @test */
     public function itCreatesComment(): void
