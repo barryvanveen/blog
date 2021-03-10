@@ -30,12 +30,8 @@ const headers = (options) => {
 }
 
 const credentials = (options) => {
-  if (options == null) {
-    options = {}
-  }
-  if (options.credentials == null) {
-    options.credentials = 'same-origin'
-  }
+  options = options || {}
+  options.credentials = options.credentials || 'same-origin'
   return options
 }
 
