@@ -2,6 +2,11 @@ import { fetchJson } from '../util/fetch'
 
 const initCsrfTokenRefresher = async () => {
   const forms = document.querySelectorAll('form')
+
+  if (forms.length === 0) {
+    return
+  }
+
   const token = await getFreshToken()
     .catch(error => {
       console.error('There was an error fetching a csrf token', error)
