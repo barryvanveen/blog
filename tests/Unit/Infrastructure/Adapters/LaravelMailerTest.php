@@ -42,6 +42,37 @@ class LaravelMailerTest extends TestCase
             '234.234.234.234'
         );
 
-        $mailer->assertSent(MarkdownMailable::class);
+        $mailer->assertSent(function (MarkdownMailable $mail) {
+            return $mail->subject === 'Lockout triggered';
+        });
+    }
+
+    /** @test */
+    public function itSendsTheNewCommentEmail(): void
+    {
+        $mailer = new MailFake();
+
+        /** @var Factory|ObjectProphecy $factory */
+        $factory = $this->prophesize(Factory::class);
+        $factory->mailer()->willReturn($mailer);
+
+        /** @var UrlGeneratorInterface|ObjectProphecy $urlGenerator */
+        $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
+        $urlGenerator->route(Argument::type('string'), Argument::type('array'))->willReturn('myUrl');
+
+        $laravelMailer = new LaravelMailer(
+            $factory->reveal(),
+            $urlGenerator->reveal()
+        );
+
+        $comment = $this->getComment();
+
+        $laravelMailer->sendNewCommentEmail(
+            $comment
+        );
+
+        $mailer->assertSent(function (MarkdownMailable $mail) {
+            return $mail->subject === 'New comment';
+        });
     }
 }

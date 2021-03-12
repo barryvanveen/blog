@@ -8,6 +8,7 @@ use App\Application\Comments\Events\CommentWasCreated;
 use App\Application\Comments\Events\CommentWasUpdated;
 use App\Application\Core\BaseEventListener;
 use App\Application\Interfaces\CacheInterface;
+use App\Application\Interfaces\MailerInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Models\Article;
@@ -19,17 +20,20 @@ final class CommentListener extends BaseEventListener
     private UrlGeneratorInterface $urlGenerator;
     private CommentRepositoryInterface $commentRepository;
     private ArticleRepositoryInterface $articleRepository;
+    private MailerInterface $mailer;
 
     public function __construct(
         CacheInterface $cache,
         UrlGeneratorInterface $urlGenerator,
         CommentRepositoryInterface $commentRepository,
-        ArticleRepositoryInterface $articleRepository
+        ArticleRepositoryInterface $articleRepository,
+        MailerInterface $mailer
     ) {
         $this->cache = $cache;
         $this->urlGenerator = $urlGenerator;
         $this->commentRepository = $commentRepository;
         $this->articleRepository = $articleRepository;
+        $this->mailer = $mailer;
     }
 
     public function handleCommentWasCreated(CommentWasCreated $event): void
@@ -37,6 +41,8 @@ final class CommentListener extends BaseEventListener
         $this->clearArticleCache($event->uuid());
 
         $this->clearArticleIndexCache();
+
+        $this->sendNewCommentEmail($event->uuid());
     }
 
     public function handleCommentWasUpdated(CommentWasUpdated $event): void
@@ -68,5 +74,12 @@ final class CommentListener extends BaseEventListener
         $comment = $this->commentRepository->getByUuid($commentUuid);
 
         return $this->articleRepository->getByUuid($comment->articleUuid());
+    }
+
+    private function sendNewCommentEmail(string $commentUuid): void
+    {
+        $comment = $this->commentRepository->getByUuid($commentUuid);
+
+        $this->mailer->sendNewCommentEmail($comment);
     }
 }
