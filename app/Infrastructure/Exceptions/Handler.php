@@ -53,20 +53,11 @@ final class Handler implements ExceptionHandlerContract
         'password_confirmation',
     ];
 
-    /** @var LoggerInterface */
-    private $logger;
-
-    /** @var Factory */
-    private $viewFactory;
-
-    /** @var Redirector */
-    private $redirector;
-
-    /** @var UrlGenerator */
-    private $urlGenerator;
-
-    /** @var ResponseFactory */
-    private $responseFactory;
+    private LoggerInterface $logger;
+    private Factory $viewFactory;
+    private Redirector $redirector;
+    private UrlGenerator $urlGenerator;
+    private ResponseFactory $responseFactory;
 
     public function __construct(
         LoggerInterface $logger,
@@ -113,9 +104,11 @@ final class Handler implements ExceptionHandlerContract
             return $this->unauthenticated($request);
         } elseif ($exception instanceof ValidationException) {
             return $this->invalid($request, $exception);
+        } elseif ($exception instanceof PageExpiredHttpException) {
+            return $this->pageExpired($request, $exception);
         }
 
-        return $this->prepareResponse($exception);
+        return $this->prepareResponse($request, $exception);
     }
 
     private function mapFrameworkExceptionToHttpException(Throwable $exception): Throwable
@@ -164,7 +157,29 @@ final class Handler implements ExceptionHandlerContract
             ->withErrors($exception->errors(), $exception->errorBag);
     }
 
-    private function prepareResponse(Throwable $exception): SymfonyResponse
+    /**
+     * @param Request $request
+     * @param PageExpiredHttpException $exception
+     * @return JsonResponse|SymfonyResponse
+     */
+    private function pageExpired(Request $request, PageExpiredHttpException $exception)
+    {
+        if ($request->expectsJson()) {
+            return $this->responseFactory->json(
+                ['error' => 'Your token expired, please reload the page'],
+                StatusCode::STATUS_PAGE_EXPIRED
+            );
+        }
+
+        return $this->prepareResponse($request, $exception);
+    }
+
+    /**
+     * @param Request $request
+     * @param Throwable $exception
+     * @return JsonResponse|SymfonyResponse
+     */
+    private function prepareResponse(Request $request, Throwable $exception)
     {
         // debug mode -> show exception details
         if ($this->isHttpException($exception) === false && config('app.debug')) {
@@ -174,6 +189,14 @@ final class Handler implements ExceptionHandlerContract
         // convert non-http exceptions to 500 Internal Server Error
         if ($this->isHttpException($exception) === false) {
             $exception = InternalServerErrorHttpException::create($exception);
+        }
+
+        // return an error message for json requests
+        if ($request->expectsJson()) {
+            return $this->responseFactory->json(
+                ['error' => 'Sorry, something went wrong'],
+                StatusCode::STATUS_INTERNAL_SERVER_ERROR
+            );
         }
 
         // display error page
