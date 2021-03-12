@@ -9,9 +9,12 @@ use App\Application\Comments\Events\CommentWasUpdated;
 use App\Application\Comments\Listeners\CommentListener;
 use App\Application\Core\EventInterface;
 use App\Application\Interfaces\CacheInterface;
+use App\Application\Interfaces\MailerInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
+use App\Domain\Comments\Comment;
 use App\Domain\Comments\CommentRepositoryInterface;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
 
@@ -37,6 +40,9 @@ class CommentListenerTest extends TestCase
 
     /** @var ObjectProphecy|ArticleRepositoryInterface */
     private $articleRepository;
+
+    /** @var ObjectProphecy|MailerInterface */
+    private $mailer;
 
     /** @var CommentListener */
     private $listener;
@@ -67,11 +73,14 @@ class CommentListenerTest extends TestCase
         $this->articleRepository = $this->prophesize(ArticleRepositoryInterface::class);
         $this->articleRepository->getByUuid(self::ARTICLE_UUID)->willReturn($article);
 
+        $this->mailer = $this->prophesize(MailerInterface::class);
+
         $this->listener = new CommentListener(
             $this->cache->reveal(),
             $this->urlGenerator->reveal(),
             $this->commentRepository->reveal(),
-            $this->articleRepository->reveal()
+            $this->articleRepository->reveal(),
+            $this->mailer->reveal()
         );
     }
 
@@ -100,5 +109,16 @@ class CommentListenerTest extends TestCase
                 'event' => new CommentWasUpdated(self::COMMENT_UUID),
             ],
         ];
+    }
+
+    /** @test */
+    public function itSendsAnEmailWhenCommentWasCreated(): void
+    {
+        $event = new CommentWasCreated(self::COMMENT_UUID);
+
+        $this->mailer->sendNewCommentEmail(Argument::type(Comment::class))
+            ->shouldBeCalled();
+
+        $this->listener->handle($event);
     }
 }

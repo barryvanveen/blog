@@ -6,6 +6,7 @@ namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\MailerInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
+use App\Domain\Comments\Comment;
 use App\Infrastructure\Mail\MarkdownMailable;
 use Illuminate\Contracts\Mail\Factory;
 use Illuminate\Mail\Mailer;
@@ -35,6 +36,20 @@ class LaravelMailer implements MailerInterface
                 'email' => $email,
                 'ip' => $ip,
                 'admin_url' => $this->urlGenerator->route('admin.dashboard'),
+            ]
+        );
+    }
+
+    public function sendNewCommentEmail(Comment $comment): void
+    {
+        $this->send(
+            'emails.new_comment',
+            'New comment',
+            [
+                'name' => $comment->name(),
+                'email' => $comment->email(),
+                'content' => $comment->content(),
+                'admin_url' => $this->urlGenerator->route('admin.comments.edit', ['uuid' => $comment->uuid()]),
             ]
         );
     }
