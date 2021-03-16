@@ -10,6 +10,7 @@ use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Controllers\CommentsController;
 use App\Application\Http\StatusCode;
 use App\Application\Interfaces\CommandBusInterface;
+use App\Application\Interfaces\ConfigurationInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Comments\Requests\CommentStoreRequestInterface;
 use Prophecy\Argument;
@@ -23,6 +24,9 @@ use Tests\TestCase;
  */
 class CommentsControllerTest extends TestCase
 {
+    /** @var ObjectProphecy|ConfigurationInterface */
+    private $configuration;
+
     /** @var ObjectProphecy|ArticleRepositoryInterface */
     private $articleRepository;
 
@@ -42,17 +46,50 @@ class CommentsControllerTest extends TestCase
     {
         parent::setUp();
 
+        $this->configuration = $this->prophesize(ConfigurationInterface::class);
+        $this->configuration->boolean('comments.enabled')->willReturn(true);
         $this->articleRepository = $this->prophesize(ArticleRepositoryInterface::class);
         $this->commandBus = $this->prophesize(CommandBusInterface::class);
         $this->responseBuilder = $this->prophesize(ResponseBuilderInterface::class);
         $this->logger = $this->prophesize(LoggerInterface::class);
 
         $this->controller = new CommentsController(
+            $this->configuration->reveal(),
             $this->articleRepository->reveal(),
             $this->commandBus->reveal(),
             $this->responseBuilder->reveal(),
             $this->logger->reveal()
         );
+    }
+
+    /** @test */
+    public function storeReturnsServiceUnavailableIfCommentsAreDisabled(): void
+    {
+        // arrange
+        $this->configuration->boolean('comments.enabled')->willReturn(false);
+        $request = $this->buildRequest();
+        $response = $this->buildResponse();
+
+        $this->articleRepository
+            ->getPublishedByUuid(Argument::exact('myArticleUuid'))
+            ->shouldNotBeCalled();
+
+        $this->commandBus
+            ->dispatch(Argument::any())
+            ->shouldNotBeCalled();
+
+        $this->responseBuilder
+            ->json([
+                'error' => 'Posting new comments is currently disabled.',
+            ], StatusCode::STATUS_SERVICE_UNAVAILABLE)
+            ->shouldBeCalled()
+            ->willReturn($response);
+
+        // act
+        $result = $this->controller->store($request);
+
+        // assert
+        $this->assertEquals($response, $result);
     }
 
     /** @test */

@@ -6,6 +6,7 @@ namespace App\Infrastructure\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\Browser;
+use PHPUnit\Framework\Assert;
 
 class DuskServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,22 @@ class DuskServiceProvider extends ServiceProvider
         Browser::macro('waitForCsrfToken', function () {
             /** @var Browser $this */
             $this->waitUntil('return document.querySelector(\'input[name="_token"][data-filled]\') !== null;', 5);
+
+            return $this;
+        });
+
+        Browser::macro('waitForSubmitButtonEnabled', function () {
+            /** @var Browser $this */
+            $this->waitUntil('return document.querySelector(\'input[type="submit"]:not([disabled])\') !== null;', 5);
+
+            return $this;
+        });
+
+        Browser::macro('assertNumberOfElements', function (string $selector, int $expectedCount) {
+            /** @var Browser $this */
+            $elements = $this->elements($selector);
+
+            Assert::assertCount($expectedCount, $elements);
 
             return $this;
         });
