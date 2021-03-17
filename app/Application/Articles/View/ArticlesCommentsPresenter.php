@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Articles\View;
 
+use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
@@ -18,14 +19,18 @@ final class ArticlesCommentsPresenter implements PresenterInterface
 
     private CommentRepositoryInterface $commentRepository;
 
+    private ConfigurationInterface $configuration;
+
     public function __construct(
         ArticleShowRequestInterface $request,
         DateTimeFormatterInterface $dateTimeFormatter,
-        CommentRepositoryInterface $commentRepository
+        CommentRepositoryInterface $commentRepository,
+        ConfigurationInterface $configuration
     ) {
         $this->request = $request;
         $this->dateTimeFormatter = $dateTimeFormatter;
         $this->commentRepository = $commentRepository;
+        $this->configuration = $configuration;
     }
 
     public function present(): array
@@ -35,6 +40,7 @@ final class ArticlesCommentsPresenter implements PresenterInterface
         return [
             'total' => $comments->count(),
             'comments' => $this->comments($comments),
+            'comments_enabled' => $this->configuration->boolean('comments.enabled'),
         ];
     }
 

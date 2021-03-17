@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Application\Articles\View;
 
 use App\Application\Articles\View\ArticlesCommentsPresenter;
+use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use App\Domain\Comments\Comment;
@@ -45,10 +46,15 @@ class ArticlesCommentsPresenterTest extends TestCase
         $commentRepository = $this->prophesize(CommentRepositoryInterface::class);
         $commentRepository->onlineOrderedByArticleUuid(self::ARTICLE_UUID)->willReturn($comments);
 
+        /** @var ConfigurationInterface|ObjectProphecy $configuration */
+        $configuration = $this->prophesize(ConfigurationInterface::class);
+        $configuration->boolean('comments.enabled')->willReturn(true);
+
         $presenter = new ArticlesCommentsPresenter(
             $request->reveal(),
             $dateTimeFormatter->reveal(),
-            $commentRepository->reveal()
+            $commentRepository->reveal(),
+            $configuration->reveal()
         );
 
         $result = $presenter->present();
@@ -78,6 +84,7 @@ class ArticlesCommentsPresenterTest extends TestCase
                     'uuid' => 'uuid3',
                 ],
             ],
+            'comments_enabled' => true,
         ], $result);
     }
 

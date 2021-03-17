@@ -16,7 +16,7 @@ class ArticleItemTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function seePublishedArticle(): void
+    public function seePublishedArticleAndCommentForm(): void
     {
         /** @var ArticleEloquentModel $article */
         $article = ArticleFactory::new()->published()->publishedInPast()->create([
@@ -27,6 +27,24 @@ class ArticleItemTest extends TestCase
 
         $response->assertOk();
         $response->assertSee($article->title);
+        $response->assertSee('Email address (not visible to others)');
+    }
+
+    /** @test */
+    public function seePublishedArticleButNoCommentFormIfCommentsAreDisabled(): void
+    {
+        Config::set('comments.enabled', false);
+
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->published()->publishedInPast()->create([
+            'title' => 'FooArticle',
+        ]);
+
+        $response = $this->get(route('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug]));
+
+        $response->assertOk();
+        $response->assertSee($article->title);
+        $response->assertDontSee('Email address (not visible to others)');
     }
 
     /** @test */
