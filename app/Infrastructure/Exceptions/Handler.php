@@ -10,6 +10,7 @@ use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
 use App\Application\Http\Exceptions\ServiceUnavailableException;
+use App\Application\Http\Exceptions\TooManyRequestsHttpException;
 use App\Application\Http\StatusCode;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -20,6 +21,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Exceptions\WhoopsHandler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -104,8 +106,6 @@ final class Handler implements ExceptionHandlerContract
             return $this->unauthenticated($request);
         } elseif ($exception instanceof ValidationException) {
             return $this->invalid($request, $exception);
-        } elseif ($exception instanceof PageExpiredHttpException) {
-            return $this->pageExpired($request, $exception);
         }
 
         return $this->prepareResponse($request, $exception);
@@ -113,19 +113,14 @@ final class Handler implements ExceptionHandlerContract
 
     private function mapFrameworkExceptionToHttpException(Throwable $exception): Throwable
     {
-        if ($exception instanceof AuthorizationException) {
-            $exception = ForbiddenHttpException::create($exception);
-        } elseif ($exception instanceof TokenMismatchException) {
-            $exception = PageExpiredHttpException::create($exception);
-        } elseif ($exception instanceof SymfonyNotFoundHttpException) {
-            $exception = NotFoundHttpException::create($exception);
-        } elseif ($exception instanceof SuspiciousOperationException) {
-            $exception = NotFoundHttpException::create($exception);
-        } elseif ($exception instanceof MaintenanceModeException) {
-            $exception = ServiceUnavailableException::create($exception);
-        }
-
-        return $exception;
+        return match (get_class($exception)) {
+            AuthorizationException::class => ForbiddenHttpException::create($exception),
+            TokenMismatchException::class => PageExpiredHttpException::create($exception),
+            SuspiciousOperationException::class, SymfonyNotFoundHttpException::class => NotFoundHttpException::create($exception),
+            MaintenanceModeException::class => ServiceUnavailableException::create($exception),
+            ThrottleRequestsException::class => TooManyRequestsHttpException::create($exception),
+        default => $exception,
+        };
     }
 
     /**
@@ -159,23 +154,6 @@ final class Handler implements ExceptionHandlerContract
 
     /**
      * @param Request $request
-     * @param PageExpiredHttpException $exception
-     * @return JsonResponse|SymfonyResponse
-     */
-    private function pageExpired(Request $request, PageExpiredHttpException $exception)
-    {
-        if ($request->expectsJson()) {
-            return $this->responseFactory->json(
-                ['error' => 'Your token expired, please reload the page'],
-                StatusCode::STATUS_PAGE_EXPIRED
-            );
-        }
-
-        return $this->prepareResponse($request, $exception);
-    }
-
-    /**
-     * @param Request $request
      * @param Throwable $exception
      * @return JsonResponse|SymfonyResponse
      */
@@ -193,10 +171,7 @@ final class Handler implements ExceptionHandlerContract
 
         // return an error message for json requests
         if ($request->expectsJson()) {
-            return $this->responseFactory->json(
-                ['error' => 'Sorry, something went wrong'],
-                StatusCode::STATUS_INTERNAL_SERVER_ERROR
-            );
+            return $this->toJsonResponse($exception);
         }
 
         // display error page
@@ -243,6 +218,26 @@ final class Handler implements ExceptionHandlerContract
         $response = new Response($view, (int) $exception->getCode());
 
         return $response->withException($exception);
+    }
+
+    private function toJsonResponse(Throwable $exception): JsonResponse
+    {
+        if ($exception instanceof PageExpiredHttpException) {
+            return $this->responseFactory->json(
+                ['error' => 'Your token expired, please reload the page'],
+                StatusCode::STATUS_PAGE_EXPIRED
+            );
+        } elseif ($exception instanceof TooManyRequestsHttpException) {
+            return $this->responseFactory->json(
+                ['error' => 'Too many requests, please try again later'],
+                StatusCode::STATUS_TOO_MANY_REQUESTS
+            );
+        }
+
+        return $this->responseFactory->json(
+            ['error' => 'Sorry, something went wrong'],
+            StatusCode::STATUS_INTERNAL_SERVER_ERROR
+        );
     }
 
     public function renderForConsole($output, Throwable $e): void
