@@ -11,20 +11,15 @@ use App\Application\Interfaces\UrlGeneratorInterface;
 
 final class HeadHtmlPresenter implements PresenterInterface
 {
-    /** @var AssetUrlBuilderInterface */
-    private $assetUrlBuilder;
+    private AssetUrlBuilderInterface $assetUrlBuilder;
 
-    /** @var ConfigurationInterface */
-    private $configuration;
+    private ConfigurationInterface $configuration;
 
-    /** @var SessionInterface */
-    private $session;
+    private SessionInterface $session;
 
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
     public function __construct(
         AssetUrlBuilderInterface $assetUrlBuilder,
@@ -44,9 +39,9 @@ final class HeadHtmlPresenter implements PresenterInterface
     {
         return [
             'base_url' => $this->configuration->string('app.url'),
-            'csrf_token' => $this->session->token(),
             'css_paths' => $this->getCssPaths(),
             'about_url' => $this->urlGenerator->route('about', [], true),
+            'rss_url' => $this->urlGenerator->route('articles.rss', [], true),
         ];
     }
 
