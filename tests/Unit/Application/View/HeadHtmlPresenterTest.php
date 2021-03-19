@@ -64,11 +64,11 @@ class HeadHtmlPresenterTest extends TestCase
 
         $this->assertEquals([
             'base_url' => 'http://myapp.dev',
-            'csrf_token' => 'myMockToken',
             'css_paths' => [
                 'app.css',
             ],
             'about_url' => 'http://myapp.dev/about',
+            'rss_url' => 'http://myapp.dev/about',
         ], $this->presenter->present());
     }
 
@@ -79,12 +79,12 @@ class HeadHtmlPresenterTest extends TestCase
 
         $this->assertEquals([
             'base_url' => 'http://myapp.dev',
-            'csrf_token' => 'myMockToken',
             'css_paths' => [
                 'app.css',
                 'admin.css',
             ],
             'about_url' => 'http://myapp.dev/about',
+            'rss_url' => 'http://myapp.dev/about',
         ], $this->presenter->present());
     }
 }

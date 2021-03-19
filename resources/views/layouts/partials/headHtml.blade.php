@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="csrf-token" content="{{ $csrf_token }}">
     <base href="{{ $base_url }}">
 
     <meta name="site_name" content="Barry van Veen" />
@@ -18,4 +17,5 @@
     @foreach($css_paths as $path)
         <link href="{{ $path }}" rel="stylesheet" type="text/css">
     @endforeach
+    <link href="{{ $rss_url }}" rel="alternate" type="application/rss+xml" title="Barry van Veen's blog">
 </head>
