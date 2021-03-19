@@ -8,6 +8,10 @@
         @include('comments.comment', ['comment' => $comment])
     @endforeach
 
+    <div class="bg-green-300 rounded p-4 my-6 hidden" id="comment-created">
+        You comment has been posted, thanks for your contribution!
+    </div>
+
     @if($comments_enabled)
         @include('comments.create')
     @else

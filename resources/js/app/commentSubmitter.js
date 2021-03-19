@@ -1,4 +1,5 @@
 import { postJson } from '../util/fetch'
+import { setCommentCreatedCookie } from '../util/storage'
 
 const formErrorClass = 'js-error'
 
@@ -24,6 +25,7 @@ const submitComment = async (event) => {
 
   postJson(form.action, formData)
     .then(() => {
+      setCommentCreatedCookie()
       redirectToLatestComment()
     })
     .catch((error) => {
