@@ -30,5 +30,12 @@ class RouteServiceProvider extends ServiceProvider
                 Limit::perMinute(3)->by($request->ip() ?? 'ip-placeholder'),
             ];
         });
+
+        RateLimiter::for('login', function (Request $request) {
+            return [
+                Limit::perMinute(10),
+                Limit::perMinute(3)->by($request->ip() ?? 'ip-placeholder'),
+            ];
+        });
     }
 }

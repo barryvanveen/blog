@@ -22,7 +22,8 @@ Route::middleware(['cache'])->group(function () {
 Route::get('/csrf-token', [\App\Application\Http\Controllers\CsrfController::class, 'csrf'])->name('csrf');
 
 Route::get('/login', [\App\Application\Http\Controllers\LoginController::class, 'form'])->name('login');
-Route::post('/login', [\App\Application\Http\Controllers\LoginController::class, 'login'])->name('login.post');
+Route::post('/login', [\App\Application\Http\Controllers\LoginController::class, 'login'])->name('login.post')
+    ->middleware(['throttle:login']);
 Route::post('/logout', [\App\Application\Http\Controllers\LoginController::class, 'logout'])->name('logout.post');
 
 Route::middleware(['auth'])->group(function () {
