@@ -14,6 +14,10 @@ const submitComment = async (event) => {
   event.preventDefault()
 
   const form = event.target
+  const submitButton = form.querySelector('input[type="submit"]')
+
+  disableSubmitButton(submitButton)
+
   const formData = getFormData(form)
 
   clearFormErrors(form)
@@ -25,7 +29,18 @@ const submitComment = async (event) => {
     .catch((error) => {
       error.response.json()
         .then(data => showFormErrors(form, data))
+        .then(enableSubmitButton(submitButton))
     })
+}
+
+const disableSubmitButton = (submitButton) => {
+  submitButton.setAttribute('disabled', true)
+  submitButton.classList.add('cursor-not-allowed')
+}
+
+const enableSubmitButton = (submitButton) => {
+  submitButton.removeAttribute('disabled')
+  submitButton.classList.remove('cursor-not-allowed')
 }
 
 const clearFormErrors = (form) => {

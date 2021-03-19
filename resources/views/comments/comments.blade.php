@@ -8,5 +8,9 @@
         @include('comments.comment', ['comment' => $comment])
     @endforeach
 
-    @include('comments.create')
+    @if($comments_enabled)
+        @include('comments.create')
+    @else
+        @include('comments.disabled')
+    @endif
 </section>

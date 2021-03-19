@@ -9,6 +9,7 @@ use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Exceptions\HoneypotException;
 use App\Application\Http\StatusCode;
 use App\Application\Interfaces\CommandBusInterface;
+use App\Application\Interfaces\ConfigurationInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Comments\CommentStatus;
 use App\Domain\Comments\Requests\CommentStoreRequestInterface;
@@ -19,17 +20,20 @@ use Psr\Log\LoggerInterface;
 
 final class CommentsController
 {
+    private ConfigurationInterface $configuration;
     private ArticleRepositoryInterface $articleRepository;
     private CommandBusInterface $commandBus;
     private ResponseBuilderInterface $responseBuilder;
     private LoggerInterface $logger;
 
     public function __construct(
+        ConfigurationInterface $configuration,
         ArticleRepositoryInterface $articleRepository,
         CommandBusInterface $commandBus,
         ResponseBuilderInterface $responseBuilder,
         LoggerInterface $logger
     ) {
+        $this->configuration = $configuration;
         $this->articleRepository = $articleRepository;
         $this->commandBus = $commandBus;
         $this->responseBuilder = $responseBuilder;
@@ -38,6 +42,12 @@ final class CommentsController
 
     public function store(CommentStoreRequestInterface $request): ResponseInterface
     {
+        if ($this->configuration->boolean('comments.enabled') === false) {
+            return $this->responseBuilder->json([
+                'error' => 'Posting new comments is currently disabled.',
+            ], StatusCode::STATUS_SERVICE_UNAVAILABLE);
+        }
+
         try {
             if ($request->honeypot() !== '') {
                 throw HoneypotException::honeypotNotEmpty();

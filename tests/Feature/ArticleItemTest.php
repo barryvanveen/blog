@@ -8,6 +8,7 @@ use App\Application\Http\StatusCode;
 use App\Infrastructure\Eloquent\ArticleEloquentModel;
 use Database\Factories\ArticleFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class ArticleItemTest extends TestCase
@@ -15,7 +16,7 @@ class ArticleItemTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function seePublishedArticle(): void
+    public function seePublishedArticleAndCommentForm(): void
     {
         /** @var ArticleEloquentModel $article */
         $article = ArticleFactory::new()->published()->publishedInPast()->create([
@@ -26,6 +27,24 @@ class ArticleItemTest extends TestCase
 
         $response->assertOk();
         $response->assertSee($article->title);
+        $response->assertSee('Email address (not visible to others)');
+    }
+
+    /** @test */
+    public function seePublishedArticleButNoCommentFormIfCommentsAreDisabled(): void
+    {
+        Config::set('comments.enabled', false);
+
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->published()->publishedInPast()->create([
+            'title' => 'FooArticle',
+        ]);
+
+        $response = $this->get(route('articles.show', ['uuid' => $article->uuid, 'slug' => $article->slug]));
+
+        $response->assertOk();
+        $response->assertSee($article->title);
+        $response->assertDontSee('Email address (not visible to others)');
     }
 
     /** @test */
@@ -110,7 +129,6 @@ class ArticleItemTest extends TestCase
         ]);
     }
 
-
     /** @test */
     public function itCreatesComment(): void
     {
@@ -131,6 +149,31 @@ class ArticleItemTest extends TestCase
         $response->assertStatus(StatusCode::STATUS_OK);
         $response->assertJson([
             'success' => true,
+        ]);
+    }
+
+    /** @test */
+    public function itFailsToCreateCommentIfCommentsAreDisabled(): void
+    {
+        Config::set('comments.enabled', false);
+
+        /** @var ArticleEloquentModel $article */
+        $article = ArticleFactory::new()->publishedInPast()->create([
+            'uuid' => 'myuuid',
+            'slug' => 'my-slug-string',
+        ]);
+
+        $response = $this->postJson(route('comments.store'), [
+            'article_uuid' => $article->uuid,
+            'content' => 'myContent',
+            'email' => 'john@example.com',
+            'ip' => '123.123.123.123',
+            'name' => 'My Name',
+        ]);
+
+        $response->assertStatus(StatusCode::STATUS_SERVICE_UNAVAILABLE);
+        $response->assertJson([
+            'error' => 'Posting new comments is currently disabled.',
         ]);
     }
 }

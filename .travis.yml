@@ -16,6 +16,8 @@ env:
     - LOG_CHANNEL=single
     - BUGSNAG_API_KEY=
     - SECURITY_HEADER_CSP_ENABLED=true
+    - COMMENTS_ENABLED=true
+    - MAIL_MAILER=log
 
 matrix:
   fast_finish: true
