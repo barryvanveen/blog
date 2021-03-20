@@ -13,7 +13,7 @@ class ImportData extends Command
     /** @var string */
     protected $signature = 'import-data';
 
-    /** @var string */
+    /** @var string|null */
     protected $description = 'Import and convert articles and pages from remote mysql';
 
     private MarkdownConverterInterface $markdownConverter;
