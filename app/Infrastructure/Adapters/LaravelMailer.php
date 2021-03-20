@@ -9,7 +9,7 @@ use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Comments\Comment;
 use App\Infrastructure\Mail\MarkdownMailable;
 use Illuminate\Contracts\Mail\Factory;
-use Illuminate\Mail\Mailer;
+use Illuminate\Contracts\Mail\Mailer;
 
 class LaravelMailer implements MailerInterface
 {

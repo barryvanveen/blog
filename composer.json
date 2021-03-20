@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
-        "doctrine/dbal": "~2.3",
+        "doctrine/dbal": "~3.0",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.9.1",
         "laravel/dusk": "^6.0",
@@ -39,7 +39,7 @@
         "nunomaduro/collision": "^5.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.3",
-        "qossmic/deptrac-shim": "0.11.0.1",
+        "qossmic/deptrac-shim": "~0.12.0",
         "roave/security-advisories": "dev-master",
         "scrutinizer/ocular": "^1.8",
         "slevomat/coding-standard": "^6.0",
