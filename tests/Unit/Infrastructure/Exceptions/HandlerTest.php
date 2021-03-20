@@ -9,6 +9,7 @@ use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
 use App\Application\Http\Exceptions\ServiceUnavailableException;
+use App\Application\Http\Exceptions\TooManyRequestsHttpException;
 use App\Application\Http\StatusCode;
 use App\Infrastructure\Exceptions\Handler;
 use Exception;
@@ -18,6 +19,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,6 +44,7 @@ use Validator;
  * @covers \App\Application\Http\Exceptions\InternalServerErrorHttpException
  * @covers \App\Application\Http\Exceptions\NotFoundHttpException
  * @covers \App\Application\Http\Exceptions\PageExpiredHttpException
+ * @covers \App\Application\Http\Exceptions\TooManyRequestsHttpException
  */
 class HandlerTest extends TestCase
 {
@@ -201,6 +204,11 @@ class HandlerTest extends TestCase
                 'httpExceptionClass' => ServiceUnavailableException::class,
                 'httpStatusCode' => StatusCode::STATUS_SERVICE_UNAVAILABLE,
             ],
+            [
+                'frameworkException' => new ThrottleRequestsException(60),
+                'httpExceptionClass' => TooManyRequestsHttpException::class,
+                'httpStatusCode' => StatusCode::STATUS_TOO_MANY_REQUESTS,
+            ],
         ];
     }
 
@@ -218,6 +226,22 @@ class HandlerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertInstanceOf(InternalServerErrorHttpException::class, $response->exception);
         $this->assertEquals(StatusCode::STATUS_INTERNAL_SERVER_ERROR, $response->getStatusCode());
+    }
+
+    /** @test */
+    public function itReturnsAJsonErrorMessageOnUnknownExceptions(): void
+    {
+        // arrange
+        $exception = new Exception();
+
+        $this->request->expectsJson()->willReturn(true);
+        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_INTERNAL_SERVER_ERROR)->willReturn(new JsonResponse());
+
+        // act
+        $response = $this->handler->render($this->request->reveal(), $exception);
+
+        // assert
+        $this->assertInstanceOf(JsonResponse::class, $response);
     }
 
     /** @test */
@@ -244,7 +268,7 @@ class HandlerTest extends TestCase
         $exception = new AuthenticationException();
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::cetera())->willReturn(new JsonResponse());
+        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_UNAUTHORIZED)->willReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -325,7 +349,39 @@ class HandlerTest extends TestCase
             ->redirectTo(self::REDIRECT_TO_PATH);
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::cetera())->willReturn(new JsonResponse());
+        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_BAD_REQUEST)->willReturn(new JsonResponse());
+
+        // act
+        $response = $this->handler->render($this->request->reveal(), $exception);
+
+        // assert
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
+
+    /** @test */
+    public function itReturnsAJsonErrorMessageOnTokenMismatchExceptions(): void
+    {
+        // arrange
+        $exception = new TokenMismatchException();
+
+        $this->request->expectsJson()->willReturn(true);
+        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_PAGE_EXPIRED)->willReturn(new JsonResponse());
+
+        // act
+        $response = $this->handler->render($this->request->reveal(), $exception);
+
+        // assert
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
+
+    /** @test */
+    public function itReturnsAJsonErrorMessageOnThrottleRequestsExceptions(): void
+    {
+        // arrange
+        $exception = new ThrottleRequestsException();
+
+        $this->request->expectsJson()->willReturn(true);
+        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_TOO_MANY_REQUESTS)->willReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
