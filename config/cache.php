@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Str;
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -42,6 +40,12 @@ return [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data'),
         ],
+
+        'redis' => [
+            'driver' => 'redis',
+            'connection' => env('CACHE_CONNECTION', 'default'),
+            'lock_connection' => 'default',
+        ],
     ],
 
     /*
@@ -55,7 +59,17 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
+    'prefix' => env('CACHE_PREFIX', 'cache'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Http Responses
+    |--------------------------------------------------------------------------
+    |
+    | When this is enabled the CacheResponseMiddleware will cache all
+    | successful responses and serve those until the cache is cleared.
+    |
+    */
 
     'cache_responses' => env('RESPONSE_CACHE_ENABLED', false),
 ];
