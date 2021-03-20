@@ -10,7 +10,7 @@ use PHPUnit\Framework\Assert;
 
 class DuskServiceProvider extends ServiceProvider
 {
-    public function register(): void
+    public function boot(): void
     {
         if (config('app.env') === 'production') {
             return;
