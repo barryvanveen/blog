@@ -26,15 +26,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('comments', function (Request $request) {
             return [
-                Limit::perMinute(10),
-                Limit::perMinute(3)->by($request->ip() ?? 'ip-placeholder'),
+                Limit::perMinute(config('throttling.comments.total')),
+                Limit::perMinute(config('throttling.comments.individual'))->by($request->ip() ?? 'ip-placeholder'),
             ];
         });
 
         RateLimiter::for('login', function (Request $request) {
             return [
-                Limit::perMinute(10),
-                Limit::perMinute(3)->by($request->ip() ?? 'ip-placeholder'),
+                Limit::perMinute(config('throttling.login.total')),
+                Limit::perMinute(config('throttling.login.individual'))->by($request->ip() ?? 'ip-placeholder'),
             ];
         });
     }

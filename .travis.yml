@@ -18,6 +18,11 @@ env:
     - SECURITY_HEADER_CSP_ENABLED=true
     - COMMENTS_ENABLED=true
     - MAIL_MAILER=log
+    - CACHE_DRIVER=redis
+    - THROTTLING_COMMENTS_TOTAL=1000
+    - THROTTLING_COMMENTS_INDIVIDUAL=1000
+    - THROTTLING_LOGIN_TOTAL=1000
+    - THROTTLING_LOGIN_INDIVIDUAL=1000
 
 matrix:
   fast_finish: true
@@ -38,6 +43,7 @@ addons:
 
 services:
   - mysql
+  - redis-server
 
 before_install:
   - sudo apt-get install -y php-common
