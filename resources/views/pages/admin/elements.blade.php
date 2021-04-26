@@ -40,89 +40,76 @@
             <h2>Making the change</h2>
             <p>It was actually quite simple, there are just a few protected attributes you have to change on the Eloquent model(s), as can be seen in this code sample:</p>
 
-            <!-- Code php -->
-            <pre class="  language-php"><code class="  language-php"><span class="token string single-quoted-string">'remote_mysql'</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span>
-    <span class="token string single-quoted-string">'driver'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'mysql'</span><span class="token punctuation">,</span>
-    <span class="token string single-quoted-string">'host'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_HOST'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'127.0.0.1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string single-quoted-string">'port'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_PORT'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'13306'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string single-quoted-string">'database'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_DATABASE'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'forge'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string single-quoted-string">'username'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_USERNAME'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'forge'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token string single-quoted-string">'password'</span> <span class="token operator">=&gt;</span> <span class="token function">env</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'REMOTE_DB_PASSWORD'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">''</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token comment">// ... </span>
-<span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <h2>Javascript Code</h2>
+            <pre><code class="language-javascript hljs"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">$initHighlight</span>(<span class="hljs-params">block, cls</span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">if</span> (cls.search(<span class="hljs-regexp">/\bno\-highlight\b/</span>) != -<span class="hljs-number">1</span>)
+      <span class="hljs-keyword">return</span> process(block, <span class="hljs-literal">true</span>, <span class="hljs-number">0x0F</span>) +
+             <span class="hljs-string">` class="<span class="hljs-subst">${cls}</span>"`</span>;
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-comment">/* handle exception */</span>
+  }
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span> / <span class="hljs-number">2</span>; i &lt; classes.length; i++) {
+    <span class="hljs-keyword">if</span> (checkCondition(classes[i]) === <span class="hljs-literal">undefined</span>)
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'undefined'</span>);
+  }
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">web-component</span>&gt;</span>{block}<span class="hljs-tag">&lt;/<span class="hljs-name">web-component</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  )
+}
+
+<span class="hljs-keyword">export</span>  $initHighlight;
 </code></pre>
 
-    <pre class="  language-php"><code class="  language-php"><span class="token keyword">class</span> Article <span class="token keyword">extends</span> <span class="token class-name">Model</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">// column name of key</span>
-    <span class="token keyword">protected</span> <span class="token variable">$primaryKey</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'uuid'</span><span class="token punctuation">;</span>
+            <h2>PHP code</h2>
+            <pre><code class="language-php hljs"><span class="hljs-keyword">require_once</span> <span class="hljs-string">'Zend/Uri/Http.php'</span>;
 
-    <span class="token comment">// type of key</span>
-    <span class="token keyword">protected</span> <span class="token variable">$keyType</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'string'</span><span class="token punctuation">;</span>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Location</span>\<span class="hljs-title">Web</span>;
 
-    <span class="token comment">// whether the key is automatically incremented or not</span>
-    <span class="token keyword">public</span> <span class="token variable">$incrementing</span> <span class="token operator">=</span> <span class="token constant boolean">false</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Factory</span>
+</span>{
+    <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_factory</span>(<span class="hljs-params"></span>)</span>;
+}
 
-    <pre class="  language-bash"><code class="  language-bash"><span class="token operator">&lt;</span>IfModule mod_rewrite.c<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span>IfModule mod_negotiation.c<span class="token operator">&gt;</span>
-        Options -MultiViews
-    <span class="token operator">&lt;</span>/IfModule<span class="token operator">&gt;</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">URI</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseURI</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Factory</span>
+</span>{
+    <span class="hljs-keyword">abstract</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>)</span>;
 
-    <span class="token comment"># set Expire and Cache Control headers for css and js</span>
-    <span class="token operator">&lt;</span>IfModule mod_expires.c<span class="token operator">&gt;</span>
-        ExpiresActive On
-        ExpiresDefault <span class="token string">"access"</span>
-        ExpiresByType text/css <span class="token string">"access plus 1 year"</span>
-        ExpiresByType application/javascript <span class="token string">"access plus 1 year"</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-variable">$st1</span> = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">const</span> ME = <span class="hljs-string">"Yo"</span>;
+    <span class="hljs-keyword">var</span> <span class="hljs-variable">$list</span> = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-variable">$var</span>;
 
-        ExpiresByType font/truetype <span class="token string">"access plus 1 year"</span>
-        ExpiresByType font/opentype <span class="token string">"access plus 1 year"</span>
-        ExpiresByType application/x-font-woff <span class="token string">"access plus 1 year"</span>
-        ExpiresByType image/svg+xml <span class="token string">"access plus 1 year"</span>
-        ExpiresByType application/vnd.ms-fontobject <span class="token string">"access plus 1 year"</span>
-        ExpiresByType image/vnd.microsoft.icon <span class="token string">"access plus 1 month"</span>
-    <span class="token operator">&lt;</span>/IfModule<span class="token operator">&gt;</span>
+    <span class="hljs-comment">/**
+     * Returns a URI
+     *
+     * <span class="hljs-doctag">@return</span> URI
+     */</span>
+    <span class="hljs-built_in">static</span> <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_factory</span>(<span class="hljs-params"><span class="hljs-variable">$stats</span> = <span class="hljs-keyword">array</span>(<span class="hljs-params"></span>), <span class="hljs-variable">$uri</span> = <span class="hljs-string">'http'</span></span>)
+    </span>{
+        <span class="hljs-keyword">echo</span> <span class="hljs-keyword">__METHOD__</span>;
+        <span class="hljs-variable">$uri</span> = explode(<span class="hljs-string">':'</span>, <span class="hljs-variable">$uri</span>, <span class="hljs-number">0b10</span>);
+        <span class="hljs-variable">$schemeSpecific</span> = <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$uri</span>[<span class="hljs-number">1</span>]) ? <span class="hljs-variable">$uri</span>[<span class="hljs-number">1</span>] : <span class="hljs-string">''</span>;
+        <span class="hljs-variable">$desc</span> = <span class="hljs-string">'Multi
+line description'</span>;
 
-    RewriteEngine On
+        <span class="hljs-comment">// Security check</span>
+        <span class="hljs-keyword">if</span> (!ctype_alnum(<span class="hljs-variable">$scheme</span>)) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Zend_Uri_Exception(<span class="hljs-string">'Illegal scheme'</span>);
+        }
 
-    <span class="token comment"># Redirect to preferred domain</span>
-    RewriteCond %<span class="token punctuation">{</span>HTTP_HOST<span class="token punctuation">}</span> <span class="token operator">!</span><span class="token punctuation">(</span>^barryvanveen<span class="token punctuation">\</span>.test<span class="token operator">|</span>^barryvanveen<span class="token punctuation">\</span>.nl<span class="token punctuation">)</span>$ <span class="token punctuation">[</span>NC<span class="token punctuation">]</span>
-    RewriteRule ^<span class="token punctuation">(</span>.*<span class="token punctuation">)</span>$ <a class="token url-link" href="https://barryvanveen.nl/">https://barryvanveen.nl/</a><span class="token variable">$1</span> <span class="token punctuation">[</span>R<span class="token operator">=</span><span class="token number">301</span>,L<span class="token punctuation">]</span>
+        <span class="hljs-keyword">$this</span>-&gt;var = <span class="hljs-number">0</span> - <span class="hljs-built_in">self</span>::<span class="hljs-variable">$st</span>;
+        <span class="hljs-keyword">$this</span>-&gt;list = <span class="hljs-keyword">list</span>(<span class="hljs-keyword">Array</span>(<span class="hljs-string">"1"</span>=&gt; <span class="hljs-number">2</span>, <span class="hljs-number">2</span>=&gt;<span class="hljs-built_in">self</span>::ME, <span class="hljs-number">3</span> =&gt; \Location\Web\URI::class));
 
-    <span class="token comment"># Redirect old Dutch urls to English urls</span>
-    RewriteRule ^over-mij$ <a class="token url-link" href="https://barryvanveen.nl/about-me">https://barryvanveen.nl/about-me</a> <span class="token punctuation">[</span>L,R<span class="token operator">=</span><span class="token number">301</span><span class="token punctuation">]</span>
-    RewriteRule ^over-mij/boeken-die-ik-heb-gelezen$ <a class="token url-link" href="https://barryvanveen.nl/about-me/books-that-i-have-read">https://barryvanveen.nl/about-me/books-that-i-have-read</a> <span class="token punctuation">[</span>L,R<span class="token operator">=</span><span class="token number">301</span><span class="token punctuation">]</span>
-
-    <span class="token comment"># Redirect to HTTPS domain</span>
-    RewriteCond %<span class="token punctuation">{</span>HTTP_HOST<span class="token punctuation">}</span> ^barryvanveen.nl$ <span class="token punctuation">[</span>NC<span class="token punctuation">]</span>
-    RewriteCond %<span class="token punctuation">{</span>HTTPS<span class="token punctuation">}</span> <span class="token operator">!=</span>on <span class="token punctuation">[</span>NC<span class="token punctuation">]</span>
-    RewriteRule ^<span class="token punctuation">(</span>.*<span class="token punctuation">)</span>$ <a class="token url-link" href="https://barryvanveen.nl/">https://barryvanveen.nl/</a><span class="token variable">$1</span> <span class="token punctuation">[</span>R<span class="token operator">=</span><span class="token number">301</span>,L<span class="token punctuation">]</span>
-
-    <span class="token comment"># Redirect assets with filehash in name to actual filename</span>
-    RewriteRule ^dist/css/<span class="token punctuation">(</span>.*<span class="token punctuation">)</span><span class="token punctuation">\</span>.<span class="token punctuation">[</span><span class="token number">0</span>-9a-f<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">\</span>.css$ /dist/css/<span class="token variable">$1</span>.css <span class="token punctuation">[</span>L<span class="token punctuation">]</span>
-    RewriteRule ^dist/js/<span class="token punctuation">(</span>.*<span class="token punctuation">)</span><span class="token punctuation">\</span>.<span class="token punctuation">[</span><span class="token number">0</span>-9a-f<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">\</span>.js$ /dist/js/<span class="token variable">$1</span>.js <span class="token punctuation">[</span>L<span class="token punctuation">]</span>
-
-    <span class="token comment"># Remove trailing slashes if not a folder</span>
-    RewriteCond %<span class="token punctuation">{</span>REQUEST_FILENAME<span class="token punctuation">}</span> <span class="token operator">!</span>-d
-    RewriteCond %<span class="token punctuation">{</span>REQUEST_URI<span class="token punctuation">}</span> <span class="token punctuation">(</span>.+<span class="token punctuation">)</span>/$
-    RewriteRule ^ %1 <span class="token punctuation">[</span>L,R<span class="token operator">=</span><span class="token number">301</span><span class="token punctuation">]</span>
-
-    <span class="token comment"># Handle request using index.php</span>
-    RewriteCond %<span class="token punctuation">{</span>REQUEST_FILENAME<span class="token punctuation">}</span> <span class="token operator">!</span>-d
-    RewriteCond %<span class="token punctuation">{</span>REQUEST_FILENAME<span class="token punctuation">}</span> <span class="token operator">!</span>-f
-    RewriteRule ^ index.php <span class="token punctuation">[</span>L<span class="token punctuation">]</span>
-<span class="token operator">&lt;</span>/IfModule<span class="token operator">&gt;</span>
-</code></pre>
-
-    <pre class="  language-json"><code class="  language-json"><span class="token property">"repositories"</span><span class="token operator">:</span><span class="token punctuation">[</span>
-    <span class="token punctuation">{</span>
-        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"vcs"</span><span class="token punctuation">,</span>
-        <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"<a class="token email-link" href="mailto:git@github.com">git@github.com</a>:barryvanveen/secret.git"</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">]</span>
-</code></pre>
+        <span class="hljs-keyword">return</span> [
+            <span class="hljs-string">'uri'</span>   =&gt; <span class="hljs-variable">$uri</span>,
+            <span class="hljs-string">'value'</span> =&gt; <span class="hljs-literal">null</span>,
+        ];
+    }
+}</code></pre>
 
             <h2>Results</h2>
             <table class="table table-striped">

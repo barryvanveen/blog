@@ -16,6 +16,9 @@ module.exports = [
                 new PurgecssPlugin({
                     paths: glob.sync(`${settings.paths.templates}/**/*`, { nodir: true }),
                     defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+                    safelist: {
+                        deep: [/hljs-/],
+                    }
                 }),
             ],
             optimization: {
