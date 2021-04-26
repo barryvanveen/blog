@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\MarkdownConverterInterface;
-use cebe\markdown\GithubMarkdown;
+use App\Infrastructure\Markdown\FencedCodeMarkdownExtension;
 
 class CebeMarkdownConverter implements MarkdownConverterInterface
 {
-    private GithubMarkdown $githubMarkdown;
+    private FencedCodeMarkdownExtension $markdownConverter;
 
-    public function __construct(
-        GithubMarkdown $githubMarkdown
-    ) {
-        $this->githubMarkdown = $githubMarkdown;
+    public function __construct(FencedCodeMarkdownExtension $fencedCodeMarkdownExtension)
+    {
+        $this->markdownConverter = $fencedCodeMarkdownExtension;
     }
 
     public function convertToHtml(string $markdown): string
     {
-        $this->githubMarkdown->html5 = true;
-        $this->githubMarkdown->keepListStartNumber = true;
-        $this->githubMarkdown->enableNewlines = true; // only available for GithubMarkdown
-        return $this->githubMarkdown->parse($markdown);
+        $this->markdownConverter->html5 = true;
+        $this->markdownConverter->keepListStartNumber = true;
+        $this->markdownConverter->enableNewlines = true; // only available for GithubMarkdown
+        return $this->markdownConverter->parse($markdown);
     }
 }

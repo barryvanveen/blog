@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Tests\Unit\Infrastructure\Adapters;
 
 use App\Infrastructure\Adapters\CebeMarkdownConverter;
+use App\Infrastructure\Markdown\FencedCodeMarkdownExtension;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
-use cebe\markdown\GithubMarkdown;
 
 /**
  * @covers \App\Infrastructure\Adapters\CebeMarkdownConverter
  */
 class CebeMarkdownConverterTest extends TestCase
 {
-    /** @var ObjectProphecy|GithubMarkdown */
-    private $githubMarkdown;
+    /** @var ObjectProphecy|FencedCodeMarkdownExtension */
+    private $extendedGithubMarkdown;
 
     private CebeMarkdownConverter $cebeMarkdownConverter;
 
@@ -24,10 +24,10 @@ class CebeMarkdownConverterTest extends TestCase
     {
         parent::setUp();
 
-        $this->githubMarkdown = $this->prophesize(GithubMarkdown::class);
+        $this->extendedGithubMarkdown = $this->prophesize(FencedCodeMarkdownExtension::class);
 
         $this->cebeMarkdownConverter = new CebeMarkdownConverter(
-            $this->githubMarkdown->reveal()
+            $this->extendedGithubMarkdown->reveal()
         );
     }
 
@@ -36,7 +36,7 @@ class CebeMarkdownConverterTest extends TestCase
     {
         // arrange
         $htmlString = 'htmlString';
-        $this->githubMarkdown->parse(Argument::any())->willReturn($htmlString);
+        $this->extendedGithubMarkdown->parse(Argument::any())->willReturn($htmlString);
 
         // act
         $html = $this->cebeMarkdownConverter->convertToHtml('markdown');
