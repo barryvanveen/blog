@@ -1,6 +1,5 @@
 import debounce from '../util/debounce'
 import getVariable from '../util/variables'
-import Prism from 'prismjs'
 
 const initPreviews = () => {
   const editors = document.querySelectorAll('[data-editor]')
@@ -28,6 +27,7 @@ const getHtmlFromMarkdown = (markdown) => {
 
   const url = getVariable('markdown_to_html_url')
 
+  // todo: refactor to use more fetch utilities
   return fetch(url, {
     method: 'POST',
     mode: 'same-origin',
@@ -35,7 +35,7 @@ const getHtmlFromMarkdown = (markdown) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+      'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
     },
     body: JSON.stringify(data)
   })
@@ -49,7 +49,6 @@ const setHtmlOnPreviewElement = (html, el) => {
   }
 
   previewEl.innerHTML = html
-  Prism.highlightAll()
 }
 
 const updatePreview = (event) => {

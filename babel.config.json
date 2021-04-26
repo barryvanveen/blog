@@ -13,12 +13,6 @@
         ]
     ],
     "plugins": [
-        "@babel/plugin-transform-runtime",
-        ["prismjs", {
-            "languages": ["bash", "git", "json", "markdown", "php", "php-extras", "scss", "sql", "yaml"],
-            "plugins": ["autolinker", "line-numbers"],
-            "theme": "okaidia",
-            "css": false
-        }]
+        "@babel/plugin-transform-runtime"
     ]
 }

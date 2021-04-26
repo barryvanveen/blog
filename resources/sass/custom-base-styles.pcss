@@ -1,3 +1,4 @@
+/*! purgecss start ignore */
 html {
     @apply text-gray-900 antialiased leading-tight text-base;
 }
@@ -53,7 +54,12 @@ main {
     }
 
     pre {
-        @apply overflow-auto bg-gray-200 p-4 text-sm whitespace-pre overflow-x-scroll;
+        @apply my-3;
+    }
+
+    pre code {
+        @apply overflow-auto text-sm whitespace-pre overflow-x-scroll;
+        @apply p-4 !important;
     }
 
     table {
@@ -127,3 +133,4 @@ main {
     right: 50%;
     width: 60vw;
 }
+/*! purgecss end ignore */
