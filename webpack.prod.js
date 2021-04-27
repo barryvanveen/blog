@@ -25,9 +25,7 @@ module.exports = [
                 minimize: true,
                 minimizer: [
                     `...`,
-                    new CssMinimizerPlugin({
-                        sourceMap: true,
-                    }),
+                    new CssMinimizerPlugin(),
                 ],
             },
         }
