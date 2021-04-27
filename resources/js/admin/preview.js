@@ -1,5 +1,6 @@
 import debounce from '../util/debounce'
 import getVariable from '../util/variables'
+import { postJson } from '../util/fetch'
 
 const initPreviews = () => {
   const editors = document.querySelectorAll('[data-editor]')
@@ -22,23 +23,13 @@ const registerInputEventListener = (el) => {
 
 const getHtmlFromMarkdown = (markdown) => {
   const data = {
-    markdown: markdown
+    markdown: markdown,
+    _token: document.querySelector('input[name="_token"]').value
   }
 
   const url = getVariable('markdown_to_html_url')
 
-  // todo: refactor to use more fetch utilities
-  return fetch(url, {
-    method: 'POST',
-    mode: 'same-origin',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-    },
-    body: JSON.stringify(data)
-  })
+  return postJson(url, data)
 }
 
 const setHtmlOnPreviewElement = (html, el) => {
@@ -54,7 +45,6 @@ const setHtmlOnPreviewElement = (html, el) => {
 const updatePreview = (event) => {
   const markdown = event.target.value
   getHtmlFromMarkdown(markdown)
-    .then(response => response.json())
     .then(data => setHtmlOnPreviewElement(data.html, event.target))
     .catch(err => console.warn('Something went wrong.', err))
 }
