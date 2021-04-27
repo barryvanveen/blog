@@ -4,12 +4,16 @@ module.exports = {
     es2021: true
   },
   extends: [
-    'standard'
+     'standard',
+    'plugin:promise/recommended'
   ],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module'
   },
+  plugins: [
+    'promise'
+  ],
   rules: {
   }
 }

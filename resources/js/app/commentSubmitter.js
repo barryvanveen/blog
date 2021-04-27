@@ -25,13 +25,14 @@ const submitComment = async (event) => {
 
   postJson(form.action, formData)
     .then(() => {
-      setCommentCreatedCookie()
-      redirectToLatestComment()
+      return setCommentCreatedCookie()
     })
-    .catch((error) => {
-      error.response.json()
-        .then(data => showFormErrors(form, data))
-        .then(enableSubmitButton(submitButton))
+    .then(() => {
+      return redirectToLatestComment()
+    })
+    .catch(errorJson => {
+      showFormErrors(form, errorJson, submitButton)
+      enableSubmitButton(submitButton)
     })
 }
 
@@ -64,27 +65,39 @@ const getFormData = (form) => {
 }
 
 const redirectToLatestComment = () => {
-  window.location.reload()
+  return window.location.reload()
 }
 
-const showFormErrors = (form, errors) => {
-  Object.entries(errors).forEach(([key, value]) => {
-    const input = form.querySelector('[name=' + key + ']')
-    if (!input) {
-      return
-    }
-    const error = createErrorElement(value)
-    insertAfter(error, input)
-  })
+const showFormErrors = (form, errorJson, submitButton) => {
+  errorJson.response.json()
+    .then(errors => {
+      // errors for individual form fields
+      Object.entries(errors).forEach(([key, value]) => {
+        if (key === 'error') {
+          return // skip generic errors
+        }
+        const input = form.querySelector('[name=' + key + ']')
+        if (!input) {
+          console.error('Cannot find form field ' + key + ', so cannot show validation error')
+          return
+        }
+        const error = createErrorElement(value)
+        insertAfter(error, input)
+      })
 
-  if (!errors.error) {
-    return
-  }
+      if (!errors.error) {
+        return true
+      }
 
-  const formError = createErrorElement(errors.error)
-  const submitButton = form.querySelector('input[type="submit"]')
-  insertAfter(formError, submitButton)
-  console.error(errors.error)
+      // generic errors, like "Commenting is currently disabled"
+      const formError = createErrorElement(errors.error)
+      insertAfter(formError, submitButton)
+      console.error(errors.error)
+      return true
+    })
+    .catch(jsonDecodeError => {
+      console.error(jsonDecodeError)
+    })
 }
 
 const createErrorElement = (value) => {
