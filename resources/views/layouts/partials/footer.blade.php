@@ -4,7 +4,7 @@
 
         @foreach($menu_items as $menu_item)
             <a class="pr-8 align-items-center"
-               href="{{ $menu_item->url() }}" @if($menu_item->openInNewWindow())target="_blank"@endif>
+               href="{{ $menu_item->url() }}" @if($menu_item->openInNewWindow())target="_blank" rel="noopener"@endif>
                 {{ $menu_item->name() }}
             </a>
         @endforeach
