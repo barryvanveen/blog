@@ -119,7 +119,7 @@ final class Handler implements ExceptionHandlerContract
             SuspiciousOperationException::class, SymfonyNotFoundHttpException::class => NotFoundHttpException::create($exception),
             MaintenanceModeException::class => ServiceUnavailableException::create($exception),
             ThrottleRequestsException::class => TooManyRequestsHttpException::create($exception),
-        default => $exception,
+            default => $exception,
         };
     }
 
