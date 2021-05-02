@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Infrastructure\Markdown;
 
 use Highlight\Highlighter;
-use cebe\markdown\GithubMarkdown;
 
-class FencedCodeMarkdownExtension extends GithubMarkdown
+trait FencedCodeWithSyntaxHighlighting
 {
-    private Highlighter $highlighter;
+    private $languages = [];
 
-    public function __construct()
+    /**
+     * @param array $languages
+     */
+    protected function setAutoDetectLanguages($languages)
     {
-        $this->highlighter = new Highlighter();
-        $this->highlighter->setAutodetectLanguages([
-            'php',
-            'js',
-            'css',
-            'bash',
-        ]);
+        $this->languages = $languages;
     }
 
     /**
@@ -78,12 +74,19 @@ class FencedCodeMarkdownExtension extends GithubMarkdown
     {
         $contents = htmlspecialchars_decode(implode("\n", $block['content']) . "\n");
 
+        $highlighter = new Highlighter();
+        if (!empty($this->languages)) {
+            $highlighter->setAutodetectLanguages($this->languages);
+        }
+
         $result = isset($block['language'])
-            ? $this->highlighter->highlight($block['language'], $contents)
-            : $this->highlighter->highlightAuto($contents);
+            ? $highlighter->highlight($block['language'], $contents)
+            : $highlighter->highlightAuto($contents);
 
         $code = $result->value;
-        $language = $block['language'] ?? $result->language;
+        $language = isset($block['language'])
+            ? $block['language']
+            : $result->language;
 
         return vsprintf('<pre><code class="%s hljs %s" data-lang="%s">%s</code></pre>', [
             'language-'.$language,

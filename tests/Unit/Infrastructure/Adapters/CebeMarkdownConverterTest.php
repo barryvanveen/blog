@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Infrastructure\Adapters;
 
 use App\Infrastructure\Adapters\CebeMarkdownConverter;
-use App\Infrastructure\Markdown\FencedCodeMarkdownExtension;
+use App\Infrastructure\Markdown\MyMarkdown;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -15,7 +15,7 @@ use Tests\TestCase;
  */
 class CebeMarkdownConverterTest extends TestCase
 {
-    /** @var ObjectProphecy|FencedCodeMarkdownExtension */
+    /** @var ObjectProphecy|MyMarkdown */
     private $extendedGithubMarkdown;
 
     private CebeMarkdownConverter $cebeMarkdownConverter;
@@ -24,7 +24,7 @@ class CebeMarkdownConverterTest extends TestCase
     {
         parent::setUp();
 
-        $this->extendedGithubMarkdown = $this->prophesize(FencedCodeMarkdownExtension::class);
+        $this->extendedGithubMarkdown = $this->prophesize(MyMarkdown::class);
 
         $this->cebeMarkdownConverter = new CebeMarkdownConverter(
             $this->extendedGithubMarkdown->reveal()

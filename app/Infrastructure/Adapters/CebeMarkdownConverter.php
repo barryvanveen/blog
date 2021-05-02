@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\MarkdownConverterInterface;
-use App\Infrastructure\Markdown\FencedCodeMarkdownExtension;
+use App\Infrastructure\Markdown\MyMarkdown;
 
 class CebeMarkdownConverter implements MarkdownConverterInterface
 {
-    private FencedCodeMarkdownExtension $markdownConverter;
+    private MyMarkdown $markdownConverter;
 
-    public function __construct(FencedCodeMarkdownExtension $fencedCodeMarkdownExtension)
+    public function __construct(MyMarkdown $fencedCodeMarkdownExtension)
     {
         $this->markdownConverter = $fencedCodeMarkdownExtension;
     }
