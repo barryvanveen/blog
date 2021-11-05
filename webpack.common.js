@@ -16,6 +16,7 @@ const baseConfig = {
         path: settings.paths.output,
         filename: settings.output.filename + '.js',
         publicPath: settings.paths.public,
+        assetModuleFilename: settings.paths.publicImagesPostfix + '[hash][ext][query]',
     },
     target: settings.target,
     module: {
@@ -58,14 +59,7 @@ const baseConfig = {
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            outputPath: settings.paths.publicImagesPostfix,
-                        },
-                    },
-                ],
+                type: 'asset/resource',
             },
         ],
     },
