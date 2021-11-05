@@ -75,19 +75,19 @@ final class Handler implements ExceptionHandlerContract
         $this->responseFactory = $responseFactory;
     }
 
-    public function report(Throwable $exception)
+    public function report(Throwable $e)
     {
-        if ($this->shouldReport($exception) === false) {
+        if ($this->shouldReport($e) === false) {
             return;
         }
 
-        $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+        $this->logger->error($e->getMessage(), ['exception' => $e]);
     }
 
-    public function shouldReport(Throwable $exception)
+    public function shouldReport(Throwable $e)
     {
-        $matches = array_filter($this->dontReport, function (string $type) use ($exception) {
-            return $exception instanceof $type;
+        $matches = array_filter($this->dontReport, function (string $type) use ($e) {
+            return $e instanceof $type;
         });
 
         return count($matches) === 0;

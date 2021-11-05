@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Console\Commands;
 
-use App\Application\Interfaces\MarkdownConverterInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -13,18 +12,8 @@ class ImportData extends Command
     /** @var string */
     protected $signature = 'import-data';
 
-    /** @var string|null */
+    /** @var string */
     protected $description = 'Import and convert articles and pages from remote mysql';
-
-    private MarkdownConverterInterface $markdownConverter;
-
-    public function __construct(
-        MarkdownConverterInterface $markdownConverter
-    ) {
-        parent::__construct();
-
-        $this->markdownConverter = $markdownConverter;
-    }
 
     public function handle(): void
     {
