@@ -1,6 +1,6 @@
 @presenter(App\Application\View\Admin\DashboardPresenter)
 
-@extends('layouts.base')
+@extends('layouts.admin')
 
 @section('headHtmlMetaTags')
     @include('layouts.partials.headHtmlMetaTags', ['metaData' => $metaData])

@@ -1,27 +1,31 @@
 /*! purgecss start ignore */
 html {
-    @apply text-gray-900 antialiased leading-tight text-base;
+    @apply text-gray-900 leading-relaxed text-base;
 }
 
 body {
-    @apply font-sans leading-normal tracking-normal bg-gray-100;
+    @apply font-sans leading-relaxed tracking-normal;
+}
+
+.container-max-md {
+    @apply container max-w-screen-md;
 }
 
 main {
-    @apply mt-3 mb-10;
+    @apply w-full;
 
     * + p {
-        @apply my-3;
+        @apply my-4;
     }
 
     h1,
     h2,
     h3 {
-        @apply mt-8 mb-4 leading-tight font-semibold;
+        @apply mt-8 mb-4 leading-tight font-bold;
     }
 
     h1 {
-        @apply text-4xl;
+        @apply text-4xl mt-0;
     }
 
     h2 {
@@ -33,11 +37,27 @@ main {
     }
 
     a {
-        @apply text-blue-500 underline;
+        @apply text-blue-400 relative;
     }
 
     a:hover {
-        @apply text-black underline;
+        @apply underline;
+    }
+
+    /* anchor links */
+    a:not([href*="//"])[href*="#"]:before {
+        content: "#️";
+        @apply mx-1;
+    }
+
+    /* external links */
+    a[href*="//"]:not([href*="blog.test"],[href*="barryvanveen.nl"]):after {
+        content: "↗";
+        @apply mx-1;
+    }
+
+    .article-details {
+        @apply text-gray-700 text-sm;
     }
 
     ol {
@@ -54,25 +74,29 @@ main {
     }
 
     p code {
-        @apply bg-gray-300 p-1 rounded font-mono text-sm;
+        @apply bg-gray-200 p-1 rounded-md font-mono text-sm;
     }
 
     pre {
-        @apply my-3;
+        @apply my-4;
     }
 
     pre code {
-        @apply overflow-auto text-sm whitespace-pre overflow-x-scroll;
+        @apply overflow-auto text-sm whitespace-pre overflow-x-scroll rounded-md filter drop-shadow-md;
         @apply p-4 !important;
     }
 
     table {
-        @apply table-auto min-w-full;
+        @apply table-auto min-w-full w-full;
     }
 
     table td,
     table th {
         @apply px-2 py-2 break-words;
+    }
+
+    table thead {
+        @apply font-bold;
     }
 
     table tbody tr {
@@ -102,39 +126,28 @@ main {
             }
         }
 
+        a:hover {
+            @apply shadow-lg;
+        }
+
         figcaption {
-            @apply text-sm;
+            @apply italic mt-2;
         }
     }
 }
-
-.bg-image-1 {
-    background-image: url('../images/blog_313.gif');
-}
-
-.bg-image-2 {
-    background-image: url('../images/amoeba_yellow.gif');
-}
-
-.bg-image-3 {
-    background-image: url('../images/lavalamp_yellow.gif');
-}
-
-.bg-image-4 {
-    background-image: url('../images/cubism_yellow.gif');
-}
-
-.bg-image-5 {
-    background-image: url('../images/squarish_spirals_yellow.gif');
-}
-
-.editor-container-60 {
-    left: 50%;
-    margin-left: -30vw;
-    margin-right: -30vw;
-    max-width: 60vw;
-    position: relative;
-    right: 50%;
-    width: 60vw;
-}
 /*! purgecss end ignore */
+
+/*a:after {
+    @apply transition;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    border-bottom: 2px solid black;
+    transition: 0.4s;
+}
+
+a:hover:after {
+    width: 100%;
+}*/

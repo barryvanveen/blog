@@ -7,7 +7,7 @@
     "scripts": {
         "dev": "webpack --config webpack.dev.js",
         "watch": "webpack --watch --config webpack.dev.js",
-        "prod": "webpack --config webpack.prod.js --progress"
+        "prod": "webpack --node-env=production --config webpack.prod.js --progress"
     },
     "devDependencies": {
         "@babel/core": "^7.9.6",
@@ -30,7 +30,6 @@
         "postcss-import": "^14.0.0",
         "postcss-loader": "^6.2.0",
         "postcss-nested": "^5.0.3",
-        "purgecss-webpack-plugin": "^4.0.0",
         "tailwindcss": "^2.2.19",
         "webpack": "^5.11.0",
         "webpack-cli": "^4.2.0",

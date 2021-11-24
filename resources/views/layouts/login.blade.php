@@ -3,7 +3,7 @@
     @include('layouts.partials.headHtml')
 
     <body>
-        <main class="container mx-auto max-w-2xl px-4">
+        <main class="container-max-md mx-auto max-w-2xl px-4">
             @yield('body')
         </main>
 

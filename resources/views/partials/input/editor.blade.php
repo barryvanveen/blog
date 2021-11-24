@@ -1,9 +1,9 @@
-<div class="mb-8 editor-container-60">
+<div class="mb-8">
     <label class="block font-bold mb-2" for="editor-{{ $name }}">{{ $title }}</label>
 
     <div class="grid grid-cols-2 gap-4">
         <div>
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            <textarea class="appearance-none border rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:border-blue-400"
                       id="editor-{{ $name }}"
                       name="{{ $name }}"
                       type="textarea"

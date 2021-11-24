@@ -1,5 +1,5 @@
 @presenter(App\Application\Articles\View\AdminArticlesCreatePresenter)
-@extends('layouts.base')
+@extends('layouts.admin')
 
 @section('title', $title)
 

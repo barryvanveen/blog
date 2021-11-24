@@ -1,11 +1,11 @@
-<div class="my-6" id="comment-{{ $comment['uuid'] }}" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<div class="pt-6 mb-6 border-t-4 border-gray-300" id="comment-{{ $comment['uuid'] }}" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
     <div>
         <span class="font-bold" itemprop="author">{{ $comment['name'] }}</span>
-        <span class="text-gray-700 text-sm">
+        <span class="article-details">
             <time itemprop="dateCreated" datetime="{{ $comment['date_meta'] }}">{{ $comment['date_human_readable'] }}</time>
         </span>
     </div>
     <div>
-        <div class="col-xs-12" itemprop="text">{!! nl2br(e($comment['content'])) !!}</div>
+        <div itemprop="text">{!! nl2br(e($comment['content'])) !!}</div>
     </div>
 </div>

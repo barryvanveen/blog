@@ -1,10 +1,10 @@
 @presenter(App\Application\Articles\View\ArticlesCreateCommentPresenter)
 
-<noscript class="block bg-red-300 rounded p-4 my-6">
+<noscript class="block bg-red-300 rounded p-4 my-4">
     Sorry, posting comments will only work if you enable Javascript.
 </noscript>
 
-<form action="{{ $create_comment_url }}" method="post" name="comment" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<form action="{{ $create_comment_url }}" method="post" name="comment" class="bg-gray-300 drop-shadow-md rounded-md p-4 mb-4">
     @include('partials.input.csrf')
 
     @include('partials.input.honeypot', [

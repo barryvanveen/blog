@@ -103,7 +103,7 @@ final class PagesHomePresenter implements PresenterInterface
         $articlesContent = '';
         $counter = 0;
         foreach ($articles as $article) {
-            $articleUrl = $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()]);
+            $articleUrl = $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()], false);
             $articlesContent .= "- [".$article->title()."](".$articleUrl.")\n";
             $counter++;
             if ($counter >= 3) {
