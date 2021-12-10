@@ -9,13 +9,8 @@
 
     <div class="flex flex-grow pt-8">
         <main role="main">
-            <div class="container-max-md pb-8">
+            <div class="container pb-8">
                 @yield('body')
-            </div>
-            <div class="bg-gray-200">
-                <div class="container-max-md">
-                    @yield('comments')
-                </div>
             </div>
         </main>
     </div>

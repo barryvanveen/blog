@@ -4,7 +4,7 @@
     <div class="mt-2 inline-block relative w-full">
         <select name="{{ $name }}"
             id="select-{{ $name }}"
-            class="block shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="block appearance-none border rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:border-blue-400"
         >
             @foreach($options as $option)
                 <option value="{{ $option['value'] }}"

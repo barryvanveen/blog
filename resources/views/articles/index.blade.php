@@ -8,33 +8,25 @@
 
 @section('body')
     <section itemscope itemtype="https://schema.org/Blog">
-        <h1 itemprop="about">Articles</h1>
+        <h1 itemprop="about" class="mb-8">Articles</h1>
 
         @foreach($articles as $article)
-            <article class="w-full max-w-full sm:flex mb-4"
-                     itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-
-                <a class="block h-24 sm:h-auto sm:w-48 flex-none bg-repeat rounded-t sm:rounded-t-none sm:rounded-l text-center overflow-hidden bg-image-{{ ($loop->iteration % 5) + 1 }}"
-                   href="{{ $article['url'] }}" itemprop="url">
-                </a>
-
-                <div class="w-full border-r border-b border-l border-gray-400 sm:border-l-0 sm:border-t sm:border-gray-400 bg-white rounded-b sm:rounded-b-none sm:rounded-r p-6 flex flex-col justify-between leading-normal">
-                    <header>
-                        <h2 itemprop="headline" class="text-base leading-normal my-0">
-                            <a class="text-gray-900 font-bold text-xl mb-2 no-underline"
-                               href="{{ $article['url'] }}" itemprop="url">
-                                {{ $article['title'] }}
-                            </a>
-                        </h2>
-                        <p class="text-gray-700 text-base mb-0" itemprop="description">
-                            {!! $article['description'] !!}
-                        </p>
-                        <p class="text-gray-700 text-sm">
-                            <span class="mr-6">{{ $article['publication_date'] }}</span>
-                            {{ $article['comments'] }} comments
-                        </p>
-                    </header>
-                </div>
+            <article class="pt-6 mb-8 border-t-4 border-gray-200" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+                <header>
+                    <h2 itemprop="headline" class="mt-0 mb-2 text-2xl transition-colors hover:text-blue-400">
+                        <a class="no-underline text-gray-900 hover:text-blue-400 hover:underline transition-colors"
+                           href="{{ $article['url'] }}" itemprop="url">
+                            {{ $article['title'] }}
+                        </a>
+                    </h2>
+                </header>
+                <section class="text-base mb-2 hidden sm:block" itemprop="description">
+                    {!! $article['description'] !!}
+                </section>
+                <section class="article-details">
+                    <time class="mr-6" datetime="??????">{{ $article['publication_date'] }}</time>
+                    {{ $article['comments'] }} comments
+                </section>
             </article>
         @endforeach
     </section>

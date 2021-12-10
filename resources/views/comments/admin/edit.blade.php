@@ -1,5 +1,5 @@
 @presenter(App\Application\Comments\View\AdminCommentsEditPresenter)
-@extends('layouts.base')
+@extends('layouts.admin')
 
 @section('title', $title)
 

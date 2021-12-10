@@ -2,19 +2,30 @@
 <html lang="en">
     @include('layouts.partials.headHtml')
 
-    <body>
-        @include('layouts.partials.header')
+    <body class="min-h-screen flex flex-col">
+        <div class="flex-grow-0">
+            @include('layouts.partials.header')
+        </div>
 
-        <div class="flex items-center justify-center text-gray-700 py-10">
-            <div class="border-r-2 px-6 text-3xl text-center">
-                @yield('code')
-            </div>
+        <div class="flex-grow">
+            <div class="container-max-md pt-8">
+                <div class="text-center">
+                    <span class="border-r-2 px-6 text-4xl">
+                        @yield('code')
+                    </span>
 
-            <div class="text-2xl px-4 text-2xl text-center">
-                @yield('message')
+                    <span class="text-3xl px-6">
+                        @yield('message')
+                    </span>
+                </div>
             </div>
         </div>
 
-        @include('layouts.partials.footer')
+        <div class="flex-grow-0">
+            @include('layouts.partials.footer')
+        </div>
+
+        @include('layouts.partials.javascript')
+        @include('layouts.partials.mobileHeader')
     </body>
 </html>
