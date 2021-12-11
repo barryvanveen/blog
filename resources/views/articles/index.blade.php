@@ -24,7 +24,7 @@
                     {!! $article['description'] !!}
                 </section>
                 <section class="article-details">
-                    <time class="mr-6" datetime="??????">{{ $article['publication_date'] }}</time>
+                    <time class="mr-6" datetime="{{ $article['publication_date_meta']  }}">{{ $article['publication_date'] }}</time>
                     {{ $article['comments'] }} comments
                 </section>
             </article>
