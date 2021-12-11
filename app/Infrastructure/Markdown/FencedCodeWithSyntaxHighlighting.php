@@ -25,10 +25,7 @@ trait FencedCodeWithSyntaxHighlighting
     protected function identifyFencedCode($line)
     {
         // if a line starts with at least 3 backticks it is identified as a fenced code block
-        if (strncmp($line, '```', 3) === 0) {
-            return true;
-        }
-        return false;
+        return strncmp($line, '```', 3) === 0;
     }
 
     /**
