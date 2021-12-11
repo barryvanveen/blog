@@ -1,5 +1,8 @@
 @extends('layouts.error')
 
-@section('title', 'Unauthorized')
+@section('headHtmlMetaTags')
+    @include('errors.partials.headHtmlMetaTags', ['title' => 'Unauthorized'])
+@endsection
+
 @section('code', '401')
 @section('message', 'Unauthorized')

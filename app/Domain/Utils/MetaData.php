@@ -36,7 +36,7 @@ final class MetaData
 
     public function title(): string
     {
-        return $this->title . '  - A blog about web development - Barry van Veen';
+        return $this->title;
     }
 
     public function description(): string
