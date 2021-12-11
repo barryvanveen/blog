@@ -11,7 +11,7 @@
 
     @if ($errors->has($name))
         @foreach($errors->get($name) as $error)
-            <p class="text-red-500 italic">{{ $error }}</p>
+            <p class="error">{{ $error }}</p>
         @endforeach
     @endif
 </div>

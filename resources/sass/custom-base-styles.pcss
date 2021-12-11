@@ -7,8 +7,37 @@ body {
     @apply font-sans leading-relaxed tracking-normal;
 }
 
+.article-details {
+    @apply text-gray-700 text-sm;
+}
+
 .container-max-md {
     @apply container max-w-screen-md;
+}
+
+.hover-link-color {
+    @apply transition-colors;
+
+}
+
+.hover-link-color:hover {
+    @apply text-blue-600;
+}
+
+.border-color {
+    @apply border-gray-200;
+}
+
+.button {
+    @apply bg-blue-600 transition-colors text-white font-bold py-2 px-4 rounded-md cursor-pointer;
+}
+
+.button:hover {
+    @apply bg-blue-800;
+}
+
+.button:focus {
+    @apply ring;
 }
 
 main {
@@ -16,6 +45,10 @@ main {
 
     * + p {
         @apply my-4;
+    }
+
+    p.error {
+        @apply text-red-800 italic mt-2;
     }
 
     h1,
@@ -37,7 +70,7 @@ main {
     }
 
     a {
-        @apply text-blue-400 relative;
+        @apply text-blue-600 relative;
     }
 
     a:hover {
@@ -56,10 +89,6 @@ main {
         @apply mx-1;
     }
 
-    .article-details {
-        @apply text-gray-700 text-sm;
-    }
-
     ol {
         @apply list-decimal;
     }
@@ -74,7 +103,7 @@ main {
     }
 
     p code {
-        @apply bg-gray-200 p-1 rounded-md font-mono text-sm;
+        @apply bg-gray-200 text-black rounded-md font-mono text-sm p-1;
     }
 
     pre {
