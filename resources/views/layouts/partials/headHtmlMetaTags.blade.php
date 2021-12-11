@@ -1,7 +1,7 @@
 @php /** @var App\Domain\Utils\MetaData $metaData */ @endphp
-<title>{{ $metaData->title() }}</title>
-<meta name="title" content="{{ $metaData->title() }}" />
-<meta property="og:title" content="{{ $metaData->title() }}" />
+<title>{{ $metaData->title() }}{{ __('blog.page_title_suffix') }}</title>
+<meta name="title" content="{{ $metaData->title() }}{{ __('blog.page_title_suffix') }}" />
+<meta property="og:title" content="{{ $metaData->title() }}{{ __('blog.page_title_suffix') }}" />
 
 <meta name="description" content="{{ $metaData->description() }}" />
 <meta property="og:description" content="{{ $metaData->description() }}" />

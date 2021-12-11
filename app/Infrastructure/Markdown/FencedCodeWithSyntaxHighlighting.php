@@ -25,10 +25,7 @@ trait FencedCodeWithSyntaxHighlighting
     protected function identifyFencedCode($line)
     {
         // if a line starts with at least 3 backticks it is identified as a fenced code block
-        if (strncmp($line, '```', 3) === 0) {
-            return true;
-        }
-        return false;
+        return strncmp($line, '```', 3) === 0;
     }
 
     /**
@@ -88,7 +85,7 @@ trait FencedCodeWithSyntaxHighlighting
             ? $block['language']
             : $result->language;
 
-        return vsprintf('<pre><code class="%s hljs %s" data-lang="%s">%s</code></pre>', [
+        return vsprintf('<pre><code class="%s hljs %s" data-lang="%s" tabindex="0">%s</code></pre>', [
             'language-'.$language,
             $language,
             $language,

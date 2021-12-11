@@ -62,6 +62,7 @@ final class ArticlesIndexPresenter implements PresenterInterface
                 'description' => $this->markdownConverter->convertToHtml($article->description()),
                 'url' => $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()]),
                 'publication_date' => $this->dateTimeFormatter->humanReadable($article->publishedAt()),
+                'publication_date_meta' => $this->dateTimeFormatter->metadata($article->publishedAt()),
                 'comments' => $comments->count(),
             ];
         }

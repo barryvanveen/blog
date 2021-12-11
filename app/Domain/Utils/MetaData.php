@@ -10,17 +10,13 @@ final class MetaData
 
     public const TYPE_ARTICLE = 'article';
 
-    /** @var string */
-    private $title;
+    private string $title;
 
-    /** @var string */
-    private $description;
+    private string $description;
 
-    /** @var string */
-    private $url;
+    private string $url;
 
-    /** @var string */
-    private $type;
+    private string $type;
 
     public function __construct(
         string $title,
@@ -36,7 +32,7 @@ final class MetaData
 
     public function title(): string
     {
-        return $this->title . '  - A blog about web development - Barry van Veen';
+        return $this->title;
     }
 
     public function description(): string

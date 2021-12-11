@@ -102,7 +102,7 @@ const showFormErrors = (form, errorJson, submitButton) => {
 
 const createErrorElement = (value) => {
   const error = document.createElement('p')
-  error.className = `text-red-500 italic ${formErrorClass}`
+  error.className = `error ${formErrorClass}`
   error.textContent = value
   return error
 }

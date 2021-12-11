@@ -56,6 +56,7 @@ class ArticlesIndexPresenterTest extends TestCase
         /** @var ObjectProphecy|DateTimeFormatterInterface $dateTimeFormatter */
         $dateTimeFormatter = $this->prophesize(DateTimeFormatterInterface::class);
         $dateTimeFormatter->humanReadable(Argument::any())->willReturn('humanReadableDate');
+        $dateTimeFormatter->metadata(Argument::any())->willReturn('metaDate');
 
         /** @var ObjectProphecy|CommentRepositoryInterface $commentRepository */
         $commentRepository = $this->prophesize(CommentRepositoryInterface::class);
@@ -81,6 +82,7 @@ class ArticlesIndexPresenterTest extends TestCase
         $this->assertEquals('myTitle', $result['articles'][0]['title']);
         $this->assertEquals('htmlString', $result['articles'][0]['description']);
         $this->assertEquals('humanReadableDate', $result['articles'][0]['publication_date']);
+        $this->assertEquals('metaDate', $result['articles'][0]['publication_date_meta']);
         $this->assertEquals(2, $result['articles'][0]['comments']);
 
         $this->assertArrayHasKey('metaData', $result);
