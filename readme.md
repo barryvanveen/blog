@@ -24,5 +24,7 @@ The composer.json file contains some shortcuts that can help with checking/fixin
 ## Security Vulnerabilities
 If you discover a security vulnerability within this code, please send an e-mail to Barry van Veen via barryvanveen[at]gmail.com
 
-## License
-The Laravel framework is open-source software licensed under the MIT license.
+## Supported by
+I couldn't run my website without these awesome services providing free plans for Open Source projects:
+
+- [Bugsnag](https://www.bugsnag.com/open-source) gives me insight into exceptions.
