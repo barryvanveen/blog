@@ -13,7 +13,7 @@
         @foreach($articles as $article)
             <article class="pt-6 mb-8 border-t-4 border-color" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
                 <header>
-                    <h2 itemprop="headline" class="mt-0 mb-2 text-2xl hover-link-color">
+                    <h2 itemprop="headline" class="mt-0 mb-2 text-2xl">
                         <a class="no-underline text-gray-900 hover-link-color hover:underline"
                            href="{{ $article['url'] }}" itemprop="url">
                             {{ $article['title'] }}

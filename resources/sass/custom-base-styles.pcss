@@ -1,170 +1,153 @@
-/*! purgecss start ignore */
-html {
-    @apply text-gray-900 leading-relaxed text-base;
-}
+@layer base {
 
-body {
-    @apply font-sans leading-relaxed tracking-normal;
-}
+    html {
+        @apply text-gray-900 leading-relaxed text-base;
+    }
 
-.article-details {
-    @apply text-gray-700 text-sm;
-}
-
-.container-max-md {
-    @apply container max-w-screen-md;
-}
-
-.hover-link-color {
-    @apply transition-colors;
+    body {
+        @apply font-sans leading-relaxed tracking-normal;
+    }
 
 }
 
-.hover-link-color:hover {
-    @apply text-blue-600;
-}
-
-.border-color {
-    @apply border-gray-200;
-}
-
-.button {
-    @apply bg-blue-600 transition-colors text-white font-bold py-2 px-4 rounded-md cursor-pointer;
-}
-
-.button:hover {
-    @apply bg-blue-800;
-}
-
-.button:focus {
-    @apply ring;
-}
-
-main {
-    @apply w-full;
-
-    * + p {
-        @apply my-4;
+@layer components {
+    .article-details {
+        @apply text-gray-700 text-sm;
     }
 
-    p.error {
-        @apply text-red-800 italic mt-2;
+    .container-max-md {
+        @apply container max-w-screen-md;
     }
 
-    h1,
-    h2,
-    h3 {
-        @apply mt-8 mb-4 leading-tight font-bold;
+    .hover-link-color {
+        @apply transition-colors hover:text-blue-600;
     }
 
-    h1 {
-        @apply text-4xl mt-0;
+    .border-color {
+        @apply border-gray-200;
     }
 
-    h2 {
-        @apply text-3xl;
+    .button {
+        @apply bg-blue-600 transition-colors text-white font-bold py-2 px-4 rounded-md cursor-pointer hover:bg-blue-800 focus:ring;
     }
 
-    h3 {
-        @apply text-2xl;
-    }
+    main {
+        @apply w-full;
 
-    a {
-        @apply text-blue-600 relative;
-    }
+        * + p {
+            @apply my-4;
+        }
 
-    a:hover {
-        @apply underline;
-    }
+        p.error {
+            @apply text-red-800 italic mt-2;
+        }
 
-    /* anchor links */
-    a:not([href*="//"])[href*="#"]:before {
-        content: "#️";
-        @apply mx-1;
-    }
+        h1,
+        h2,
+        h3 {
+            @apply mt-8 mb-4 leading-tight font-bold;
+        }
 
-    /* external links */
-    a[href*="//"]:not([href*="blog.test"],[href*="barryvanveen.nl"]):after {
-        content: "↗";
-        @apply mx-1;
-    }
+        h1 {
+            @apply text-4xl mt-0;
+        }
 
-    ol {
-        @apply list-decimal;
-    }
+        h2 {
+            @apply text-3xl;
+        }
 
-    ul {
-        @apply list-disc;
-    }
-
-    ol,
-    ul {
-        @apply list-outside pl-6;
-    }
-
-    p code {
-        @apply bg-gray-200 text-black rounded-md font-mono text-sm p-1;
-    }
-
-    pre {
-        @apply my-4;
-    }
-
-    pre code {
-        @apply overflow-auto text-sm whitespace-pre overflow-x-scroll rounded-md filter drop-shadow-md;
-        @apply p-4 !important;
-    }
-
-    table {
-        @apply table-auto min-w-full w-full;
-    }
-
-    table td,
-    table th {
-        @apply px-2 py-2 break-words;
-    }
-
-    table thead {
-        @apply font-bold;
-    }
-
-    table tbody tr {
-        @apply border-b;
-    }
-
-    table tbody tr:nth-child(2n-1) {
-        @apply bg-gray-200;
-    }
-
-    table tbody tr.online {
-        @apply bg-green-200;
-    }
-
-    table tbody tr.offline {
-        @apply bg-red-200;
-    }
-
-    figure {
-        @apply w-full py-8 text-center;
+        h3 {
+            @apply text-2xl;
+        }
 
         a {
-            @apply inline-block mx-auto;
+            @apply text-blue-600 relative hover:underline;
+        }
 
-            img {
-                @apply shadow-md;
+        /* anchor links */
+        a:not([href*="//"])[href*="#"]:before {
+            content: "#️";
+            @apply mx-1;
+        }
+
+        /* external links */
+        a[href*="//"]:not([href*="blog.test"],[href*="barryvanveen.nl"]):after {
+            content: "↗";
+            @apply mx-1;
+        }
+
+        ol {
+            @apply list-decimal;
+        }
+
+        ul {
+            @apply list-disc;
+        }
+
+        ol,
+        ul {
+            @apply list-outside pl-6;
+        }
+
+        p code {
+            @apply bg-gray-200 text-black rounded-md font-mono text-sm p-1;
+        }
+
+        pre {
+            @apply my-4;
+        }
+
+        pre code {
+            @apply overflow-auto text-sm whitespace-pre overflow-x-scroll rounded-md drop-shadow-md;
+            @apply p-4 !important;
+        }
+
+        table {
+            @apply table-auto min-w-full w-full;
+        }
+
+        table td,
+        table th {
+            @apply px-2 py-2 break-words;
+        }
+
+        table thead {
+            @apply font-bold;
+        }
+
+        table tbody tr {
+            @apply border-b;
+        }
+
+        table tbody tr:nth-child(2n-1) {
+            @apply bg-gray-200;
+        }
+
+        table tbody tr.online {
+            @apply bg-emerald-200;
+        }
+
+        table tbody tr.offline {
+            @apply bg-red-200;
+        }
+
+        figure {
+            @apply w-full py-8 text-center;
+
+            a {
+                @apply inline-block mx-auto hover:shadow-lg;
+
+                img {
+                    @apply shadow-md;
+                }
             }
-        }
 
-        a:hover {
-            @apply shadow-lg;
-        }
-
-        figcaption {
-            @apply italic mt-2;
+            figcaption {
+                @apply italic mt-2;
+            }
         }
     }
 }
-/*! purgecss end ignore */
 
 /*a:after {
     @apply transition;
