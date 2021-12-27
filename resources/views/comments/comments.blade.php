@@ -8,7 +8,7 @@
         @include('comments.comment', ['comment' => $comment])
     @endforeach
 
-    <div class="bg-green-300 rounded-md p-4 my-4 hidden" id="comment-created">
+    <div class="bg-emerald-300 rounded-md p-4 my-4 hidden" id="comment-created" role="alert">
         You comment has been posted, thanks for your contribution!
     </div>
 

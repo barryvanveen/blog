@@ -1,16 +1,9 @@
 module.exports = {
-  // mode: 'jit',
-  purge: {
-      content: ['./resources/views/**/*.php'],
-      options: {
-          safelist: {
-              standard: [/cursor-not-allowed/],
-              deep: [/hljs-?/],
-          },
-          keyframes: true,
-      }
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: [
+          './resources/views/**/*.php',
+          './resources/js/**/*.js',
+          './vendor/scrivo/highlight.php/styles/a11y-dark.css',
+  ],
   theme: {
     screens: {
       'sm': '640px',
@@ -24,11 +17,6 @@ module.exports = {
         padding: '1rem',
         center: true,
       },
-    },
-  },
-  variants: {
-    extend: {
-
     },
   },
   plugins: [],

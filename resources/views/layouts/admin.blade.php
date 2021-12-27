@@ -3,7 +3,7 @@
 @include('layouts.partials.headHtml')
 
 <body class="min-h-screen flex flex-col">
-    <div class="flex-grow-0">
+    <div class="grow-0">
         @include('layouts.partials.header')
     </div>
 
@@ -15,7 +15,7 @@
         </main>
     </div>
 
-    <div class="flex-grow-0">
+    <div class="grow-0">
         @include('layouts.partials.footer')
     </div>
 

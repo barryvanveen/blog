@@ -48,8 +48,8 @@ const baseConfig = {
                             postcssOptions: {
                                 plugins: [
                                     require('postcss-import'),
+                                    require('tailwindcss/nesting'),
                                     require('tailwindcss'),
-                                    require('postcss-nested'),
                                     require('autoprefixer'),
                                 ],
                             },
