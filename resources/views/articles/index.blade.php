@@ -11,10 +11,10 @@
         <h1 itemprop="about" class="mb-8">Articles</h1>
 
         @foreach($articles as $article)
-            <article class="pt-6 mb-8 border-t-4 border-color" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+            <article class="pt-6 mb-8 border-t-4 border-gray-100" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
                 <header>
                     <h2 itemprop="headline" class="mt-0 mb-2 text-2xl">
-                        <a class="no-underline text-gray-900 hover-link-color hover:underline"
+                        <a class="no-underline text-gray-900 hover:text-terracotta hover:underline"
                            href="{{ $article['url'] }}" itemprop="url">
                             {{ $article['title'] }}
                         </a>

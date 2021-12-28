@@ -1,4 +1,4 @@
-<div class="pt-6 mb-6 border-t-4 border-gray-300 break-words" id="comment-{{ $comment['uuid'] }}" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<div class="pt-6 mb-6 border-t-4 border-darkTeal break-words" id="comment-{{ $comment['uuid'] }}" itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
     <div>
         <span class="font-bold" itemprop="author">{{ $comment['name'] }}</span>
         <span class="article-details">
