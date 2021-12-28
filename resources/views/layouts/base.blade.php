@@ -20,10 +20,6 @@
         </main>
     </div>
 
-    <div class="grow-0">
-        @include('layouts.partials.footer')
-    </div>
-
     @include('layouts.partials.javascript')
     @include('layouts.partials.mobileHeader')
 </body>
