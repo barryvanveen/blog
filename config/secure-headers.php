@@ -208,5 +208,10 @@ return [
 
             'unsafe-eval' => false,
         ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/object-src
+        'object-src' => [
+            'none' => true,
+        ],
     ],
 ];

@@ -1,0 +1,40 @@
+{
+    "name": "Barry van Veen blog",
+    "short_name": "Barry blog",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png?v=2",
+            "sizes": "192x192",
+            "purpose": "any",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png?v=2",
+            "sizes": "512x512",
+            "purpose": "any",
+            "type": "image/png"
+        },
+        {
+            "src": "/maskable-icon-1024x1024.png?v=2",
+            "sizes": "1024x1024",
+            "purpose": "maskable any",
+            "type": "image/png"
+        },
+        {
+            "src": "/monochrome-icon.svg?v=2",
+            "sizes": "any",
+            "purpose": "monochrome",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "/favicon.svg?v=2",
+            "sizes": "any",
+            "purpose": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "theme_color": "#f4c148",
+    "background_color": "#ffffff",
+    "start_url": "/articles",
+    "display": "standalone"
+}

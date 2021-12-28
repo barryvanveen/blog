@@ -1,34 +1,10 @@
 @layer base {
-
     html {
         @apply text-gray-900 leading-relaxed text-base;
     }
 
     body {
         @apply font-sans leading-relaxed tracking-normal;
-    }
-
-}
-
-@layer components {
-    .article-details {
-        @apply text-gray-700 text-sm;
-    }
-
-    .container-max-md {
-        @apply container max-w-screen-md;
-    }
-
-    .hover-link-color {
-        @apply transition-colors hover:text-blue-600;
-    }
-
-    .border-color {
-        @apply border-gray-200;
-    }
-
-    .button {
-        @apply bg-blue-600 transition-colors text-white font-bold py-2 px-4 rounded-md cursor-pointer hover:bg-blue-800 focus:ring;
     }
 
     main {
@@ -61,7 +37,7 @@
         }
 
         a {
-            @apply text-blue-600 relative hover:underline;
+            @apply text-terracotta relative hover:underline;
         }
 
         /* anchor links */
@@ -89,6 +65,10 @@
             @apply list-outside pl-6;
         }
 
+        li {
+            @apply mb-1;
+        }
+
         p code {
             @apply bg-gray-200 text-black rounded-md font-mono text-sm p-1;
         }
@@ -98,7 +78,7 @@
         }
 
         pre code {
-            @apply overflow-auto text-sm whitespace-pre overflow-x-scroll rounded-md drop-shadow-md;
+            @apply overflow-auto text-sm whitespace-pre overflow-x-scroll rounded-md shadow-md;
             @apply p-4 !important;
         }
 
@@ -149,17 +129,29 @@
     }
 }
 
-/*a:after {
-    @apply transition;
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    border-bottom: 2px solid black;
-    transition: 0.4s;
-}
+@layer components {
+    .article-details {
+        @apply text-gray-700 text-sm;
+    }
 
-a:hover:after {
-    width: 100%;
-}*/
+    .container-max-md {
+        @apply container max-w-screen-md;
+    }
+
+    .fancy-border {
+        @apply relative after:absolute after:left-0 after:-bottom-1 after:w-0 after:transition-all after:border-b-2 after:duration-200 after:hover:w-full;
+        content: '';
+    }
+
+    .fancy-border-terracotta {
+        @apply after:border-terracotta;
+    }
+
+    .fancy-border-turmeric {
+        @apply after:border-turmeric;
+    }
+
+    .button {
+        @apply bg-gray-900 text-white font-bold py-2 px-4 rounded-md cursor-pointer hover:shadow-md focus:ring;
+    }
+}

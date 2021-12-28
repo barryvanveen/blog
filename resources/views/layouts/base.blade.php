@@ -12,16 +12,12 @@
             <div class="container-max-md pb-8">
                 @yield('body')
             </div>
-            <div class="bg-gray-200">
+            <div class="bg-lightTeal">
                 <div class="container-max-md">
                     @yield('comments')
                 </div>
             </div>
         </main>
-    </div>
-
-    <div class="grow-0">
-        @include('layouts.partials.footer')
     </div>
 
     @include('layouts.partials.javascript')
