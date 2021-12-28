@@ -73,10 +73,7 @@ const baseConfig = {
                 '!.gitignore',
                 '!manifest.json'
             ],
-            cleanAfterEveryBuildPatterns: [
-                '!**/*.gif',
-            ],
-            verbose: true,
+            verbose: false,
             dry: false
         }),
         new WebpackManifestPlugin({
