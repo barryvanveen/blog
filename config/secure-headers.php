@@ -127,7 +127,137 @@ return [
      * Reference: https://w3c.github.io/webappsec-permissions-policy/
      */
     'permissions-policy' => [
-        'enable' => false,
+        'enable' => true,
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/accelerometer
+        'accelerometer' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/ambient-light-sensor
+        'ambient-light-sensor' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/autoplay
+        'autoplay' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/battery
+        'battery' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/camera
+        'camera' => [
+            'none' => true,
+        ],
+
+        // https://www.chromestatus.com/feature/5690888397258752
+        'cross-origin-isolated' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/display-capture
+        'display-capture' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/document-domain
+        'document-domain' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/encrypted-media
+        'encrypted-media' => [
+            'none' => true,
+        ],
+
+        // https://wicg.github.io/page-lifecycle/#execution-while-not-rendered
+        'execution-while-not-rendered' => [
+            'none' => true,
+        ],
+
+        // https://wicg.github.io/page-lifecycle/#execution-while-out-of-viewport
+        'execution-while-out-of-viewport' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/fullscreen
+        'fullscreen' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/geolocation
+        'geolocation' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/gyroscope
+        'gyroscope' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/magnetometer
+        'magnetometer' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/microphone
+        'microphone' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/midi
+        'midi' => [
+            'none' => true,
+        ],
+
+        // https://drafts.csswg.org/css-nav-1/
+        'navigation-override' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/payment
+        'payment' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/picture-in-picture
+        'picture-in-picture' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/publickey-credentials-get
+        'publickey-credentials-get' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/screen-wake-lock
+        'screen-wake-lock' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/sync-xhr
+        'sync-xhr' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/usb
+        'usb' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/web-share
+        'web-share' => [
+            'none' => true,
+        ],
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy/xr-spatial-tracking
+        'xr-spatial-tracking' => [
+            'none' => true,
+        ],
     ],
 
     /*
