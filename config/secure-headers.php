@@ -322,11 +322,14 @@ return [
             'hashes' => [
                 'sha256' => [
                     // local
-                    'b8ZAFQsPNeXTK3ntWbCANqgmWHLqLL42L8+seMMNI2g=', // js vars
-                    '/37ooHxLANUJ+by05dPK/V4LKVfyTQNS14KyEcD0ZME=', // js vars admin
+                    '0WFVqePfVUxUatTBjXFfw2Y5g9TdlE0p11zsk9NHDV0=', // js vars
+                    'oc3b/rTFb/zc8B5cu/iegs0mykMn09JDUvCT6BA2YGo=', // js vars admin
+                    // testing
+                    'ZtpvcqRHMCmrT3xUdtpkSKlDsRQ+gCvi+XQUXwTmyAk=', // js vars
+                    'jm/9yHKZByfFxfzR7AEnim2oQmV3zbuqAvdotsFiBLw=', // js vars admin
                     // production
-                    'qLSUMcy6v/z0vk9gaTvMEtAn7ISgeVBx9X7/2Ikt1rg=', // js vars
-                    'UyftXeKYBypxjGmD9JjGRcVJsmA0xblM5XcJMFUqhVI=', // js vars admin
+                    'Cvl3DZb4MLZGYtmwQge/CUuGgVdOAvSS4fXlkPst9Hk=', // js vars
+                    'WBbsOKBUMsCct/oe7jG5WdMMkgAqfyHvvE6VK8MRwuk=', // js vars admin
                 ],
             ],
         ],
