@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\View;
 
+use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\RouterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\AssetUrlBuilderInterface;
@@ -17,6 +18,8 @@ use Tests\TestCase;
  */
 class JavascriptPresenterTest extends TestCase
 {
+    private const MOCK_BASE_URL = 'https://foo.bar/';
+
     /** @var RouterInterface|ObjectProphecy */
     private $router;
 
@@ -38,10 +41,15 @@ class JavascriptPresenterTest extends TestCase
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $urlGenerator->route(Argument::any())->willReturnArgument(0);
 
+        /** @var ObjectProphecy|ConfigurationInterface $configuration */
+        $configuration = $this->prophesize(ConfigurationInterface::class);
+        $configuration->string('app.url')->willReturn(self::MOCK_BASE_URL);
+
         $this->presenter = new JavascriptPresenter(
             $this->router->reveal(),
             $assetBuilder->reveal(),
-            $urlGenerator->reveal()
+            $urlGenerator->reveal(),
+            $configuration->reveal(),
         );
     }
 
@@ -54,6 +62,7 @@ class JavascriptPresenterTest extends TestCase
 
         $this->assertEquals([
             'js_variables' => [
+                'base_url' => self::MOCK_BASE_URL,
             ],
             'js_paths' => [
                 'app.js',
@@ -70,6 +79,7 @@ class JavascriptPresenterTest extends TestCase
 
         $this->assertEquals([
             'js_variables' => [
+                'base_url' => self::MOCK_BASE_URL,
                 'markdown_to_html_url' => 'admin.markdown-to-html',
             ],
             'js_paths' => [

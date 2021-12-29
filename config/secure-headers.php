@@ -192,7 +192,8 @@ return [
             'hashes' => [
                 'sha256' => [
                     // local
-                    'o46NCqFsO7R0miT5YPCnL6OdhXUWWYGouIovNwHR6k8=', // js vars admin
+                    'b8ZAFQsPNeXTK3ntWbCANqgmWHLqLL42L8+seMMNI2g=', // js vars
+                    '/37ooHxLANUJ+by05dPK/V4LKVfyTQNS14KyEcD0ZME=', // js vars admin
                     // production
                     'qLSUMcy6v/z0vk9gaTvMEtAn7ISgeVBx9X7/2Ikt1rg=', // js vars
                     'UyftXeKYBypxjGmD9JjGRcVJsmA0xblM5XcJMFUqhVI=', // js vars admin
