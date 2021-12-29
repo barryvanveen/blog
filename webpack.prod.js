@@ -8,13 +8,22 @@ module.exports = [
         common.baseConfig,
         {
             mode: 'production',
-            devtool: 'inline-source-map',
             plugins: [],
             optimization: {
                 minimize: true,
                 minimizer: [
                     `...`,
-                    new CssMinimizerPlugin(),
+                    new CssMinimizerPlugin({
+                        minimizerOptions: {
+                            preset: [
+                                "default",
+                                {
+                                    discardComments: { removeAll: true },
+                                },
+                            ],
+                        },
+                    }),
+
                 ],
             },
         }
