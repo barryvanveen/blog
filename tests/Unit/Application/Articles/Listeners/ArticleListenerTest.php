@@ -42,6 +42,7 @@ class ArticleListenerTest extends TestCase
         $this->urlGenerator->route('articles.index')->willReturn('indexUrl');
         $this->urlGenerator->route('articles.rss')->willReturn('rssUrl');
         $this->urlGenerator->route('home')->willReturn('homeUrl');
+        $this->urlGenerator->route('sitemap')->willReturn('sitemapUrl');
 
         $this->repository = $this->prophesize(ArticleRepositoryInterface::class);
 
@@ -62,6 +63,9 @@ class ArticleListenerTest extends TestCase
             ->shouldBeCalled();
 
         $this->cache->forget('homeUrl')
+            ->shouldBeCalled();
+
+        $this->cache->forget('sitemapUrl')
             ->shouldBeCalled();
 
         $this->listener->handle(new ArticleWasCreated());
@@ -94,6 +98,9 @@ class ArticleListenerTest extends TestCase
             ->shouldBeCalled();
 
         $this->cache->forget('homeUrl')
+            ->shouldBeCalled();
+
+        $this->cache->forget('sitemapUrl')
             ->shouldBeCalled();
 
         $this->listener->handle(new ArticleWasUpdated($uuid));

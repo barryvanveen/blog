@@ -9,8 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class SitemapController
 {
-    /** @var ResponseBuilderInterface */
-    private $responseBuilder;
+    private ResponseBuilderInterface $responseBuilder;
 
     public function __construct(
         ResponseBuilderInterface $responseBuilder
@@ -20,6 +19,6 @@ class SitemapController
 
     public function index(): ResponseInterface
     {
-        return $this->responseBuilder->ok('pages.sitemap');
+        return $this->responseBuilder->xml('pages.sitemap');
     }
 }

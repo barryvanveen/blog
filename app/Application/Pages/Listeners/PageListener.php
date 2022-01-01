@@ -11,11 +11,8 @@ use App\Application\Pages\Events\PageWasUpdated;
 
 final class PageListener extends BaseEventListener
 {
-    /** @var CacheInterface */
-    private $cache;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private CacheInterface $cache;
+    private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(
         CacheInterface $cache,
@@ -31,17 +28,44 @@ final class PageListener extends BaseEventListener
 
         switch ($slug) {
             case 'about':
-                $this->cache->forget($this->urlGenerator->route('about'));
+                $this->clearAboutPageCache();
+                $this->clearSitemapCache();
                 break;
             case 'books':
-                $this->cache->forget($this->urlGenerator->route('books'));
-                $this->cache->forget($this->urlGenerator->route('home'));
+                $this->clearBooksPageCache();
+                $this->clearHomePageCache();
+                $this->clearSitemapCache();
                 break;
             case 'home':
-                $this->cache->forget($this->urlGenerator->route('home'));
+                $this->clearHomePageCache();
+                $this->clearSitemapCache();
                 break;
             default:
                 throw CacheInvalidationException::unkownSlug($slug);
         }
+    }
+
+    private function clearAboutPageCache(): void
+    {
+        $aboutUrl = $this->urlGenerator->route('about');
+        $this->cache->forget($aboutUrl);
+    }
+
+    private function clearBooksPageCache(): void
+    {
+        $booksUrl = $this->urlGenerator->route('books');
+        $this->cache->forget($booksUrl);
+    }
+
+    private function clearHomePageCache(): void
+    {
+        $homeUrl = $this->urlGenerator->route('home');
+        $this->cache->forget($homeUrl);
+    }
+
+    private function clearSitemapCache(): void
+    {
+        $sitemapUrl = $this->urlGenerator->route('sitemap');
+        $this->cache->forget($sitemapUrl);
     }
 }

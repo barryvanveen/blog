@@ -46,17 +46,32 @@ class ArticleFactory extends Factory
         ]);
     }
 
-    public function publishedInPast()
+    public function publishedInPast(): self
     {
         return $this->state([
             'published_at' => $this->faker->dateTimeBetween('-1 year', '-1 hour'),
         ]);
     }
 
-    public function publishedInFuture()
+    public function publishedInFuture(): self
     {
         return $this->state([
             'published_at' => $this->faker->dateTimeBetween('+1 hour', '+1 year'),
+        ]);
+    }
+
+    public function title(string $title): self
+    {
+        return $this->state([
+            'title' => $title,
+            'slug' => Str::slug($title),
+        ]);
+    }
+
+    public function uuid(string $uuid): self
+    {
+        return $this->state([
+            'uuid' => $uuid,
         ]);
     }
 }
