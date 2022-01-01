@@ -10,9 +10,6 @@ use App\Application\Articles\Listeners\ArticleListener;
 use App\Application\Interfaces\CacheInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Articles\Models\Article;
-use DateTimeImmutable;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
 
@@ -45,6 +42,7 @@ class ArticleListenerTest extends TestCase
         $this->urlGenerator->route('articles.index')->willReturn('indexUrl');
         $this->urlGenerator->route('articles.rss')->willReturn('rssUrl');
         $this->urlGenerator->route('home')->willReturn('homeUrl');
+        $this->urlGenerator->route('sitemap')->willReturn('sitemapUrl');
 
         $this->repository = $this->prophesize(ArticleRepositoryInterface::class);
 
@@ -67,21 +65,19 @@ class ArticleListenerTest extends TestCase
         $this->cache->forget('homeUrl')
             ->shouldBeCalled();
 
+        $this->cache->forget('sitemapUrl')
+            ->shouldBeCalled();
+
         $this->listener->handle(new ArticleWasCreated());
     }
 
     /** @test */
     public function itClearsCachesWhenAnArticleWasUpdated(): void
     {
-        $article = new Article(
-            'foo',
-            'foo',
-            new DateTimeImmutable(),
-            'my-slug',
-            ArticleStatus::published(),
-            'foo',
-            'my-uuid'
-        );
+        $uuid = 'my-uuid';
+        $article = $this->getArticle([
+            'uuid' => $uuid,
+        ]);
 
         $this->repository->getByUuid($article->uuid())
             ->willReturn($article);
@@ -104,6 +100,9 @@ class ArticleListenerTest extends TestCase
         $this->cache->forget('homeUrl')
             ->shouldBeCalled();
 
-        $this->listener->handle(new ArticleWasUpdated('my-uuid'));
+        $this->cache->forget('sitemapUrl')
+            ->shouldBeCalled();
+
+        $this->listener->handle(new ArticleWasUpdated($uuid));
     }
 }

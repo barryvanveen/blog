@@ -33,6 +33,8 @@ final class ArticleListener extends BaseEventListener
         $this->clearArticleRssCache();
 
         $this->clearHomePageCache();
+
+        $this->clearSitemapCache();
     }
 
     public function handleArticleWasUpdated(ArticleWasUpdated $event): void
@@ -50,6 +52,8 @@ final class ArticleListener extends BaseEventListener
         $this->clearArticleRssCache();
 
         $this->clearHomePageCache();
+
+        $this->clearSitemapCache();
     }
 
     private function clearArticleIndexCache(): void
@@ -68,5 +72,11 @@ final class ArticleListener extends BaseEventListener
     {
         $homeUrl = $this->urlGenerator->route('home');
         $this->cache->forget($homeUrl);
+    }
+
+    private function clearSitemapCache(): void
+    {
+        $sitemapUrl = $this->urlGenerator->route('sitemap');
+        $this->cache->forget($sitemapUrl);
     }
 }

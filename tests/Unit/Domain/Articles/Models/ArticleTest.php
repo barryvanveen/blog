@@ -69,6 +69,7 @@ class ArticleTest extends TestCase
         $article = $this->getArticle([
             'published_at' => $dateTime,
             'status' => ArticleStatus::published(),
+            'updated_at' => $dateTime,
         ]);
 
         $this->assertEquals([
@@ -78,6 +79,7 @@ class ArticleTest extends TestCase
             'slug' => 'baz-baz',
             'status' => ArticleStatus::published(),
             'title' => 'Baz baz',
+            'updated_at' => $dateTime,
             'uuid' => '123123',
         ], $article->toArray());
     }

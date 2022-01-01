@@ -16,11 +16,8 @@ class CacheResponseMiddleware
 {
     private const TTL_ONE_HOUR = 3600;
 
-    /** @var CacheInterface */
-    private $cache;
-
-    /** @var ConfigurationInterface */
-    private $configuration;
+    private CacheInterface $cache;
+    private ConfigurationInterface $configuration;
 
     public function __construct(
         CacheInterface $cache,

@@ -39,6 +39,7 @@ abstract class TestCase extends BaseTestCase
             $attributes['slug'] ?? 'baz-baz',
             $attributes['status'] ?? ArticleStatus::published(),
             $attributes['title'] ?? 'Baz baz',
+            $attributes['updated_at'] ?? new DateTimeImmutable('now'),
             $attributes['uuid'] ?? '123123'
         );
     }

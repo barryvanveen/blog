@@ -24,4 +24,12 @@ class PageFactory extends Factory
             'updated_at' => $this->faker->dateTimeBetween('-1 year'),
         ];
     }
+
+    public function title(string $title): self
+    {
+        return $this->state([
+            'slug' => Str::slug($title),
+            'title' => $title,
+        ]);
+    }
 }

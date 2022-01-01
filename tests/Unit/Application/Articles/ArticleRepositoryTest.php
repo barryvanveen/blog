@@ -135,21 +135,16 @@ class ArticleRepositoryTest extends TestCase
     public function itSavesAnArticle(): void
     {
         // arrange
-        $article = new Article(
-            'article-content',
-            'article-description',
-            new DateTimeImmutable(),
-            'article-slug',
-            ArticleStatus::published(),
-            'article-title',
-            '123123'
-        );
+        $title = 'article-title';
+        $article = $this->getArticle([
+            'title' => $title,
+        ]);
 
         // act
         $this->repository->insert($article);
 
         // assert
-        $this->assertDatabaseHas('articles', ['title' => 'article-title']);
+        $this->assertDatabaseHas('articles', ['title' => $title]);
         $this->laravelBusFake->assertDispatchedTimes(ArticleWasCreated::class);
     }
 
@@ -157,29 +152,21 @@ class ArticleRepositoryTest extends TestCase
     public function itUpdatesAnArticle(): void
     {
         // arrange
-        $article = new Article(
-            'article-content',
-            'article-description',
-            new DateTimeImmutable(),
-            'article-slug',
-            ArticleStatus::published(),
-            'old-article-title',
-            '123123'
-        );
+        $uuid = '123123';
+
+        $article = $this->getArticle([
+            'title' => 'old-article-title',
+            'uuid' => $uuid,
+        ]);
 
         $this->repository->insert($article);
         $this->assertDatabaseHas('articles', ['title' => 'old-article-title']);
 
         // act
-        $article = new Article(
-            'article-content',
-            'article-description',
-            new DateTimeImmutable(),
-            'article-slug',
-            ArticleStatus::published(),
-            'new-article-title',
-            '123123'
-        );
+        $article = $this->getArticle([
+            'title' => 'new-article-title',
+            'uuid' => $uuid,
+        ]);
         $this->repository->update($article);
 
         // assert

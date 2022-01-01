@@ -11,10 +11,7 @@ use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
-use DateTimeImmutable;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
@@ -96,31 +93,27 @@ class ArticlesControllerTest extends TestCase
     /** @test */
     public function showRedirectsOnSlugMismatch(): void
     {
+        $uuid = 'asdasd';
+
         // arrange
         $request = $this->prophesize(ArticleShowRequestInterface::class);
 
         $request
             ->uuid()
             ->shouldBeCalled()
-            ->willReturn('asdasd');
+            ->willReturn($uuid);
 
         $request
             ->slug()
             ->shouldBeCalled()
             ->willReturn('requestSlug');
 
-        $article = new Article(
-            'content',
-            'description',
-            new DateTimeImmutable(),
-            'articleSlug',
-            ArticleStatus::published(),
-            'title',
-            'uuid'
-        );
+        $article = $this->getArticle([
+            'slug' => 'articleSlug',
+        ]);
 
         $this->articleRepository
-            ->getPublishedByUuid(Argument::exact('asdasd'))
+            ->getPublishedByUuid(Argument::exact($uuid))
             ->shouldBeCalled()
             ->willReturn($article);
 
@@ -144,31 +137,28 @@ class ArticlesControllerTest extends TestCase
     /** @test */
     public function showReturnsViewResponse(): void
     {
+        $slug = 'mySlugValue';
+        $uuid = 'asdasd';
+
         // arrange
         $request = $this->prophesize(ArticleShowRequestInterface::class);
 
         $request
             ->uuid()
             ->shouldBeCalled()
-            ->willReturn('asdasd');
+            ->willReturn($uuid);
 
         $request
             ->slug()
             ->shouldBeCalled()
-            ->willReturn('slug');
+            ->willReturn($slug);
 
-        $article = new Article(
-            'content',
-            'description',
-            new DateTimeImmutable(),
-            'slug',
-            ArticleStatus::published(),
-            'title',
-            'uuid'
-        );
+        $article = $this->getArticle([
+            'slug' => $slug,
+        ]);
 
         $this->articleRepository
-            ->getPublishedByUuid(Argument::exact('asdasd'))
+            ->getPublishedByUuid(Argument::exact($uuid))
             ->shouldBeCalled()
             ->willReturn($article);
 
