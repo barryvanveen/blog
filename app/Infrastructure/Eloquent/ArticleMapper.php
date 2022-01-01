@@ -33,6 +33,7 @@ final class ArticleMapper implements ModelMapperInterface
             $model['slug'],
             new ArticleStatus((int) $model['status']),
             $model['title'],
+            new DateTimeImmutable($model['updated_at']),
             $model['uuid']
         );
     }

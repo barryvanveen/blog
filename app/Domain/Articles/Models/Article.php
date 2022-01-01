@@ -6,37 +6,27 @@ namespace App\Domain\Articles\Models;
 
 use App\Domain\Articles\Enums\ArticleStatus;
 use DateTimeImmutable;
+use DateTimeInterface;
 
 class Article
 {
-    /** @var string */
-    private $content;
-
-    /** @var string */
-    private $description;
-
-    /** @var DateTimeImmutable */
-    private $publishedAt;
-
-    /** @var string */
-    private $slug;
-
-    /** @var ArticleStatus */
-    private $status;
-
-    /** @var string */
-    private $title;
-
-    /** @var string */
-    private $uuid;
+    private string $content;
+    private string $description;
+    private DateTimeInterface $publishedAt;
+    private string $slug;
+    private ArticleStatus $status;
+    private string $title;
+    private DateTimeInterface $updatedAt;
+    private string $uuid;
 
     public function __construct(
         string $content,
         string $description,
-        DateTimeImmutable $publishedAt,
+        DateTimeInterface $publishedAt,
         string $slug,
         ArticleStatus $status,
         string $title,
+        DateTimeInterface $updatedAt,
         string $uuid
     ) {
         $this->content = $content;
@@ -45,6 +35,7 @@ class Article
         $this->slug = $slug;
         $this->status = $status;
         $this->title = $title;
+        $this->updatedAt = $updatedAt;
         $this->uuid = $uuid;
     }
 
@@ -58,7 +49,7 @@ class Article
         return $this->description;
     }
 
-    public function publishedAt(): DateTimeImmutable
+    public function publishedAt(): DateTimeInterface
     {
         return $this->publishedAt;
     }
@@ -86,6 +77,11 @@ class Article
         return $this->title;
     }
 
+    public function updatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
     public function uuid(): string
     {
         return $this->uuid;
@@ -100,6 +96,7 @@ class Article
             'slug' => $this->slug,
             'status' => $this->status,
             'title' => $this->title,
+            'updated_at' => $this->updatedAt,
             'uuid' => $this->uuid,
         ];
     }

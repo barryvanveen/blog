@@ -10,9 +10,6 @@ use App\Application\Articles\Listeners\ArticleListener;
 use App\Application\Interfaces\CacheInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Articles\Models\Article;
-use DateTimeImmutable;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
 
@@ -73,15 +70,10 @@ class ArticleListenerTest extends TestCase
     /** @test */
     public function itClearsCachesWhenAnArticleWasUpdated(): void
     {
-        $article = new Article(
-            'foo',
-            'foo',
-            new DateTimeImmutable(),
-            'my-slug',
-            ArticleStatus::published(),
-            'foo',
-            'my-uuid'
-        );
+        $uuid = 'my-uuid';
+        $article = $this->getArticle([
+            'uuid' => $uuid,
+        ]);
 
         $this->repository->getByUuid($article->uuid())
             ->willReturn($article);
@@ -104,6 +96,6 @@ class ArticleListenerTest extends TestCase
         $this->cache->forget('homeUrl')
             ->shouldBeCalled();
 
-        $this->listener->handle(new ArticleWasUpdated('my-uuid'));
+        $this->listener->handle(new ArticleWasUpdated($uuid));
     }
 }

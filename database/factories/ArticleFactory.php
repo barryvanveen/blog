@@ -27,6 +27,7 @@ class ArticleFactory extends Factory
             'slug' => Str::slug($title),
             'status' => ArticleStatus::published(),
             'title' => $title,
+            'updated_at' => $this->faker->dateTime,
             'uuid' => $uniqueIdGenerator->generate(),
         ];
     }

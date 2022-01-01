@@ -9,8 +9,6 @@ use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\DateTimeFormatterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Enums\ArticleStatus;
-use App\Domain\Articles\Models\Article;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use App\Domain\Utils\MetaData;
 use DateTimeImmutable;
@@ -29,15 +27,11 @@ class ArticlesItemPresenterTest extends TestCase
         $uuid = 'myMockUuid';
         $title = 'titleString';
 
-        $article = new Article(
-            'contentString',
-            'descriptionString',
-            DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 19:56:48'),
-            'slug-string',
-            ArticleStatus::published(),
-            $title,
-            $uuid
-        );
+        $article = $this->getArticle([
+            'published_at' => DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-04 19:56:48'),
+            'title' => $title,
+            'uuid' => $uuid,
+        ]);
 
         /** @var ObjectProphecy|ArticleRepositoryInterface $repository */
         $repository = $this->prophesize(ArticleRepositoryInterface::class);

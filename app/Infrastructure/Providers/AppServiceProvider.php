@@ -9,6 +9,7 @@ use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Core\UniqueIdGenerator;
 use App\Application\Core\UniqueIdGeneratorInterface;
 use App\Application\Interfaces\CacheInterface;
+use App\Application\Interfaces\ClockInterface;
 use App\Application\Interfaces\CommandBusInterface;
 use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\EventBusInterface;
@@ -44,6 +45,7 @@ use App\Infrastructure\Adapters\LaravelSession;
 use App\Infrastructure\Adapters\LaravelSlugFactory;
 use App\Infrastructure\Adapters\LaravelUrlGenerator;
 use App\Infrastructure\Adapters\LaravelViewBuilder;
+use App\Infrastructure\Adapters\SystemClock;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -52,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(AssetUrlBuilderInterface::class, AssetUrlBuilder::class);
         $this->app->bind(CacheInterface::class, LaravelCache::class);
+        $this->app->bind(ClockInterface::class, SystemClock::class);
         $this->app->singleton(CommandBusInterface::class, LaravelCommandBus::class);
         $this->app->bind(ConfigurationInterface::class, LaravelConfiguration::class);
         $this->app->bind(DateTimeFormatterInterface::class, DateTimeFormatter::class);
