@@ -18,6 +18,8 @@
             {!! $content !!}
         </div>
 
+        <span class="divider"></span>
+
         <footer class="my-6">
             <p class="article-details">
                 Last update: <time itemprop="lastReviewed" datetime="{{ $lastUpdatedDateInAtomFormat }}">{{ $lastUpdatedDateInHumanFormat }}</time>
