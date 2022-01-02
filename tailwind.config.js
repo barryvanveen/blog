@@ -1,8 +1,8 @@
 module.exports = {
   content: [
-          './resources/views/**/*.php',
-          './resources/js/**/*.js',
-          './vendor/scrivo/highlight.php/styles/a11y-dark.css',
+    './resources/views/**/*.php',
+    './resources/js/**/*.js',
+    './vendor/scrivo/highlight.php/styles/a11y-dark.css',
   ],
   theme: {
     screens: {
