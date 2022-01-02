@@ -47,6 +47,7 @@ final class Handler implements ExceptionHandlerContract
         NotFoundHttpException::class,
         SymfonyNotFoundHttpException::class,
         MaintenanceModeException::class,
+        TokenMismatchException::class,
     ];
 
     /** @var string[] */
