@@ -12,12 +12,12 @@ class AdminMarkdownToHtmlRequest extends BaseRequest implements AdminMarkdownToH
     public function rules(): array
     {
         return [
-            'markdown' => 'string|nullable',
+            'markdown' => 'nullable',
         ];
     }
 
     public function markdown(): string
     {
-        return $this->getInputParameterAsString('markdown');
+        return $this->getInputParameterAsNullableString('markdown');
     }
 }

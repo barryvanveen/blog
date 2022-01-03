@@ -37,6 +37,21 @@ class BaseRequest extends FormRequest
         return $value;
     }
 
+    protected function getInputParameterAsNullableString(string $parameter): string
+    {
+        $value = $this->input($parameter);
+
+        if ($value === null) {
+            return '';
+        }
+
+        if (is_string($value) === false) {
+            throw InvalidInputParameterException::becauseParameterShouldBeAString($parameter);
+        }
+
+        return $value;
+    }
+
     protected function getInputParameterAsInteger(string $parameter): int
     {
         $value = $this->input($parameter);
