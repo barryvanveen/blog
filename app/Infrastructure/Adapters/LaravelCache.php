@@ -36,4 +36,9 @@ class LaravelCache implements CacheInterface
     {
         $this->cache->forget($key);
     }
+
+    public function clear(): void
+    {
+        $this->cache->clear();
+    }
 }

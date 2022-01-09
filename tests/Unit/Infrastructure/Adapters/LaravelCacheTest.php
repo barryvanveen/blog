@@ -66,4 +66,19 @@ class LaravelCacheTest extends TestCase
 
         $this->assertEquals(null, $cache->get('foo'));
     }
+
+    /** @test */
+    public function itClearsAllItemsFromCache(): void
+    {
+        /** @var Repository $repository */
+        $repository = app()->make(Repository::class);
+        $repository->set('foo', 'bar');
+        $repository->set('bar', 'baz');
+
+        $cache = new LaravelCache($repository);
+        $cache->clear();
+
+        $this->assertEquals(null, $cache->get('foo'));
+        $this->assertEquals(null, $cache->get('bar'));
+    }
 }
