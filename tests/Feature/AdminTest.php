@@ -48,4 +48,16 @@ class AdminTest extends TestCase
         $response->assertJson(["html" => '<h1>FOO</h1>
 ']);
     }
+
+    /** @test */
+    public function clearCache(): void
+    {
+        /** @var UserEloquentModel $user */
+        $user = UserFactory::new()->create();
+        Auth::login($user);
+
+        $response = $this->post(route('admin.clear-cache'));
+
+        $response->assertRedirect();
+    }
 }
