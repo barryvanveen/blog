@@ -48,4 +48,5 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/pages/{slug}', [\App\Application\Http\Controllers\Admin\PagesController::class, 'update'])->name('admin.pages.update');
 
     Route::post('/admin/markdown-to-html', [\App\Application\Http\Controllers\Admin\MarkdownController::class, 'index'])->name('admin.markdown-to-html');
+    Route::post('/admin/clear-cache', [\App\Application\Http\Controllers\Admin\ClearCacheController::class, 'index'])->name('admin.clear-cache');
 });

@@ -1,7 +1,7 @@
 @presenter(\App\Application\View\HeaderPresenter)
 <header class="w-full bg-turmeric py-6 shadow z-10">
     <div class="container-max-md flex justify-between items-center">
-        @include('layouts.partials.logo')
+        @include('layouts.partials.logo', ['home_url' => $home_url])
         <nav class="hidden md:block" aria-labelledby="menu-title">
             <h1 id="menu-title" class="sr-only">Menu</h1>
             <ul class="inline-flex gap-x-16">

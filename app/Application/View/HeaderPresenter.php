@@ -10,15 +10,12 @@ use App\Domain\Utils\MenuItem;
 
 final class HeaderPresenter implements PresenterInterface
 {
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var RouterInterface */
-    private $router;
+    private UrlGeneratorInterface $urlGenerator;
+    private RouterInterface $router;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
-        RouterInterface $router
+        RouterInterface $router,
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->router = $router;
@@ -48,7 +45,6 @@ final class HeaderPresenter implements PresenterInterface
             new MenuItem('Articles', $this->urlGenerator->route('admin.articles.index')),
             new MenuItem('Pages', $this->urlGenerator->route('admin.pages.index')),
             new MenuItem('Comments', $this->urlGenerator->route('admin.comments.index')),
-            new MenuItem('Logout', $this->urlGenerator->route('admin.dashboard')),
         ];
     }
 

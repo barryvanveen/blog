@@ -13,4 +13,6 @@ interface CacheInterface
     public function put(string $key, $value, int $ttl): bool;
 
     public function forget(string $key): void;
+
+    public function clear(): void;
 }
