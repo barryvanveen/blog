@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/barryvanveen/blog.svg?branch=master)](https://travis-ci.org/barryvanveen/blog)
-[![Code Coverage](https://scrutinizer-ci.com/g/barryvanveen/blog/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/barryvanveen/blog/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/barryvanveen/blog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/barryvanveen/blog/?branch=master)
+Source code for [barryvanveen.nl](https://barryvanveen.nl)
 
 ## Getting started
 - Copy `.env.example` to `.env` and customize where necessary
