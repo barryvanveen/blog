@@ -11,5 +11,19 @@
 # timezone
 sudo timedatectl set-timezone "Europe/Amsterdam"
 
-# nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh
+# install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# switch to correct node version
+cd /home/vagrant/code
+nvm install
+nvm use
+
+# switch to correct php version
+sudo update-alternatives --set php /usr/bin/php8.0
+sudo update-alternatives --set php-config /usr/bin/php-config8.0
+sudo update-alternatives --set phpize /usr/bin/phpize8.0
