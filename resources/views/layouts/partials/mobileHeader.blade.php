@@ -13,9 +13,15 @@
                 <nav class="text-center" aria-labelledby="mobile-menu-title">
                     <h1 id="mobile-menu-title" class="sr-only">Menu</h1>
                     <ul>
+                        <li class="mb-4">
+                            <a class="text-xl hover:text-terracotta fancy-border fancy-border-turmeric"
+                               href="{{ $home_url }}">
+                                Home
+                            </a>
+                        </li>
                         @foreach($menu_items as $menu_item)
                             <li class="mb-4">
-                                <a type="button" class="text-xl hover:text-terracotta fancy-border fancy-border-turmeric"
+                                <a class="text-xl hover:text-terracotta fancy-border fancy-border-turmeric"
                                    href="{{ $menu_item->url() }}"
                                    @if($menu_item->openInNewWindow()) target="_blank"@endif>
                                     {{ $menu_item->name() }}
