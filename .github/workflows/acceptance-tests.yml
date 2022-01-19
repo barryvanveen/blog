@@ -1,0 +1,129 @@
+name: Acceptance tests
+
+on: [pull_request]
+
+jobs:
+  acceptance-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_USER: user
+          MYSQL_PASSWORD: secret
+          MYSQL_DATABASE: blog
+        ports:
+          - 3306:3306
+        # set health checks to wait until mysql database has started
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: xdebug
+
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.4.0
+        with:
+          redis-version: 6
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Read .nvmrc for Node.js version
+        id: node-version
+        run: |
+          version=`cat .nvmrc | xargs`
+          echo "::set-output name=version::$version"
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: ${{ steps.node-version.outputs.version }}
+
+      - name: Cache npm packages
+        id: npm-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-js-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-js-
+
+      - name: Install npm packages
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: yarn install --no-progress --frozen-lockfile
+
+      - name: Compile assets
+        run: yarn run prod
+
+      - name: Laravel setup
+        run: |
+          cp .env.ci .env
+          chmod -R 777 storage bootstrap/cache
+
+      - name: Test migrations and seeders
+        run: |
+          php artisan migrate:fresh --seed
+          php artisan migrate:fresh
+
+      - name: Feature tests
+        run: |
+          vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Feature --no-coverage
+
+      - name: Upgrade chrome driver
+        run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+
+      - name: Start chrome driver
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux &
+
+      - name: Run laravel server
+        run: php artisan serve --no-reload &
+
+      - name: Run dusk tests
+        run: php artisan dusk
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: storage/logs
+
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots
+
+      - name: Upload console logs
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: console
+          path: tests/Browser/console
