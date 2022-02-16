@@ -12,7 +12,7 @@
     <file>./bootstrap</file>
     <file>./config</file>
     <file>./database</file>
-    <file>./resources/lang</file>
+    <file>./lang</file>
     <file>./routes</file>
     <file>./tests</file>
 

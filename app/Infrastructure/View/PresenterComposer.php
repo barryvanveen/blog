@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\View;
 
 use App\Application\View\PresenterInterface;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\View\View;
 
@@ -21,9 +20,7 @@ class PresenterComposer
 
     public function compose(View $view): void
     {
-        try {
-            $html = file_get_contents($view->getPath());
-        } catch (Exception $exception) {
+        if (($html = @file_get_contents($view->getPath())) === false) {
             throw PresenterComposerException::becauseFileCouldNotBeFound($view->getPath());
         }
 

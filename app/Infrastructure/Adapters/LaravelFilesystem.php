@@ -5,21 +5,25 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Application\Interfaces\FilesystemInterface;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Factory;
+use League\Flysystem\Filesystem;
 
 class LaravelFilesystem implements FilesystemInterface
 {
-    /** @var Filesystem */
-    private $laravelFilesystem;
+    private Factory $laravelFilesystemFactory;
 
-    public function __construct(Filesystem $laravelFilesystem)
-    {
-        $this->laravelFilesystem = $laravelFilesystem;
+    public function __construct(
+        Factory $laravelFilesystemFactory,
+    ) {
+        $this->laravelFilesystemFactory = $laravelFilesystemFactory;
     }
 
-    public function getDriver(): \League\Flysystem\FilesystemInterface
+    /**
+     * @psalm-suppress InvalidReturnType
+     */
+    public function getDriver(): Filesystem
     {
-        /** @psalm-suppress UndefinedInterfaceMethod */
-        return $this->laravelFilesystem->getDriver();
+        /** @psalm-suppress InvalidReturnStatement */
+        return $this->laravelFilesystemFactory->disk();
     }
 }
