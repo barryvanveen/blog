@@ -19,7 +19,6 @@ use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Foundation\Exceptions\WhoopsHandler;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
@@ -38,12 +37,13 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as SymfonyNotFoundHttpException;
 use Throwable;
 use Whoops\Handler\HandlerInterface;
+use Whoops\Handler\PlainTextHandler;
 use Whoops\Run as Whoops;
 
 final class Handler implements ExceptionHandlerContract
 {
     /** @var string[] */
-    private $dontReport = [
+    private array $dontReport = [
         NotFoundHttpException::class,
         SymfonyNotFoundHttpException::class,
         MaintenanceModeException::class,
@@ -52,7 +52,7 @@ final class Handler implements ExceptionHandlerContract
     ];
 
     /** @var string[] */
-    private $dontFlash = [
+    private array $dontFlash = [
         'password',
         'password_confirmation',
     ];
@@ -106,7 +106,9 @@ final class Handler implements ExceptionHandlerContract
 
         if ($exception instanceof AuthenticationException) {
             return $this->unauthenticated($request);
-        } elseif ($exception instanceof ValidationException) {
+        }
+
+        if ($exception instanceof ValidationException) {
             return $this->invalid($request, $exception);
         }
 
@@ -187,7 +189,7 @@ final class Handler implements ExceptionHandlerContract
 
     private function toDebugResponse(Throwable $exception): SymfonyResponse
     {
-        return SymfonyResponse::create($this->getWhoopsOutput($exception), 500);
+        return new SymfonyResponse($this->getWhoopsOutput($exception), StatusCode::STATUS_INTERNAL_SERVER_ERROR);
     }
 
     private function getWhoopsOutput(Throwable $exception): string
@@ -206,7 +208,7 @@ final class Handler implements ExceptionHandlerContract
         try {
             return app(HandlerInterface::class);
         } catch (BindingResolutionException $e) {
-            return (new WhoopsHandler)->forDebug();
+            return new PlainTextHandler();
         }
     }
 
@@ -217,9 +219,7 @@ final class Handler implements ExceptionHandlerContract
             'exception' => $exception,
         ]);
 
-        $response = new Response($view, (int) $exception->getCode());
-
-        return $response->withException($exception);
+        return (new Response($view, (int)$exception->getCode()))->withException($exception);
     }
 
     private function toJsonResponse(Throwable $exception): JsonResponse
@@ -229,7 +229,9 @@ final class Handler implements ExceptionHandlerContract
                 ['error' => 'Your token expired, please reload the page'],
                 StatusCode::STATUS_PAGE_EXPIRED
             );
-        } elseif ($exception instanceof TooManyRequestsHttpException) {
+        }
+
+        if ($exception instanceof TooManyRequestsHttpException) {
             return $this->responseFactory->json(
                 ['error' => 'Too many requests, please try again later'],
                 StatusCode::STATUS_TOO_MANY_REQUESTS

@@ -200,7 +200,7 @@ class HandlerTest extends TestCase
                 'httpStatusCode' => StatusCode::STATUS_NOT_FOUND,
             ],
             [
-                'frameworkException' => new MaintenanceModeException(60),
+                'frameworkException' => new MaintenanceModeException(60, 60, "try again"),
                 'httpExceptionClass' => ServiceUnavailableException::class,
                 'httpStatusCode' => StatusCode::STATUS_SERVICE_UNAVAILABLE,
             ],
@@ -318,7 +318,7 @@ class HandlerTest extends TestCase
 
         // inputs are flashed by password is removed
         $session->flashInput(Argument::that(function (array $input) {
-            return $input['email'] = 123 && !isset($input['password']);
+            return ($input['email'] = 123) && !isset($input['password']);
         }))->shouldBeCalled();
 
         // errors are flashed
