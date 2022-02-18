@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'connection' => 'session', // links to one of the connections in database.php
+    'connection' => env('SESSION_CONNECTION', 'session'), // links to one of the connections in database.php
 
     /*
     |--------------------------------------------------------------------------
