@@ -43,7 +43,7 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => env('CACHE_CONNECTION', 'default'),
+            'connection' => env('CACHE_CONNECTION', 'cache'),  // links to one of the connections in database.php
             'lock_connection' => 'default',
         ],
     ],
