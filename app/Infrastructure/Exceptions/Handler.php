@@ -34,6 +34,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as SymfonyNotFoundHttpException;
 use Throwable;
 use Whoops\Handler\HandlerInterface;
@@ -49,6 +50,8 @@ final class Handler implements ExceptionHandlerContract
         MaintenanceModeException::class,
         TokenMismatchException::class,
         ValidationException::class,
+        MethodNotAllowedHttpException::class,
+        AuthenticationException::class,
     ];
 
     /** @var string[] */
