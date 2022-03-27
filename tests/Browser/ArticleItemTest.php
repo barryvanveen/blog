@@ -39,6 +39,7 @@ class ArticleItemTest extends DuskTestCase
                 ->assertNumberOfElements('div[itemprop="comment"]', 1)
 
                 // submit empty form and see error messages
+                ->waitForCsrfToken()
                 ->click('@submit')
                 ->waitForSubmitButtonEnabled()
                 ->assertSeeIn('@nameError', 'Please fill in your name')

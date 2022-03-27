@@ -321,13 +321,16 @@ return [
 
             'hashes' => [
                 'sha256' => [
-                    // local
-                    '0WFVqePfVUxUatTBjXFfw2Y5g9TdlE0p11zsk9NHDV0=', // js vars
-                    'oc3b/rTFb/zc8B5cu/iegs0mykMn09JDUvCT6BA2YGo=', // js vars admin
-                    // testing
-                    'ZtpvcqRHMCmrT3xUdtpkSKlDsRQ+gCvi+XQUXwTmyAk=', // js vars
-                    'jm/9yHKZByfFxfzR7AEnim2oQmV3zbuqAvdotsFiBLw=', // js vars admin
-                    // production
+                    // https://blog.test
+                    'VtxfVJ6Iy3A/kad1AnzSkmtgkH3KQC2hGeS/S6wWm5o=', // js vars
+                    '9PxH0Wex47bxC+BhPExyeEmhuWFgB6JwHxo6H13hpvg=', // js vars admin
+                    // http://nginx:80
+                    'mTYB4qiX+4cEaNlsYF4twR10mh1wS0GbtT7h9lQbLx4=', // js vars
+                    'js7JC8xOUkUnJ0YYd9mJWMir1SVszcd0x3DQvbrEQEI=', // js vars admin
+                    // http://127.0.0.1:8000
+                    '7rcHVaCBc3gFfamPDnEZP5GiaBXn0rhiq9vwewfQlSE=', // js vars
+                    '6exCX9+hZjgE26Veo3XtRgpEse/A7lXiW4cRqdLTwdY=', // js vars admin
+                    // https://barryvanveen.nl
                     'Cvl3DZb4MLZGYtmwQge/CUuGgVdOAvSS4fXlkPst9Hk=', // js vars
                     'WBbsOKBUMsCct/oe7jG5WdMMkgAqfyHvvE6VK8MRwuk=', // js vars admin
                 ],

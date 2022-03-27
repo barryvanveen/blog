@@ -33,19 +33,26 @@ const getHtmlFromMarkdown = (markdown) => {
 }
 
 const setHtmlOnPreviewElement = (html, el) => {
-  const previewEl = document.querySelector(el.dataset.preview)
+  el.innerHTML = html
+}
 
-  if (!previewEl) {
-    return
-  }
-
-  previewEl.innerHTML = html
+const setPreviewElementAsFilled = (el) => {
+  el.dataset.filled = 'true'
 }
 
 const updatePreview = (event) => {
   const markdown = event.target.value
+  const el = document.querySelector(event.target.dataset.preview)
+
+  if (!el) {
+    return
+  }
+
+  delete el.dataset.filled
+
   getHtmlFromMarkdown(markdown)
-    .then(data => setHtmlOnPreviewElement(data.html, event.target))
+    .then(data => setHtmlOnPreviewElement(data.html, el))
+    .then(() => setPreviewElementAsFilled(el))
     .catch(err => console.warn('Something went wrong.', err))
 }
 

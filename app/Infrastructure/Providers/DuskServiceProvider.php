@@ -30,6 +30,13 @@ class DuskServiceProvider extends ServiceProvider
             return $this;
         });
 
+        Browser::macro('waitForPreviewRendered', function (string $name) {
+            /** @var Browser $this */
+            $this->waitUntil('return document.querySelector(\'#editor-preview-'.$name.'[data-filled]\') !== null;', 5);
+
+            return $this;
+        });
+
         Browser::macro('waitForSubmitButtonEnabled', function () {
             /** @var Browser $this */
             $this->waitUntil('return document.querySelector(\'input[type="submit"]:not([disabled])\') !== null;', 5);

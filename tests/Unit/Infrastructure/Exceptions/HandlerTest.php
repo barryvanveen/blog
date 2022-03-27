@@ -15,22 +15,23 @@ use App\Infrastructure\Exceptions\Handler;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Session\Store;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response as ResponseFactory;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Validation\ValidationException;
+use Mockery;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as SymfonyNotFoundHttpException;
@@ -49,50 +50,26 @@ use Validator;
 class HandlerTest extends TestCase
 {
     private const REDIRECT_TO_PATH = '/my/redirect/to/path';
-
     private const PATH_TO_LOGIN = '/path/to/login';
+    private const VIEW_CONTENT = 'myViewContent';
 
-    /** @var ObjectProphecy|LoggerInterface */
-    private $logger;
-
-    /** @var ObjectProphecy|Factory */
-    private $viewFactory;
-
-    /** @var ObjectProphecy|Redirector */
-    private $redirector;
-
-    /** @var ObjectProphecy|UrlGenerator */
-    private $urlGenerator;
-
-    /** @var ObjectProphecy|Request */
-    private $request;
-
-    /** @var ObjectProphecy|ResponseFactory */
-    private $responseFactory;
-
-    /** @var Handler */
-    private $handler;
+    private ObjectProphecy|Request $request;
+    private Handler $handler;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->logger = $this->prophesize(LoggerInterface::class);
-        $this->viewFactory = $this->prophesize(Factory::class);
-        $this->redirector = $this->prophesize(Redirector::class);
-        $this->urlGenerator = $this->prophesize(UrlGenerator::class);
-        $this->urlGenerator->route('login')->willReturn(self::PATH_TO_LOGIN);
         $this->request = $this->prophesize(Request::class);
         $this->request->expectsJson()->willReturn(false);
-        $this->responseFactory = $this->prophesize(ResponseFactory::class);
 
-        $this->handler = new Handler(
-            $this->logger->reveal(),
-            $this->viewFactory->reveal(),
-            $this->redirector->reveal(),
-            $this->urlGenerator->reveal(),
-            $this->responseFactory->reveal()
-        );
+        Log::spy();
+        View::spy();
+        Redirect::spy();
+        URL::spy();
+        ResponseFactory::spy();
+
+        $this->handler = new Handler();
     }
 
     /**
@@ -109,11 +86,9 @@ class HandlerTest extends TestCase
 
         // assert
         if ($shouldBeReported) {
-            $this->logger->error('MyMessage', ['exception' => $exception])
-                ->shouldBeCalled();
+            Log::shouldHaveReceived()->error('MyMessage', ['exception' => $exception]);
         } else {
-            $this->logger->error('MyMessage', ['exception' => $exception])
-                ->shouldNotBeCalled();
+            Log::shouldNotHaveReceived()->error('MyMessage', ['exception' => $exception]);
         }
     }
 
@@ -141,15 +116,16 @@ class HandlerTest extends TestCase
         // arrange
         $exception = new NotFoundHttpException('MyMessage', StatusCode::STATUS_NOT_FOUND);
 
-        $this->viewFactory->make('errors.404', Argument::type('array'))
-            ->willReturn('myViewContent');
+        View::shouldReceive('make')
+            ->with('errors.404', Mockery::type('array'))
+            ->andReturn(self::VIEW_CONTENT);
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
 
         // assert
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('myViewContent', $response->getContent());
+        $this->assertEquals(self::VIEW_CONTENT, $response->getContent());
         $this->assertEquals(StatusCode::STATUS_NOT_FOUND, $response->getStatusCode());
     }
 
@@ -164,8 +140,9 @@ class HandlerTest extends TestCase
         int $httpStatusCode
     ): void {
         // arrange
-        $this->viewFactory->make(Argument::cetera())
-            ->willReturn('myViewContent');
+        View::shouldReceive('make')
+            ->with(Mockery::any())
+            ->andReturn(self::VIEW_CONTENT);
 
         // act
         $response = $this->handler->render($this->request->reveal(), $frameworkException);
@@ -216,8 +193,9 @@ class HandlerTest extends TestCase
     public function itTurnsNonHttpExceptionsIntoInternalServerErrorExceptions(): void
     {
         // arrange
-        $this->viewFactory->make('errors.500', Argument::type('array'))
-            ->willReturn('myViewContent');
+        View::shouldReceive('make')
+            ->with('errors.500', Mockery::type('array'))
+            ->andReturn(self::VIEW_CONTENT);
 
         // act
         $response = $this->handler->render($this->request->reveal(), new Exception());
@@ -235,7 +213,10 @@ class HandlerTest extends TestCase
         $exception = new Exception();
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_INTERNAL_SERVER_ERROR)->willReturn(new JsonResponse());
+
+        ResponseFactory::shouldReceive('json')
+            ->with(Mockery::type('array'), StatusCode::STATUS_INTERNAL_SERVER_ERROR)
+            ->andReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -250,9 +231,13 @@ class HandlerTest extends TestCase
         // arrange
         $exception = new AuthenticationException();
 
-        $this->redirector->guest(self::PATH_TO_LOGIN)
-            ->willReturn(new RedirectResponse(self::PATH_TO_LOGIN))
-            ->shouldBeCalled();
+        Url::shouldReceive('route')
+            ->with('login')
+            ->andReturn(self::PATH_TO_LOGIN);
+
+        Redirect::shouldReceive('guest')
+            ->with(self::PATH_TO_LOGIN)
+            ->andReturn(new RedirectResponse(self::PATH_TO_LOGIN));
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -268,7 +253,10 @@ class HandlerTest extends TestCase
         $exception = new AuthenticationException();
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_UNAUTHORIZED)->willReturn(new JsonResponse());
+
+        ResponseFactory::shouldReceive('json')
+            ->with(Mockery::type('array'), StatusCode::STATUS_UNAUTHORIZED)
+            ->andReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -306,9 +294,9 @@ class HandlerTest extends TestCase
         $redirect = new RedirectResponse(self::REDIRECT_TO_PATH);
         $redirect->setSession($session->reveal());
 
-        $this->redirector->to(self::REDIRECT_TO_PATH)
-            ->willReturn($redirect)
-            ->shouldBeCalled();
+        Redirect::shouldReceive('to')
+            ->with(self::REDIRECT_TO_PATH)
+            ->andReturn($redirect);
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -349,7 +337,10 @@ class HandlerTest extends TestCase
             ->redirectTo(self::REDIRECT_TO_PATH);
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_BAD_REQUEST)->willReturn(new JsonResponse());
+
+        ResponseFactory::shouldReceive('json')
+            ->with(Mockery::type('array'), StatusCode::STATUS_BAD_REQUEST)
+            ->andReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -365,7 +356,10 @@ class HandlerTest extends TestCase
         $exception = new TokenMismatchException();
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_PAGE_EXPIRED)->willReturn(new JsonResponse());
+
+        ResponseFactory::shouldReceive('json')
+            ->with(Mockery::type('array'), StatusCode::STATUS_PAGE_EXPIRED)
+            ->andReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
@@ -381,7 +375,10 @@ class HandlerTest extends TestCase
         $exception = new ThrottleRequestsException();
 
         $this->request->expectsJson()->willReturn(true);
-        $this->responseFactory->json(Argument::type('array'), StatusCode::STATUS_TOO_MANY_REQUESTS)->willReturn(new JsonResponse());
+
+        ResponseFactory::shouldReceive('json')
+            ->with(Mockery::type('array'), StatusCode::STATUS_TOO_MANY_REQUESTS)
+            ->andReturn(new JsonResponse());
 
         // act
         $response = $this->handler->render($this->request->reveal(), $exception);
