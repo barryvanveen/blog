@@ -39,7 +39,7 @@
         "nunomaduro/collision": "^6.1",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
-        "qossmic/deptrac-shim": "^0.19",
+        "qossmic/deptrac-shim": "^0.20",
         "roave/security-advisories": "dev-latest",
         "rregeer/phpunit-coverage-check": "^0.3.1",
         "slevomat/coding-standard": "^7.0",
