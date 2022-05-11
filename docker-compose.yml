@@ -1,0 +1,92 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: ./docker/nginx
+    depends_on:
+      - php
+      - mysql
+      - redis
+      - maildev
+    restart: unless-stopped
+    working_dir: /var/www/app
+    volumes:
+      - ./:/var/www/app
+      - ./docker/nginx/certs:/etc/nginx/certs
+    ports:
+      - '127.0.0.1:80:80'
+      - '127.0.0.1:443:443'
+    networks:
+      - laravel
+
+  php:
+    container_name: php
+    restart: unless-stopped
+    build:
+      context: ./docker/php80
+      args:
+        xdebug: 'false'
+    depends_on:
+      - mysql
+    working_dir: /var/www/app
+    volumes:
+      - ./:/var/www/app
+    networks:
+      - laravel
+
+  mysql:
+    container_name: mysql
+    restart: unless-stopped
+    build: ./docker/mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/mysql/provisioning:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=homestead
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=mysql
+    ports:
+      - '127.0.0.1:3306:3306'
+    networks:
+      - laravel
+
+  redis:
+    container_name: redis
+    restart: unless-stopped
+    build: ./docker/redis
+    ports:
+      - '127.0.0.1:6379:6379'
+    networks:
+      - laravel
+
+  maildev:
+    container_name: maildev
+    restart: unless-stopped
+    build: ./docker/maildev
+    ports:
+      - '127.0.0.1:1080:1080'
+    networks:
+      - laravel
+
+  selenium:
+    container_name: selenium
+    restart: unless-stopped
+    build: ./docker/selenium
+    shm_size: '3gb'
+    volumes:
+      - '/dev/shm:/dev/shm'
+    ports:
+      - '127.0.0.1:4444:4444'
+    networks:
+      - laravel
+
+volumes:
+  dbdata:
+
+networks:
+  laravel:

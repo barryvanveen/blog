@@ -16,21 +16,21 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response as ResponseFactory;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Validation\ValidationException;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -60,33 +60,13 @@ final class Handler implements ExceptionHandlerContract
         'password_confirmation',
     ];
 
-    private LoggerInterface $logger;
-    private Factory $viewFactory;
-    private Redirector $redirector;
-    private UrlGenerator $urlGenerator;
-    private ResponseFactory $responseFactory;
-
-    public function __construct(
-        LoggerInterface $logger,
-        Factory $viewFactory,
-        Redirector $redirector,
-        UrlGenerator $urlGenerator,
-        ResponseFactory $responseFactory
-    ) {
-        $this->logger = $logger;
-        $this->viewFactory = $viewFactory;
-        $this->redirector = $redirector;
-        $this->urlGenerator = $urlGenerator;
-        $this->responseFactory = $responseFactory;
-    }
-
     public function report(Throwable $e)
     {
         if ($this->shouldReport($e) === false) {
             return;
         }
 
-        $this->logger->error($e->getMessage(), ['exception' => $e]);
+        Log::error($e->getMessage(), ['exception' => $e]);
     }
 
     public function shouldReport(Throwable $e)
@@ -137,10 +117,10 @@ final class Handler implements ExceptionHandlerContract
     private function unauthenticated(Request $request)
     {
         if ($request->expectsJson()) {
-            return $this->responseFactory->json(['message' => 'Forbidden'], StatusCode::STATUS_UNAUTHORIZED);
+            return ResponseFactory::json(['message' => 'Forbidden'], StatusCode::STATUS_UNAUTHORIZED);
         }
 
-        return $this->redirector->guest($this->urlGenerator->route('login'));
+        return Redirect::guest(URL::route('login'));
     }
 
     /**
@@ -151,10 +131,10 @@ final class Handler implements ExceptionHandlerContract
     private function invalid(Request $request, ValidationException $exception)
     {
         if ($request->expectsJson()) {
-            return $this->responseFactory->json($exception->errors(), StatusCode::STATUS_BAD_REQUEST);
+            return ResponseFactory::json($exception->errors(), StatusCode::STATUS_BAD_REQUEST);
         }
 
-        return $this->redirector->to($exception->redirectTo)
+        return Redirect::to($exception->redirectTo)
             ->withInput(Arr::except($request->input(), $this->dontFlash))
             ->withErrors($exception->errors(), $exception->errorBag);
     }
@@ -217,7 +197,7 @@ final class Handler implements ExceptionHandlerContract
 
     private function toResponse(Throwable $exception): Response
     {
-        $view = $this->viewFactory->make('errors.'.$exception->getCode(), [
+        $view = View::make('errors.'.$exception->getCode(), [
             'errors' => new ViewErrorBag(),
             'exception' => $exception,
         ]);
@@ -228,20 +208,20 @@ final class Handler implements ExceptionHandlerContract
     private function toJsonResponse(Throwable $exception): JsonResponse
     {
         if ($exception instanceof PageExpiredHttpException) {
-            return $this->responseFactory->json(
+            return ResponseFactory::json(
                 ['error' => 'Your token expired, please reload the page'],
                 StatusCode::STATUS_PAGE_EXPIRED
             );
         }
 
         if ($exception instanceof TooManyRequestsHttpException) {
-            return $this->responseFactory->json(
+            return ResponseFactory::json(
                 ['error' => 'Too many requests, please try again later'],
                 StatusCode::STATUS_TOO_MANY_REQUESTS
             );
         }
 
-        return $this->responseFactory->json(
+        return ResponseFactory::json(
             ['error' => 'Sorry, something went wrong'],
             StatusCode::STATUS_INTERNAL_SERVER_ERROR
         );

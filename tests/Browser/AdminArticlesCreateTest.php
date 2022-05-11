@@ -53,7 +53,7 @@ class AdminArticlesCreateTest extends DuskTestCase
                 ->type('@description', 'Description')
                 ->type('@content', 'Content')
                 ->waitForCsrfToken()
-                ->click('@submit')
+                ->clickAndWaitForReload('@submit')
                 ->assertRouteIs('admin.articles.index')
                 ->assertSee($title);
         });
@@ -74,7 +74,9 @@ class AdminArticlesCreateTest extends DuskTestCase
                 ->type('@description', 'Description')
                 ->type('@content', 'Content')
                 ->waitForCsrfToken()
-                ->click('@submit')
+                ->waitForPreviewRendered('description')
+                ->waitForPreviewRendered('content')
+                ->clickAndWaitForReload('@submit')
                 ->assertRouteIs('admin.articles.create')
                 ->assertSeeIn('@titleError', "The title field is required.")
                 ->assertInputValue('@publicationDate', $publicationDate);
