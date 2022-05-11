@@ -23,7 +23,7 @@ const registerInputEventListener = (el) => {
 
 const getHtmlFromMarkdown = (markdown) => {
   const data = {
-    markdown: markdown,
+    markdown,
     _token: document.querySelector('input[name="_token"]').value
   }
 
