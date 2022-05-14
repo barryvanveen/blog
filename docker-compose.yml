@@ -3,8 +3,7 @@ version: '3'
 services:
   nginx:
     container_name: nginx
-    build:
-      context: ./docker/nginx
+    build: ./docker/nginx
     depends_on:
       - php
       - mysql
@@ -45,7 +44,7 @@ services:
       - ./docker/mysql/provisioning:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_USER=homestead
+      - MYSQL_USER=blog
       - MYSQL_PASSWORD=secret
       - MYSQL_ROOT_PASSWORD=secret
       - SERVICE_TAGS=dev
