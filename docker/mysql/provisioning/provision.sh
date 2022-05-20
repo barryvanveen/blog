@@ -2,4 +2,4 @@
 
 CREATE DATABASE blog;
 CREATE DATABASE blog_dusk;
-GRANT ALL PRIVILEGES ON *.* TO 'homestead'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'blog'@'%';
