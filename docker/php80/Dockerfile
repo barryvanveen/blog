@@ -21,8 +21,6 @@ RUN if [ ${xdebug} = true ]; then \
 
 RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
 RUN apt-get install -y nodejs
-# this line will enable yarn
-RUN corepack enable
 
 COPY php-configuration.ini /usr/local/etc/php/conf.d/php-configuration.ini
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

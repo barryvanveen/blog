@@ -6,7 +6,6 @@
 /.idea
 /.vagrant
 npm-debug.log
-yarn-error.log
 .deptrac.cache
 .env
 .env.dusk.local
