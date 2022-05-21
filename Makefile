@@ -2,8 +2,8 @@ install:
 	docker-compose exec php composer install
 	docker-compose exec php php artisan key:generate
 	docker-compose exec php php artisan migrate
-	docker-compose exec php yarn install
-	docker-compose exec php yarn run dev
+	docker-compose exec php npm install
+	docker-compose exec php npm run dev
 
 start:
 	docker-compose up -d --build --remove-orphans

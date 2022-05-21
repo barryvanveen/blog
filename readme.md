@@ -3,7 +3,7 @@ Source code for [barryvanveen.nl](https://barryvanveen.nl)
 ## Getting started
 - Copy `.env.example` to `.env` and customize where necessary
 - Run `make start` to start all Docker containers
-- Run `make install` to install composer and yarn dependencies
+- Run `make install` to install composer and npm dependencies
 - (optional) Run `install_cert` to trust the provided certificate for blog.test. This allows you to run it on https without any annoying warnings.
 
 When you are done, run `make stop` to shut down all containers.
