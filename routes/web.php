@@ -16,7 +16,6 @@ Route::middleware(['cache'])->group(function () {
         ->middleware(['throttle:comments']);
 
     Route::get('/sitemap.xml', [\App\Application\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
-    Route::get('/images/{filename}', [\App\Application\Http\Controllers\ImagesController::class, 'show'])->name('images');
 });
 
 Route::get('/csrf-token', [\App\Application\Http\Controllers\CsrfController::class, 'csrf'])->name('csrf');
