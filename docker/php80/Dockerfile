@@ -8,7 +8,7 @@ ARG NODE_VERSION=16
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update \
-    && apt-get install -y libzip-dev
+    && apt-get install -y libzip-dev unzip
 
 RUN docker-php-ext-install bcmath pdo_mysql zip
 
