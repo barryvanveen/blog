@@ -11,15 +11,10 @@ use App\Application\Pages\Events\PageWasUpdated;
 
 final class PageListener extends BaseEventListener
 {
-    private CacheInterface $cache;
-    private UrlGeneratorInterface $urlGenerator;
-
     public function __construct(
-        CacheInterface $cache,
-        UrlGeneratorInterface $urlGenerator
+        private CacheInterface $cache,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->cache = $cache;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function handlePageWasUpdated(PageWasUpdated $event): void
@@ -28,44 +23,30 @@ final class PageListener extends BaseEventListener
 
         switch ($slug) {
             case 'about':
-                $this->clearAboutPageCache();
-                $this->clearSitemapCache();
+                $this->clearRouteCache('about');
+                $this->clearRouteCache('sitemap');
                 break;
             case 'books':
-                $this->clearBooksPageCache();
-                $this->clearHomePageCache();
-                $this->clearSitemapCache();
+                $this->clearRouteCache('books');
+                $this->clearRouteCache('home');
+                $this->clearRouteCache('sitemap');
                 break;
             case 'home':
-                $this->clearHomePageCache();
-                $this->clearSitemapCache();
+                $this->clearRouteCache('home');
+                $this->clearRouteCache('sitemap');
+                break;
+            case 'music':
+                $this->clearRouteCache('music');
+                $this->clearRouteCache('sitemap');
                 break;
             default:
                 throw CacheInvalidationException::unkownSlug($slug);
         }
     }
 
-    private function clearAboutPageCache(): void
+    private function clearRouteCache(string $route): void
     {
-        $aboutUrl = $this->urlGenerator->route('about');
-        $this->cache->forget($aboutUrl);
-    }
-
-    private function clearBooksPageCache(): void
-    {
-        $booksUrl = $this->urlGenerator->route('books');
-        $this->cache->forget($booksUrl);
-    }
-
-    private function clearHomePageCache(): void
-    {
-        $homeUrl = $this->urlGenerator->route('home');
-        $this->cache->forget($homeUrl);
-    }
-
-    private function clearSitemapCache(): void
-    {
-        $sitemapUrl = $this->urlGenerator->route('sitemap');
-        $this->cache->forget($sitemapUrl);
+        $url = $this->urlGenerator->route($route);
+        $this->cache->forget($url);
     }
 }

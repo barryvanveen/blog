@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5c4d7b39123c0e6c811099a3e5d3b2a",
+    "content-hash": "ceea4d90c22dd90d432ec429b4ee9c37",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -146,6 +146,76 @@
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.224.3"
             },
             "time": "2022-06-02T18:22:57+00:00"
+        },
+        {
+            "name": "barryvanveen/lastfm",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvanveen/lastfm.git",
+                "reference": "8b5bfc5c1098937ca3c242e8ef9196984f473a4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvanveen/lastfm/zipball/8b5bfc5c1098937ca3c242e8ef9196984f473a4e",
+                "reference": "8b5bfc5c1098937ca3c242e8ef9196984f473a4e",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1",
+                "guzzlehttp/guzzle": "^6.5.6 || ^7.4.3",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8.0",
+                "phpunit/phpunit": "^9.0",
+                "rregeer/phpunit-coverage-check": "^0.3.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvanveen\\Lastfm\\LastfmServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvanveen\\Lastfm\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry van Veen",
+                    "email": "barryvanveen@gmail.com",
+                    "homepage": "https://barryvanveen.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Last.fm API client for PHP 7+",
+            "homepage": "https://github.com/barryvanveen/lastfm",
+            "keywords": [
+                "PHP7",
+                "api",
+                "client",
+                "laravel",
+                "laravel5",
+                "last.fm",
+                "lastfm",
+                "service provider"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvanveen/lastfm/issues",
+                "source": "https://github.com/barryvanveen/lastfm/tree/2.0.0"
+            },
+            "time": "2022-06-06T07:35:11+00:00"
         },
         {
             "name": "bepsvpt/secure-headers",

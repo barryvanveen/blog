@@ -215,4 +215,28 @@ class PageRepositoryTest extends TestCase
         $this->expectException(RecordNotFoundException::class);
         $this->repository->home();
     }
+
+    /** @test */
+    public function itRetrievesMusicPageBySlug(): void
+    {
+        // arrange
+        /** @var PageEloquentModel $eloquentPage */
+        $eloquentPage = PageFactory::new()->create([
+            'slug' => 'music',
+        ]);
+        $page = $this->repository->music();
+
+        // assert
+        $this->assertInstanceOf(Page::class, $page);
+        $this->assertEquals($eloquentPage->slug, $page->slug());
+        $this->assertEquals($eloquentPage->title, $page->title());
+    }
+
+    /** @test */
+    public function itThrowsAnExceptionWhenRetrievingUnknownMusicPage(): void
+    {
+        // assert
+        $this->expectException(RecordNotFoundException::class);
+        $this->repository->music();
+    }
 }

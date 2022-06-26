@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'Home',
             'About',
             'Books',
+            'Music',
         ];
 
         foreach ($pages as $title) {

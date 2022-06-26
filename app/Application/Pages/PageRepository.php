@@ -16,15 +16,11 @@ final class PageRepository implements PageRepositoryInterface
     private const SLUG_ABOUT = 'about';
     private const SLUG_BOOKS = 'books';
     private const SLUG_HOME = 'home';
+    private const SLUG_MUSIC = 'music';
 
-    /** @var QueryBuilderInterface */
-    private $queryBuilder;
-
-    /** @var ModelMapperInterface */
-    private $modelMapper;
-
-    /** @var EventBusInterface */
-    private $eventBus;
+    private QueryBuilderInterface $queryBuilder;
+    private ModelMapperInterface $modelMapper;
+    private EventBusInterface $eventBus;
 
     public function __construct(
         QueryBuilderInterface $queryBuilder,
@@ -90,5 +86,10 @@ final class PageRepository implements PageRepositoryInterface
     public function home(): Page
     {
         return $this->getBySlug(self::SLUG_HOME);
+    }
+
+    public function music(): Page
+    {
+        return $this->getBySlug(self::SLUG_MUSIC);
     }
 }
