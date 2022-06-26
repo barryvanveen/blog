@@ -125,12 +125,13 @@ class CacheResponseMiddlewareTest extends TestCase
     }
 
     /** @test */
-    public function itCachesUncachedResponses(): void
+    public function itCachesUncachedResponsesWithDefaultTtl(): void
     {
         // arrange
         $this->mockCacheableRequest();
 
         $url = 'myurl';
+        $defaultTtl = 604800;
 
         $this->request->url()
             ->willReturn($url);
@@ -138,13 +139,42 @@ class CacheResponseMiddlewareTest extends TestCase
         $this->cache->has($url)
             ->willReturn(false);
 
-        $this->cache->put($url, Argument::any(), Argument::any())
+        $this->cache->put($url, Argument::any(), $defaultTtl)
             ->shouldBeCalled();
 
         // act
         $result = $this->middleware->handle(
             $this->request->reveal(),
             $this->next
+        );
+
+        // assert
+        $this->assertEquals('nextResponse', (string) $result->getContent());
+    }
+
+    /** @test */
+    public function itCachesUncachedResponsesWithCustomTtl(): void
+    {
+        // arrange
+        $this->mockCacheableRequest();
+
+        $url = 'myurl';
+        $customTtl = 123;
+
+        $this->request->url()
+            ->willReturn($url);
+
+        $this->cache->has($url)
+            ->willReturn(false);
+
+        $this->cache->put($url, Argument::any(), $customTtl)
+            ->shouldBeCalled();
+
+        // act
+        $result = $this->middleware->handle(
+            $this->request->reveal(),
+            $this->next,
+            $customTtl,
         );
 
         // assert

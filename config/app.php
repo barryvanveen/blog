@@ -178,6 +178,7 @@ return [
         App\Infrastructure\Providers\RequestServiceProvider::class,
         App\Infrastructure\Providers\RouteServiceProvider::class,
         App\Infrastructure\Providers\ViewServiceProvider::class,
+        Barryvanveen\Lastfm\LastfmServiceProvider::class,
     ],
 
     /*

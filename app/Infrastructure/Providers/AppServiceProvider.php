@@ -15,6 +15,7 @@ use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\EventBusInterface;
 use App\Application\Interfaces\FilesystemInterface;
 use App\Application\Interfaces\GuardInterface;
+use App\Application\Interfaces\LastfmInterface;
 use App\Application\Interfaces\MailerInterface;
 use App\Application\Interfaces\MarkdownConverterInterface;
 use App\Application\Interfaces\PathBuilderInterface;
@@ -43,6 +44,7 @@ use App\Infrastructure\Adapters\LaravelSession;
 use App\Infrastructure\Adapters\LaravelSlugFactory;
 use App\Infrastructure\Adapters\LaravelUrlGenerator;
 use App\Infrastructure\Adapters\LaravelViewBuilder;
+use App\Infrastructure\Adapters\LastfmHttpClient;
 use App\Infrastructure\Adapters\SystemClock;
 use Illuminate\Support\ServiceProvider;
 
@@ -59,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EventBusInterface::class, LaravelEventBus::class);
         $this->app->bind(FilesystemInterface::class, LaravelFilesystem::class);
         $this->app->bind(GuardInterface::class, LaravelGuard::class);
+        $this->app->bind(LastfmInterface::class, LastfmHttpClient::class);
         $this->app->bind(MailerInterface::class, LaravelMailer::class);
         $this->app->bind(MarkdownConverterInterface::class, CebeMarkdownConverter::class);
         $this->app->bind(PathBuilderInterface::class, LaravelPathBuilder::class);

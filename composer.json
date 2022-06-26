@@ -13,6 +13,7 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "aws/aws-sdk-php": "^3.173",
+        "barryvanveen/lastfm": "^2.0.0",
         "bepsvpt/secure-headers": "^7.2",
         "bugsnag/bugsnag-laravel": "^2.0",
         "cebe/markdown": "^1.2",

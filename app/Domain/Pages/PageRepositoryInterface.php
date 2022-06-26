@@ -22,4 +22,6 @@ interface PageRepositoryInterface
     public function books(): Page;
 
     public function home(): Page;
+
+    public function music(): Page;
 }

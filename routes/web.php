@@ -18,6 +18,9 @@ Route::middleware(['cache'])->group(function () {
     Route::get('/sitemap.xml', [\App\Application\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 });
 
+Route::get('/about/music', [\App\Application\Http\Controllers\MusicController::class, 'index'])->name('music')
+    ->middleware('cache:86400');
+
 Route::get('/csrf-token', [\App\Application\Http\Controllers\CsrfController::class, 'csrf'])->name('csrf');
 
 Route::get('/login', [\App\Application\Http\Controllers\LoginController::class, 'form'])->name('login');
