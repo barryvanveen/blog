@@ -8,5 +8,6 @@
 
 <meta name="url" content="{{ $metaData->url() }}" />
 <meta property="og:url" content="{{ $metaData->url() }}" />
+<link rel="canonical" href="{{ $metaData->url() }}">
 
 <meta name="og:type" content="{{ $metaData->type() }}">
