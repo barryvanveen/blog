@@ -58,16 +58,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.233.2",
+            "version": "3.234.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c804eb974240ae04b4ae5381f45003f25bbed56c"
+                "reference": "d2113f1e5ec9f7f19de2472f5063333b39a55280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c804eb974240ae04b4ae5381f45003f25bbed56c",
-                "reference": "c804eb974240ae04b4ae5381f45003f25bbed56c",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d2113f1e5ec9f7f19de2472f5063333b39a55280",
+                "reference": "d2113f1e5ec9f7f19de2472f5063333b39a55280",
                 "shasum": ""
             },
             "require": {
@@ -144,9 +144,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.233.2"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.234.0"
             },
-            "time": "2022-08-15T18:16:30+00:00"
+            "time": "2022-08-22T18:20:42+00:00"
         },
         {
             "name": "barryvanveen/lastfm",
