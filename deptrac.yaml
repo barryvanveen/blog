@@ -1,4 +1,4 @@
-parameters:
+deptrac:
   paths:
     - ./app
     - ./vendor/bugsnag
@@ -11,28 +11,28 @@ parameters:
     - ./vendor/nesbot
     - ./vendor/symfony
   layers:
-    - name: Infrastructure
-      collectors:
-        - type: directory
-          regex: app/Infrastructure/.*
     - name: Framework
       collectors:
         - type: directory
-          regex: vendor/.*
+          value: vendor/.*
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: app/Infrastructure/.*
     - name: Application
       collectors:
         - type: directory
-          regex: app/Application/.*
+          value: app/Application/.*
     - name: Domain
       collectors:
         - type: directory
-          regex: app/Domain/.*
+          value: app/Domain/.*
   ruleset:
-    Framework:
+    Framework: ~
     Infrastructure:
       - Framework
       - Application
       - Domain
     Application:
       - Domain
-    Domain:
+    Domain: ~
