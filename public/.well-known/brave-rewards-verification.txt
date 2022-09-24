@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: barryvanveen.nl
+Token: a381c9419414b1fcb05ad98eac5b30e35d633104ef5dff8d2c45ac2e7f19ac52
