@@ -1,2 +1,4 @@
 deptrac:
   skip_violations:
+    App\Infrastructure\Console\Commands\CreateUser:
+      - Illuminate\Console\Signals
