@@ -1,1 +1,1 @@
-FROM maildev/maildev:2.0.2
+FROM maildev/maildev:2.0.5

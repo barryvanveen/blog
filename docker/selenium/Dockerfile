@@ -1,1 +1,1 @@
-FROM seleniarm/standalone-chromium:4.1.3-20220412
+FROM seleniarm/standalone-chromium:4.5.0-20221001
