@@ -9,8 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class DashboardController
 {
-    public function __construct(private ResponseBuilderInterface $responseBuilder)
-    {
+    public function __construct(
+        private ResponseBuilderInterface $responseBuilder,
+    ) {
     }
 
     public function index(): ResponseInterface

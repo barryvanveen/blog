@@ -8,8 +8,13 @@ use DateTimeInterface;
 
 class Page
 {
-    public function __construct(private string $content, private string $description, private DateTimeInterface $lastUpdated, private string $slug, private string $title)
-    {
+    public function __construct(
+        private string $content,
+        private string $description,
+        private DateTimeInterface $lastUpdated,
+        private string $slug,
+        private string $title,
+    ) {
     }
 
     public function content(): string

@@ -13,8 +13,11 @@ use App\Domain\Core\CollectionInterface;
 
 final class ArticlesRssItemPresenter implements PresenterInterface
 {
-    public function __construct(private ArticleRepositoryInterface $repository, private UrlGeneratorInterface $urlGenerator, private DateTimeFormatterInterface $dateTimeFormatter)
-    {
+    public function __construct(
+        private ArticleRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+    ) {
     }
 
     public function present(): array

@@ -8,8 +8,16 @@ use DateTimeImmutable;
 
 class Comment
 {
-    public function __construct(private string $articleUuid, private string $content, private DateTimeImmutable $createdAt, private string $email, private string $ip, private string $name, private CommentStatus $status, private string $uuid)
-    {
+    public function __construct(
+        private string $articleUuid,
+        private string $content,
+        private DateTimeImmutable $createdAt,
+        private string $email,
+        private string $ip,
+        private string $name,
+        private CommentStatus $status,
+        private string $uuid,
+    ) {
     }
 
     public function articleUuid(): string

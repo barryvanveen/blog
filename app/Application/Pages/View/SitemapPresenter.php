@@ -16,8 +16,12 @@ use DateTimeInterface;
 
 final class SitemapPresenter implements PresenterInterface
 {
-    public function __construct(private PageRepositoryInterface $pageRepository, private UrlGeneratorInterface $urlGenerator, private DateTimeFormatterInterface $dateTimeFormatter, private ArticleRepositoryInterface $articleRepository)
-    {
+    public function __construct(
+        private PageRepositoryInterface $pageRepository,
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+        private ArticleRepositoryInterface $articleRepository,
+    ) {
     }
 
     public function present(): array

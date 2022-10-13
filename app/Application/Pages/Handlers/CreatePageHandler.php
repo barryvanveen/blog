@@ -12,8 +12,9 @@ use DateTimeImmutable;
 
 final class CreatePageHandler extends BaseCommandHandler
 {
-    public function __construct(private PageRepositoryInterface $repository)
-    {
+    public function __construct(
+        private PageRepositoryInterface $repository,
+    ) {
     }
 
     public function handleCreatePage(CreatePage $command): void

@@ -20,8 +20,11 @@ use Psr\Http\Message\ResponseInterface;
 
 final class ArticlesController
 {
-    public function __construct(private ArticleRepositoryInterface $articleRepository, private ResponseBuilderInterface $responseBuilder, private CommandBusInterface $commandBus)
-    {
+    public function __construct(
+        private ArticleRepositoryInterface $articleRepository,
+        private ResponseBuilderInterface $responseBuilder,
+        private CommandBusInterface $commandBus,
+    ) {
     }
 
     public function index(): ResponseInterface

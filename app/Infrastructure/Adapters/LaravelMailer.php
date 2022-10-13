@@ -17,7 +17,7 @@ class LaravelMailer implements MailerInterface
 
     public function __construct(
         Factory $factory,
-        private UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
     ) {
         $this->mailer = $factory->mailer();
     }
@@ -52,7 +52,7 @@ class LaravelMailer implements MailerInterface
     private function send(
         string $template,
         string $subject,
-        array $variables
+        array $variables,
     ): void {
         $this->mailer->send(
             new MarkdownMailable(

@@ -10,8 +10,10 @@ use App\Application\View\PresenterInterface;
 
 final class AdminPagesCreatePresenter implements PresenterInterface
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private SessionInterface $session)
-    {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private SessionInterface $session,
+    ) {
     }
 
     public function present(): array

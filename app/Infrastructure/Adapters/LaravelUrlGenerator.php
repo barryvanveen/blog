@@ -9,8 +9,9 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 
 class LaravelUrlGenerator implements UrlGeneratorInterface
 {
-    public function __construct(private UrlGenerator $laravelUrlGenerator)
-    {
+    public function __construct(
+        private UrlGenerator $laravelUrlGenerator,
+    ) {
     }
 
     public function route(string $name, array $parameters = [], bool $absolute = true): string

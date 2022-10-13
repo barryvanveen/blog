@@ -18,8 +18,13 @@ final class AdminCommentsEditPresenter implements PresenterInterface
 {
     use PresentsArticles, PresentsCommentStatuses;
 
-    public function __construct(private CommentRepositoryInterface $repository, private UrlGeneratorInterface $urlGenerator, private AdminCommentEditRequestInterface $request, private SessionInterface $session, private ArticleRepositoryInterface $articleRepository)
-    {
+    public function __construct(
+        private CommentRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private AdminCommentEditRequestInterface $request,
+        private SessionInterface $session,
+        private ArticleRepositoryInterface $articleRepository,
+    ) {
     }
 
     public function present(): array

@@ -12,8 +12,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class HomeController
 {
-    public function __construct(private PageRepositoryInterface $pageRepository, private ResponseBuilderInterface $responseBuilder)
-    {
+    public function __construct(
+        private PageRepositoryInterface $pageRepository,
+        private ResponseBuilderInterface $responseBuilder,
+    ) {
     }
 
     public function index(): ResponseInterface

@@ -17,8 +17,10 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
 
     private const DECAY_IN_SECONDS = 60;
 
-    public function __construct(private CommandHandlerInterface $loginHandler, private RateLimiterInterface $limiter)
-    {
+    public function __construct(
+        private CommandHandlerInterface $loginHandler,
+        private RateLimiterInterface $limiter,
+    ) {
     }
 
     /**

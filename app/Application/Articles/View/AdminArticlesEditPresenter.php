@@ -15,8 +15,12 @@ final class AdminArticlesEditPresenter implements PresenterInterface
 {
     use PresentsArticleStatuses;
 
-    public function __construct(private ArticleRepositoryInterface $repository, private UrlGeneratorInterface $urlGenerator, private AdminArticleEditRequestInterface $request, private SessionInterface $session)
-    {
+    public function __construct(
+        private ArticleRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private AdminArticleEditRequestInterface $request,
+        private SessionInterface $session,
+    ) {
     }
 
     public function present(): array

@@ -14,8 +14,12 @@ use App\Domain\Utils\MetaData;
 
 final class PagesAboutPresenter implements PresenterInterface
 {
-    public function __construct(private PageRepositoryInterface $repository, private UrlGeneratorInterface $urlGenerator, private DateTimeFormatterInterface $dateTimeFormatter, private MarkdownConverterInterface $markdownConverter)
-    {
+    public function __construct(
+        private PageRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+        private MarkdownConverterInterface $markdownConverter,
+    ) {
     }
 
     public function present(): array

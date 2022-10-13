@@ -10,7 +10,13 @@ use DateTimeImmutable;
 
 class UpdateArticle implements CommandInterface
 {
-    public function __construct(public string $content, public string $description, public DateTimeImmutable $publishedAt, public ArticleStatus $status, public string $title, public string $uuid)
-    {
+    public function __construct(
+        public string $content,
+        public string $description,
+        public DateTimeImmutable $publishedAt,
+        public ArticleStatus $status,
+        public string $title,
+        public string $uuid,
+    ) {
     }
 }

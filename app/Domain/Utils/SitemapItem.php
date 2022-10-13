@@ -8,8 +8,10 @@ use DateTimeInterface;
 
 final class SitemapItem
 {
-    public function __construct(private string $url, private DateTimeInterface $lastModificationDate)
-    {
+    public function __construct(
+        private string $url,
+        private DateTimeInterface $lastModificationDate,
+    ) {
     }
 
     public function url(): string

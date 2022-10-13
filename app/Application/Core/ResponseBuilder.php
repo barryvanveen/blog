@@ -15,8 +15,14 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 class ResponseBuilder implements ResponseBuilderInterface
 {
-    public function __construct(private ViewBuilderInterface $viewBuilder, private ResponseFactoryInterface $responseFactory, private StreamFactoryInterface $streamFactory, private UrlGeneratorInterface $urlGenerator, private ServerRequestInterface $request, private SessionInterface $session)
-    {
+    public function __construct(
+        private ViewBuilderInterface $viewBuilder,
+        private ResponseFactoryInterface $responseFactory,
+        private StreamFactoryInterface $streamFactory,
+        private UrlGeneratorInterface $urlGenerator,
+        private ServerRequestInterface $request,
+        private SessionInterface $session,
+    ) {
     }
 
     public function ok(string $view, array $data = []): ResponseInterface
@@ -31,7 +37,7 @@ class ResponseBuilder implements ResponseBuilderInterface
     public function redirect(
         string $route,
         array $routeParams = [],
-        int $status = StatusCode::STATUS_FOUND
+        int $status = StatusCode::STATUS_FOUND,
     ): ResponseInterface {
         $response = $this->responseFactory->createResponse($status);
 
@@ -42,7 +48,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     public function redirectBack(
         int $status = StatusCode::STATUS_FOUND,
-        array $errors = []
+        array $errors = [],
     ): ResponseInterface {
         $location = $this->determinePreviousUrl();
 
@@ -56,7 +62,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     public function redirectIntended(
         string $fallbackRoute,
-        int $status = StatusCode::STATUS_FOUND
+        int $status = StatusCode::STATUS_FOUND,
     ): ResponseInterface {
         $location = $this->session->intendedUrl() ?? $this->urlGenerator->route($fallbackRoute);
 

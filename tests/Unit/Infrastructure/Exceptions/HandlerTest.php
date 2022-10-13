@@ -79,7 +79,7 @@ class HandlerTest extends TestCase
      */
     public function itReportsExceptionsThatShouldBeReported(
         Throwable $exception,
-        bool $shouldBeReported
+        bool $shouldBeReported,
     ): void {
         // act
         $this->handler->report($exception);
@@ -137,7 +137,7 @@ class HandlerTest extends TestCase
     public function itMapsFrameworkExceptionsIntoHttpExceptions(
         Throwable $frameworkException,
         string $httpExceptionClass,
-        int $httpStatusCode
+        int $httpStatusCode,
     ): void {
         // arrange
         View::shouldReceive('make')

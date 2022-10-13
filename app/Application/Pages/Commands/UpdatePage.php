@@ -8,7 +8,11 @@ use App\Application\Core\CommandInterface;
 
 class UpdatePage implements CommandInterface
 {
-    public function __construct(public string $content, public string $description, public string $slug, public string $title)
-    {
+    public function __construct(
+        public string $content,
+        public string $description,
+        public string $slug,
+        public string $title,
+    ) {
     }
 }

@@ -8,8 +8,9 @@ use Stringable;
 
 abstract class Enum implements Stringable
 {
-    public function __construct(protected int $value)
-    {
+    public function __construct(
+        protected int $value,
+    ) {
     }
 
     public function equals(self $value): bool

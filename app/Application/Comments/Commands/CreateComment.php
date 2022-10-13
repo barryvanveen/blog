@@ -10,7 +10,14 @@ use DateTimeImmutable;
 
 class CreateComment implements CommandInterface
 {
-    public function __construct(public string $articleUuid, public string $content, public DateTimeImmutable $createdAt, public string $email, public string $ip, public string $name, public CommentStatus $status)
-    {
+    public function __construct(
+        public string $articleUuid,
+        public string $content,
+        public DateTimeImmutable $createdAt,
+        public string $email,
+        public string $ip,
+        public string $name,
+        public CommentStatus $status,
+    ) {
     }
 }

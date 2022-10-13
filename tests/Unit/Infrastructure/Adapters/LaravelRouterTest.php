@@ -28,7 +28,7 @@ class LaravelRouterTest extends TestCase
      */
     public function itReturnsWhetherTheCurrentRouteIsAnAdminRoute(
         ?string $currentRoute,
-        bool $expectedResult
+        bool $expectedResult,
     ): void {
         $this->laravelRouter->currentRouteName()
             ->willReturn($currentRoute)

@@ -8,8 +8,9 @@ use App\Application\Interfaces\SessionInterface;
 
 final class CsrfTokenPresenter implements PresenterInterface
 {
-    public function __construct(private SessionInterface $session)
-    {
+    public function __construct(
+        private SessionInterface $session,
+    ) {
     }
 
     public function present(): array

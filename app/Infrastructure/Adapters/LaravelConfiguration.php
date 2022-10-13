@@ -9,8 +9,9 @@ use Illuminate\Contracts\Config\Repository;
 
 class LaravelConfiguration implements ConfigurationInterface
 {
-    public function __construct(private Repository $config)
-    {
+    public function __construct(
+        private Repository $config,
+    ) {
     }
 
     public function string(string $key): string

@@ -16,8 +16,9 @@ class LaravelGuard implements GuardInterface
 {
     private StatefulGuard $laravelGuard;
 
-    public function __construct(Factory $authFactory)
-    {
+    public function __construct(
+        Factory $authFactory,
+    ) {
         $guard = $authFactory->guard();
 
         if (($guard instanceof StatefulGuard) === false) {

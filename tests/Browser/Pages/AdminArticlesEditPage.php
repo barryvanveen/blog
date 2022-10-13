@@ -6,8 +6,9 @@ namespace Tests\Browser\Pages;
 
 class AdminArticlesEditPage extends Page
 {
-    public function __construct(private string $uuid)
-    {
+    public function __construct(
+        private string $uuid,
+    ) {
     }
 
     public function url()

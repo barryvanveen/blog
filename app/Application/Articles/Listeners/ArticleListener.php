@@ -12,8 +12,11 @@ use App\Domain\Articles\ArticleRepositoryInterface;
 
 final class ArticleListener extends BaseEventListener
 {
-    public function __construct(private CacheInterface $cache, private UrlGeneratorInterface $urlGenerator, private ArticleRepositoryInterface $articleRepository)
-    {
+    public function __construct(
+        private CacheInterface $cache,
+        private UrlGeneratorInterface $urlGenerator,
+        private ArticleRepositoryInterface $articleRepository,
+    ) {
     }
 
     public function handleArticleWasCreated(): void

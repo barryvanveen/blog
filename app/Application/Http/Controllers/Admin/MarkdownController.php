@@ -11,8 +11,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class MarkdownController
 {
-    public function __construct(private MarkdownConverterInterface $markdownConverter, private ResponseBuilderInterface $responseBuilder)
-    {
+    public function __construct(
+        private MarkdownConverterInterface $markdownConverter,
+        private ResponseBuilderInterface $responseBuilder,
+    ) {
     }
 
     public function index(AdminMarkdownToHtmlRequestInterface $request): ResponseInterface

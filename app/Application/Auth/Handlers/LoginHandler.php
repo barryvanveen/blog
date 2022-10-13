@@ -12,8 +12,10 @@ use App\Application\Interfaces\SessionInterface;
 
 final class LoginHandler extends BaseCommandHandler
 {
-    public function __construct(private GuardInterface $guard, private SessionInterface $session)
-    {
+    public function __construct(
+        private GuardInterface $guard,
+        private SessionInterface $session,
+    ) {
     }
 
     /**

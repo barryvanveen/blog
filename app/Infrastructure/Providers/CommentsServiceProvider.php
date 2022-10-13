@@ -34,7 +34,7 @@ class CommentsServiceProvider extends ServiceProvider
 {
     public function boot(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
     ): void {
         $commandBus->subscribe(CreateComment::class, CreateCommentHandler::class);
         $commandBus->subscribe(UpdateComment::class, UpdateCommentHandler::class);

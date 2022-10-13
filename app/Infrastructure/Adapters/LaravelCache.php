@@ -9,8 +9,9 @@ use Illuminate\Contracts\Cache\Repository;
 
 class LaravelCache implements CacheInterface
 {
-    public function __construct(private Repository $cache)
-    {
+    public function __construct(
+        private Repository $cache,
+    ) {
     }
 
     public function has(string $key): bool

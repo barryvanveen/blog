@@ -13,8 +13,11 @@ use App\Domain\Articles\Models\Article;
 
 final class UpdateArticleHandler extends BaseCommandHandler
 {
-    public function __construct(private ArticleRepositoryInterface $repository, private SlugFactoryInterface $slugFactory, private ClockInterface $clock)
-    {
+    public function __construct(
+        private ArticleRepositoryInterface $repository,
+        private SlugFactoryInterface $slugFactory,
+        private ClockInterface $clock,
+    ) {
     }
 
     public function handleUpdateArticle(UpdateArticle $command): void

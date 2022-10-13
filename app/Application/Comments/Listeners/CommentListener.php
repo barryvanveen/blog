@@ -16,8 +16,13 @@ use App\Domain\Comments\CommentRepositoryInterface;
 
 final class CommentListener extends BaseEventListener
 {
-    public function __construct(private CacheInterface $cache, private UrlGeneratorInterface $urlGenerator, private CommentRepositoryInterface $commentRepository, private ArticleRepositoryInterface $articleRepository, private MailerInterface $mailer)
-    {
+    public function __construct(
+        private CacheInterface $cache,
+        private UrlGeneratorInterface $urlGenerator,
+        private CommentRepositoryInterface $commentRepository,
+        private ArticleRepositoryInterface $articleRepository,
+        private MailerInterface $mailer,
+    ) {
     }
 
     public function handleCommentWasCreated(CommentWasCreated $event): void

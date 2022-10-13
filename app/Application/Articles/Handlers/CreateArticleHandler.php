@@ -14,8 +14,12 @@ use App\Domain\Articles\Models\Article;
 
 final class CreateArticleHandler extends BaseCommandHandler
 {
-    public function __construct(private ArticleRepositoryInterface $repository, private UniqueIdGeneratorInterface $uniqueIdGenerator, private SlugFactoryInterface $slugFactory, private ClockInterface $clock)
-    {
+    public function __construct(
+        private ArticleRepositoryInterface $repository,
+        private UniqueIdGeneratorInterface $uniqueIdGenerator,
+        private SlugFactoryInterface $slugFactory,
+        private ClockInterface $clock,
+    ) {
     }
 
     public function handleCreateArticle(CreateArticle $command): void

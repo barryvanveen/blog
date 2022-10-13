@@ -15,8 +15,13 @@ use App\Domain\Utils\MetaData;
 
 final class ArticlesIndexPresenter implements PresenterInterface
 {
-    public function __construct(private ArticleRepositoryInterface $repository, private UrlGeneratorInterface $urlGenerator, private MarkdownConverterInterface $markdownConverter, private DateTimeFormatterInterface $dateTimeFormatter, private CommentRepositoryInterface $commentRepository)
-    {
+    public function __construct(
+        private ArticleRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private MarkdownConverterInterface $markdownConverter,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+        private CommentRepositoryInterface $commentRepository,
+    ) {
     }
 
     public function present(): array

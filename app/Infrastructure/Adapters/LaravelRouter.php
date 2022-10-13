@@ -9,8 +9,9 @@ use Illuminate\Routing\Router;
 
 final class LaravelRouter implements RouterInterface
 {
-    public function __construct(private Router $laravelRouter)
-    {
+    public function __construct(
+        private Router $laravelRouter,
+    ) {
     }
 
     public function currentRouteIsAdminRoute(): bool

@@ -15,8 +15,9 @@ use TypeError;
 
 class FooCommand implements CommandInterface
 {
-    public function __construct(public string $name)
-    {
+    public function __construct(
+        public string $name,
+    ) {
     }
 }
 

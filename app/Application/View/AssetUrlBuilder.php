@@ -9,8 +9,9 @@ use Exception;
 
 class AssetUrlBuilder implements AssetUrlBuilderInterface
 {
-    public function __construct(private PathBuilderInterface $pathBuilder)
-    {
+    public function __construct(
+        private PathBuilderInterface $pathBuilder,
+    ) {
     }
 
     public function get(string $path): string

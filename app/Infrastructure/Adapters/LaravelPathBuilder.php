@@ -9,8 +9,9 @@ use Illuminate\Contracts\Foundation\Application;
 
 class LaravelPathBuilder implements PathBuilderInterface
 {
-    public function __construct(private Application $application)
-    {
+    public function __construct(
+        private Application $application,
+    ) {
     }
 
     public function publicPath(string $path): string

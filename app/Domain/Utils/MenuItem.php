@@ -6,8 +6,11 @@ namespace App\Domain\Utils;
 
 final class MenuItem
 {
-    public function __construct(private string $name, private string $url, private bool $openInNewWindow = false)
-    {
+    public function __construct(
+        private string $name,
+        private string $url,
+        private bool $openInNewWindow = false,
+    ) {
     }
 
     public function name(): string

@@ -10,8 +10,10 @@ use App\Domain\Utils\MenuItem;
 
 final class HeaderPresenter implements PresenterInterface
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private RouterInterface $router)
-    {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private RouterInterface $router,
+    ) {
     }
 
     public function present(): array

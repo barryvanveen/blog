@@ -16,8 +16,9 @@ use TypeError;
 
 class FooEvent implements EventInterface
 {
-    public function __construct(public string $name)
-    {
+    public function __construct(
+        public string $name,
+    ) {
     }
 }
 

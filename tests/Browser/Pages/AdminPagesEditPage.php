@@ -6,8 +6,9 @@ namespace Tests\Browser\Pages;
 
 class AdminPagesEditPage extends Page
 {
-    public function __construct(private string $slug)
-    {
+    public function __construct(
+        private string $slug,
+    ) {
     }
 
     public function url()

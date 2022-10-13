@@ -10,8 +10,9 @@ use Illuminate\View\View;
 
 class PresenterComposer
 {
-    public function __construct(private Application $application)
-    {
+    public function __construct(
+        private Application $application,
+    ) {
     }
 
     public function compose(View $view): void

@@ -11,8 +11,10 @@ use Psr\Log\LoggerInterface;
 
 final class LockoutListener extends BaseEventListener
 {
-    public function __construct(private LoggerInterface $logger, private MailerInterface $mailer)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        private MailerInterface $mailer,
+    ) {
     }
 
     public function handleLockoutWasTriggered(LockoutWasTriggered $event): void

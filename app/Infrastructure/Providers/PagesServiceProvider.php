@@ -31,7 +31,7 @@ class PagesServiceProvider extends ServiceProvider
 {
     public function boot(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
     ): void {
         $commandBus->subscribe(CreatePage::class, CreatePageHandler::class);
         $commandBus->subscribe(UpdatePage::class, UpdatePageHandler::class);

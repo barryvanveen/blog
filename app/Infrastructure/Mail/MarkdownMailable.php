@@ -11,7 +11,7 @@ final class MarkdownMailable extends Mailable
     public function __construct(
         private string $template,
         string $subject,
-        private array $variables
+        private array $variables,
     ) {
         $this->subject($subject);
     }

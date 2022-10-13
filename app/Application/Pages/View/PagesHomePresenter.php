@@ -20,8 +20,14 @@ final class PagesHomePresenter implements PresenterInterface
     private const BOOKS_PLACEHOLDER = '{{BOOKS}}';
     private const BOOKS_CURRENTLY_READING_START = '## Currently reading:';
 
-    public function __construct(private PageRepositoryInterface $pageRepository, private UrlGeneratorInterface $urlGenerator, private DateTimeFormatterInterface $dateTimeFormatter, private MarkdownConverterInterface $markdownConverter, private ArticleRepositoryInterface $articleRepository, private LoggerInterface $logger)
-    {
+    public function __construct(
+        private PageRepositoryInterface $pageRepository,
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+        private MarkdownConverterInterface $markdownConverter,
+        private ArticleRepositoryInterface $articleRepository,
+        private LoggerInterface $logger,
+    ) {
     }
 
     public function present(): array

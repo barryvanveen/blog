@@ -13,8 +13,9 @@ class LaravelCollection extends IteratorIterator implements CollectionInterface
     /** @var Collection */
     protected $collection;
 
-    public function __construct(array $items = [])
-    {
+    public function __construct(
+        array $items = [],
+    ) {
         $this->collection = new Collection($items);
 
         parent::__construct($this->collection);

@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
 {
     public function boot(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
     ): void {
         $commandBus->subscribe(Login::class, RateLimitedLoginHandler::class);
         $commandBus->subscribe(Logout::class, LogoutHandler::class);

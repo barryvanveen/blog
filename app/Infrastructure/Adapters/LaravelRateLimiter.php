@@ -9,8 +9,9 @@ use Illuminate\Cache\RateLimiter;
 
 class LaravelRateLimiter implements RateLimiterInterface
 {
-    public function __construct(private RateLimiter $laravelRateLimiter)
-    {
+    public function __construct(
+        private RateLimiter $laravelRateLimiter,
+    ) {
     }
 
     public function tooManyAttempts(string $key, int $maxAttempts): bool

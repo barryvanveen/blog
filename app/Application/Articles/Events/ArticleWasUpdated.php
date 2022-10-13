@@ -8,8 +8,9 @@ use App\Application\Core\EventInterface;
 
 class ArticleWasUpdated implements EventInterface
 {
-    public function __construct(private string $uuid)
-    {
+    public function __construct(
+        private string $uuid,
+    ) {
     }
 
     public function uuid(): string

@@ -11,8 +11,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class ClearCacheController
 {
-    public function __construct(private CacheInterface $cache, private ResponseBuilderInterface $responseBuilder)
-    {
+    public function __construct(
+        private CacheInterface $cache,
+        private ResponseBuilderInterface $responseBuilder,
+    ) {
     }
 
     public function index(AdminMarkdownToHtmlRequestInterface $request): ResponseInterface

@@ -19,8 +19,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class LoginController
 {
-    public function __construct(private ResponseBuilderInterface $responseBuilder, private CommandBusInterface $commandBus, private GuardInterface $guard, private EventBusInterface $eventBus)
-    {
+    public function __construct(
+        private ResponseBuilderInterface $responseBuilder,
+        private CommandBusInterface $commandBus,
+        private GuardInterface $guard,
+        private EventBusInterface $eventBus,
+    ) {
     }
 
     public function form(): ResponseInterface

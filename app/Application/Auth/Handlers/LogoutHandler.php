@@ -10,8 +10,10 @@ use App\Application\Interfaces\SessionInterface;
 
 final class LogoutHandler extends BaseCommandHandler
 {
-    public function __construct(private GuardInterface $guard, private SessionInterface $session)
-    {
+    public function __construct(
+        private GuardInterface $guard,
+        private SessionInterface $session,
+    ) {
     }
 
     public function handleLogout(): void

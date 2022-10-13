@@ -6,8 +6,13 @@ namespace App\Domain\Users\Models;
 
 class User
 {
-    public function __construct(private string $email, private string $name, private string $password, private ?string $rememberToken, private string $uuid)
-    {
+    public function __construct(
+        private string $email,
+        private string $name,
+        private string $password,
+        private ?string $rememberToken,
+        private string $uuid,
+    ) {
     }
 
     public function email(): string

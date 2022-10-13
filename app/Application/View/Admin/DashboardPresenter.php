@@ -16,8 +16,13 @@ use App\Domain\Utils\MetaData;
 
 final class DashboardPresenter implements PresenterInterface
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private GuardInterface $guard, private ArticleRepositoryInterface $articleRepository, private PageRepositoryInterface $pageRepository, private DateTimeFormatterInterface $dateTimeFormatter)
-    {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private GuardInterface $guard,
+        private ArticleRepositoryInterface $articleRepository,
+        private PageRepositoryInterface $pageRepository,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+    ) {
     }
 
     public function present(): array

@@ -12,8 +12,9 @@ use Illuminate\Contracts\Bus\Dispatcher;
 
 final class LaravelCommandBus implements CommandBusInterface
 {
-    public function __construct(private Dispatcher $laravelDispatcher)
-    {
+    public function __construct(
+        private Dispatcher $laravelDispatcher,
+    ) {
     }
 
     public function subscribe(string $commandClassName, string $handlerClassName): void

@@ -10,8 +10,16 @@ use DateTimeInterface;
 
 class Article
 {
-    public function __construct(private string $content, private string $description, private DateTimeInterface $publishedAt, private string $slug, private ArticleStatus $status, private string $title, private DateTimeInterface $updatedAt, private string $uuid)
-    {
+    public function __construct(
+        private string $content,
+        private string $description,
+        private DateTimeInterface $publishedAt,
+        private string $slug,
+        private ArticleStatus $status,
+        private string $title,
+        private DateTimeInterface $updatedAt,
+        private string $uuid,
+    ) {
     }
 
     public function content(): string

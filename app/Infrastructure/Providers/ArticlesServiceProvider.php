@@ -34,7 +34,7 @@ class ArticlesServiceProvider extends ServiceProvider
 {
     public function boot(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
     ): void {
         $commandBus->subscribe(CreateArticle::class, CreateArticleHandler::class);
         $commandBus->subscribe(UpdateArticle::class, UpdateArticleHandler::class);

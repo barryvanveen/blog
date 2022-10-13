@@ -17,8 +17,9 @@ class LaravelSession implements SessionInterface
 
     private const OLD_INPUT_KEY = '_old_input';
 
-    public function __construct(private Store $laravelSession)
-    {
+    public function __construct(
+        private Store $laravelSession,
+    ) {
     }
 
     /**
