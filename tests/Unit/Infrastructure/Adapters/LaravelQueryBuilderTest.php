@@ -56,17 +56,14 @@ class LaravelQueryBuilderTest extends TestCase
     /** @test */
     public function itGetsAnAscOrderedCollectionOfArticles(): void
     {
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'ccc',
         ]);
@@ -86,17 +83,14 @@ class LaravelQueryBuilderTest extends TestCase
     /** @test */
     public function itGetsADescOrderedCollectionOfArticles(): void
     {
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'ccc',
         ]);
@@ -116,17 +110,14 @@ class LaravelQueryBuilderTest extends TestCase
     /** @test */
     public function itGetsTheFirstRecord(): void
     {
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'ccc',
         ]);
@@ -141,12 +132,10 @@ class LaravelQueryBuilderTest extends TestCase
     /** @test */
     public function itFiltersTheRecordsByEquality(): void
     {
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'bbb',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'slug' => 'aaa',
         ]);
@@ -161,19 +150,16 @@ class LaravelQueryBuilderTest extends TestCase
     /** @test */
     public function itFiltersTheRecordsByComparison(): void
     {
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'published_at' => '2020-01-01 00:00:00',
             'slug' => 'aaa',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'published_at' => '2020-01-03 00:00:00',
             'slug' => 'bbb',
         ]);
 
-        /** @var ArticleEloquentModel $articles */
         ArticleFactory::new()->create([
             'published_at' => '2020-01-02 00:00:00',
             'slug' => 'ccc',

@@ -39,7 +39,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
     /** @test */
     public function viewArticles(): void
     {
-        /** @var ArticleEloquentModel[] $visibleArticles */
+        /** @var ArticleEloquentModel[] $articles */
         $articles = ArticleFactory::new()->count(3)->create();
 
         $this->browse(function (Browser $browser) use ($articles) {

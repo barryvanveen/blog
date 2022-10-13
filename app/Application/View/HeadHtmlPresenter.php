@@ -6,7 +6,6 @@ namespace App\Application\View;
 
 use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\RouterInterface;
-use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 
 final class HeadHtmlPresenter implements PresenterInterface
@@ -14,7 +13,6 @@ final class HeadHtmlPresenter implements PresenterInterface
     public function __construct(
         private AssetUrlBuilderInterface $assetUrlBuilder,
         private ConfigurationInterface $configuration,
-        private SessionInterface $session,
         private UrlGeneratorInterface $urlGenerator,
         private RouterInterface $router,
     ) {

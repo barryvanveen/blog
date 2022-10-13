@@ -28,7 +28,6 @@ class JavascriptPresenterTest extends TestCase
     {
         parent::setUp();
 
-        /** @var RouterInterface|ObjectProphecy $router */
         $this->router = $this->prophesize(RouterInterface::class);
 
         /** @var ObjectProphecy|AssetUrlBuilderInterface $assetBuilder */

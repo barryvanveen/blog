@@ -8,7 +8,6 @@ use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;
-use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -17,7 +16,6 @@ final class ArticlesController
 {
     public function __construct(
         private ArticleRepositoryInterface $articleRepository,
-        private CommandBusInterface $commandBus,
         private ResponseBuilderInterface $responseBuilder,
     ) {
     }

@@ -40,7 +40,6 @@ class SitemapPresenterTest extends TestCase
             'title' => 'About',
         ]);
 
-        /** @var ObjectProphecy|PageRepositoryInterface $pageRepository */
         $this->pageRepository = $this->prophesize(PageRepositoryInterface::class);
         $this->pageRepository->books()->willReturn($booksPage);
         $this->pageRepository->home()->willReturn($homePage);
@@ -54,7 +53,6 @@ class SitemapPresenterTest extends TestCase
         $dateTimeFormatter = $this->prophesize(DateTimeFormatterInterface::class);
         $dateTimeFormatter->metadata(Argument::any())->willReturn('metadata-string');
 
-        /** @var ObjectProphecy|ArticleRepositoryInterface $articleRepository */
         $this->articleRepository = $this->prophesize(ArticleRepositoryInterface::class);
         $this->articleRepository->allPublishedAndOrdered()->willReturn(new LaravelCollection());
 

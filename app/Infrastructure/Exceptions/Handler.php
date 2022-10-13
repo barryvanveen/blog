@@ -127,9 +127,6 @@ final class Handler implements ExceptionHandlerContract
             ->withErrors($exception->errors(), $exception->errorBag);
     }
 
-    /**
-     * @return JsonResponse|SymfonyResponse
-     */
     private function prepareResponse(Request $request, Throwable $exception): JsonResponse|SymfonyResponse
     {
         // debug mode -> show exception details

@@ -47,7 +47,6 @@ class PagesHomePresenterTest extends TestCase
             'content' => self::CONTENT_STRING,
         ]);
 
-        /** @var ObjectProphecy|PageRepositoryInterface $pageRepository */
         $this->pageRepository = $this->prophesize(PageRepositoryInterface::class);
         $this->pageRepository->books()->willReturn($booksPage);
         $this->pageRepository->home()->willReturn($homePage);
@@ -61,15 +60,12 @@ class PagesHomePresenterTest extends TestCase
         $dateTimeFormatter->metadata(Argument::any())->willReturn('metadata-string');
         $dateTimeFormatter->humanReadable(Argument::any())->willReturn('humanReadable-string');
 
-        /** @var ObjectProphecy|MarkdownConverterInterface $markdownConverter */
         $this->markdownConverter = $this->prophesize(MarkdownConverterInterface::class);
         $this->markdownConverter->convertToHtml(Argument::any())->willReturn('htmlString');
 
-        /** @var ObjectProphecy|ArticleRepositoryInterface $articleRepository */
         $this->articleRepository = $this->prophesize(ArticleRepositoryInterface::class);
         $this->articleRepository->allPublishedAndOrdered()->willReturn(new LaravelCollection());
 
-        /** @var ObjectProphecy|LoggerInterface $logger */
         $this->logger = $this->prophesize(LoggerInterface::class);
 
         $this->presenter = new PagesHomePresenter(
@@ -113,7 +109,7 @@ class PagesHomePresenterTest extends TestCase
         ]);
         $this->articleRepository->allPublishedAndOrdered()->willReturn($articles);
 
-        $result = $this->presenter->present();
+        $this->presenter->present();
 
         $this->markdownConverter->convertToHtml('- [Article1](http://my-page-url)
 - [Article2](http://my-page-url)
@@ -137,7 +133,7 @@ class PagesHomePresenterTest extends TestCase
         ]);
         $this->articleRepository->allPublishedAndOrdered()->willReturn($articles);
 
-        $result = $this->presenter->present();
+        $this->presenter->present();
 
         $this->markdownConverter->convertToHtml('- [Article1](http://my-page-url)
 - [Article2](http://my-page-url)
@@ -157,7 +153,7 @@ class PagesHomePresenterTest extends TestCase
         $articles = new LaravelCollection();
         $this->articleRepository->allPublishedAndOrdered()->willReturn($articles);
 
-        $result = $this->presenter->present();
+        $this->presenter->present();
 
         $this->markdownConverter->convertToHtml('That\'s strange, no articles yet...
 ')
@@ -181,7 +177,7 @@ class PagesHomePresenterTest extends TestCase
         ]);
         $this->pageRepository->books()->willReturn($booksPage);
 
-        $result = $this->presenter->present();
+        $this->presenter->present();
 
         $this->markdownConverter->convertToHtml('Not reading anything, actually
 ')
@@ -208,7 +204,7 @@ class PagesHomePresenterTest extends TestCase
         ]);
         $this->pageRepository->books()->willReturn($booksPage);
 
-        $result = $this->presenter->present();
+        $this->presenter->present();
 
         $this->markdownConverter->convertToHtml('Not reading anything, actually
 ')
@@ -237,7 +233,7 @@ class PagesHomePresenterTest extends TestCase
         ]);
         $this->pageRepository->books()->willReturn($booksPage);
 
-        $result = $this->presenter->present();
+        $this->presenter->present();
 
         $this->markdownConverter->convertToHtml('
 - Book1
