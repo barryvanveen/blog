@@ -6,12 +6,8 @@ namespace Tests\Browser\Pages;
 
 class AdminPagesEditPage extends Page
 {
-    /** @var string */
-    private $slug;
-
-    public function __construct(string $slug)
+    public function __construct(private string $slug)
     {
-        $this->slug = $slug;
     }
 
     public function url()

@@ -37,9 +37,6 @@ class CommentTest extends TestCase
     /**
      * @test
      * @dataProvider isOnlineDataProvider
-     *
-     * @param CommentStatus $status
-     * @param bool $expected
      */
     public function isOnline(CommentStatus $status, bool $expected): void
     {

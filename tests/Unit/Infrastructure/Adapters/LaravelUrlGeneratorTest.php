@@ -14,11 +14,9 @@ use Tests\TestCase;
  */
 class LaravelUrlGeneratorTest extends TestCase
 {
-    /** @var LaravelUrlGenerator */
-    private $urlGenerator;
+    private LaravelUrlGenerator $urlGenerator;
 
-    /** @var string */
-    private $baseUrl;
+    private string $baseUrl;
 
     public function setUp(): void
     {

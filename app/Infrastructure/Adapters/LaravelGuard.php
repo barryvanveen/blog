@@ -14,15 +14,14 @@ use Illuminate\Validation\UnauthorizedException;
 
 class LaravelGuard implements GuardInterface
 {
-    /** @var StatefulGuard */
-    private $laravelGuard;
+    private StatefulGuard $laravelGuard;
 
     public function __construct(Factory $authFactory)
     {
         $guard = $authFactory->guard();
 
         if (($guard instanceof StatefulGuard) === false) {
-            throw InvalidGuardException::becauseGuardDoesNotExtendTheCorrectInterfaces(get_class($guard));
+            throw InvalidGuardException::becauseGuardDoesNotExtendTheCorrectInterfaces($guard::class);
         }
 
         $this->laravelGuard = $guard;

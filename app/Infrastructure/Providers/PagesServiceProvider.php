@@ -43,9 +43,7 @@ class PagesServiceProvider extends ServiceProvider
     {
         $this->app->when(PageRepository::class)
             ->needs(QueryBuilderInterface::class)
-            ->give(function () {
-                return new LaravelQueryBuilder(new PageEloquentModel());
-            });
+            ->give(fn() => new LaravelQueryBuilder(new PageEloquentModel()));
 
         $this->app->bind(ModelMapperInterface::class, PageMapper::class);
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);

@@ -10,33 +10,8 @@ use DateTimeInterface;
 
 class Article
 {
-    private string $content;
-    private string $description;
-    private DateTimeInterface $publishedAt;
-    private string $slug;
-    private ArticleStatus $status;
-    private string $title;
-    private DateTimeInterface $updatedAt;
-    private string $uuid;
-
-    public function __construct(
-        string $content,
-        string $description,
-        DateTimeInterface $publishedAt,
-        string $slug,
-        ArticleStatus $status,
-        string $title,
-        DateTimeInterface $updatedAt,
-        string $uuid
-    ) {
-        $this->content = $content;
-        $this->description = $description;
-        $this->publishedAt = $publishedAt;
-        $this->slug = $slug;
-        $this->status = $status;
-        $this->title = $title;
-        $this->updatedAt = $updatedAt;
-        $this->uuid = $uuid;
+    public function __construct(private string $content, private string $description, private DateTimeInterface $publishedAt, private string $slug, private ArticleStatus $status, private string $title, private DateTimeInterface $updatedAt, private string $uuid)
+    {
     }
 
     public function content(): string

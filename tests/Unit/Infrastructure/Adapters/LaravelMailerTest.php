@@ -42,9 +42,7 @@ class LaravelMailerTest extends TestCase
             '234.234.234.234'
         );
 
-        $mailer->assertSent(function (MarkdownMailable $mail) {
-            return $mail->subject === 'Lockout triggered';
-        });
+        $mailer->assertSent(fn(MarkdownMailable $mail) => $mail->subject === 'Lockout triggered');
     }
 
     /** @test */
@@ -71,8 +69,6 @@ class LaravelMailerTest extends TestCase
             $comment
         );
 
-        $mailer->assertSent(function (MarkdownMailable $mail) {
-            return $mail->subject === 'New comment';
-        });
+        $mailer->assertSent(fn(MarkdownMailable $mail) => $mail->subject === 'New comment');
     }
 }

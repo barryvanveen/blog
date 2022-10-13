@@ -24,7 +24,7 @@ class LogoutHandlerTest extends TestCase
         /** @var GuardInterface|MockObject $guardMock */
         $guardMock = $this->createMock(GuardInterface::class);
 
-        /** @var \App\Application\Interfaces\SessionInterface|MockObject $sessionMock */
+        /** @var SessionInterface|MockObject $sessionMock */
         $sessionMock = $this->createMock(SessionInterface::class);
 
         $guardMock->expects($this->once())

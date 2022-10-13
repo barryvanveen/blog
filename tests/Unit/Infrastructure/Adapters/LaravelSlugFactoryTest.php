@@ -16,8 +16,6 @@ class LaravelSlugFactoryTest extends TestCase
      * @test
      *
      * @dataProvider slugDataProvider
-     * @param string $original
-     * @param string $expected
      */
     public function itCreatesSlugsFromStrings(string $original, string $expected): void
     {

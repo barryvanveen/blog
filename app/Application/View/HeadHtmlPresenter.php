@@ -11,28 +11,8 @@ use App\Application\Interfaces\UrlGeneratorInterface;
 
 final class HeadHtmlPresenter implements PresenterInterface
 {
-    private AssetUrlBuilderInterface $assetUrlBuilder;
-
-    private ConfigurationInterface $configuration;
-
-    private SessionInterface $session;
-
-    private UrlGeneratorInterface $urlGenerator;
-
-    private RouterInterface $router;
-
-    public function __construct(
-        AssetUrlBuilderInterface $assetUrlBuilder,
-        ConfigurationInterface $configuration,
-        SessionInterface $session,
-        UrlGeneratorInterface $urlGenerator,
-        RouterInterface $router
-    ) {
-        $this->assetUrlBuilder = $assetUrlBuilder;
-        $this->configuration = $configuration;
-        $this->session = $session;
-        $this->urlGenerator = $urlGenerator;
-        $this->router = $router;
+    public function __construct(private AssetUrlBuilderInterface $assetUrlBuilder, private ConfigurationInterface $configuration, private SessionInterface $session, private UrlGeneratorInterface $urlGenerator, private RouterInterface $router)
+    {
     }
 
     public function present(): array

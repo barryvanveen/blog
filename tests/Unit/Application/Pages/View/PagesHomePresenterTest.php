@@ -25,17 +25,13 @@ class PagesHomePresenterTest extends TestCase
     private const TITLE_STRING = 'titleString';
     private const CONTENT_STRING = 'contentString';
 
-    /** @var ObjectProphecy|PageRepositoryInterface */
-    private $pageRepository;
+    private ObjectProphecy|PageRepositoryInterface $pageRepository;
 
-    /** @var ObjectProphecy|MarkdownConverterInterface */
-    private $markdownConverter;
+    private ObjectProphecy|MarkdownConverterInterface $markdownConverter;
 
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $articleRepository;
+    private ObjectProphecy|ArticleRepositoryInterface $articleRepository;
 
-    /** @var ObjectProphecy|LoggerInterface */
-    private $logger;
+    private ObjectProphecy|LoggerInterface $logger;
 
     private PagesHomePresenter $presenter;
 

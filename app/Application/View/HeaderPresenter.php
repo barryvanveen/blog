@@ -10,15 +10,8 @@ use App\Domain\Utils\MenuItem;
 
 final class HeaderPresenter implements PresenterInterface
 {
-    private UrlGeneratorInterface $urlGenerator;
-    private RouterInterface $router;
-
-    public function __construct(
-        UrlGeneratorInterface $urlGenerator,
-        RouterInterface $router,
-    ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->router = $router;
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private RouterInterface $router)
+    {
     }
 
     public function present(): array
@@ -37,7 +30,7 @@ final class HeaderPresenter implements PresenterInterface
     }
 
     /**
-     * @return \App\Domain\Utils\MenuItem[]
+     * @return MenuItem[]
      */
     private function getAdminMenuItems(): array
     {
@@ -49,7 +42,7 @@ final class HeaderPresenter implements PresenterInterface
     }
 
     /**
-     * @return \App\Domain\Utils\MenuItem[]
+     * @return MenuItem[]
      */
     private function getMenuItems(): array
     {

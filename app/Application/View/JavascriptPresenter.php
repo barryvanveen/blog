@@ -10,21 +10,8 @@ use App\Application\Interfaces\UrlGeneratorInterface;
 
 final class JavascriptPresenter implements PresenterInterface
 {
-    private RouterInterface $router;
-    private AssetUrlBuilderInterface $assetUrlBuilder;
-    private UrlGeneratorInterface $urlGenerator;
-    private ConfigurationInterface $configuration;
-
-    public function __construct(
-        RouterInterface $router,
-        AssetUrlBuilderInterface $assetUrlBuilder,
-        UrlGeneratorInterface $urlGenerator,
-        ConfigurationInterface $configuration,
-    ) {
-        $this->router = $router;
-        $this->assetUrlBuilder = $assetUrlBuilder;
-        $this->urlGenerator = $urlGenerator;
-        $this->configuration = $configuration;
+    public function __construct(private RouterInterface $router, private AssetUrlBuilderInterface $assetUrlBuilder, private UrlGeneratorInterface $urlGenerator, private ConfigurationInterface $configuration)
+    {
     }
 
     public function present(): array

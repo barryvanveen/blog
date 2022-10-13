@@ -13,8 +13,7 @@ use Tests\TestCase;
  */
 class LaravelViewBuilderTest extends TestCase
 {
-    /** @var LaravelViewBuilder */
-    private $viewBuilder;
+    private LaravelViewBuilder $viewBuilder;
 
     public function setUp(): void
     {

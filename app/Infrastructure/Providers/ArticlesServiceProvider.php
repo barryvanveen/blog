@@ -47,9 +47,7 @@ class ArticlesServiceProvider extends ServiceProvider
     {
         $this->app->when(ArticleRepository::class)
             ->needs(QueryBuilderInterface::class)
-            ->give(function () {
-                return new LaravelQueryBuilder(new ArticleEloquentModel());
-            });
+            ->give(fn() => new LaravelQueryBuilder(new ArticleEloquentModel()));
 
         $this->app->bind(ModelMapperInterface::class, ArticleMapper::class);
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);

@@ -10,24 +10,8 @@ final class MetaData
 
     public const TYPE_ARTICLE = 'article';
 
-    private string $title;
-
-    private string $description;
-
-    private string $url;
-
-    private string $type;
-
-    public function __construct(
-        string $title,
-        string $description,
-        string $url,
-        string $type
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->url = $url;
-        $this->type = $type;
+    public function __construct(private string $title, private string $description, private string $url, private string $type)
+    {
     }
 
     public function title(): string

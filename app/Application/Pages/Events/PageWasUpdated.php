@@ -8,13 +8,8 @@ use App\Application\Core\EventInterface;
 
 class PageWasUpdated implements EventInterface
 {
-    /** @var string */
-    private $slug;
-
-    public function __construct(
-        string $slug
-    ) {
-        $this->slug = $slug;
+    public function __construct(private string $slug)
+    {
     }
 
     public function slug(): string

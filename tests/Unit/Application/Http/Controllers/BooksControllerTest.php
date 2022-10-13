@@ -19,14 +19,11 @@ use Tests\TestCase;
  */
 class BooksControllerTest extends TestCase
 {
-    /** @var ObjectProphecy|PageRepositoryInterface */
-    private $repository;
+    private ObjectProphecy|PageRepositoryInterface $repository;
 
-    /** @var ObjectProphecy|ResponseBuilderInterface */
-    private $responseBuilder;
+    private ObjectProphecy|ResponseBuilderInterface $responseBuilder;
 
-    /** @var BooksController */
-    private $controller;
+    private BooksController $controller;
 
     public function setUp(): void
     {

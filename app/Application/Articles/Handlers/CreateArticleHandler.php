@@ -14,21 +14,8 @@ use App\Domain\Articles\Models\Article;
 
 final class CreateArticleHandler extends BaseCommandHandler
 {
-    private UniqueIdGeneratorInterface $uniqueIdGenerator;
-    private ArticleRepositoryInterface $repository;
-    private SlugFactoryInterface $slugFactory;
-    private ClockInterface $clock;
-
-    public function __construct(
-        ArticleRepositoryInterface $articleRepository,
-        UniqueIdGeneratorInterface $uniqueIdGenerator,
-        SlugFactoryInterface $slugFactory,
-        ClockInterface $clock,
-    ) {
-        $this->repository = $articleRepository;
-        $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->slugFactory = $slugFactory;
-        $this->clock = $clock;
+    public function __construct(private ArticleRepositoryInterface $repository, private UniqueIdGeneratorInterface $uniqueIdGenerator, private SlugFactoryInterface $slugFactory, private ClockInterface $clock)
+    {
     }
 
     public function handleCreateArticle(CreateArticle $command): void

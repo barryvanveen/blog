@@ -9,8 +9,6 @@ use App\Application\Exceptions\CommandHandlerException;
 abstract class BaseCommandHandler implements CommandHandlerInterface
 {
     /**
-     * @param CommandInterface $command
-     *
      * @throws CommandHandlerException
      */
     public function handle(CommandInterface $command): void
@@ -26,7 +24,7 @@ abstract class BaseCommandHandler implements CommandHandlerInterface
 
     private function getHandleMethod(CommandInterface $command): string
     {
-        $classParts = explode('\\', get_class($command));
+        $classParts = explode('\\', $command::class);
 
         return 'handle'.end($classParts);
     }

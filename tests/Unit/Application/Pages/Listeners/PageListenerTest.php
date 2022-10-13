@@ -20,14 +20,12 @@ use Tests\TestCase;
  */
 class PageListenerTest extends TestCase
 {
-    /** @var ObjectProphecy|CacheInterface */
-    private $cache;
+    private ObjectProphecy|CacheInterface $cache;
 
-    /** @var ObjectProphecy|UrlGeneratorInterface */
-    private $urlGenerator;
+    private ObjectProphecy|UrlGeneratorInterface $urlGenerator;
 
     /** @var PageListener() */
-    private $listener;
+    private PageListener $listener;
 
     public function setUp(): void
     {

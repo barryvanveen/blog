@@ -15,23 +15,8 @@ use Psr\Http\Message\ResponseInterface;
 
 final class ArticlesController
 {
-    /** @var ArticleRepositoryInterface */
-    private $articleRepository;
-
-    /** @var CommandBusInterface */
-    private $commandBus;
-
-    /** @var ResponseBuilderInterface */
-    private $responseBuilder;
-
-    public function __construct(
-        ArticleRepositoryInterface $articleRepository,
-        CommandBusInterface $commandBus,
-        ResponseBuilderInterface $responseBuilder
-    ) {
-        $this->articleRepository = $articleRepository;
-        $this->commandBus = $commandBus;
-        $this->responseBuilder = $responseBuilder;
+    public function __construct(private ArticleRepositoryInterface $articleRepository, private CommandBusInterface $commandBus, private ResponseBuilderInterface $responseBuilder)
+    {
     }
 
     public function index(): ResponseInterface

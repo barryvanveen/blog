@@ -21,11 +21,9 @@ use Tests\TestCase;
  */
 class RateLimitedLoginHandlerTest extends TestCase
 {
-    /** @var CommandHandlerInterface|MockObject */
-    private $mockLoginHandler;
+    private CommandHandlerInterface|MockObject $mockLoginHandler;
 
-    /** @var RateLimiterInterface|MockObject */
-    private $mockRateLimiter;
+    private RateLimiterInterface|MockObject $mockRateLimiter;
 
     public function setUp(): void
     {

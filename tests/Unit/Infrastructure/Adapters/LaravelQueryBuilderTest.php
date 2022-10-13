@@ -19,8 +19,7 @@ class LaravelQueryBuilderTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var LaravelQueryBuilder */
-    private $queryBuilder;
+    private LaravelQueryBuilder $queryBuilder;
 
     public function setUp(): void
     {

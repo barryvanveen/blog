@@ -12,13 +12,8 @@ use DateTimeImmutable;
 
 final class UpdatePageHandler extends BaseCommandHandler
 {
-    /** @var PageRepositoryInterface */
-    private $repository;
-
-    public function __construct(
-        PageRepositoryInterface $articleRepository
-    ) {
-        $this->repository = $articleRepository;
+    public function __construct(private PageRepositoryInterface $repository)
+    {
     }
 
     public function handleUpdatePage(UpdatePage $command): void

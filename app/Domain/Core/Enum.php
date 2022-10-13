@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Core;
 
-abstract class Enum
-{
-    /** @var int */
-    protected $value;
+use Stringable;
 
-    public function __construct(int $value)
+abstract class Enum implements Stringable
+{
+    public function __construct(protected int $value)
     {
-        $this->value = $value;
     }
 
     public function equals(self $value): bool

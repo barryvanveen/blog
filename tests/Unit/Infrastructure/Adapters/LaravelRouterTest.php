@@ -14,8 +14,7 @@ use Tests\TestCase;
  */
 class LaravelRouterTest extends TestCase
 {
-    /** @var ObjectProphecy|Router */
-    private $laravelRouter;
+    private ObjectProphecy|Router $laravelRouter;
 
     public function setUp(): void
     {

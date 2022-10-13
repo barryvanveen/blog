@@ -10,12 +10,8 @@ use League\Flysystem\Filesystem;
 
 class LaravelFilesystem implements FilesystemInterface
 {
-    private Factory $laravelFilesystemFactory;
-
-    public function __construct(
-        Factory $laravelFilesystemFactory,
-    ) {
-        $this->laravelFilesystemFactory = $laravelFilesystemFactory;
+    public function __construct(private Factory $laravelFilesystemFactory)
+    {
     }
 
     /**

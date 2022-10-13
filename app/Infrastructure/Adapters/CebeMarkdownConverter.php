@@ -9,11 +9,8 @@ use App\Infrastructure\Markdown\MyMarkdown;
 
 class CebeMarkdownConverter implements MarkdownConverterInterface
 {
-    private MyMarkdown $markdownConverter;
-
-    public function __construct(MyMarkdown $fencedCodeMarkdownExtension)
+    public function __construct(private MyMarkdown $markdownConverter)
     {
-        $this->markdownConverter = $fencedCodeMarkdownExtension;
     }
 
     public function convertToHtml(string $markdown): string

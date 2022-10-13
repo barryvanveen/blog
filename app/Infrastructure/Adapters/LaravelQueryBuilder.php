@@ -12,13 +12,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class LaravelQueryBuilder implements QueryBuilderInterface
 {
-    private Model $model;
-
     private Builder $builder;
 
-    public function __construct(Model $model)
+    public function __construct(private Model $model)
     {
-        $this->model = $model;
         $this->builder = $model->newQuery();
     }
 
@@ -36,7 +33,6 @@ class LaravelQueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @return array
      * @throws RecordNotFoundException
      */
     public function first(): array

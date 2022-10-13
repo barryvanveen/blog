@@ -12,12 +12,8 @@ use Illuminate\Contracts\Events\Dispatcher;
 
 final class LaravelEventBus implements EventBusInterface
 {
-    /** @var Dispatcher */
-    private $laravelDispatcher;
-
-    public function __construct(Dispatcher $laravelDispatcher)
+    public function __construct(private Dispatcher $laravelDispatcher)
     {
-        $this->laravelDispatcher = $laravelDispatcher;
     }
 
     public function subscribe(string $eventClassName, string $listenerClassName): void

@@ -10,16 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 
 class CsrfController
 {
-    private ResponseBuilderInterface $responseBuilder;
-
-    private SessionInterface $session;
-
-    public function __construct(
-        ResponseBuilderInterface $responseBuilder,
-        SessionInterface $session
-    ) {
-        $this->responseBuilder = $responseBuilder;
-        $this->session = $session;
+    public function __construct(private ResponseBuilderInterface $responseBuilder, private SessionInterface $session)
+    {
     }
 
     public function csrf(): ResponseInterface

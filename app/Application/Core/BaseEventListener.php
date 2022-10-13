@@ -9,8 +9,6 @@ use App\Application\Exceptions\EventListenerException;
 abstract class BaseEventListener implements EventListenerInterface
 {
     /**
-     * @param EventInterface $event
-     *
      * @throws EventListenerException
      */
     public function handle(EventInterface $event): void
@@ -26,7 +24,7 @@ abstract class BaseEventListener implements EventListenerInterface
 
     private function getHandleMethod(EventInterface $event): string
     {
-        $classParts = explode('\\', get_class($event));
+        $classParts = explode('\\', $event::class);
 
         return 'handle'.end($classParts);
     }

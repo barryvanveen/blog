@@ -99,9 +99,7 @@ class LaravelCollectionTest extends TestCase
             '345',
         ];
 
-        $array = LaravelCollection::make($items)->map(function (string $in): string {
-            return $in . 'x';
-        });
+        $array = LaravelCollection::make($items)->map(fn(string $in): string => $in . 'x');
 
         $this->assertEquals([
             '123x',

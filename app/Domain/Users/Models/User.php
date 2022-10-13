@@ -6,33 +6,8 @@ namespace App\Domain\Users\Models;
 
 class User
 {
-    /** @var string */
-    private $email;
-
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $password;
-
-    /** @var string|null */
-    private $rememberToken;
-
-    /** @var string*/
-    private $uuid;
-
-    public function __construct(
-        string $email,
-        string $name,
-        string $password,
-        ?string $rememberToken,
-        string $uuid
-    ) {
-        $this->email = $email;
-        $this->name = $name;
-        $this->password = $password;
-        $this->rememberToken = $rememberToken;
-        $this->uuid = $uuid;
+    public function __construct(private string $email, private string $name, private string $password, private ?string $rememberToken, private string $uuid)
+    {
     }
 
     public function email(): string

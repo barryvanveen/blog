@@ -12,23 +12,12 @@ use App\Application\Interfaces\SessionInterface;
 
 final class LoginHandler extends BaseCommandHandler
 {
-    /** @var GuardInterface */
-    private $guard;
-
-    /** @var SessionInterface */
-    private $session;
-
-    public function __construct(GuardInterface $guard, SessionInterface $session)
+    public function __construct(private GuardInterface $guard, private SessionInterface $session)
     {
-        $this->guard = $guard;
-
-        $this->session = $session;
     }
 
     /**
-     * @param Login $command
      *
-     * @return void
      *
      * @throws FailedLoginException
      */

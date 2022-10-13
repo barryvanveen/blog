@@ -17,8 +17,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    /** @var UserEloquentModel */
-    private $user;
+    private UserEloquentModel $user;
 
     public function setUp(): void
     {

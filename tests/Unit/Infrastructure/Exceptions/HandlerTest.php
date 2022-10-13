@@ -305,14 +305,10 @@ class HandlerTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $response);
 
         // inputs are flashed by password is removed
-        $session->flashInput(Argument::that(function (array $input) {
-            return ($input['email'] = 123) && !isset($input['password']);
-        }))->shouldBeCalled();
+        $session->flashInput(Argument::that(fn(array $input) => ($input['email'] = 123) && !isset($input['password'])))->shouldBeCalled();
 
         // errors are flashed
-        $session->flash('errors', Argument::that(function (ViewErrorBag $errorBag) {
-            return ($errorBag->first('email') === 'Email message');
-        }))->shouldBeCalled();
+        $session->flash('errors', Argument::that(fn(ViewErrorBag $errorBag) => $errorBag->first('email') === 'Email message'))->shouldBeCalled();
     }
 
     /** @test */

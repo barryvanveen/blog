@@ -12,16 +12,8 @@ use App\Domain\Comments\CommentRepositoryInterface;
 
 final class CreateCommentHandler extends BaseCommandHandler
 {
-    private UniqueIdGeneratorInterface $uniqueIdGenerator;
-
-    private CommentRepositoryInterface $repository;
-
-    public function __construct(
-        UniqueIdGeneratorInterface $uniqueIdGenerator,
-        CommentRepositoryInterface $repository
-    ) {
-        $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->repository = $repository;
+    public function __construct(private UniqueIdGeneratorInterface $uniqueIdGenerator, private CommentRepositoryInterface $repository)
+    {
     }
 
     public function handleCreateComment(CreateComment $command): void

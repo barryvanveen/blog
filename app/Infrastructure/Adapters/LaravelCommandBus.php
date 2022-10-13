@@ -12,12 +12,8 @@ use Illuminate\Contracts\Bus\Dispatcher;
 
 final class LaravelCommandBus implements CommandBusInterface
 {
-    /** @var Dispatcher */
-    private $laravelDispatcher;
-
-    public function __construct(Dispatcher $laravelDispatcher)
+    public function __construct(private Dispatcher $laravelDispatcher)
     {
-        $this->laravelDispatcher = $laravelDispatcher;
     }
 
     public function subscribe(string $commandClassName, string $handlerClassName): void
@@ -41,7 +37,7 @@ final class LaravelCommandBus implements CommandBusInterface
     public function dispatch(CommandInterface $command): void
     {
         if ($this->laravelDispatcher->hasCommandHandler($command) === false) {
-            throw LaravelCommandBusException::becauseNoHandlerWasSubscribed(get_class($command));
+            throw LaravelCommandBusException::becauseNoHandlerWasSubscribed($command::class);
         }
 
         $this->laravelDispatcher->dispatch($command);

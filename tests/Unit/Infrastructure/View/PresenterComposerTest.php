@@ -20,11 +20,9 @@ use Tests\TestCase;
  */
 class PresenterComposerTest extends TestCase
 {
-    /** @var ObjectProphecy|Application */
-    private $application;
+    private ObjectProphecy|Application $application;
 
-    /** @var ObjectProphecy|PresenterComposer */
-    private $presenterComposer;
+    private ObjectProphecy|PresenterComposer $presenterComposer;
 
     public function setUp(): void
     {

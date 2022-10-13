@@ -6,12 +6,8 @@ namespace Tests\Browser\Pages;
 
 class AdminArticlesEditPage extends Page
 {
-    /** @var string */
-    private $uuid;
-
-    public function __construct(string $uuid)
+    public function __construct(private string $uuid)
     {
-        $this->uuid = $uuid;
     }
 
     public function url()

@@ -8,18 +8,8 @@ use App\Application\Core\EventInterface;
 
 class LockoutWasTriggered implements EventInterface
 {
-    /** @var string */
-    private $email;
-
-    /** @var string */
-    private $ip;
-
-    public function __construct(
-        string $email,
-        string $ip
-    ) {
-        $this->email = $email;
-        $this->ip = $ip;
+    public function __construct(private string $email, private string $ip)
+    {
     }
 
     public function email(): string

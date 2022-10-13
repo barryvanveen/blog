@@ -19,11 +19,9 @@ use Tests\TestCase;
  */
 class HeadHtmlPresenterTest extends TestCase
 {
-    /** @var RouterInterface|ObjectProphecy */
-    private $router;
+    private RouterInterface|ObjectProphecy $router;
 
-    /** @var HeadHtmlPresenter */
-    private $presenter;
+    private HeadHtmlPresenter $presenter;
 
     public function setUp(): void
     {

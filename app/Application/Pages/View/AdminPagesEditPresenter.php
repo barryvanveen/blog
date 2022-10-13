@@ -13,28 +13,8 @@ use App\Domain\Pages\Requests\AdminPageEditRequestInterface;
 
 final class AdminPagesEditPresenter implements PresenterInterface
 {
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var SessionInterface */
-    private $session;
-
-    /** @var PageRepositoryInterface */
-    private $repository;
-
-    /** @var AdminPageEditRequestInterface */
-    private $request;
-
-    public function __construct(
-        UrlGeneratorInterface $urlGenerator,
-        SessionInterface $session,
-        PageRepositoryInterface $pageRepository,
-        AdminPageEditRequestInterface $request
-    ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->session = $session;
-        $this->repository = $pageRepository;
-        $this->request = $request;
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private SessionInterface $session, private PageRepositoryInterface $repository, private AdminPageEditRequestInterface $request)
+    {
     }
 
     public function present(): array

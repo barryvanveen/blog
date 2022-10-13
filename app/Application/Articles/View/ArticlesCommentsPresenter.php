@@ -13,24 +13,8 @@ use App\Domain\Core\CollectionInterface;
 
 final class ArticlesCommentsPresenter implements PresenterInterface
 {
-    private ArticleShowRequestInterface $request;
-
-    private DateTimeFormatterInterface $dateTimeFormatter;
-
-    private CommentRepositoryInterface $commentRepository;
-
-    private ConfigurationInterface $configuration;
-
-    public function __construct(
-        ArticleShowRequestInterface $request,
-        DateTimeFormatterInterface $dateTimeFormatter,
-        CommentRepositoryInterface $commentRepository,
-        ConfigurationInterface $configuration
-    ) {
-        $this->request = $request;
-        $this->dateTimeFormatter = $dateTimeFormatter;
-        $this->commentRepository = $commentRepository;
-        $this->configuration = $configuration;
+    public function __construct(private ArticleShowRequestInterface $request, private DateTimeFormatterInterface $dateTimeFormatter, private CommentRepositoryInterface $commentRepository, private ConfigurationInterface $configuration)
+    {
     }
 
     public function present(): array

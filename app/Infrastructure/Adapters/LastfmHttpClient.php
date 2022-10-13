@@ -42,12 +42,10 @@ class LastfmHttpClient implements LastfmInterface
             return [];
         }
 
-        return array_map(function (array $album) {
-            return new Album(
-                $album['artist']['name'],
-                $album['name'],
-                $album['image'][1]['#text'] ?? null,
-            );
-        }, $albums);
+        return array_map(fn(array $album) => new Album(
+            $album['artist']['name'],
+            $album['name'],
+            $album['image'][1]['#text'] ?? null,
+        ), $albums);
     }
 }

@@ -16,23 +16,8 @@ use DateTimeImmutable;
 
 final class ArticleRepository implements ArticleRepositoryInterface
 {
-    /** @var QueryBuilderInterface */
-    private $queryBuilder;
-
-    /** @var ModelMapperInterface */
-    private $modelMapper;
-
-    /** @var EventBusInterface */
-    private $eventBus;
-
-    public function __construct(
-        QueryBuilderInterface $builderFactory,
-        ModelMapperInterface $modelMapper,
-        EventBusInterface $eventBus
-    ) {
-        $this->queryBuilder = $builderFactory;
-        $this->modelMapper = $modelMapper;
-        $this->eventBus = $eventBus;
+    public function __construct(private QueryBuilderInterface $queryBuilder, private ModelMapperInterface $modelMapper, private EventBusInterface $eventBus)
+    {
     }
 
     public function allOrdered(): CollectionInterface

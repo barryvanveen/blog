@@ -19,28 +19,8 @@ use Psr\Http\Message\ResponseInterface;
 
 class LoginController
 {
-    /** @var ResponseBuilderInterface */
-    private $responseBuilder;
-
-    /** @var CommandBusInterface */
-    private $commandBus;
-
-    /** @var GuardInterface */
-    private $guard;
-
-    /** @var EventBusInterface */
-    private $eventBus;
-
-    public function __construct(
-        ResponseBuilderInterface $responseBuilder,
-        CommandBusInterface $commandBus,
-        GuardInterface $guard,
-        EventBusInterface $eventBus
-    ) {
-        $this->responseBuilder = $responseBuilder;
-        $this->commandBus = $commandBus;
-        $this->guard = $guard;
-        $this->eventBus = $eventBus;
+    public function __construct(private ResponseBuilderInterface $responseBuilder, private CommandBusInterface $commandBus, private GuardInterface $guard, private EventBusInterface $eventBus)
+    {
     }
 
     public function form(): ResponseInterface

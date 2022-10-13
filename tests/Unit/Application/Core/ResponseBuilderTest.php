@@ -24,26 +24,19 @@ use Tests\TestCase;
  */
 class ResponseBuilderTest extends TestCase
 {
-    /** @var ObjectProphecy|ViewBuilderInterface */
-    private $viewBuilder;
+    private ObjectProphecy|ViewBuilderInterface $viewBuilder;
 
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
-    /** @var StreamFactoryInterface */
-    private $streamFactory;
+    private StreamFactoryInterface $streamFactory;
 
-    /** @var ObjectProphecy|UrlGeneratorInterface */
-    private $urlGenerator;
+    private ObjectProphecy|UrlGeneratorInterface $urlGenerator;
 
-    /** @var ServerRequestInterface */
-    private $request;
+    private ServerRequestInterface $request;
 
-    /** @var ObjectProphecy|SessionInterface */
-    private $session;
+    private ObjectProphecy|SessionInterface $session;
 
-    /** @var ResponseBuilder */
-    private $responseBuilder;
+    private ResponseBuilder $responseBuilder;
 
     public function setUp(): void
     {

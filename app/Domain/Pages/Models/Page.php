@@ -8,33 +8,8 @@ use DateTimeInterface;
 
 class Page
 {
-    /** @var string */
-    private $content;
-
-    /** @var string */
-    private $description;
-
-    /** @var DateTimeInterface */
-    private $lastUpdated;
-
-    /** @var string */
-    private $slug;
-
-    /** @var string */
-    private $title;
-
-    public function __construct(
-        string $content,
-        string $description,
-        DateTimeInterface $lastUpdated,
-        string $slug,
-        string $title
-    ) {
-        $this->content = $content;
-        $this->description = $description;
-        $this->lastUpdated = $lastUpdated;
-        $this->slug = $slug;
-        $this->title = $title;
+    public function __construct(private string $content, private string $description, private DateTimeInterface $lastUpdated, private string $slug, private string $title)
+    {
     }
 
     public function content(): string

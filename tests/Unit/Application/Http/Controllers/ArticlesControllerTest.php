@@ -22,17 +22,13 @@ use Tests\TestCase;
  */
 class ArticlesControllerTest extends TestCase
 {
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $articleRepository;
+    private ObjectProphecy|ArticleRepositoryInterface $articleRepository;
 
-    /** @var ObjectProphecy|CommandBusInterface */
-    private $commandBus;
+    private ObjectProphecy|CommandBusInterface $commandBus;
 
-    /** @var ObjectProphecy|ResponseBuilderInterface */
-    private $responseBuilder;
+    private ObjectProphecy|ResponseBuilderInterface $responseBuilder;
 
-    /** @var ObjectProphecy|ArticlesController */
-    private $controller;
+    private ObjectProphecy|ArticlesController $controller;
 
     public function setUp(): void
     {

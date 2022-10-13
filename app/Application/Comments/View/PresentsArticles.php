@@ -20,12 +20,10 @@ trait PresentsArticles
             ],
         ];
 
-        $articles = $articles->map(function (Article $article) {
-            return [
-                'value' => $article->uuid(),
-                'name' => $article->title(),
-            ];
-        });
+        $articles = $articles->map(fn(Article $article) => [
+            'value' => $article->uuid(),
+            'name' => $article->title(),
+        ]);
 
         return array_merge($placeholder, $articles);
     }

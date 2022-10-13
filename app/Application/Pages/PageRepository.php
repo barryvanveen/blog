@@ -18,18 +18,8 @@ final class PageRepository implements PageRepositoryInterface
     private const SLUG_HOME = 'home';
     private const SLUG_MUSIC = 'music';
 
-    private QueryBuilderInterface $queryBuilder;
-    private ModelMapperInterface $modelMapper;
-    private EventBusInterface $eventBus;
-
-    public function __construct(
-        QueryBuilderInterface $queryBuilder,
-        ModelMapperInterface $modelMapper,
-        EventBusInterface $eventBus
-    ) {
-        $this->queryBuilder = $queryBuilder;
-        $this->modelMapper = $modelMapper;
-        $this->eventBus = $eventBus;
+    public function __construct(private QueryBuilderInterface $queryBuilder, private ModelMapperInterface $modelMapper, private EventBusInterface $eventBus)
+    {
     }
 
     public function allOrdered(): CollectionInterface

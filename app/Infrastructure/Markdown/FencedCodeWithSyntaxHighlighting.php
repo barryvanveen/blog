@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Markdown;
 
+use Exception;
 use Highlight\Highlighter;
 
 trait FencedCodeWithSyntaxHighlighting
@@ -25,7 +26,7 @@ trait FencedCodeWithSyntaxHighlighting
     protected function identifyFencedCode($line)
     {
         // if a line starts with at least 3 backticks it is identified as a fenced code block
-        return strncmp($line, '```', 3) === 0;
+        return str_starts_with($line, '```');
     }
 
     /**
@@ -65,7 +66,7 @@ trait FencedCodeWithSyntaxHighlighting
     /**
      * @param array $block
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     protected function renderFencedCode($block)
     {
@@ -81,9 +82,7 @@ trait FencedCodeWithSyntaxHighlighting
             : $highlighter->highlightAuto($contents);
 
         $code = $result->value;
-        $language = isset($block['language'])
-            ? $block['language']
-            : $result->language;
+        $language = $block['language'] ?? $result->language;
 
         return vsprintf('<pre><code class="%s hljs %s" data-lang="%s" tabindex="0">%s</code></pre>', [
             'language-'.$language,

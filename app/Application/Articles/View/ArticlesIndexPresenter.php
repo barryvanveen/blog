@@ -15,28 +15,8 @@ use App\Domain\Utils\MetaData;
 
 final class ArticlesIndexPresenter implements PresenterInterface
 {
-    private ArticleRepositoryInterface $repository;
-
-    private UrlGeneratorInterface $urlGenerator;
-
-    private MarkdownConverterInterface $markdownConverter;
-
-    private DateTimeFormatterInterface $dateTimeFormatter;
-
-    private CommentRepositoryInterface $commentRepository;
-
-    public function __construct(
-        ArticleRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator,
-        MarkdownConverterInterface $markdownConverter,
-        DateTimeFormatterInterface $dateTimeFormatter,
-        CommentRepositoryInterface $commentRepository
-    ) {
-        $this->repository = $repository;
-        $this->urlGenerator = $urlGenerator;
-        $this->markdownConverter = $markdownConverter;
-        $this->dateTimeFormatter = $dateTimeFormatter;
-        $this->commentRepository = $commentRepository;
+    public function __construct(private ArticleRepositoryInterface $repository, private UrlGeneratorInterface $urlGenerator, private MarkdownConverterInterface $markdownConverter, private DateTimeFormatterInterface $dateTimeFormatter, private CommentRepositoryInterface $commentRepository)
+    {
     }
 
     public function present(): array
