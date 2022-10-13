@@ -91,8 +91,14 @@
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta"
         ],
-        "check-style": "vendor/bin/phpcs --standard=ruleset.xml",
-        "fix-style": "vendor/bin/phpcbf --standard=ruleset.xml",
+        "check-style": [
+            "vendor/bin/phpcs --standard=ruleset.xml",
+            "vendor/bin/rector --dry-run"
+        ],
+        "fix-style": [
+            "vendor/bin/phpcbf --standard=ruleset.xml",
+            "vendor/bin/rector"
+        ],
         "ide-helper": [
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
