@@ -24,12 +24,12 @@ class CacheResponseMiddleware
 
     public function handle(Request $request, Closure $next, ?int $ttl = null)
     {
-        if ($this->configuration->boolean('cache.cache_responses') === false ||
-            $request->method() !== RequestMethodInterface::METHOD_GET
-        ) {
+        if ($this->configuration->boolean('cache.cache_responses') === false) {
             return $next($request);
         }
-
+        if ($request->method() !== RequestMethodInterface::METHOD_GET) {
+            return $next($request);
+        }
         $key = $request->url();
 
         if ($this->cache->has($key)) {

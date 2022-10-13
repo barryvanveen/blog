@@ -45,9 +45,10 @@ class Article
     public function isOnline(): bool
     {
         $now = new DateTimeImmutable();
-
-        return $this->status->equals(ArticleStatus::published()) &&
-            $now->getTimestamp() > $this->publishedAt->getTimestamp();
+        if (!$this->status->equals(ArticleStatus::published())) {
+            return false;
+        }
+        return $now->getTimestamp() > $this->publishedAt->getTimestamp();
     }
 
     public function status(): ArticleStatus
