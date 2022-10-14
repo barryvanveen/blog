@@ -85,7 +85,7 @@ trait FencedCodeWithSyntaxHighlighting
         $language = $block['language'] ?? $result->language;
 
         return vsprintf('<pre><code class="%s hljs %s" data-lang="%s" tabindex="0">%s</code></pre>', [
-            'language-'.$language,
+            'language-' . $language,
             $language,
             $language,
             $code,

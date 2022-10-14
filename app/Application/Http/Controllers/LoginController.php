@@ -66,7 +66,7 @@ class LoginController
             return $this->responseBuilder->redirectBack(
                 StatusCode::STATUS_FOUND,
                 [
-                    'email' => ['Too many login attempts. Please try again in '.$e->tryAgainIn().' seconds.'],
+                    'email' => ['Too many login attempts. Please try again in ' . $e->tryAgainIn() . ' seconds.'],
                 ]
             );
         }

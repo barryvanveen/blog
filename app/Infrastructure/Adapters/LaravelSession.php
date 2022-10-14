@@ -71,10 +71,10 @@ class LaravelSession implements SessionInterface
     {
         $errors = new MessageBag($errors);
 
-        $viewErrorBag = $this->laravelSession->get(self::ERRORS_KEY, new ViewErrorBag);
+        $viewErrorBag = $this->laravelSession->get(self::ERRORS_KEY, new ViewErrorBag());
 
         if ($viewErrorBag instanceof ViewErrorBag === false) {
-            $viewErrorBag = new ViewErrorBag;
+            $viewErrorBag = new ViewErrorBag();
         }
 
         $this->laravelSession->flash(

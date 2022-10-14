@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Comments\View;
 
 use App\Domain\Articles\Models\Article;
-use App\Domain\Comments\CommentStatus;
 
 trait PresentsArticles
 {

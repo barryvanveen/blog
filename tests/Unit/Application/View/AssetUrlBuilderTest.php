@@ -25,7 +25,7 @@ class AssetUrlBuilderTest extends TestCase
 
         $pathBuilder
             ->assetPath(Argument::type('string'))
-            ->willReturn(__DIR__.'/does_not_exist.lol');
+            ->willReturn(__DIR__ . '/does_not_exist.lol');
 
         $assetUrlBuilder = new AssetUrlBuilder($pathBuilder->reveal());
 
@@ -43,7 +43,7 @@ class AssetUrlBuilderTest extends TestCase
 
         $pathBuilder
             ->assetPath(Argument::type('string'))
-            ->willReturn(__DIR__.'/manifest.json');
+            ->willReturn(__DIR__ . '/manifest.json');
 
         $assetUrlBuilder = new AssetUrlBuilder($pathBuilder->reveal());
 
@@ -61,7 +61,7 @@ class AssetUrlBuilderTest extends TestCase
 
         $pathBuilder
             ->assetPath(Argument::type('string'))
-            ->willReturn(__DIR__.'/manifest.json');
+            ->willReturn(__DIR__ . '/manifest.json');
 
         $assetUrlBuilder = new AssetUrlBuilder($pathBuilder->reveal());
 

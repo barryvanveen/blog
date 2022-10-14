@@ -32,7 +32,7 @@ class DuskServiceProvider extends ServiceProvider
 
         Browser::macro('waitForPreviewRendered', function (string $name) {
             /** @var Browser $this */
-            $this->waitUntil('return document.querySelector(\'#editor-preview-'.$name.'[data-filled]\') !== null;', 5);
+            $this->waitUntil('return document.querySelector(\'#editor-preview-' . $name . '[data-filled]\') !== null;', 5);
 
             return $this;
         });

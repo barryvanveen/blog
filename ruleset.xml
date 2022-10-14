@@ -20,10 +20,10 @@
     <exclude-pattern>*/bootstrap/cache/*.php</exclude-pattern>
     <exclude-pattern>*.blade.php</exclude-pattern>
 
-    <!-- include all sniffs in the PSR2 standard -->
-    <rule ref="PSR2">
+    <!-- include all sniffs in the PSR12 standard -->
+    <rule ref="PSR12">
         <!-- except this one -->
-        <exclude name="Generic.Files.LineLength.TooLong"/>
+        <exclude name="Generic.Files.LineLength"/>
     </rule>
 
     <!-- specific sniffs to include -->
@@ -42,6 +42,11 @@
             <property name="caseSensitive" value="true"/>
         </properties>
     </rule>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Namespaces/UnusedUsesSniff.php">
+        <properties>
+            <property name="searchAnnotations" value="true"/>
+        </properties>
+    </rule>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Operators/DisallowEqualOperatorsSniff.php"/>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php">
         <properties>
@@ -49,12 +54,6 @@
             <property name="linesCountAfterDeclare" value="1"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
-    </rule>
-
-
-    <!-- allow classes without namespace -->
-    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>*/database/*</exclude-pattern>
     </rule>
 
     <!-- allow multiple classes per file -->

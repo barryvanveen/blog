@@ -18,7 +18,8 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, ProphecyTrait;
+    use CreatesApplication;
+    use ProphecyTrait;
 
     protected function getStreamFactory(): StreamFactoryInterface
     {

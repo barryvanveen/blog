@@ -53,7 +53,7 @@ final class RateLimitedLoginHandler extends BaseCommandHandler
 
     private function throttleKey(Login $command): string
     {
-        return mb_strtolower($command->email, 'UTF-8').'|'.$command->ip;
+        return mb_strtolower($command->email, 'UTF-8') . '|' . $command->ip;
     }
 
     private function getLockoutException(Login $login): LockoutException
