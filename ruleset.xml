@@ -42,6 +42,11 @@
             <property name="caseSensitive" value="true"/>
         </properties>
     </rule>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Namespaces/UnusedUsesSniff.php">
+        <properties>
+            <property name="searchAnnotations" value="true"/>
+        </properties>
+    </rule>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Operators/DisallowEqualOperatorsSniff.php"/>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php">
         <properties>

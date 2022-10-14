@@ -8,7 +8,6 @@ use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\PresenterInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
-use App\Domain\Articles\Models\Article;
 use App\Domain\Comments\CommentStatus;
 
 final class AdminCommentsCreatePresenter implements PresenterInterface
