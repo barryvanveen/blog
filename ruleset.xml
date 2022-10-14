@@ -56,12 +56,6 @@
         </properties>
     </rule>
 
-
-    <!-- allow classes without namespace -->
-    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>*/database/*</exclude-pattern>
-    </rule>
-
     <!-- allow multiple classes per file -->
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>*/tests/*</exclude-pattern>
