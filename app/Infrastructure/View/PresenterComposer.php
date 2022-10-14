@@ -10,12 +10,9 @@ use Illuminate\View\View;
 
 class PresenterComposer
 {
-    /** @var Application */
-    private $application;
-
-    public function __construct(Application $application)
-    {
-        $this->application = $application;
+    public function __construct(
+        private Application $application,
+    ) {
     }
 
     public function compose(View $view): void
@@ -33,7 +30,7 @@ class PresenterComposer
         $presenter = $this->application->make($matches[1]);
 
         if (! $presenter instanceof PresenterInterface) {
-            throw PresenterComposerException::becausePresenterDoesNotImplementInterface(get_class($presenter));
+            throw PresenterComposerException::becausePresenterDoesNotImplementInterface($presenter::class);
         }
 
         $view->with($presenter->present());

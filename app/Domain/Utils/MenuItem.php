@@ -6,20 +6,11 @@ namespace App\Domain\Utils;
 
 final class MenuItem
 {
-    /** @var string */
-    private $name;
-
-    /** @var string */
-    private $url;
-
-    /** @var bool */
-    private $openInNewWindow;
-
-    public function __construct(string $name, string $url, bool $openInNewWindow = false)
-    {
-        $this->name = $name;
-        $this->url = $url;
-        $this->openInNewWindow = $openInNewWindow;
+    public function __construct(
+        private string $name,
+        private string $url,
+        private bool $openInNewWindow = false,
+    ) {
     }
 
     public function name(): string

@@ -15,11 +15,9 @@ use TypeError;
 
 class FooCommand implements CommandInterface
 {
-    public $name;
-
-    public function __construct(string $name)
-    {
-        $this->name = $name;
+    public function __construct(
+        public string $name,
+    ) {
     }
 }
 
@@ -57,9 +55,7 @@ class LaravelCommandBusTest extends TestCase
         // assert
         Bus::assertDispatched(
             FooCommand::class,
-            function (FooCommand $command) {
-                return 'asdasd' === $command->name;
-            }
+            fn(FooCommand $command) => 'asdasd' === $command->name
         );
     }
 
@@ -69,7 +65,7 @@ class LaravelCommandBusTest extends TestCase
         // arrange
         $laravelCommandBus = new LaravelCommandBus(Bus::fake());
         $command = new FooCommand('asdasd');
-        $commandClassName = get_class($command);
+        $commandClassName = $command::class;
 
         // assert
         $this->expectException(LaravelCommandBusException::class);

@@ -15,20 +15,11 @@ use App\Domain\Core\CollectionInterface;
 
 final class CommentRepository implements CommentRepositoryInterface
 {
-    private QueryBuilderInterface $queryBuilder;
-
-    private ModelMapperInterface $modelMapper;
-
-    private EventBusInterface $eventBus;
-
     public function __construct(
-        QueryBuilderInterface $queryBuilder,
-        ModelMapperInterface $modelMapper,
-        EventBusInterface $eventBus
+        private QueryBuilderInterface $queryBuilder,
+        private ModelMapperInterface $modelMapper,
+        private EventBusInterface $eventBus,
     ) {
-        $this->queryBuilder = $queryBuilder;
-        $this->modelMapper = $modelMapper;
-        $this->eventBus = $eventBus;
     }
 
     public function allOrdered(): CollectionInterface

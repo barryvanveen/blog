@@ -17,8 +17,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    /** @var UserEloquentModel */
-    private $user;
+    private UserEloquentModel $user;
 
     public function setUp(): void
     {
@@ -40,7 +39,7 @@ class AdminArticlesOverviewTest extends DuskTestCase
     /** @test */
     public function viewArticles(): void
     {
-        /** @var ArticleEloquentModel[] $visibleArticles */
+        /** @var ArticleEloquentModel[] $articles */
         $articles = ArticleFactory::new()->count(3)->create();
 
         $this->browse(function (Browser $browser) use ($articles) {

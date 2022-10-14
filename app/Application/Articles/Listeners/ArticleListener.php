@@ -12,18 +12,11 @@ use App\Domain\Articles\ArticleRepositoryInterface;
 
 final class ArticleListener extends BaseEventListener
 {
-    private CacheInterface $cache;
-    private UrlGeneratorInterface $urlGenerator;
-    private ArticleRepositoryInterface $articleRepository;
-
     public function __construct(
-        CacheInterface $cache,
-        UrlGeneratorInterface $urlGenerator,
-        ArticleRepositoryInterface $articleRepository
+        private CacheInterface $cache,
+        private UrlGeneratorInterface $urlGenerator,
+        private ArticleRepositoryInterface $articleRepository,
     ) {
-        $this->cache = $cache;
-        $this->urlGenerator = $urlGenerator;
-        $this->articleRepository = $articleRepository;
     }
 
     public function handleArticleWasCreated(): void

@@ -15,8 +15,7 @@ class LaravelRateLimiterTest extends TestCase
 {
     private const KEY = 'mykey';
 
-    /** @var LaravelRateLimiter */
-    private $rateLimiter;
+    private LaravelRateLimiter $rateLimiter;
 
     public function setUp(): void
     {

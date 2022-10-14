@@ -11,15 +11,10 @@ use App\Domain\Comments\CommentRepositoryInterface;
 
 final class AdminCommentsIndexPresenter implements PresenterInterface
 {
-    private CommentRepositoryInterface $commentRepository;
-    private UrlGeneratorInterface $urlGenerator;
-
     public function __construct(
-        CommentRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator
+        private CommentRepositoryInterface $commentRepository,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->commentRepository = $repository;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function present(): array

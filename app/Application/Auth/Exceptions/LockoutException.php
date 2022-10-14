@@ -8,13 +8,11 @@ use Exception;
 
 final class LockoutException extends Exception
 {
-    /** @var int */
-    private $seconds;
-
-    private function __construct(int $seconds, string $message, int $code = 0)
-    {
-        $this->seconds = $seconds;
-
+    private function __construct(
+        private int $seconds,
+        string $message,
+        int $code = 0,
+    ) {
         parent::__construct($message, $code);
     }
 

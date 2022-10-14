@@ -2,3 +2,9 @@ deptrac:
   skip_violations:
     App\Infrastructure\Console\Commands\CreateUser:
       - Illuminate\Console\Signals
+    App\Domain\Articles\Enums\ArticleStatus:
+      - Stringable
+    App\Domain\Comments\CommentStatus:
+      - Stringable
+    App\Domain\Core\Enum:
+      - Stringable

@@ -11,12 +11,9 @@ use App\Domain\Comments\CommentRepositoryInterface;
 
 final class UpdateCommentHandler extends BaseCommandHandler
 {
-    private CommentRepositoryInterface $repository;
-
     public function __construct(
-        CommentRepositoryInterface $commentRepository
+        private CommentRepositoryInterface $repository,
     ) {
-        $this->repository = $commentRepository;
     }
 
     public function handleUpdateComment(UpdateComment $command): void

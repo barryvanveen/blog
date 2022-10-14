@@ -18,23 +18,11 @@ use Psr\Http\Message\ResponseInterface;
 
 final class PagesController
 {
-    /** @var PageRepositoryInterface */
-    private $pageRepository;
-
-    /** @var ResponseBuilderInterface */
-    private $responseBuilder;
-
-    /** @var CommandBusInterface */
-    private $commandBus;
-
     public function __construct(
-        PageRepositoryInterface $pageRepository,
-        ResponseBuilderInterface $responseBuilder,
-        CommandBusInterface $commandBus
+        private PageRepositoryInterface $pageRepository,
+        private ResponseBuilderInterface $responseBuilder,
+        private CommandBusInterface $commandBus,
     ) {
-        $this->pageRepository = $pageRepository;
-        $this->responseBuilder = $responseBuilder;
-        $this->commandBus = $commandBus;
     }
 
     public function index(): ResponseInterface

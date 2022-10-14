@@ -20,18 +20,11 @@ use Psr\Http\Message\ResponseInterface;
 
 final class CommentsController
 {
-    private ResponseBuilderInterface $responseBuilder;
-    private CommandBusInterface $commandBus;
-    private CommentRepositoryInterface $commentRepository;
-
     public function __construct(
-        ResponseBuilderInterface $responseBuilder,
-        CommandBusInterface $commandBus,
-        CommentRepositoryInterface $commentRepository
+        private ResponseBuilderInterface $responseBuilder,
+        private CommandBusInterface $commandBus,
+        private CommentRepositoryInterface $commentRepository,
     ) {
-        $this->responseBuilder = $responseBuilder;
-        $this->commandBus = $commandBus;
-        $this->commentRepository = $commentRepository;
     }
 
     public function index(): ResponseInterface

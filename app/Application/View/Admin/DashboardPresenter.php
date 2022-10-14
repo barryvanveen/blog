@@ -16,24 +16,13 @@ use App\Domain\Utils\MetaData;
 
 final class DashboardPresenter implements PresenterInterface
 {
-    private UrlGeneratorInterface $urlGenerator;
-    private GuardInterface $guard;
-    private ArticleRepositoryInterface $articleRepository;
-    private PageRepositoryInterface $pageRepository;
-    private DateTimeFormatterInterface $dateTimeFormatter;
-
     public function __construct(
-        UrlGeneratorInterface $urlGenerator,
-        GuardInterface $guard,
-        ArticleRepositoryInterface $articleRepository,
-        PageRepositoryInterface $pageRepository,
-        DateTimeFormatterInterface $dateTimeFormatter,
+        private UrlGeneratorInterface $urlGenerator,
+        private GuardInterface $guard,
+        private ArticleRepositoryInterface $articleRepository,
+        private PageRepositoryInterface $pageRepository,
+        private DateTimeFormatterInterface $dateTimeFormatter,
     ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->guard = $guard;
-        $this->articleRepository = $articleRepository;
-        $this->pageRepository = $pageRepository;
-        $this->dateTimeFormatter = $dateTimeFormatter;
     }
 
     public function present(): array

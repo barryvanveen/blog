@@ -12,18 +12,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class BooksController
 {
-    /** @var PageRepositoryInterface */
-    private $pageRepository;
-
-    /** @var ResponseBuilderInterface */
-    private $responseBuilder;
-
     public function __construct(
-        PageRepositoryInterface $pageRepository,
-        ResponseBuilderInterface $responseBuilder
+        private PageRepositoryInterface $pageRepository,
+        private ResponseBuilderInterface $responseBuilder,
     ) {
-        $this->pageRepository = $pageRepository;
-        $this->responseBuilder = $responseBuilder;
     }
 
     public function index(): ResponseInterface

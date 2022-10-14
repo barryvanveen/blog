@@ -24,11 +24,9 @@ class LaravelGuardTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var LaravelGuard */
-    private $guard;
+    private LaravelGuard $guard;
 
-    /** @var UserEloquentModel */
-    private $user;
+    private UserEloquentModel $user;
 
     public function setUp(): void
     {

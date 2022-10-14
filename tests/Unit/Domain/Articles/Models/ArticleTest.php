@@ -36,10 +36,6 @@ class ArticleTest extends TestCase
     /**
      * @test
      * @dataProvider isOnlineDataProvider
-     *
-     * @param DateTimeImmutable $dateTime
-     * @param ArticleStatus $status
-     * @param bool $expected
      */
     public function isOnline(DateTimeImmutable $dateTime, ArticleStatus $status, bool $expected): void
     {

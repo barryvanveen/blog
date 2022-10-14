@@ -71,16 +71,13 @@ final class Handler implements ExceptionHandlerContract
 
     public function shouldReport(Throwable $e)
     {
-        $matches = array_filter($this->dontReport, function (string $type) use ($e) {
-            return $e instanceof $type;
-        });
+        $matches = array_filter($this->dontReport, fn(string $type) => $e instanceof $type);
 
         return count($matches) === 0;
     }
 
     /**
      * @param Request $request
-     * @param Throwable $e
      * @return SymfonyResponse
      */
     public function render($request, Throwable $e)
@@ -100,7 +97,7 @@ final class Handler implements ExceptionHandlerContract
 
     private function mapFrameworkExceptionToHttpException(Throwable $exception): Throwable
     {
-        return match (get_class($exception)) {
+        return match ($exception::class) {
             AuthorizationException::class => ForbiddenHttpException::create($exception),
             TokenMismatchException::class => PageExpiredHttpException::create($exception),
             SuspiciousOperationException::class, SymfonyNotFoundHttpException::class => NotFoundHttpException::create($exception),
@@ -110,11 +107,7 @@ final class Handler implements ExceptionHandlerContract
         };
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse|RedirectResponse
-     */
-    private function unauthenticated(Request $request)
+    private function unauthenticated(Request $request): JsonResponse|RedirectResponse
     {
         if ($request->expectsJson()) {
             return ResponseFactory::json(['message' => 'Forbidden'], StatusCode::STATUS_UNAUTHORIZED);
@@ -123,12 +116,7 @@ final class Handler implements ExceptionHandlerContract
         return Redirect::guest(URL::route('login'));
     }
 
-    /**
-     * @param Request $request
-     * @param ValidationException $exception
-     * @return JsonResponse|RedirectResponse
-     */
-    private function invalid(Request $request, ValidationException $exception)
+    private function invalid(Request $request, ValidationException $exception): JsonResponse|RedirectResponse
     {
         if ($request->expectsJson()) {
             return ResponseFactory::json($exception->errors(), StatusCode::STATUS_BAD_REQUEST);
@@ -139,12 +127,7 @@ final class Handler implements ExceptionHandlerContract
             ->withErrors($exception->errors(), $exception->errorBag);
     }
 
-    /**
-     * @param Request $request
-     * @param Throwable $exception
-     * @return JsonResponse|SymfonyResponse
-     */
-    private function prepareResponse(Request $request, Throwable $exception)
+    private function prepareResponse(Request $request, Throwable $exception): JsonResponse|SymfonyResponse
     {
         // debug mode -> show exception details
         if ($this->isHttpException($exception) === false && config('app.debug')) {
@@ -190,7 +173,7 @@ final class Handler implements ExceptionHandlerContract
     {
         try {
             return app(HandlerInterface::class);
-        } catch (BindingResolutionException $e) {
+        } catch (BindingResolutionException) {
             return new PlainTextHandler();
         }
     }

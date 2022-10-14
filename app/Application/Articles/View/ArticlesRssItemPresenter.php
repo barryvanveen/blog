@@ -13,23 +13,11 @@ use App\Domain\Core\CollectionInterface;
 
 final class ArticlesRssItemPresenter implements PresenterInterface
 {
-    /** @var ArticleRepositoryInterface */
-    private $repository;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var DateTimeFormatterInterface */
-    private $dateTimeFormatter;
-
     public function __construct(
-        ArticleRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator,
-        DateTimeFormatterInterface $dateTimeFormatter
+        private ArticleRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
     ) {
-        $this->repository = $repository;
-        $this->urlGenerator = $urlGenerator;
-        $this->dateTimeFormatter = $dateTimeFormatter;
     }
 
     public function present(): array
@@ -43,14 +31,12 @@ final class ArticlesRssItemPresenter implements PresenterInterface
 
     private function parseArticles(CollectionInterface $articles): array
     {
-        return $articles->map(function (Article $article): array {
-            return [
-                'title' => $article->title(),
-                'publicationDate' => $this->publicationDateInAtomFormat($article),
-                'description' => $article->description(),
-                'url' => $this->articleShowUrl($article),
-            ];
-        });
+        return $articles->map(fn(Article $article): array => [
+            'title' => $article->title(),
+            'publicationDate' => $this->publicationDateInAtomFormat($article),
+            'description' => $article->description(),
+            'url' => $this->articleShowUrl($article),
+        ]);
     }
 
     private function publicationDateInAtomFormat(Article $article): string

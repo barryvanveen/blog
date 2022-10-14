@@ -9,12 +9,9 @@ use Illuminate\Contracts\View\Factory;
 
 class LaravelViewBuilder implements ViewBuilderInterface
 {
-    /** @var Factory */
-    private $laravelViewFactory;
-
-    public function __construct(Factory $laravelViewFactory)
-    {
-        $this->laravelViewFactory = $laravelViewFactory;
+    public function __construct(
+        private Factory $laravelViewFactory,
+    ) {
     }
 
     public function render(string $view, array $data = []): string

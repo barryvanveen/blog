@@ -30,8 +30,7 @@ class PageRepositoryTest extends TestCase
     /** @var PageRepository */
     protected $repository;
 
-    /** @var EventFake */
-    private $laravelBusFake;
+    private EventFake $laravelBusFake;
 
     public function setUp(): void
     {

@@ -12,18 +12,10 @@ use App\Domain\Utils\MetaData;
 
 final class AdminPagesIndexPresenter implements PresenterInterface
 {
-    /** @var PageRepositoryInterface */
-    private $repository;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
     public function __construct(
-        PageRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator
+        private PageRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->repository = $repository;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function present(): array

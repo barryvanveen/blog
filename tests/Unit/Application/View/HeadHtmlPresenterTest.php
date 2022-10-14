@@ -6,7 +6,6 @@ namespace Tests\Unit\Application\View;
 
 use App\Application\Interfaces\ConfigurationInterface;
 use App\Application\Interfaces\RouterInterface;
-use App\Application\Interfaces\SessionInterface;
 use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Application\View\AssetUrlBuilderInterface;
 use App\Application\View\HeadHtmlPresenter;
@@ -19,11 +18,9 @@ use Tests\TestCase;
  */
 class HeadHtmlPresenterTest extends TestCase
 {
-    /** @var RouterInterface|ObjectProphecy */
-    private $router;
+    private RouterInterface|ObjectProphecy $router;
 
-    /** @var HeadHtmlPresenter */
-    private $presenter;
+    private HeadHtmlPresenter $presenter;
 
     public function setUp(): void
     {
@@ -37,21 +34,15 @@ class HeadHtmlPresenterTest extends TestCase
         $configuration = $this->prophesize(ConfigurationInterface::class);
         $configuration->string(Argument::exact('app.url'))->willReturn('http://myapp.dev');
 
-        /** @var ObjectProphecy|SessionInterface $session */
-        $session = $this->prophesize(SessionInterface::class);
-        $session->token()->willReturn('myMockToken');
-
         /** @var ObjectProphecy|UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->prophesize(UrlGeneratorInterface::class);
         $urlGenerator->route(Argument::cetera())->willReturn('http://myapp.dev/about');
 
-        /** @var RouterInterface|ObjectProphecy $router */
         $this->router = $this->prophesize(RouterInterface::class);
 
         $this->presenter = new HeadHtmlPresenter(
             $assetBuilder->reveal(),
             $configuration->reveal(),
-            $session->reveal(),
             $urlGenerator->reveal(),
             $this->router->reveal()
         );

@@ -6,13 +6,10 @@ namespace Tests\Browser\Pages;
 
 class ArticleItemPage extends Page
 {
-    private string $uuid;
-    private string $slug;
-
-    public function __construct(string $uuid, string $slug)
-    {
-        $this->uuid = $uuid;
-        $this->slug = $slug;
+    public function __construct(
+        private string $uuid,
+        private string $slug,
+    ) {
     }
 
     public function url()

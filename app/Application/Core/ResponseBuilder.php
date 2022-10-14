@@ -15,38 +15,14 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 class ResponseBuilder implements ResponseBuilderInterface
 {
-    /** @var ViewBuilderInterface */
-    private $viewBuilder;
-
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
-
-    /** @var StreamFactoryInterface */
-    private $streamFactory;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var ServerRequestInterface */
-    private $request;
-
-    /** @var SessionInterface */
-    private $session;
-
     public function __construct(
-        ViewBuilderInterface $viewBuilder,
-        ResponseFactoryInterface $responseFactory,
-        StreamFactoryInterface $streamFactory,
-        UrlGeneratorInterface $urlGenerator,
-        ServerRequestInterface $request,
-        SessionInterface $session
+        private ViewBuilderInterface $viewBuilder,
+        private ResponseFactoryInterface $responseFactory,
+        private StreamFactoryInterface $streamFactory,
+        private UrlGeneratorInterface $urlGenerator,
+        private ServerRequestInterface $request,
+        private SessionInterface $session,
     ) {
-        $this->viewBuilder = $viewBuilder;
-        $this->responseFactory = $responseFactory;
-        $this->streamFactory = $streamFactory;
-        $this->urlGenerator = $urlGenerator;
-        $this->request = $request;
-        $this->session = $session;
     }
 
     public function ok(string $view, array $data = []): ResponseInterface
@@ -61,7 +37,7 @@ class ResponseBuilder implements ResponseBuilderInterface
     public function redirect(
         string $route,
         array $routeParams = [],
-        int $status = StatusCode::STATUS_FOUND
+        int $status = StatusCode::STATUS_FOUND,
     ): ResponseInterface {
         $response = $this->responseFactory->createResponse($status);
 
@@ -72,7 +48,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     public function redirectBack(
         int $status = StatusCode::STATUS_FOUND,
-        array $errors = []
+        array $errors = [],
     ): ResponseInterface {
         $location = $this->determinePreviousUrl();
 
@@ -86,7 +62,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     public function redirectIntended(
         string $fallbackRoute,
-        int $status = StatusCode::STATUS_FOUND
+        int $status = StatusCode::STATUS_FOUND,
     ): ResponseInterface {
         $location = $this->session->intendedUrl() ?? $this->urlGenerator->route($fallbackRoute);
 
@@ -107,7 +83,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     public function json(array $data, int $status = StatusCode::STATUS_OK): ResponseInterface
     {
-        $body = $this->streamFactory->createStream(json_encode($data));
+        $body = $this->streamFactory->createStream(json_encode($data, JSON_THROW_ON_ERROR));
 
         return $this->responseFactory->createResponse($status)
             ->withBody($body)

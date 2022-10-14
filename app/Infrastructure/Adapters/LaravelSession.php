@@ -17,12 +17,9 @@ class LaravelSession implements SessionInterface
 
     private const OLD_INPUT_KEY = '_old_input';
 
-    /** @var Store */
-    private $laravelSession;
-
-    public function __construct(Store $laravelSession)
-    {
-        $this->laravelSession = $laravelSession;
+    public function __construct(
+        private Store $laravelSession,
+    ) {
     }
 
     /**
@@ -37,8 +34,6 @@ class LaravelSession implements SessionInterface
 
     /**
      * Flush the session data and regenerate the ID.
-     *
-     * @return bool
      */
     public function invalidate(): bool
     {
@@ -47,9 +42,6 @@ class LaravelSession implements SessionInterface
 
     /**
      * Generate a new session identifier.
-     *
-     * @param  bool $destroy
-     * @return bool
      */
     public function regenerate(bool $destroy = false): bool
     {
@@ -58,8 +50,6 @@ class LaravelSession implements SessionInterface
 
     /**
      * Get the previous URL from the session.
-     *
-     * @return string|null
      */
     public function previousUrl(): ?string
     {
@@ -68,8 +58,6 @@ class LaravelSession implements SessionInterface
 
     /**
      * Get the intended URL from the session.
-     *
-     * @return string|null
      */
     public function intendedUrl(): ?string
     {
@@ -78,8 +66,6 @@ class LaravelSession implements SessionInterface
 
     /**
      * Flash set of error messages so they are visible on next page load.
-     *
-     * @param array $errors
      */
     public function flashErrors(array $errors): void
     {
@@ -100,7 +86,6 @@ class LaravelSession implements SessionInterface
     /**
      * Get the requested item from the flashed input array.
      *
-     * @param string $key
      * @param mixed $default
      * @return mixed
      */

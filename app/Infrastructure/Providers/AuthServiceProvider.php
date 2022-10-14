@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
 {
     public function boot(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
     ): void {
         $commandBus->subscribe(Login::class, RateLimitedLoginHandler::class);
         $commandBus->subscribe(Logout::class, LogoutHandler::class);
@@ -33,12 +33,10 @@ class AuthServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->bind(RateLimitedLoginHandler::class, function (Application $app): RateLimitedLoginHandler {
-            return new RateLimitedLoginHandler(
-                $app->make(LoginHandler::class),
-                $app->make(RateLimiterInterface::class)
-            );
-        });
+        $this->app->bind(RateLimitedLoginHandler::class, fn(Application $app): RateLimitedLoginHandler => new RateLimitedLoginHandler(
+            $app->make(LoginHandler::class),
+            $app->make(RateLimiterInterface::class)
+        ));
 
         $this->app->bind(LoginRequestInterface::class, LoginRequest::class);
     }

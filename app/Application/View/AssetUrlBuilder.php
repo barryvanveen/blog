@@ -9,12 +9,9 @@ use Exception;
 
 class AssetUrlBuilder implements AssetUrlBuilderInterface
 {
-    /** @var PathBuilderInterface */
-    private $pathBuilder;
-
-    public function __construct(PathBuilderInterface $pathBuilder)
-    {
-        $this->pathBuilder = $pathBuilder;
+    public function __construct(
+        private PathBuilderInterface $pathBuilder,
+    ) {
     }
 
     public function get(string $path): string
@@ -22,8 +19,8 @@ class AssetUrlBuilder implements AssetUrlBuilderInterface
         $manifestPath = $this->pathBuilder->assetPath('manifest.json');
 
         try {
-            $manifest = json_decode(file_get_contents($manifestPath), true);
-        } catch (Exception $e) {
+            $manifest = json_decode(file_get_contents($manifestPath), true, 512, JSON_THROW_ON_ERROR);
+        } catch (Exception) {
             throw ManifestException::becauseManifestFileCouldNotBeRead();
         }
 

@@ -8,5 +8,5 @@ use Fig\Http\Message\StatusCodeInterface;
 
 interface StatusCode extends StatusCodeInterface
 {
-    const STATUS_PAGE_EXPIRED = 419;
+    public const STATUS_PAGE_EXPIRED = 419;
 }

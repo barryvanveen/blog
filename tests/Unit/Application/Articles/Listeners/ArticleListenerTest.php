@@ -20,17 +20,13 @@ use Tests\TestCase;
  */
 class ArticleListenerTest extends TestCase
 {
-    /** @var ObjectProphecy|CacheInterface */
-    private $cache;
+    private ObjectProphecy|CacheInterface $cache;
 
-    /** @var ObjectProphecy|UrlGeneratorInterface */
-    private $urlGenerator;
+    private ObjectProphecy|UrlGeneratorInterface $urlGenerator;
 
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $repository;
+    private ObjectProphecy|ArticleRepositoryInterface $repository;
 
-    /** @var ArticleListener */
-    private $listener;
+    private ArticleListener $listener;
 
     public function setUp(): void
     {

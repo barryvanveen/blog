@@ -13,18 +13,13 @@ use Illuminate\Contracts\Mail\Mailer;
 
 class LaravelMailer implements MailerInterface
 {
-    /** @var Mailer */
-    private $mailer;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private Mailer $mailer;
 
     public function __construct(
         Factory $factory,
-        UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
     ) {
         $this->mailer = $factory->mailer();
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function sendLockoutTriggeredEmail(string $email, string $ip): void
@@ -57,7 +52,7 @@ class LaravelMailer implements MailerInterface
     private function send(
         string $template,
         string $subject,
-        array $variables
+        array $variables,
     ): void {
         $this->mailer->send(
             new MarkdownMailable(

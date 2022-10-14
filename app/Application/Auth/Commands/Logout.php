@@ -8,7 +8,4 @@ use App\Application\Core\CommandInterface;
 
 class Logout implements CommandInterface
 {
-    public function __construct()
-    {
-    }
 }

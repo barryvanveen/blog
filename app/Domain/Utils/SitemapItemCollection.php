@@ -12,7 +12,7 @@ final class SitemapItemCollection
     private array $items;
 
     public function __construct(
-        SitemapItem ...$items
+        SitemapItem ...$items,
     ) {
         $this->items = $items;
     }

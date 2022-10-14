@@ -12,13 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class LaravelQueryBuilder implements QueryBuilderInterface
 {
-    private Model $model;
-
     private Builder $builder;
 
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
+    public function __construct(
+        private Model $model,
+    ) {
         $this->builder = $model->newQuery();
     }
 
@@ -36,7 +34,6 @@ class LaravelQueryBuilder implements QueryBuilderInterface
     }
 
     /**
-     * @return array
      * @throws RecordNotFoundException
      */
     public function first(): array
@@ -71,7 +68,7 @@ class LaravelQueryBuilder implements QueryBuilderInterface
         string $column,
         string $operator = null,
         string $value = '',
-        string $boolean = 'and'
+        string $boolean = 'and',
     ): QueryBuilderInterface {
         $this->builder->where($column, $operator, $value, $boolean);
 

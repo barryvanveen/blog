@@ -20,17 +20,14 @@ class JavascriptPresenterTest extends TestCase
 {
     private const MOCK_BASE_URL = 'https://foo.bar/';
 
-    /** @var RouterInterface|ObjectProphecy */
-    private $router;
+    private RouterInterface|ObjectProphecy $router;
 
-    /** @var JavascriptPresenter */
-    private $presenter;
+    private JavascriptPresenter $presenter;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        /** @var RouterInterface|ObjectProphecy $router */
         $this->router = $this->prophesize(RouterInterface::class);
 
         /** @var ObjectProphecy|AssetUrlBuilderInterface $assetBuilder */

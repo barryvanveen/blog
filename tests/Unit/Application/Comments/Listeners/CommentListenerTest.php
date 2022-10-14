@@ -29,23 +29,17 @@ class CommentListenerTest extends TestCase
     private const ARTICLE_UUID = 'qweqwe';
     private const ARTICLE_SLUG = 'zxczxc';
 
-    /** @var ObjectProphecy|CacheInterface */
-    private $cache;
+    private ObjectProphecy|CacheInterface $cache;
 
-    /** @var ObjectProphecy|UrlGeneratorInterface */
-    private $urlGenerator;
+    private ObjectProphecy|UrlGeneratorInterface $urlGenerator;
 
-    /** @var ObjectProphecy|CommentRepositoryInterface */
-    private $commentRepository;
+    private ObjectProphecy|CommentRepositoryInterface $commentRepository;
 
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $articleRepository;
+    private ObjectProphecy|ArticleRepositoryInterface $articleRepository;
 
-    /** @var ObjectProphecy|MailerInterface */
-    private $mailer;
+    private ObjectProphecy|MailerInterface $mailer;
 
-    /** @var CommentListener */
-    private $listener;
+    private CommentListener $listener;
 
     public function setUp(): void
     {

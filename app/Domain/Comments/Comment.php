@@ -8,48 +8,16 @@ use DateTimeImmutable;
 
 class Comment
 {
-    /** @var string */
-    private $articleUuid;
-
-    /** @var string */
-    private $content;
-
-    /** @var DateTimeImmutable */
-    private $createdAt;
-
-    /** @var string */
-    private $email;
-
-    /** @var string */
-    private $ip;
-
-    /** @var string */
-    private $name;
-
-    /** @var CommentStatus */
-    private $status;
-
-    /** @var string */
-    private $uuid;
-
     public function __construct(
-        string $article_uuid,
-        string $content,
-        DateTimeImmutable $createdAt,
-        string $email,
-        string $ip,
-        string $name,
-        CommentStatus $status,
-        string $uuid
+        private string $articleUuid,
+        private string $content,
+        private DateTimeImmutable $createdAt,
+        private string $email,
+        private string $ip,
+        private string $name,
+        private CommentStatus $status,
+        private string $uuid,
     ) {
-        $this->articleUuid = $article_uuid;
-        $this->content = $content;
-        $this->createdAt = $createdAt;
-        $this->email = $email;
-        $this->ip = $ip;
-        $this->name = $name;
-        $this->status = $status;
-        $this->uuid = $uuid;
     }
 
     public function articleUuid(): string

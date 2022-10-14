@@ -10,10 +10,10 @@ interface MailerInterface
 {
     public function sendLockoutTriggeredEmail(
         string $email,
-        string $ip
+        string $ip,
     ): void;
 
     public function sendNewCommentEmail(
-        Comment $comment
+        Comment $comment,
     ): void;
 }

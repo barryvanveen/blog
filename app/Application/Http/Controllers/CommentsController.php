@@ -20,24 +20,13 @@ use Psr\Log\LoggerInterface;
 
 final class CommentsController
 {
-    private ConfigurationInterface $configuration;
-    private ArticleRepositoryInterface $articleRepository;
-    private CommandBusInterface $commandBus;
-    private ResponseBuilderInterface $responseBuilder;
-    private LoggerInterface $logger;
-
     public function __construct(
-        ConfigurationInterface $configuration,
-        ArticleRepositoryInterface $articleRepository,
-        CommandBusInterface $commandBus,
-        ResponseBuilderInterface $responseBuilder,
-        LoggerInterface $logger
+        private ConfigurationInterface $configuration,
+        private ArticleRepositoryInterface $articleRepository,
+        private CommandBusInterface $commandBus,
+        private ResponseBuilderInterface $responseBuilder,
+        private LoggerInterface $logger,
     ) {
-        $this->configuration = $configuration;
-        $this->articleRepository = $articleRepository;
-        $this->commandBus = $commandBus;
-        $this->responseBuilder = $responseBuilder;
-        $this->logger = $logger;
     }
 
     public function store(CommentStoreRequestInterface $request): ResponseInterface

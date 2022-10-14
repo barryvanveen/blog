@@ -28,12 +28,21 @@
 
     <!-- specific sniffs to include -->
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Arrays/TrailingArrayCommaSniff.php"/>
-    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Operators/DisallowEqualOperatorsSniff.php"/>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Classes/RequireMultiLineMethodSignatureSniff.php">
+        <properties>
+            <property name="minLineLength" value="0"/>
+            <property name="includedMethodPatterns" type="array">
+                <element value="/^__construct$/"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Functions/RequireTrailingCommaInDeclarationSniff.php"/>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Namespaces/AlphabeticallySortedUsesSniff.php">
         <properties>
             <property name="caseSensitive" value="true"/>
         </properties>
     </rule>
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Operators/DisallowEqualOperatorsSniff.php"/>
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php">
         <properties>
             <property name="linesCountBeforeDeclare" value="1"/>
@@ -41,6 +50,7 @@
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
     </rule>
+
 
     <!-- allow classes without namespace -->
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">

@@ -10,15 +10,10 @@ use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 
 final class ArticlesCreateCommentPresenter implements PresenterInterface
 {
-    private ArticleShowRequestInterface $request;
-    private UrlGeneratorInterface $urlGenerator;
-
     public function __construct(
-        ArticleShowRequestInterface $request,
-        UrlGeneratorInterface $urlGenerator
+        private ArticleShowRequestInterface $request,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->request = $request;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function present(): array

@@ -20,11 +20,9 @@ use Tests\TestCase;
  */
 class SitemapPresenterTest extends TestCase
 {
-    /** @var ObjectProphecy|PageRepositoryInterface */
-    private $pageRepository;
+    private ObjectProphecy|PageRepositoryInterface $pageRepository;
 
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $articleRepository;
+    private ObjectProphecy|ArticleRepositoryInterface $articleRepository;
 
     private SitemapPresenter $presenter;
 
@@ -42,7 +40,6 @@ class SitemapPresenterTest extends TestCase
             'title' => 'About',
         ]);
 
-        /** @var ObjectProphecy|PageRepositoryInterface $pageRepository */
         $this->pageRepository = $this->prophesize(PageRepositoryInterface::class);
         $this->pageRepository->books()->willReturn($booksPage);
         $this->pageRepository->home()->willReturn($homePage);
@@ -56,7 +53,6 @@ class SitemapPresenterTest extends TestCase
         $dateTimeFormatter = $this->prophesize(DateTimeFormatterInterface::class);
         $dateTimeFormatter->metadata(Argument::any())->willReturn('metadata-string');
 
-        /** @var ObjectProphecy|ArticleRepositoryInterface $articleRepository */
         $this->articleRepository = $this->prophesize(ArticleRepositoryInterface::class);
         $this->articleRepository->allPublishedAndOrdered()->willReturn(new LaravelCollection());
 
@@ -75,7 +71,7 @@ class SitemapPresenterTest extends TestCase
         $result = $this->presenter->present();
 
         // assert
-        $this->assertEquals(3, count($result['items']));
+        $this->assertEquals(3, is_countable($result['items']) ? count($result['items']) : 0);
 
         $pages = array_column($result['items'], 'url');
         $this->assertContains('books', $pages);
@@ -100,7 +96,7 @@ class SitemapPresenterTest extends TestCase
         $result = $this->presenter->present();
 
         // assert
-        $this->assertEquals(6, count($result['items']));
+        $this->assertEquals(6, is_countable($result['items']) ? count($result['items']) : 0);
 
         $pages = array_column($result['items'], 'url');
         $this->assertContains('books', $pages);

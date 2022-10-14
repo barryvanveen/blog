@@ -8,30 +8,16 @@ use App\Application\Core\ResponseBuilderInterface;
 use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;
-use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class ArticlesController
 {
-    /** @var ArticleRepositoryInterface */
-    private $articleRepository;
-
-    /** @var CommandBusInterface */
-    private $commandBus;
-
-    /** @var ResponseBuilderInterface */
-    private $responseBuilder;
-
     public function __construct(
-        ArticleRepositoryInterface $articleRepository,
-        CommandBusInterface $commandBus,
-        ResponseBuilderInterface $responseBuilder
+        private ArticleRepositoryInterface $articleRepository,
+        private ResponseBuilderInterface $responseBuilder,
     ) {
-        $this->articleRepository = $articleRepository;
-        $this->commandBus = $commandBus;
-        $this->responseBuilder = $responseBuilder;
     }
 
     public function index(): ResponseInterface

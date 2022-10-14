@@ -15,8 +15,7 @@ use Tests\TestCase;
  */
 class CebeMarkdownConverterTest extends TestCase
 {
-    /** @var ObjectProphecy|MyMarkdown */
-    private $extendedGithubMarkdown;
+    private ObjectProphecy|MyMarkdown $extendedGithubMarkdown;
 
     private CebeMarkdownConverter $cebeMarkdownConverter;
 

@@ -14,23 +14,23 @@ interface ResponseBuilderInterface
     public function redirect(
         string $route,
         array $routeParams = [],
-        int $status = StatusCode::STATUS_FOUND
+        int $status = StatusCode::STATUS_FOUND,
     ): ResponseInterface;
 
     public function redirectBack(
         int $status = StatusCode::STATUS_FOUND,
-        array $errors = []
+        array $errors = [],
     ): ResponseInterface;
 
     public function redirectIntended(
         string $fallbackRoute,
-        int $status = StatusCode::STATUS_FOUND
+        int $status = StatusCode::STATUS_FOUND,
     ): ResponseInterface;
 
     public function xml(string $view): ResponseInterface;
 
     public function json(
         array $data,
-        int $status = StatusCode::STATUS_OK
+        int $status = StatusCode::STATUS_OK,
     ): ResponseInterface;
 }

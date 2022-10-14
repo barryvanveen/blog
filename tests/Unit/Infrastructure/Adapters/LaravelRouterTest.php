@@ -14,8 +14,7 @@ use Tests\TestCase;
  */
 class LaravelRouterTest extends TestCase
 {
-    /** @var ObjectProphecy|Router */
-    private $laravelRouter;
+    private ObjectProphecy|Router $laravelRouter;
 
     public function setUp(): void
     {
@@ -29,7 +28,7 @@ class LaravelRouterTest extends TestCase
      */
     public function itReturnsWhetherTheCurrentRouteIsAnAdminRoute(
         ?string $currentRoute,
-        bool $expectedResult
+        bool $expectedResult,
     ): void {
         $this->laravelRouter->currentRouteName()
             ->willReturn($currentRoute)

@@ -15,28 +15,12 @@ final class AdminArticlesEditPresenter implements PresenterInterface
 {
     use PresentsArticleStatuses;
 
-    /** @var ArticleRepositoryInterface */
-    private $repository;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var AdminArticleEditRequestInterface */
-    private $request;
-
-    /** @var SessionInterface */
-    private $session;
-
     public function __construct(
-        ArticleRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator,
-        AdminArticleEditRequestInterface $request,
-        SessionInterface $session
+        private ArticleRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
+        private AdminArticleEditRequestInterface $request,
+        private SessionInterface $session,
     ) {
-        $this->repository = $repository;
-        $this->urlGenerator = $urlGenerator;
-        $this->request = $request;
-        $this->session = $session;
     }
 
     public function present(): array

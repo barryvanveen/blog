@@ -31,11 +31,14 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
-      - name: Check code style
+      - name: PHP Code Sniffer checks
         run: vendor/bin/phpcs --standard=ruleset.xml
+
+      - name: Rector checks
+        run: vendor/bin/rector --dry-run
 
       - name: Psalm checks
         run: vendor/bin/psalm --show-info=false
 
-      - name: Deptract checks
+      - name: Deptrac checks
         run: vendor/bin/deptrac

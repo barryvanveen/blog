@@ -11,18 +11,10 @@ use App\Domain\Articles\Models\Article;
 
 final class AdminArticlesIndexPresenter implements PresenterInterface
 {
-    /** @var ArticleRepositoryInterface */
-    private $repository;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
     public function __construct(
-        ArticleRepositoryInterface $repository,
-        UrlGeneratorInterface $urlGenerator
+        private ArticleRepositoryInterface $repository,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->repository = $repository;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function present(): array

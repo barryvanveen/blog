@@ -10,32 +10,12 @@ use DateTimeImmutable;
 
 class CreateArticle implements CommandInterface
 {
-    /** @var string */
-    public $content;
-
-    /** @var string */
-    public $description;
-
-    /** @var DateTimeImmutable */
-    public $publishedAt;
-
-    /** @var ArticleStatus */
-    public $status;
-
-    /** @var string */
-    public $title;
-
     public function __construct(
-        string $content,
-        string $description,
-        DateTimeImmutable $publishedAt,
-        ArticleStatus $status,
-        string $title
+        public string $content,
+        public string $description,
+        public DateTimeImmutable $publishedAt,
+        public ArticleStatus $status,
+        public string $title,
     ) {
-        $this->content = $content;
-        $this->description = $description;
-        $this->publishedAt = $publishedAt;
-        $this->status = $status;
-        $this->title = $title;
     }
 }

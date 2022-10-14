@@ -16,14 +16,11 @@ use Tests\TestCase;
  */
 class CsrfControllerTest extends TestCase
 {
-    /** @var ObjectProphecy|ResponseBuilderInterface */
-    private $responseBuilder;
+    private ObjectProphecy|ResponseBuilderInterface $responseBuilder;
 
-    /** @var ObjectProphecy|SessionInterface */
-    private $session;
+    private ObjectProphecy|SessionInterface $session;
 
-    /** @var CsrfController */
-    private $controller;
+    private CsrfController $controller;
 
     public function setUp(): void
     {

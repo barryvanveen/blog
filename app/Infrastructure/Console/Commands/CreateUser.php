@@ -17,17 +17,11 @@ class CreateUser extends Command
     /** @var string */
     protected $description = 'Create a user';
 
-    private UniqueIdGeneratorInterface $uniqueIdGenerator;
-    private Hasher $hasher;
-
     public function __construct(
-        UniqueIdGeneratorInterface $uniqueIdGenerator,
-        Hasher $hasher,
+        private UniqueIdGeneratorInterface $uniqueIdGenerator,
+        private Hasher $hasher,
     ) {
         parent::__construct();
-
-        $this->uniqueIdGenerator = $uniqueIdGenerator;
-        $this->hasher = $hasher;
     }
 
     public function handle(): void

@@ -15,28 +15,13 @@ use App\Domain\Utils\MetaData;
 
 final class ArticlesItemPresenter implements PresenterInterface
 {
-    private ArticleRepositoryInterface $repository;
-
-    private ArticleShowRequestInterface $request;
-
-    private UrlGeneratorInterface $urlGenerator;
-
-    private DateTimeFormatterInterface $dateTimeFormatter;
-
-    private MarkdownConverterInterface $markdownConverter;
-
     public function __construct(
-        ArticleRepositoryInterface $repository,
-        ArticleShowRequestInterface $request,
-        UrlGeneratorInterface $urlGenerator,
-        DateTimeFormatterInterface $dateTimeFormatter,
-        MarkdownConverterInterface $markdownConverter
+        private ArticleRepositoryInterface $repository,
+        private ArticleShowRequestInterface $request,
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
+        private MarkdownConverterInterface $markdownConverter,
     ) {
-        $this->repository = $repository;
-        $this->request = $request;
-        $this->urlGenerator = $urlGenerator;
-        $this->dateTimeFormatter = $dateTimeFormatter;
-        $this->markdownConverter = $markdownConverter;
     }
 
     public function present(): array

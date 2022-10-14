@@ -17,11 +17,9 @@ class AdminPageEditTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    /** @var UserEloquentModel */
-    private $user;
+    private UserEloquentModel $user;
 
-    /** @var PageEloquentModel */
-    private $page;
+    private PageEloquentModel $page;
 
     public function setUp(): void
     {

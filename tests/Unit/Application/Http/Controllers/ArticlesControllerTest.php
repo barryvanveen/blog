@@ -9,7 +9,6 @@ use App\Application\Exceptions\RecordNotFoundException;
 use App\Application\Http\Controllers\ArticlesController;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\StatusCode;
-use App\Application\Interfaces\CommandBusInterface;
 use App\Domain\Articles\ArticleRepositoryInterface;
 use App\Domain\Articles\Requests\ArticleShowRequestInterface;
 use Prophecy\Argument;
@@ -22,29 +21,21 @@ use Tests\TestCase;
  */
 class ArticlesControllerTest extends TestCase
 {
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $articleRepository;
+    private ObjectProphecy|ArticleRepositoryInterface $articleRepository;
 
-    /** @var ObjectProphecy|CommandBusInterface */
-    private $commandBus;
+    private ObjectProphecy|ResponseBuilderInterface $responseBuilder;
 
-    /** @var ObjectProphecy|ResponseBuilderInterface */
-    private $responseBuilder;
-
-    /** @var ObjectProphecy|ArticlesController */
-    private $controller;
+    private ObjectProphecy|ArticlesController $controller;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->articleRepository = $this->prophesize(ArticleRepositoryInterface::class);
-        $this->commandBus = $this->prophesize(CommandBusInterface::class);
         $this->responseBuilder = $this->prophesize(ResponseBuilderInterface::class);
 
         $this->controller = new ArticlesController(
             $this->articleRepository->reveal(),
-            $this->commandBus->reveal(),
             $this->responseBuilder->reveal()
         );
     }

@@ -16,17 +16,15 @@ use TypeError;
 
 class FooEvent implements EventInterface
 {
-    public $name;
-
-    public function __construct(string $name)
-    {
-        $this->name = $name;
+    public function __construct(
+        public string $name,
+    ) {
     }
 }
 
 class FooListener extends BaseEventListener
 {
-    private static $calls = [];
+    private static array $calls = [];
 
     public function handleFooEvent(FooEvent $event): void
     {
@@ -44,7 +42,7 @@ class FooListener extends BaseEventListener
 
 class BarListener extends BaseEventListener
 {
-    private static $calls = [];
+    private static array $calls = [];
 
     public function handleFooEvent(FooEvent $event): void
     {

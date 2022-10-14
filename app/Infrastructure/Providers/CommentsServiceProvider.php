@@ -34,7 +34,7 @@ class CommentsServiceProvider extends ServiceProvider
 {
     public function boot(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
     ): void {
         $commandBus->subscribe(CreateComment::class, CreateCommentHandler::class);
         $commandBus->subscribe(UpdateComment::class, UpdateCommentHandler::class);
@@ -47,9 +47,7 @@ class CommentsServiceProvider extends ServiceProvider
     {
         $this->app->when(CommentRepository::class)
             ->needs(QueryBuilderInterface::class)
-            ->give(function () {
-                return new LaravelQueryBuilder(new CommentEloquentModel());
-            });
+            ->give(fn() => new LaravelQueryBuilder(new CommentEloquentModel()));
 
         $this->app->bind(ModelMapperInterface::class, CommentMapper::class);
         $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);

@@ -9,12 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class SitemapController
 {
-    private ResponseBuilderInterface $responseBuilder;
-
     public function __construct(
-        ResponseBuilderInterface $responseBuilder
+        private ResponseBuilderInterface $responseBuilder,
     ) {
-        $this->responseBuilder = $responseBuilder;
     }
 
     public function index(): ResponseInterface

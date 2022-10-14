@@ -16,24 +16,13 @@ use App\Domain\Comments\CommentRepositoryInterface;
 
 final class CommentListener extends BaseEventListener
 {
-    private CacheInterface $cache;
-    private UrlGeneratorInterface $urlGenerator;
-    private CommentRepositoryInterface $commentRepository;
-    private ArticleRepositoryInterface $articleRepository;
-    private MailerInterface $mailer;
-
     public function __construct(
-        CacheInterface $cache,
-        UrlGeneratorInterface $urlGenerator,
-        CommentRepositoryInterface $commentRepository,
-        ArticleRepositoryInterface $articleRepository,
-        MailerInterface $mailer
+        private CacheInterface $cache,
+        private UrlGeneratorInterface $urlGenerator,
+        private CommentRepositoryInterface $commentRepository,
+        private ArticleRepositoryInterface $articleRepository,
+        private MailerInterface $mailer,
     ) {
-        $this->cache = $cache;
-        $this->urlGenerator = $urlGenerator;
-        $this->commentRepository = $commentRepository;
-        $this->articleRepository = $articleRepository;
-        $this->mailer = $mailer;
     }
 
     public function handleCommentWasCreated(CommentWasCreated $event): void

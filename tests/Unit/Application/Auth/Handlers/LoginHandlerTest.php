@@ -22,8 +22,7 @@ class LoginHandlerTest extends TestCase
     /** @var GuardInterface|MockObject */
     protected $guardMock;
 
-    /** @var SessionInterface|MockObject */
-    private $sessionMock;
+    private SessionInterface|MockObject $sessionMock;
 
     public function setUp(): void
     {

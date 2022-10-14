@@ -11,18 +11,10 @@ use DateTimeImmutable;
 
 final class ArticlesRssPresenter implements PresenterInterface
 {
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var DateTimeFormatterInterface */
-    private $dateTimeFormatter;
-
     public function __construct(
-        UrlGeneratorInterface $urlGenerator,
-        DateTimeFormatterInterface $dateTimeFormatter
+        private UrlGeneratorInterface $urlGenerator,
+        private DateTimeFormatterInterface $dateTimeFormatter,
     ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->dateTimeFormatter = $dateTimeFormatter;
     }
 
     public function present(): array

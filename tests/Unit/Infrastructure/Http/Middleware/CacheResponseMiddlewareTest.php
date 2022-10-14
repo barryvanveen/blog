@@ -20,20 +20,16 @@ use Tests\TestCase;
  */
 class CacheResponseMiddlewareTest extends TestCase
 {
-    /** @var ObjectProphecy|CacheInterface */
-    private $cache;
+    private ObjectProphecy|CacheInterface $cache;
 
-    /** @var ObjectProphecy|ConfigurationInterface */
-    private $config;
+    private ObjectProphecy|ConfigurationInterface $config;
 
-    /** @var ObjectProphecy|Request */
-    private $request;
+    private ObjectProphecy|Request $request;
 
     /** @var Closure */
     private $next;
 
-    /** @var CacheResponseMiddleware */
-    private $middleware;
+    private CacheResponseMiddleware $middleware;
 
     public function setUp(): void
     {
@@ -43,9 +39,7 @@ class CacheResponseMiddlewareTest extends TestCase
         $this->config = $this->prophesize(ConfigurationInterface::class);
 
         $this->request = $this->prophesize(Request::class);
-        $this->next = function () {
-            return new Response('nextResponse');
-        };
+        $this->next = fn() => new Response('nextResponse');
 
         $this->middleware = new CacheResponseMiddleware(
             $this->cache->reveal(),
@@ -195,9 +189,7 @@ class CacheResponseMiddlewareTest extends TestCase
         $this->cache->has($url)
             ->willReturn(false);
 
-        $this->next = function () {
-            return new Response('errorResponse', 500);
-        };
+        $this->next = fn() => new Response('errorResponse', 500);
 
         $this->cache->put($url, Argument::any(), Argument::any())
             ->shouldNotBeCalled();

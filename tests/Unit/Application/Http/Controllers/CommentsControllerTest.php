@@ -24,23 +24,17 @@ use Tests\TestCase;
  */
 class CommentsControllerTest extends TestCase
 {
-    /** @var ObjectProphecy|ConfigurationInterface */
-    private $configuration;
+    private ObjectProphecy|ConfigurationInterface $configuration;
 
-    /** @var ObjectProphecy|ArticleRepositoryInterface */
-    private $articleRepository;
+    private ObjectProphecy|ArticleRepositoryInterface $articleRepository;
 
-    /** @var ObjectProphecy|CommandBusInterface */
-    private $commandBus;
+    private ObjectProphecy|CommandBusInterface $commandBus;
 
-    /** @var ObjectProphecy|ResponseBuilderInterface */
-    private $responseBuilder;
+    private ObjectProphecy|ResponseBuilderInterface $responseBuilder;
 
-    /** @var ObjectProphecy|LoggerInterface */
-    private $logger;
+    private ObjectProphecy|LoggerInterface $logger;
 
-    /** @var ObjectProphecy|CommentsController */
-    private $controller;
+    private ObjectProphecy|CommentsController $controller;
 
     public function setUp(): void
     {
@@ -153,10 +147,7 @@ class CommentsControllerTest extends TestCase
         $this->assertEquals($response, $result);
     }
 
-    /**
-     * @return ObjectProphecy|CommentStoreRequestInterface
-     */
-    private function buildRequest()
+    private function buildRequest(): ObjectProphecy|CommentStoreRequestInterface
     {
         /** @var ObjectProphecy|CommentStoreRequestInterface $request */
         $request = $this->prophesize(CommentStoreRequestInterface::class);

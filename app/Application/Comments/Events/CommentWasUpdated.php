@@ -8,13 +8,9 @@ use App\Application\Core\EventInterface;
 
 class CommentWasUpdated implements EventInterface
 {
-    /** @var string */
-    private $uuid;
-
     public function __construct(
-        string $uuid
+        private string $uuid,
     ) {
-        $this->uuid = $uuid;
     }
 
     public function uuid(): string

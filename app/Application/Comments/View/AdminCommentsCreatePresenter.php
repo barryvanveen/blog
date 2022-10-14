@@ -15,18 +15,11 @@ final class AdminCommentsCreatePresenter implements PresenterInterface
 {
     use PresentsArticles, PresentsCommentStatuses;
 
-    private UrlGeneratorInterface $urlGenerator;
-    private SessionInterface $session;
-    private ArticleRepositoryInterface $articleRepository;
-
     public function __construct(
-        UrlGeneratorInterface $urlGenerator,
-        SessionInterface $session,
-        ArticleRepositoryInterface $articleRepository
+        private UrlGeneratorInterface $urlGenerator,
+        private SessionInterface $session,
+        private ArticleRepositoryInterface $articleRepository,
     ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->session = $session;
-        $this->articleRepository = $articleRepository;
     }
 
     public function present(): array
