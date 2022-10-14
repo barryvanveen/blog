@@ -92,13 +92,13 @@ class ArticlesCommentsPresenterTest extends TestCase
     {
         return new Comment(
             self::ARTICLE_UUID,
-            'Content'.$comment,
+            'Content' . $comment,
             new DateTimeImmutable('-1 day'),
             'foo@bar.baz',
             '123.123.123.123',
-            'Name'.$comment,
+            'Name' . $comment,
             CommentStatus::published(),
-            'uuid'.$comment
+            'uuid' . $comment
         );
     }
 }

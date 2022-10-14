@@ -40,6 +40,6 @@ class LaravelPathBuilder implements PathBuilderInterface
 
     private function appendPath(string $base, string $path): string
     {
-        return $base.($path ? DIRECTORY_SEPARATOR.ltrim($path, DIRECTORY_SEPARATOR) : $path);
+        return $base . ($path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : $path);
     }
 }

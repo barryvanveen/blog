@@ -34,7 +34,7 @@ class LaravelRateLimiterTest extends TestCase
      */
     public function itTracksHitsAndChecksWhetherThereAreTooMany(int $hits, int $limit, bool $expected): void
     {
-        for ($i=0; $i<$hits; $i++) {
+        for ($i = 0; $i < $hits; $i++) {
             $this->rateLimiter->hit(self::KEY);
         }
 

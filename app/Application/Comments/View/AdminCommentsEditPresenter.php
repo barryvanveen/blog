@@ -14,7 +14,8 @@ use App\Domain\Comments\Requests\AdminCommentEditRequestInterface;
 
 final class AdminCommentsEditPresenter implements PresenterInterface
 {
-    use PresentsArticles, PresentsCommentStatuses;
+    use PresentsArticles;
+    use PresentsCommentStatuses;
 
     public function __construct(
         private CommentRepositoryInterface $repository,

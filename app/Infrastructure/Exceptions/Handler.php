@@ -160,7 +160,7 @@ final class Handler implements ExceptionHandlerContract
 
     private function getWhoopsOutput(Throwable $exception): string
     {
-        return tap(new Whoops, function (Whoops $whoops) {
+        return tap(new Whoops(), function (Whoops $whoops) {
             $whoops->appendHandler($this->whoopsHandler());
 
             $whoops->writeToOutput(false);
@@ -180,7 +180,7 @@ final class Handler implements ExceptionHandlerContract
 
     private function toResponse(Throwable $exception): Response
     {
-        $view = View::make('errors.'.$exception->getCode(), [
+        $view = View::make('errors.' . $exception->getCode(), [
             'errors' => new ViewErrorBag(),
             'exception' => $exception,
         ]);
@@ -212,6 +212,6 @@ final class Handler implements ExceptionHandlerContract
 
     public function renderForConsole($output, Throwable $e): void
     {
-        (new ConsoleApplication)->renderThrowable($e, $output);
+        (new ConsoleApplication())->renderThrowable($e, $output);
     }
 }

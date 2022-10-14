@@ -27,7 +27,7 @@ class PagesMusicPresenterTest extends TestCase
     {
         $title = 'titleString';
 
-        $albums = ['foo'=>'bar'];
+        $albums = ['foo' => 'bar'];
 
         $page = $this->getPage([
             'title' => $title,

@@ -26,6 +26,6 @@ abstract class BaseCommandHandler implements CommandHandlerInterface
     {
         $classParts = explode('\\', $command::class);
 
-        return 'handle'.end($classParts);
+        return 'handle' . end($classParts);
     }
 }

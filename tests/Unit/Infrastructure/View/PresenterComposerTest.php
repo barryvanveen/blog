@@ -38,7 +38,7 @@ class PresenterComposerTest extends TestCase
         $view = $this->prophesize(View::class);
 
         $view->getPath()
-            ->willReturn(__DIR__.'/doesNotExist.blade.php');
+            ->willReturn(__DIR__ . '/doesNotExist.blade.php');
 
         $this->expectException(PresenterComposerException::class);
         $this->expectExceptionMessage('File could not be found:');
@@ -54,7 +54,7 @@ class PresenterComposerTest extends TestCase
         $view = $this->prophesize(View::class);
 
         $view->getPath()
-            ->willReturn(__DIR__.'/emptyView.blade.php');
+            ->willReturn(__DIR__ . '/emptyView.blade.php');
 
         $this->application->make(Argument::type('string'))->shouldNotBeCalled();
 
@@ -74,7 +74,7 @@ class PresenterComposerTest extends TestCase
         $view = $this->prophesize(View::class);
 
         $view->getPath()
-            ->willReturn(__DIR__.'/view.blade.php');
+            ->willReturn(__DIR__ . '/view.blade.php');
 
         $this->expectException(PresenterComposerException::class);
         $this->expectExceptionMessage('Presenter should implement correct interface:');
@@ -102,7 +102,7 @@ class PresenterComposerTest extends TestCase
         $view = $this->prophesize(View::class);
 
         $view->getPath()
-            ->willReturn(__DIR__.'/view.blade.php');
+            ->willReturn(__DIR__ . '/view.blade.php');
 
         $view->with(Argument::type('array'))->shouldBeCalled();
 

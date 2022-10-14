@@ -20,8 +20,8 @@
     <exclude-pattern>*/bootstrap/cache/*.php</exclude-pattern>
     <exclude-pattern>*.blade.php</exclude-pattern>
 
-    <!-- include all sniffs in the PSR2 standard -->
-    <rule ref="PSR2">
+    <!-- include all sniffs in the PSR12 standard -->
+    <rule ref="PSR12">
         <!-- except this one -->
         <exclude name="Generic.Files.LineLength.TooLong"/>
     </rule>

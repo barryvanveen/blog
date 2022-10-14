@@ -26,6 +26,6 @@ abstract class BaseEventListener implements EventListenerInterface
     {
         $classParts = explode('\\', $event::class);
 
-        return 'handle'.end($classParts);
+        return 'handle' . end($classParts);
     }
 }

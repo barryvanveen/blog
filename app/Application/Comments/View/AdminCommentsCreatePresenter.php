@@ -12,7 +12,8 @@ use App\Domain\Comments\CommentStatus;
 
 final class AdminCommentsCreatePresenter implements PresenterInterface
 {
-    use PresentsArticles, PresentsCommentStatuses;
+    use PresentsArticles;
+    use PresentsCommentStatuses;
 
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,

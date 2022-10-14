@@ -91,7 +91,7 @@ final class PagesHomePresenter implements PresenterInterface
         $counter = 0;
         foreach ($articles as $article) {
             $articleUrl = $this->urlGenerator->route('articles.show', ['uuid' => $article->uuid(), 'slug' => $article->slug()], false);
-            $articlesContent .= "- [".$article->title()."](".$articleUrl.")\n";
+            $articlesContent .= "- [" . $article->title() . "](" . $articleUrl . ")\n";
             $counter++;
             if ($counter >= 3) {
                 break;
@@ -125,7 +125,7 @@ final class PagesHomePresenter implements PresenterInterface
             return str_replace(self::BOOKS_PLACEHOLDER, "Not reading anything, actually\n", $homePageContent);
         }
 
-        $currentlyReadingContents = mb_substr($booksContent, $currentlyReadingStart, $currentlyReadingEnd-$currentlyReadingStart);
+        $currentlyReadingContents = mb_substr($booksContent, $currentlyReadingStart, $currentlyReadingEnd - $currentlyReadingStart);
 
         return str_replace(self::BOOKS_PLACEHOLDER, $currentlyReadingContents, $homePageContent);
     }

@@ -12,6 +12,6 @@ final class InvalidGuardException extends RuntimeException
 {
     public static function becauseGuardDoesNotExtendTheCorrectInterfaces(string $currentGuardClassname): self
     {
-        return new self('Guard '.$currentGuardClassname.' is not an instance of '.Guard::class.' and '.StatefulGuard::class);
+        return new self('Guard ' . $currentGuardClassname . ' is not an instance of ' . Guard::class . ' and ' . StatefulGuard::class);
     }
 }

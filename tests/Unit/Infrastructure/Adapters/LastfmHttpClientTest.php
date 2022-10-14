@@ -61,7 +61,7 @@ class LastfmHttpClientTest extends TestCase
             'artist' => [
                 'url' => 'https://www.last.fm/music/Derek+&+The+Dominos',
                 'name' => 'Derek & The Dominos',
-                'mbid' =>' ',
+                'mbid' => ' ',
             ],
             'image' => [
                 [
@@ -81,7 +81,7 @@ class LastfmHttpClientTest extends TestCase
                     '#text' => 'https://lastfm.freetls.fastly.net/i/u/300x300/fd44803f0e8fbb17d14d0a323b53ba3e.jpg',
                 ],
             ],
-            'mbid' =>' ',
+            'mbid' => ' ',
             'url' => 'https://www.last.fm/music/Derek+&+The+Dominos/Layla+And+Other+Assorted+Love+Songs+(Remastered+2010)',
             'playcount' => 24,
             '@attr' => [
