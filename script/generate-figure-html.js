@@ -99,6 +99,16 @@ const figures = [
         'Comparison plot of 2 ab-runner tests',
         'Comparison of 2 benchmark tests. The cached version of the website is faster with a mean of 148ms, compared to a mean of 199ms for the uncached version'
     ),
+    new Figure(
+        'db584055-ab-runner-comparison.png',
+        'Comparison plot of 3 ab-runner tests',
+        'Comparison of 3 benchmark tests. When Docker\'s experimental features are enabled, response times drop from a mean of 785ms to a mean of 232ms.'
+    ),
+    new Figure(
+        'db584055-docker-settings.png',
+        'Docker\'s experimental features',
+        'Screenshot of Docker (version 4.12.0) settings screen with experimental features enabled'
+    ),
 ];
 
 figures.forEach((figure) => {
