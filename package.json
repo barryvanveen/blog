@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "webpack --config webpack.dev.js",
         "watch": "webpack --watch --config webpack.dev.js",
-        "prod": "webpack --node-env=production --config webpack.prod.js --progress"
+        "prod": "webpack --define-process-env-node-env production --config webpack.prod.js --progress"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",
