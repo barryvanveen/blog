@@ -5,20 +5,26 @@ declare(strict_types=1);
 namespace App\Infrastructure\Adapters;
 
 use App\Domain\Core\CollectionInterface;
+use ArrayIterator;
 use Illuminate\Support\Collection;
-use IteratorIterator;
 
-class LaravelCollection extends IteratorIterator implements CollectionInterface
+/**
+ * @template TKey of array-key
+ * @template TValue
+ *
+ * @extends ArrayIterator<TKey, TValue>
+ * @implements CollectionInterface<TKey, TValue>
+ */
+class LaravelCollection extends ArrayIterator implements CollectionInterface
 {
-    /** @var Collection */
-    protected $collection;
+    protected Collection $collection;
 
     public function __construct(
         array $items = [],
     ) {
         $this->collection = new Collection($items);
 
-        parent::__construct($this->collection);
+        parent::__construct($this->collection->toArray());
     }
 
     public static function make(array $items = []): CollectionInterface

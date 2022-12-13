@@ -7,6 +7,13 @@ namespace App\Domain\Core;
 use Countable;
 use Traversable;
 
+/**
+ * @template TKey of array-key
+ * @template TValue
+ *
+ * @template-extends Countable
+ * @template-extends Traversable<TKey, TValue>
+ */
 interface CollectionInterface extends Countable, Traversable
 {
     public static function make(array $items = []): self;
