@@ -45,7 +45,7 @@
         "slevomat/coding-standard": "^8.1",
         "spatie/laravel-ignition": "^1.0",
         "squizlabs/php_codesniffer": "^3.4",
-        "vimeo/psalm": "^4.3.1"
+        "vimeo/psalm": "^5.2.0"
     },
     "config": {
         "optimize-autoloader": true,
