@@ -138,7 +138,7 @@ class LaravelEventBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelEventBusException::class);
-        $this->expectExceptionMessage("Event ${eventClassName} does not implement ${interfaceClassName}");
+        $this->expectExceptionMessage("Event {$eventClassName} does not implement {$interfaceClassName}");
 
         // act
         $laravelEventBus->subscribe(NoEvent::class, FooListener::class);
@@ -154,7 +154,7 @@ class LaravelEventBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelEventBusException::class);
-        $this->expectExceptionMessage("Listener ${listenerClassName} does not implement ${interfaceClassName}");
+        $this->expectExceptionMessage("Listener {$listenerClassName} does not implement {$interfaceClassName}");
 
         // act
         $laravelEventBus->subscribe(FooEvent::class, NoListener::class);
