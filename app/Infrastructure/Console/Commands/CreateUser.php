@@ -14,7 +14,7 @@ class CreateUser extends Command
     /** @var string */
     protected $signature = 'create-user {name} {email} {password}';
 
-    /** @var string */
+    /** @var string|null */
     protected $description = 'Create a user';
 
     public function __construct(
