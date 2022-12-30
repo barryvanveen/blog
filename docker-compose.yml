@@ -24,7 +24,7 @@ services:
     container_name: php
     restart: unless-stopped
     build:
-      context: ./docker/php81
+      context: ./docker/php82
       args:
         xdebug: 'false'
     depends_on:
