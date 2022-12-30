@@ -69,7 +69,7 @@ class LaravelCommandBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage("No handler found for ${commandClassName}");
+        $this->expectExceptionMessage("No handler found for {$commandClassName}");
 
         // act
         $laravelCommandBus->dispatch($command);
@@ -98,7 +98,7 @@ class LaravelCommandBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage("Command ${commandClassName} does not implement ${interfaceClassName}");
+        $this->expectExceptionMessage("Command {$commandClassName} does not implement {$interfaceClassName}");
 
         // act
         $laravelCommandBus->subscribe(NoCommand::class, FooHandler::class);
@@ -114,7 +114,7 @@ class LaravelCommandBusTest extends TestCase
 
         // assert
         $this->expectException(LaravelCommandBusException::class);
-        $this->expectExceptionMessage("Handler ${handlerClassName} does not implement ${interfaceClassName}");
+        $this->expectExceptionMessage("Handler {$handlerClassName} does not implement {$interfaceClassName}");
 
         // act
         $laravelCommandBus->subscribe(FooCommand::class, NoHandler::class);
