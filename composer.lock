@@ -8305,16 +8305,16 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v7.2.1",
+            "version": "v7.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "cb8c951b0ea7bd109265cf6a821ab5612d9cbcb9"
+                "reference": "c20931e9ecd3d10246ebb8f1ec70ecebfb77b122"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/cb8c951b0ea7bd109265cf6a821ab5612d9cbcb9",
-                "reference": "cb8c951b0ea7bd109265cf6a821ab5612d9cbcb9",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/c20931e9ecd3d10246ebb8f1ec70ecebfb77b122",
+                "reference": "c20931e9ecd3d10246ebb8f1ec70ecebfb77b122",
                 "shasum": ""
             },
             "require": {
@@ -8372,9 +8372,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/dusk/issues",
-                "source": "https://github.com/laravel/dusk/tree/v7.2.1"
+                "source": "https://github.com/laravel/dusk/tree/v7.3.0"
             },
-            "time": "2022-12-16T14:37:35+00:00"
+            "time": "2023-01-03T09:39:52+00:00"
         },
         {
             "name": "mockery/mockery",
