@@ -1,0 +1,28 @@
+name: Preloading
+
+on: [pull_request]
+
+jobs:
+  preloading:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        version: [ '8.2' ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.version }}
+          coverage: none
+
+      - name: Install production dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --no-dev -q --no-ansi --no-interaction --no-progress --optimize-autoloader --prefer-dist --no-scripts
+
+      - name: Test Opcache preload script
+        run: php -f $GITHUB_WORKSPACE/preload.php
+
