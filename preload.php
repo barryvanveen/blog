@@ -128,6 +128,10 @@ class Preloader
 
 (new Preloader())
     ->paths(
+        __DIR__ . '/bootstrap',
+        __DIR__ . '/config',
+        __DIR__ . '/resources/views',
+        __DIR__ . '/route',
         __DIR__ . '/vendor/composer',
 //        __DIR__ . '/vendor/laravel/framework',
         __DIR__ . '/vendor/bepsvpt/secure-headers',
