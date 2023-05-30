@@ -9,14 +9,12 @@ use App\Application\Http\Exceptions\HttpExceptionInterface;
 use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
-use App\Application\Http\Exceptions\ServiceUnavailableException;
 use App\Application\Http\Exceptions\TooManyRequestsHttpException;
 use App\Application\Http\StatusCode;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
-use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -47,7 +45,6 @@ final class Handler implements ExceptionHandlerContract
     private array $dontReport = [
         NotFoundHttpException::class,
         SymfonyNotFoundHttpException::class,
-        MaintenanceModeException::class,
         TokenMismatchException::class,
         ValidationException::class,
         MethodNotAllowedHttpException::class,
@@ -60,7 +57,7 @@ final class Handler implements ExceptionHandlerContract
         'password_confirmation',
     ];
 
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         if ($this->shouldReport($e) === false) {
             return;
@@ -69,7 +66,7 @@ final class Handler implements ExceptionHandlerContract
         Log::error($e->getMessage(), ['exception' => $e]);
     }
 
-    public function shouldReport(Throwable $e)
+    public function shouldReport(Throwable $e): bool
     {
         $matches = array_filter($this->dontReport, fn(string $type) => $e instanceof $type);
 
@@ -101,7 +98,6 @@ final class Handler implements ExceptionHandlerContract
             AuthorizationException::class => ForbiddenHttpException::create($exception),
             TokenMismatchException::class => PageExpiredHttpException::create($exception),
             SuspiciousOperationException::class, SymfonyNotFoundHttpException::class => NotFoundHttpException::create($exception),
-            MaintenanceModeException::class => ServiceUnavailableException::create($exception),
             ThrottleRequestsException::class => TooManyRequestsHttpException::create($exception),
             default => $exception,
         };

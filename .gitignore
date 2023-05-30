@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/.phpunit.cache
 /.idea
 /.vagrant
 npm-debug.log

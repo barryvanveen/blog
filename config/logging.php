@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Monolog\Handler\StreamHandler;
+use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
     /*
@@ -44,12 +45,14 @@ return [
 
         'bugsnag' => [
             'driver' => 'bugsnag',
+            'replace_placeholders' => true,
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
+            'replace_placeholders' => true,
         ],
 
         'daily' => [
@@ -57,6 +60,7 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
             'days' => 14,
+            'replace_placeholders' => true,
         ],
 
         'stderr' => [
@@ -65,16 +69,20 @@ return [
             'with' => [
                 'stream' => 'php://stderr',
             ],
+            'processors' => [PsrLogMessageProcessor::class],
         ],
 
         'syslog' => [
             'driver' => 'syslog',
             'level' => 'debug',
+            'facility' => LOG_USER,
+            'replace_placeholders' => true,
         ],
 
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => 'debug',
+            'replace_placeholders' => true,
         ],
 
         'emergency' => [

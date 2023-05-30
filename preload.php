@@ -139,7 +139,7 @@ class Preloader
 //        __DIR__ . '/vendor/cebe/markdown',
         __DIR__ . '/vendor/guzzlehttp',
 //        __DIR__ . '/vendor/nesbot/carbon',
-        __DIR__ . '/vendor/nyholm/psr7',
+//        __DIR__ . '/vendor/nyholm/psr7',
         __DIR__ . '/vendor/predis/predis',
         __DIR__ . '/vendor/psr',
 //        __DIR__ . '/vendor/symfony/http-foundation',
