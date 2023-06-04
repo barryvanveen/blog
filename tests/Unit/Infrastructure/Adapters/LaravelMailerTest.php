@@ -8,7 +8,7 @@ use App\Application\Interfaces\UrlGeneratorInterface;
 use App\Infrastructure\Adapters\LaravelMailer;
 use App\Infrastructure\Mail\MarkdownMailable;
 use Illuminate\Contracts\Mail\Factory;
-use Illuminate\Support\Testing\Fakes\MailFake;
+use Illuminate\Support\Facades\Mail;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Tests\TestCase;
@@ -22,7 +22,7 @@ class LaravelMailerTest extends TestCase
     /** @test */
     public function itSendsTheLockoutTriggeredEmail(): void
     {
-        $mailer = new MailFake();
+        $mailer = Mail::fake();
 
         /** @var Factory|ObjectProphecy $factory */
         $factory = $this->prophesize(Factory::class);
@@ -48,7 +48,7 @@ class LaravelMailerTest extends TestCase
     /** @test */
     public function itSendsTheNewCommentEmail(): void
     {
-        $mailer = new MailFake();
+        $mailer = Mail::fake();
 
         /** @var Factory|ObjectProphecy $factory */
         $factory = $this->prophesize(Factory::class);

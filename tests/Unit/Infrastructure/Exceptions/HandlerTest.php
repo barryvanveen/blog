@@ -8,14 +8,12 @@ use App\Application\Http\Exceptions\ForbiddenHttpException;
 use App\Application\Http\Exceptions\InternalServerErrorHttpException;
 use App\Application\Http\Exceptions\NotFoundHttpException;
 use App\Application\Http\Exceptions\PageExpiredHttpException;
-use App\Application\Http\Exceptions\ServiceUnavailableException;
 use App\Application\Http\Exceptions\TooManyRequestsHttpException;
 use App\Application\Http\StatusCode;
 use App\Infrastructure\Exceptions\Handler;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -175,11 +173,6 @@ class HandlerTest extends TestCase
                 'frameworkException' => new SuspiciousOperationException(),
                 'httpExceptionClass' => NotFoundHttpException::class,
                 'httpStatusCode' => StatusCode::STATUS_NOT_FOUND,
-            ],
-            [
-                'frameworkException' => new MaintenanceModeException(60, 60, "try again"),
-                'httpExceptionClass' => ServiceUnavailableException::class,
-                'httpStatusCode' => StatusCode::STATUS_SERVICE_UNAVAILABLE,
             ],
             [
                 'frameworkException' => new ThrottleRequestsException(60),
