@@ -51,7 +51,7 @@ class LoginController
 
         try {
             $this->commandBus->dispatch($command);
-        } catch (FailedLoginException $e) {
+        } catch (FailedLoginException) {
             return $this->responseBuilder->redirectBack(
                 StatusCode::STATUS_FOUND,
                 [
