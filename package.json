@@ -21,7 +21,7 @@
         "eslint-webpack-plugin": "^4.0.1",
         "glob": "^10.3.0",
         "mini-css-extract-plugin": "^2.7.5",
-        "postcss": "^8.4.24",
+        "postcss": "^8.4.25",
         "postcss-import": "^15.1.0",
         "postcss-loader": "^7.3.3",
         "sharp": "^0.32.0",
