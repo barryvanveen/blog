@@ -21,9 +21,16 @@ updates:
       laravel:
         patterns:
           - "laravel/*"
+      linters:
+        patterns:
+          - "rector/rector"
+          - "vimeo/psalm"
       # group all dev dependencies that did not match so far
       dev-dependencies:
         dependency-type: "development"
+        exclude-patterns:
+          - "rector/rector"
+          - "vimeo/psalm"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
