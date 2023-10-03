@@ -25,7 +25,8 @@ updates:
         patterns:
           - "rector/rector"
           - "vimeo/psalm"
-      # group all dev dependencies that did not match so far
+      prod-dependencies:
+        dependency-type: "production"
       dev-dependencies:
         dependency-type: "development"
         exclude-patterns:
