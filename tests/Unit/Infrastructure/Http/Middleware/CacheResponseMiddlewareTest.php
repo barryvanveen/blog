@@ -26,8 +26,7 @@ class CacheResponseMiddlewareTest extends TestCase
 
     private ObjectProphecy|Request $request;
 
-    /** @var Closure */
-    private $next;
+    private Closure $next;
 
     private CacheResponseMiddleware $middleware;
 
