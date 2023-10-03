@@ -24,7 +24,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "nyholm/psr7": "^1.2",
         "predis/predis": "~2.0",
-        "psr/http-message": "^1.0",
+        "psr/http-message": "^2.0",
         "scrivo/highlight.php": "^9.18",
         "spatie/laravel-backup": "^8.0",
         "symfony/psr-http-message-bridge": "^2.0"
