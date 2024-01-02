@@ -47,7 +47,7 @@ class CommentTest extends TestCase
         $this->assertEquals($expected, $comment->isOnline());
     }
 
-    public function isOnlineDataProvider(): array
+    public static function isOnlineDataProvider(): array
     {
         return [
             [CommentStatus::unpublished(), false],

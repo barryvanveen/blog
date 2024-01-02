@@ -43,7 +43,7 @@ class LaravelRateLimiterTest extends TestCase
         $this->assertEquals($expected, $overLimit);
     }
 
-    public function tooManyAttemptsDataProvider(): array
+    public static function tooManyAttemptsDataProvider(): array
     {
         return [
             [

@@ -29,7 +29,7 @@ class LaravelSlugFactoryTest extends TestCase
         $this->assertEquals($expected, $slug);
     }
 
-    public function slugDataProvider()
+    public static function slugDataProvider()
     {
         return [
             ['Title', 'title'],

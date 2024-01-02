@@ -34,7 +34,7 @@ class LaravelConfigurationTest extends TestCase
         $this->assertEquals($expected, $configuration->string('myKey'));
     }
 
-    public function stringDataProvider()
+    public static function stringDataProvider()
     {
         return [
             [
@@ -75,7 +75,7 @@ class LaravelConfigurationTest extends TestCase
         $this->assertEquals($expected, $configuration->boolean('myKey'));
     }
 
-    public function booleanDataProvider()
+    public static function booleanDataProvider()
     {
         return [
             [

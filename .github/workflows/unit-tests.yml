@@ -36,7 +36,7 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
       - name: Unit tests
-        run: vendor/bin/phpunit --verbose --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
+        run: vendor/bin/phpunit --configuration phpunit.xml --testsuite Unit --coverage-clover coverage.clover
 
       - name: Code coverage
         run: vendor/bin/coverage-check coverage.clover 60 --only-percentage

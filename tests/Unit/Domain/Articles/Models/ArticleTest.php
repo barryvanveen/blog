@@ -47,7 +47,7 @@ class ArticleTest extends TestCase
         $this->assertEquals($expected, $article->isOnline());
     }
 
-    public function isOnlineDataProvider(): array
+    public static function isOnlineDataProvider(): array
     {
         return [
             [new DateTimeImmutable('+1 day'), ArticleStatus::unpublished(), false],
