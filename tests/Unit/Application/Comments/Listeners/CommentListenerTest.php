@@ -93,7 +93,7 @@ class CommentListenerTest extends TestCase
         $this->listener->handle($event);
     }
 
-    public function eventDataProvider(): array
+    public static function eventDataProvider(): array
     {
         return [
             [

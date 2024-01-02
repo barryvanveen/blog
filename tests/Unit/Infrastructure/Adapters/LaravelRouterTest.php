@@ -41,7 +41,7 @@ class LaravelRouterTest extends TestCase
         $this->assertEquals($expectedResult, $router->currentRouteIsAdminRoute());
     }
 
-    public function routeNameDataProvider()
+    public static function routeNameDataProvider()
     {
         return [
             [

@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         colors="true">
-    <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
-    </testsuites>
-    <coverage cacheDirectory="./tests/cache"
-              processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./app</directory>
-        </include>
-        <report>
-            <clover outputFile="./tests/build/coverage.xml"/>
-            <html outputDirectory="./tests/build/report" lowUpperBound="35" highLowerBound="70"/>
-        </report>
-    </coverage>
-    <extensions>
-        <extension class="Tests\Bootstrap"/>
-    </extensions>
-    <php>
-        <ini name="memory_limit" value="-1" />
-        <env name="APP_ENV" value="testing"/>
-        <env name="APP_DEBUG" value="false"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value=":memory:"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="MAIL_MAILER" value="array"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="RESPONSE_CACHE_ENABLED" value="false"/>
-        <env name="COMMENTS_ENABLED" value="true"/>
-        <env name="THROTTLING_COMMENTS_TOTAL" value="1000"/>
-        <env name="THROTTLING_COMMENTS_INDIVIDUAL" value="1000"/>
-        <env name="THROTTLING_LOGIN_TOTAL" value="1000"/>
-        <env name="THROTTLING_LOGIN_INDIVIDUAL" value="1000"/>
-        <env name="APP_CONFIG_CACHE" value="bootstrap/cache/config.phpunit.php"/>
-        <env name="APP_SERVICES_CACHE" value="bootstrap/cache/services.phpunit.php"/>
-        <env name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
-        <env name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
-        <env name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
-    </php>
+         colors="true"
+         cacheDirectory=".phpunit.cache">
+  <testsuites>
+    <testsuite name="Unit">
+      <directory suffix="Test.php">./tests/Unit</directory>
+    </testsuite>
+    <testsuite name="Feature">
+      <directory suffix="Test.php">./tests/Feature</directory>
+    </testsuite>
+  </testsuites>
+  <coverage>
+    <report>
+      <clover outputFile="./tests/build/coverage.xml"/>
+      <html outputDirectory="./tests/build/report" lowUpperBound="35" highLowerBound="70"/>
+    </report>
+  </coverage>
+  <php>
+    <ini name="memory_limit" value="-1"/>
+    <env name="APP_ENV" value="testing"/>
+    <env name="APP_DEBUG" value="false"/>
+    <env name="DB_CONNECTION" value="sqlite"/>
+    <env name="DB_DATABASE" value=":memory:"/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="MAIL_MAILER" value="array"/>
+    <env name="QUEUE_CONNECTION" value="sync"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="RESPONSE_CACHE_ENABLED" value="false"/>
+    <env name="COMMENTS_ENABLED" value="true"/>
+    <env name="THROTTLING_COMMENTS_TOTAL" value="1000"/>
+    <env name="THROTTLING_COMMENTS_INDIVIDUAL" value="1000"/>
+    <env name="THROTTLING_LOGIN_TOTAL" value="1000"/>
+    <env name="THROTTLING_LOGIN_INDIVIDUAL" value="1000"/>
+    <env name="APP_CONFIG_CACHE" value="bootstrap/cache/config.phpunit.php"/>
+    <env name="APP_SERVICES_CACHE" value="bootstrap/cache/services.phpunit.php"/>
+    <env name="APP_PACKAGES_CACHE" value="bootstrap/cache/packages.phpunit.php"/>
+    <env name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
+    <env name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
+  </php>
+  <source>
+    <include>
+      <directory suffix=".php">./app</directory>
+    </include>
+  </source>
 </phpunit>

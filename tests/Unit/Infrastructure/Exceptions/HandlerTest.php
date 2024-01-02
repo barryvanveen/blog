@@ -90,7 +90,7 @@ class HandlerTest extends TestCase
         }
     }
 
-    public function shouldLogExceptionsDataProvider(): array
+    public static function shouldLogExceptionsDataProvider(): array
     {
         return [
             [
@@ -151,7 +151,7 @@ class HandlerTest extends TestCase
         $this->assertEquals($httpStatusCode, $response->getStatusCode());
     }
 
-    public function frameworkExceptionMappingDataProvider(): array
+    public static function frameworkExceptionMappingDataProvider(): array
     {
         return [
             [

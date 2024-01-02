@@ -36,7 +36,7 @@ class LaravelPathBuilderTest extends TestCase
         $this->assertEquals($expected, $laravelPathBuilder->publicPath($postfix));
     }
 
-    public function publicPathDataProvider()
+    public static function publicPathDataProvider()
     {
         return [
             [
@@ -87,7 +87,7 @@ class LaravelPathBuilderTest extends TestCase
         $this->assertEquals($expected, $laravelPathBuilder->assetPath($postfix));
     }
 
-    public function assetPathDataProvider()
+    public static function assetPathDataProvider()
     {
         return [
             [
@@ -138,7 +138,7 @@ class LaravelPathBuilderTest extends TestCase
         $this->assertEquals($expected, $laravelPathBuilder->storagePath($postfix));
     }
 
-    public function storagePathDataProvider()
+    public static function storagePathDataProvider()
     {
         return [
             [
