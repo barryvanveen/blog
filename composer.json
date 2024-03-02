@@ -30,7 +30,7 @@
         "symfony/psr-http-message-bridge": "^7.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.6",
+        "barryvdh/laravel-ide-helper": "^3.0",
         "doctrine/dbal": "^3.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/dusk": "^7.0",
