@@ -3,7 +3,7 @@ FROM php:8.2-fpm-bullseye
 
 WORKDIR /var/www/app
 
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18
 
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
