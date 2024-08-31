@@ -1,4 +1,4 @@
-Source code for [barryvanveen.nl](https://barryvanveen.nl)
+Source code for a previous incarnation of [barryvanveen.nl](https://barryvanveen.nl)
 
 ## Getting started
 - Copy `.env.example` to `.env` and customize where necessary
